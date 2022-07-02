@@ -12,7 +12,7 @@ const SignupView = ({ signupUser, error, auth }) => {
   const [mistake, setMistake] = useState(false);
 
   return (auth.uid ?
-    <Navigate to='/board' /> :
+    <Navigate to={'/admin/' + auth.uid} /> :
     <FrontLayout>
       <Typography variant='h4' m={2}>
         Sign Up

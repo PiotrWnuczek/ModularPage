@@ -6,10 +6,11 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Box, Grid, Typography, IconButton } from '@mui/material';
 import { Menu } from '@mui/icons-material';
 import { format } from 'date-fns';
+import withRouter from 'assets/withRouter';
 import MainLayout from 'pages/MainLayout';
-import ItemCard from 'molecules/ItemCard';
+import WebsiteCard from 'molecules/WebsiteCard';
 
-const BoardView = ({ items }) => {
+const PanelView = ({ id, websites }) => {
   const [sidebar, setSidebar] = useApp();
 
   return (
@@ -27,21 +28,24 @@ const BoardView = ({ items }) => {
       </Box>
     }>
       <Grid sx={{ p: 2 }} container spacing={2}>
-        {items && items.map(item =>
-          <Grid item xs={12} key={item.name}>
-            <ItemCard item={item} />
+        {websites && websites.map(website =>
+          <Grid item xs={12} key={website.id}>
+            <WebsiteCard website={website} />
           </Grid>
         )}
       </Grid>
+      <Typography sx={{ p: 2 }}>
+        Panel View: {id}
+      </Typography>
     </MainLayout>
   )
 };
 
 const mapStateToProps = (state) => ({
-  items: state.firestore.ordered.items,
+  websites: state.firestore.ordered.websites,
 });
 
-export default compose(
+export default withRouter(compose(
   connect(mapStateToProps),
-  firestoreConnect(['items']),
-)(BoardView);
+  firestoreConnect(['websites']),
+)(PanelView));

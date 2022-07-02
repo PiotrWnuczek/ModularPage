@@ -6,14 +6,13 @@ import 'firebase/compat/auth';
 import 'firebase/compat/storage';
 
 firebase.initializeApp({
-  apiKey: '0',
-  authDomain: '0',
-  projectId: '0',
-  storageBucket: '0',
-  messagingSenderId: '0',
-  appId: '0',
-  measurementId: '0',
-  databaseURL: '0',
+  apiKey: 'AIzaSyBPLnHJ6JtV_jQz2z6HTdiWIXx54h9ystc',
+  authDomain: 'websitecreator-db.firebaseapp.com',
+  projectId: 'websitecreator-db',
+  storageBucket: 'websitecreator-db.appspot.com',
+  messagingSenderId: '282092313429',
+  appId: '1:282092313429:web:fad03d6ef2cfa29f57addc',
+  measurementId: 'G-RLTEP2X7YC',
 });
 
 firebase.analytics();

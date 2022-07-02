@@ -2,28 +2,28 @@ const initial = {
   id: null,
 };
 
-const itemsReducer = (state = initial, action) => {
+const websitesReducer = (state = initial, action) => {
   switch (action.type) {
-    case 'CREATEITEM_SUCCESS':
+    case 'CREATEWEBSITE_SUCCESS':
       console.log(action.data);
       return state;
-    case 'CREATEITEM_ERROR':
+    case 'CREATEWEBSITE_ERROR':
       console.log(action.err);
       return state;
-    case 'UPDATEITEM_SUCCESS':
+    case 'UPDATEWEBSITE_SUCCESS':
       console.log(action.data);
       return state;
-    case 'UPDATEITEM_ERROR':
+    case 'UPDATEWEBSITE_ERROR':
       console.log(action.err);
       return state;
-    case 'REMOVEITEM_SUCCESS':
+    case 'REMOVEWEBSITE_SUCCESS':
       console.log(action.id);
       return state;
-    case 'REMOVEITEM_ERROR':
+    case 'REMOVEWEBSITE_ERROR':
       console.log(action.err);
       return state;
     default: return state;
   }
 };
 
-export default itemsReducer;
+export default websitesReducer;

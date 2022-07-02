@@ -3,21 +3,21 @@ import { Typography, Avatar } from '@mui/material';
 import { Card, CardHeader, CardContent } from '@mui/material';
 import { FolderOpen } from '@mui/icons-material';
 
-const ItemCard = ({ item }) => (
+const WebsiteCard = ({ website }) => (
   <Card
     sx={{ borderRadius: 2 }}
     variant='outlined'
   >
     <CardHeader
-      title={item.name}
+      title={website.title}
       avatar={<Avatar>
         <FolderOpen />
       </Avatar>}
     />
     <CardContent>
-      <Typography>{item.description}</Typography>
+      <Typography>{website.description}</Typography>
     </CardContent>
   </Card>
 );
 
-export default ItemCard;
+export default WebsiteCard;

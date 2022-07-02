@@ -9,7 +9,10 @@ import { ThemeProvider } from '@mui/material';
 import AppProvider from 'assets/useApp';
 import SigninView from 'pages/SigninView';
 import SignupView from 'pages/SignupView';
-import BoardView from 'pages/BoardView';
+import WebsiteView from 'pages/WebsiteView';
+import PanelView from 'pages/PanelView';
+import CreateView from 'pages/CreateView';
+import AboutView from 'about/AboutView';
 
 const App = () => {
   const auth = useSelector(state => state.firebase.auth);
@@ -27,9 +30,23 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <Routes>
+            <Route exact path='/' element={<Navigate to='/about' />} />
+            <Route path='/about' element={<AboutView />} />
             <Route path='/signin' element={<SigninView />} />
             <Route path='/signup' element={<SignupView />} />
-            <Route path='/*' element={access || 1 ? <BoardView /> : <Navigate to='/signin' />} />
+            <Route path='/:id/*' element={<WebsiteView />} />
+            <Route
+              path='/:id/admin'
+              element={access ? <WebsiteView admin /> : <Navigate to='/signin' />}
+            />
+            <Route
+              path='/admin/:id'
+              element={access ? <PanelView /> : <Navigate to='/signin' />}
+            />
+            <Route
+              path='/create'
+              element={access ? <CreateView /> : <Navigate to='/signin' />}
+            />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
