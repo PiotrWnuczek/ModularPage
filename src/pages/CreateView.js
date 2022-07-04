@@ -1,48 +1,35 @@
 import React from 'react';
-import { useApp } from 'assets/useApp';
 import { connect } from 'react-redux';
 import { createWebsite } from 'store/websitesActions';
+import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
-import { Box, Typography, IconButton, Button } from '@mui/material';
-import { Menu } from '@mui/icons-material';
-import { format } from 'date-fns';
+import { Box, Button } from '@mui/material';
 import MainLayout from 'pages/MainLayout';
 import TextInput from 'atoms/TextInput';
 
-const CreateView = ({ createWebsite }) => {
-  const [sidebar, setSidebar] = useApp();
+const CreateView = ({ createWebsite, auth }) => {
+  const navigate = useNavigate();
 
   return (
-    <MainLayout navbar={
-      <Box sx={{ display: 'flex', alignItems: 'center', m: { xs: 1.2, sm: 2.2 } }}>
-        <IconButton
-          sx={{ display: { xs: 'flex', sm: 'none' }, mr: 2 }}
-          onClick={() => setSidebar(!sidebar)}
-        >
-          <Menu />
-        </IconButton>
-        <Typography variant='h6'>
-          Today is the {format(new Date(), 'do MMMM Y')}
-        </Typography>
-      </Box>
-    }>
-      <Box sx={{ p: 5 }}>
+    <MainLayout>
+      <Box sx={{ p: 2 }}>
         <Formik
           initialValues={{
-            title: '',
+            name: '',
             description: '',
           }}
           onSubmit={(values) => {
             createWebsite(values);
+            navigate('/admin/' + auth.uid);
           }}
         >
           {({ values, handleChange, handleSubmit }) => (
             <form onSubmit={handleSubmit}>
               <TextInput
                 onChange={handleChange}
-                value={values.title}
-                label='Title'
-                name='title'
+                value={values.name}
+                label='Name'
+                name='name'
                 type='text'
                 size='small'
                 autoFocus
@@ -55,15 +42,17 @@ const CreateView = ({ createWebsite }) => {
                 name='description'
                 type='text'
                 size='small'
+                multiline
+                minRows={4}
                 required
               />
               <Button
                 sx={{ mb: 1 }}
                 type='submit'
-                variant='outlined'
+                variant='contained'
                 fullWidth
               >
-                Create
+                Create Website
               </Button>
             </form>
           )}
@@ -73,9 +62,13 @@ const CreateView = ({ createWebsite }) => {
   )
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapStateToProps = (state) => ({
+  auth: state.firebase.auth,
+});
+
+const mapDispatchToPorps = (dispatch) => ({
   createWebsite: (data) => dispatch(createWebsite(data)),
 });
 
-export default connect(null, mapDispatchToProps)
+export default connect(mapStateToProps, mapDispatchToPorps)
   (CreateView);

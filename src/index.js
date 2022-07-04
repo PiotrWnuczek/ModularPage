@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { createStore, applyMiddleware } from 'redux';
 import { useSelector, Provider } from 'react-redux';
 import { getFirebase, isLoaded } from 'react-redux-firebase';
@@ -35,15 +35,15 @@ const AuthIsLoaded = ({ children }) => {
   return isLoaded(auth) ? children : <p>loading...</p>;
 };
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <ReactReduxFirebaseProvider {...rrfProps}>
     <Provider store={store}>
       <AuthIsLoaded>
         <App />
       </AuthIsLoaded>
     </Provider>
-  </ReactReduxFirebaseProvider>,
-  document.getElementById('root'),
+  </ReactReduxFirebaseProvider>
 );
 
 serviceWorkerRegistration.register();

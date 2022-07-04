@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { signoutUser } from 'store/usersActions';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Drawer, Avatar, List, ListItem, Typography } from '@mui/material';
+import { Drawer, Avatar, List, ListItem } from '@mui/material';
 import { ListItemText, ListItemAvatar } from '@mui/material';
 import { Add, Dashboard, Logout } from '@mui/icons-material';
 
@@ -13,11 +13,6 @@ const SideBar = ({ signoutUser, auth, ...props }) => {
   return (
     <Drawer {...props}>
       <List>
-        <ListItem sx={{ mb: 12 }}>
-          <Typography variant='h5'>
-            Panel
-          </Typography>
-        </ListItem>
         <ListItem
           sx={{ textTransform: 'uppercase' }}
           selected={location.pathname === '/admin/' + auth.uid}
@@ -29,7 +24,10 @@ const SideBar = ({ signoutUser, auth, ...props }) => {
               <Dashboard />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText secondary='Panel' />
+          <ListItemText
+            sx={{ display: { xs: 'none', md: 'block' } }}
+            secondary='Panel'
+          />
         </ListItem>
         <ListItem
           sx={{ textTransform: 'uppercase' }}
@@ -42,7 +40,10 @@ const SideBar = ({ signoutUser, auth, ...props }) => {
               <Add />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText secondary='Create' />
+          <ListItemText
+            sx={{ display: { xs: 'none', md: 'block' } }}
+            secondary='Create'
+          />
         </ListItem>
       </List>
       <List>
@@ -56,7 +57,10 @@ const SideBar = ({ signoutUser, auth, ...props }) => {
               <Logout />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText secondary='Sign Out' />
+          <ListItemText
+            sx={{ display: { xs: 'none', md: 'block' } }}
+            secondary='Sign Out'
+          />
         </ListItem>
       </List>
     </Drawer>
