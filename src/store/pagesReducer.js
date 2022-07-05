@@ -2,28 +2,28 @@ const initial = {
   id: null,
 };
 
-const websitesReducer = (state = initial, action) => {
+const pagesReducer = (state = initial, action) => {
   switch (action.type) {
-    case 'CREATEWEBSITE_SUCCESS':
+    case 'CREATEPAGE_SUCCESS':
       console.log(action.data);
       return state;
-    case 'CREATEWEBSITE_ERROR':
+    case 'CREATEPAGE_ERROR':
       console.log(action.err);
       return state;
-    case 'UPDATEWEBSITE_SUCCESS':
+    case 'UPDATEPAGE_SUCCESS':
       console.log(action.data);
       return state;
-    case 'UPDATEWEBSITE_ERROR':
+    case 'UPDATEPAGE_ERROR':
       console.log(action.err);
       return state;
-    case 'REMOVEWEBSITE_SUCCESS':
+    case 'REMOVEPAGE_SUCCESS':
       console.log(action.id);
       return state;
-    case 'REMOVEWEBSITE_ERROR':
+    case 'REMOVEPAGE_ERROR':
       console.log(action.err);
       return state;
     default: return state;
   }
 };
 
-export default websitesReducer;
+export default pagesReducer;

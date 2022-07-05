@@ -5,14 +5,14 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { Grid, Typography } from '@mui/material';
 import withRouter from 'assets/withRouter';
 import MainLayout from 'pages/MainLayout';
-import WebsiteCard from 'molecules/WebsiteCard';
+import PageCard from 'molecules/PageCard';
 
-const BoardView = ({ id, websites }) => (
+const BoardView = ({ id, pages }) => (
   <MainLayout>
     <Grid sx={{ p: 2 }} container spacing={2}>
-      {websites && websites.map(website =>
-        <Grid item xs={12} key={website.id}>
-          <WebsiteCard website={website} />
+      {pages && pages.map(page =>
+        <Grid item xs={12} key={page.id}>
+          <PageCard page={page} />
         </Grid>
       )}
     </Grid>
@@ -23,10 +23,10 @@ const BoardView = ({ id, websites }) => (
 );
 
 const mapStateToProps = (state) => ({
-  websites: state.firestore.ordered.websites,
+  pages: state.firestore.ordered.pages,
 });
 
 export default withRouter(compose(
   connect(mapStateToProps),
-  firestoreConnect(['websites']),
+  firestoreConnect(['pages']),
 )(BoardView));

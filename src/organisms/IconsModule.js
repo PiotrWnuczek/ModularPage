@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-const GraphicSection = () => (
+const IconsModule = () => (
   <Box>
-    Graphic Section
+    Icons Module
   </Box>
 );
 
-export default GraphicSection;
+export default IconsModule;

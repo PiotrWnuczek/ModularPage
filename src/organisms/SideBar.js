@@ -26,7 +26,7 @@ const SideBar = ({ signoutUser, auth, main, site, ...props }) => {
           </ListItemAvatar>
           <ListItemText
             sx={{ display: { xs: 'none', md: 'block' } }}
-            secondary='Panel'
+            secondary='Board'
           />
         </ListItem>
         {main && <ListItem

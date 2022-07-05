@@ -4,7 +4,7 @@ import { Typography, Avatar } from '@mui/material';
 import { Menu, Settings } from '@mui/icons-material';
 import SideBar from 'organisms/SideBar';
 
-const SiteLayout = ({ admin, website, children }) => {
+const PageLayout = ({ admin, page, children }) => {
   const [sidebar, setSidebar] = useState(false);
   const [dialog, setDialog] = useState(false);
   const width = { xs: 70, md: 160 };
@@ -55,7 +55,7 @@ const SiteLayout = ({ admin, website, children }) => {
               Settings
             </Typography>
             <Typography variant='subtitle1'>
-              {website && website.name} | {website && website.description}
+              {page && page.name} | {page && page.description}
             </Typography>
             <Button
               onClick={() => setDialog(false)}
@@ -74,4 +74,4 @@ const SiteLayout = ({ admin, website, children }) => {
   )
 };
 
-export default SiteLayout;
+export default PageLayout;

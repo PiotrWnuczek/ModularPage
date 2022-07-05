@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-const IconsSection = () => (
+const CardsModule = () => (
   <Box>
-    Icons Section
+    Cards Module
   </Box>
 );
 
-export default IconsSection;
+export default CardsModule;

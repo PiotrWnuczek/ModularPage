@@ -4,7 +4,7 @@ import { Card, Avatar } from '@mui/material';
 import { CardActionArea, CardHeader } from '@mui/material';
 import { FolderOpen } from '@mui/icons-material';
 
-const WebsiteCard = ({ website }) => {
+const PageCard = ({ page }) => {
   const navigate = useNavigate();
 
   return (
@@ -12,10 +12,10 @@ const WebsiteCard = ({ website }) => {
       sx={{ bgcolor: 'secondary.light', borderRadius: 2 }}
       variant='outlined'
     >
-      <CardActionArea onClick={() => navigate('/' + website.name + '/admin')}>
+      <CardActionArea onClick={() => navigate('/' + page.name + '/admin')}>
         <CardHeader
-          title={website.name}
-          subheader={website.description}
+          title={page.name}
+          subheader={page.description}
           avatar={<Avatar sx={{ bgcolor: 'primary.main' }}>
             <FolderOpen />
           </Avatar>}
@@ -25,4 +25,4 @@ const WebsiteCard = ({ website }) => {
   )
 };
 
-export default WebsiteCard;
+export default PageCard;

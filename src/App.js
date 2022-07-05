@@ -8,7 +8,7 @@ import { grey, blueGrey } from '@mui/material/colors';
 import { ThemeProvider } from '@mui/material';
 import SigninView from 'pages/SigninView';
 import SignupView from 'pages/SignupView';
-import WebsiteView from 'pages/WebsiteView';
+import PageView from 'pages/PageView';
 import BoardView from 'pages/BoardView';
 import CreateView from 'pages/CreateView';
 import AboutView from 'about/AboutView';
@@ -32,10 +32,10 @@ const App = () => {
           <Route path='/about' element={<AboutView />} />
           <Route path='/signin' element={<SigninView />} />
           <Route path='/signup' element={<SignupView />} />
-          <Route path='/:id/*' element={<WebsiteView />} />
+          <Route path='/:id/*' element={<PageView />} />
           <Route
             path='/:id/admin'
-            element={access ? <WebsiteView admin /> : <Navigate to='/signin' />}
+            element={access ? <PageView admin /> : <Navigate to='/signin' />}
           />
           <Route
             path='/admin/:id'

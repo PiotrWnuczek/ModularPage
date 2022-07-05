@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createWebsite } from 'store/websitesActions';
+import { createPage } from 'store/pagesActions';
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import { Box, Button } from '@mui/material';
 import MainLayout from 'pages/MainLayout';
 import TextInput from 'atoms/TextInput';
 
-const CreateView = ({ createWebsite, auth }) => {
+const CreateView = ({ createPage, auth }) => {
   const navigate = useNavigate();
 
   return (
@@ -19,7 +19,7 @@ const CreateView = ({ createWebsite, auth }) => {
             description: '',
           }}
           onSubmit={(values) => {
-            createWebsite(values);
+            createPage(values);
             navigate('/admin/' + auth.uid);
           }}
         >
@@ -52,7 +52,7 @@ const CreateView = ({ createWebsite, auth }) => {
                 variant='contained'
                 fullWidth
               >
-                Create Website
+                Create Page
               </Button>
             </form>
           )}
@@ -67,7 +67,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToPorps = (dispatch) => ({
-  createWebsite: (data) => dispatch(createWebsite(data)),
+  createPage: (data) => dispatch(createPage(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToPorps)
