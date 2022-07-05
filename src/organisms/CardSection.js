@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-const GraphicModule = () => (
+const CardSection = () => (
   <Box>
-    Graphic Module
+    Card Section
   </Box>
 );
 
-export default GraphicModule;
+export default CardSection;

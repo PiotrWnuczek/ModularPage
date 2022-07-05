@@ -2,31 +2,31 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import withRouter from 'assets/withRouter';
 import MainLayout from 'pages/MainLayout';
-import PageCard from 'molecules/PageCard';
+import WebsiteCard from 'molecules/WebsiteCard';
 
-const BoardView = ({ id, pages }) => (
+const BoardView = ({ websites }) => (
   <MainLayout>
     <Grid sx={{ p: 2 }} container spacing={2}>
-      {pages && pages.map(page =>
-        <Grid item xs={12} key={page.id}>
-          <PageCard page={page} />
+      {websites && websites.map(website =>
+        <Grid item xs={12} key={website.id}>
+          <WebsiteCard website={website} />
         </Grid>
       )}
     </Grid>
-    <Typography sx={{ px: 2 }}>
-      Panel View: {id}
-    </Typography>
   </MainLayout>
 );
 
 const mapStateToProps = (state) => ({
-  pages: state.firestore.ordered.pages,
+  websites: state.firestore.ordered.websites,
+  auth: state.firebase.auth,
 });
 
 export default withRouter(compose(
   connect(mapStateToProps),
-  firestoreConnect(['pages']),
+  firestoreConnect(props => [
+    { collection: 'websites', where: [['email', '==', props.auth.email]] },
+  ]),
 )(BoardView));

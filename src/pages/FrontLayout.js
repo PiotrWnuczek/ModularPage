@@ -1,17 +1,12 @@
 import React from 'react';
-import { Container, Card, Typography } from '@mui/material';
-import { styled } from '@mui/system';
-
-const StyledWrapper = styled('div')({
-  height: '100vh',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  textAlign: 'center',
-});
+import { Container, Box } from '@mui/material';
+import { Card, Typography } from '@mui/material';
 
 const FrontLayout = ({ children }) => (
-  <StyledWrapper>
+  <Box sx={{
+    height: '100vh', display: 'flex', textAlign: 'center',
+    alignItems: 'center', justifyContent: 'center',
+  }}>
     <Container maxWidth='sm'>
       <Card
         sx={{
@@ -22,11 +17,11 @@ const FrontLayout = ({ children }) => (
       >
         {children}
       </Card>
-      <Typography mt={2}>
-        Copyright © ReactFirebase
+      <Typography sx={{ mt: 2 }}>
+        Copyright © ModularPage
       </Typography>
     </Container>
-  </StyledWrapper>
+  </Box>
 );
 
 export default FrontLayout;

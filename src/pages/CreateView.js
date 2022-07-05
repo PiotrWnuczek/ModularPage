@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createPage } from 'store/pagesActions';
+import { createWebsite } from 'store/websitesActions';
 import { useNavigate } from 'react-router-dom';
-import { Formik } from 'formik';
 import { Box, Button } from '@mui/material';
+import { Formik } from 'formik';
 import MainLayout from 'pages/MainLayout';
 import TextInput from 'atoms/TextInput';
 
-const CreateView = ({ createPage, auth }) => {
+const CreateView = ({ createWebsite, info, auth }) => {
   const navigate = useNavigate();
 
   return (
@@ -19,7 +19,7 @@ const CreateView = ({ createPage, auth }) => {
             description: '',
           }}
           onSubmit={(values) => {
-            createPage(values);
+            createWebsite(values);
             navigate('/admin/' + auth.uid);
           }}
         >
@@ -52,8 +52,9 @@ const CreateView = ({ createPage, auth }) => {
                 variant='contained'
                 fullWidth
               >
-                Create Page
+                Create Website
               </Button>
+              {info && <p>{info}</p>}
             </form>
           )}
         </Formik>
@@ -63,11 +64,12 @@ const CreateView = ({ createPage, auth }) => {
 };
 
 const mapStateToProps = (state) => ({
+  info: state.websites.info,
   auth: state.firebase.auth,
 });
 
 const mapDispatchToPorps = (dispatch) => ({
-  createPage: (data) => dispatch(createPage(data)),
+  createWebsite: (data) => dispatch(createWebsite(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToPorps)

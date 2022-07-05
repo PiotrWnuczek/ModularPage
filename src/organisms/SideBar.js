@@ -6,7 +6,7 @@ import { Drawer, Avatar, List, ListItem } from '@mui/material';
 import { ListItemText, ListItemAvatar } from '@mui/material';
 import { Add, Dashboard, Logout, Preview } from '@mui/icons-material';
 
-const SideBar = ({ signoutUser, auth, main, page, ...props }) => {
+const SideBar = ({ signoutUser, auth, main, site, ...props }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -45,7 +45,7 @@ const SideBar = ({ signoutUser, auth, main, page, ...props }) => {
             secondary='Create'
           />
         </ListItem>}
-        {page && <ListItem
+        {site && <ListItem
           sx={{ textTransform: 'uppercase' }}
           button
         >

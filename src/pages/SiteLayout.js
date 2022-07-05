@@ -4,7 +4,7 @@ import { Typography, Avatar } from '@mui/material';
 import { Menu, Settings } from '@mui/icons-material';
 import SideBar from 'organisms/SideBar';
 
-const PageLayout = ({ admin, page, children }) => {
+const SiteLayout = ({ admin, website, children }) => {
   const [sidebar, setSidebar] = useState(false);
   const [dialog, setDialog] = useState(false);
   const width = { xs: 70, md: 160 };
@@ -19,7 +19,7 @@ const PageLayout = ({ admin, page, children }) => {
         variant='temporary'
         open={sidebar}
         onClose={() => setSidebar(!sidebar)}
-        page
+        site
       />}
       {admin && <Box sx={{ position: 'fixed', top: 20, left: 20 }}>
         <Avatar
@@ -55,7 +55,7 @@ const PageLayout = ({ admin, page, children }) => {
               Settings
             </Typography>
             <Typography variant='subtitle1'>
-              {page && page.name} | {page && page.description}
+              {website && website.name} | {website && website.description}
             </Typography>
             <Button
               onClick={() => setDialog(false)}
@@ -74,4 +74,4 @@ const PageLayout = ({ admin, page, children }) => {
   )
 };
 
-export default PageLayout;
+export default SiteLayout;
