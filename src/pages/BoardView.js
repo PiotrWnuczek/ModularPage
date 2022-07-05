@@ -7,7 +7,7 @@ import withRouter from 'assets/withRouter';
 import MainLayout from 'pages/MainLayout';
 import WebsiteCard from 'molecules/WebsiteCard';
 
-const PanelView = ({ id, websites }) => (
+const BoardView = ({ id, websites }) => (
   <MainLayout>
     <Grid sx={{ p: 2 }} container spacing={2}>
       {websites && websites.map(website =>
@@ -29,4 +29,4 @@ const mapStateToProps = (state) => ({
 export default withRouter(compose(
   connect(mapStateToProps),
   firestoreConnect(['websites']),
-)(PanelView));
+)(BoardView));

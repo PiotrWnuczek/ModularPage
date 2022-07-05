@@ -4,9 +4,9 @@ import { signoutUser } from 'store/usersActions';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Drawer, Avatar, List, ListItem } from '@mui/material';
 import { ListItemText, ListItemAvatar } from '@mui/material';
-import { Add, Dashboard, Logout } from '@mui/icons-material';
+import { Add, Dashboard, Logout, Preview } from '@mui/icons-material';
 
-const SideBar = ({ signoutUser, auth, ...props }) => {
+const SideBar = ({ signoutUser, auth, main, site, ...props }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -29,7 +29,7 @@ const SideBar = ({ signoutUser, auth, ...props }) => {
             secondary='Panel'
           />
         </ListItem>
-        <ListItem
+        {main && <ListItem
           sx={{ textTransform: 'uppercase' }}
           selected={location.pathname === '/create'}
           onClick={() => navigate('/create')}
@@ -44,7 +44,21 @@ const SideBar = ({ signoutUser, auth, ...props }) => {
             sx={{ display: { xs: 'none', md: 'block' } }}
             secondary='Create'
           />
-        </ListItem>
+        </ListItem>}
+        {site && <ListItem
+          sx={{ textTransform: 'uppercase' }}
+          button
+        >
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: 'primary.main' }}>
+              <Preview />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            sx={{ display: { xs: 'none', md: 'block' } }}
+            secondary='Preview'
+          />
+        </ListItem>}
       </List>
       <List>
         <ListItem

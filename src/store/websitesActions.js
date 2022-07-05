@@ -2,7 +2,7 @@ export const createWebsite = (data) => (dispatch, gs, { getFirestore }) => {
   const firestore = getFirestore();
   const ref = firestore.collection('websites');
   ref.doc(data.name).set({
-    ...data
+    ...data, sections: [],
   }).then(() => {
     dispatch({ type: 'CREATEWEBSITE_SUCCESS', data });
   }).catch((err) => {

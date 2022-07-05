@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import SideBar from 'organisms/SideBar';
 
 const MainLayout = ({ children }) => {
-  const width = { xs: 70, md: 150 };
+  const width = { xs: 70, md: 160 };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -13,6 +13,7 @@ const MainLayout = ({ children }) => {
             { bgcolor: 'secondary.dark', justifyContent: 'space-between', width },
         }}
         variant='permanent'
+        main
       />
       <Box sx={{ flexGrow: 1 }}>
         {children}

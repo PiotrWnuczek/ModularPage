@@ -9,7 +9,7 @@ import { ThemeProvider } from '@mui/material';
 import SigninView from 'pages/SigninView';
 import SignupView from 'pages/SignupView';
 import WebsiteView from 'pages/WebsiteView';
-import PanelView from 'pages/PanelView';
+import BoardView from 'pages/BoardView';
 import CreateView from 'pages/CreateView';
 import AboutView from 'about/AboutView';
 
@@ -39,7 +39,7 @@ const App = () => {
           />
           <Route
             path='/admin/:id'
-            element={access ? <PanelView /> : <Navigate to='/signin' />}
+            element={access ? <BoardView /> : <Navigate to='/signin' />}
           />
           <Route
             path='/create'

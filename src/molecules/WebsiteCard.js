@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardActionArea, CardHeader, Avatar } from '@mui/material';
+import { Card, Avatar } from '@mui/material';
+import { CardActionArea, CardHeader } from '@mui/material';
 import { FolderOpen } from '@mui/icons-material';
 
 const WebsiteCard = ({ website }) => {
@@ -11,7 +12,7 @@ const WebsiteCard = ({ website }) => {
       sx={{ bgcolor: 'secondary.light', borderRadius: 2 }}
       variant='outlined'
     >
-      <CardActionArea onClick={() => navigate('/' + website.name)}>
+      <CardActionArea onClick={() => navigate('/' + website.name + '/admin')}>
         <CardHeader
           title={website.name}
           subheader={website.description}
