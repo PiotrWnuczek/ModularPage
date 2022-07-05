@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { updatePage } from 'store/pagesActions';
+import { createModule, updateModule } from 'store/pagesActions';
 import { Box, Typography } from '@mui/material';
 import { IconButton, Avatar } from '@mui/material';
 import { Add, Tune, Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 import TextInput from 'atoms/TextInput';
 
-const TextModule = ({ updatePage, admin, page, module }) => {
+const TextModule = ({ createModule, updateModule, admin, page, module }) => {
+  const random = Math.random().toString(16).slice(2);
   const [title, setTitle] = useState(false);
 
   return (
@@ -30,12 +31,12 @@ const TextModule = ({ updatePage, admin, page, module }) => {
         onClick={() => setTitle(true)}
         variant='h5'
       >
-        module.title
+        {module.title || 'New Title'}
       </Typography>}
       {title && <Formik
-        initialValues={{ title: module.title }}
+        initialValues={{ title: module.title || 'New Title' }}
         onSubmit={(values) => {
-          console.log(values);
+          updateModule(values, module.id, page.name);
           setTitle(false);
         }}
       >
@@ -72,8 +73,8 @@ const TextModule = ({ updatePage, admin, page, module }) => {
             cursor: 'pointer', bgcolor: 'info.main',
             '&:hover': { bgcolor: 'info.dark' },
           }}
-          onClick={() => updatePage({
-            modules: [...page.modules, { type: 'content' }]
+          onClick={() => createModule({
+            id: random, type: 'content',
           }, page.name)}
         >
           <Add />
@@ -84,7 +85,8 @@ const TextModule = ({ updatePage, admin, page, module }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updatePage: (data, id) => dispatch(updatePage(data, id)),
+  createModule: (data, page) => dispatch(createModule(data, page)),
+  updateModule: (data, id, page) => dispatch(updateModule(data, id, page)),
 });
 
 export default connect(null, mapDispatchToProps)

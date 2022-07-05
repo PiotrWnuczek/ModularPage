@@ -2,13 +2,13 @@ import React from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { updatePage } from 'store/pagesActions';
+import { createModule } from 'store/pagesActions';
 import { Box, Button } from '@mui/material';
 import withRouter from 'assets/withRouter';
 import PageLayout from 'pages/PageLayout';
 import TextModule from 'organisms/TextModule';
 
-const PageView = ({ updatePage, admin, page }) => {
+const PageView = ({ createModule, admin, page }) => {
   const random = Math.random().toString(16).slice(2);
 
   return (
@@ -26,8 +26,8 @@ const PageView = ({ updatePage, admin, page }) => {
           />
         )}
         {page && !page.modules.length && <Button
-          onClick={() => updatePage({
-            modules: [...page.modules, { id: random, type: 'content' }]
+          onClick={() => createModule({
+            id: random, type: 'content',
           }, page.name)}
           variant='outlined'
           size='small'
@@ -44,7 +44,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updatePage: (data, id) => dispatch(updatePage(data, id)),
+  createModule: (data, page) => dispatch(createModule(data, page)),
 });
 
 export default withRouter(compose(

@@ -19,7 +19,7 @@ const PageLayout = ({ admin, page, children }) => {
         variant='temporary'
         open={sidebar}
         onClose={() => setSidebar(!sidebar)}
-        site
+        page
       />}
       {admin && <Box sx={{ position: 'fixed', top: 20, left: 20 }}>
         <Avatar

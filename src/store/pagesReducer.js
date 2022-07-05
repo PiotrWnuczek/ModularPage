@@ -22,6 +22,24 @@ const pagesReducer = (state = initial, action) => {
     case 'REMOVEPAGE_ERROR':
       console.log(action.err);
       return state;
+    case 'CREATEMODULE_SUCCESS':
+      console.log(action.data);
+      return state;
+    case 'CREATEMODULE_ERROR':
+      console.log(action.err);
+      return state;
+    case 'UPDATEMODULE_SUCCESS':
+      console.log(action.data);
+      return state;
+    case 'UPDATEMODULE_ERROR':
+      console.log(action.err);
+      return state;
+    case 'REMOVEMODULE_SUCCESS':
+      console.log(action.id);
+      return state;
+    case 'REMOVEMODULE_ERROR':
+      console.log(action.err);
+      return state;
     default: return state;
   }
 };
