@@ -1,12 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { signoutUser } from 'store/usersActions';
+import { signoutUser } from 'store/usersSlice';
+import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Drawer, Avatar, List, ListItem } from '@mui/material';
 import { ListItemText, ListItemAvatar } from '@mui/material';
 import { Add, Dashboard, Logout, Preview } from '@mui/icons-material';
 
-const SideBar = ({ signoutUser, auth, main, site, ...props }) => {
+const SideBar = ({ main, site, ...props }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -15,8 +16,8 @@ const SideBar = ({ signoutUser, auth, main, site, ...props }) => {
       <List>
         <ListItem
           sx={{ textTransform: 'uppercase' }}
-          selected={location.pathname === '/admin/' + auth.uid}
-          onClick={() => navigate('/admin/' + auth.uid)}
+          selected={location.pathname === '/admin'}
+          onClick={() => navigate('/admin')}
           button
         >
           <ListItemAvatar>
@@ -63,7 +64,7 @@ const SideBar = ({ signoutUser, auth, main, site, ...props }) => {
       <List>
         <ListItem
           sx={{ textTransform: 'uppercase', whiteSpace: 'nowrap' }}
-          onClick={signoutUser}
+          onClick={() => dispatch(signoutUser())}
           button
         >
           <ListItemAvatar>
@@ -81,13 +82,4 @@ const SideBar = ({ signoutUser, auth, main, site, ...props }) => {
   )
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.firebase.auth,
-});
-
-const mapDispatchToPorps = (dispatch) => ({
-  signoutUser: () => dispatch(signoutUser()),
-});
-
-export default connect(mapStateToProps, mapDispatchToPorps)
-  (SideBar);
+export default SideBar;

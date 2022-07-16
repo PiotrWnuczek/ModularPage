@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { firestoreReducer } from 'redux-firestore';
 import { firebaseReducer } from 'react-redux-firebase';
-import usersReducer from 'store/usersReducer';
-import websitesReducer from 'store/websitesReducer';
+import usersReducer from 'store/usersSlice';
+import websitesReducer from 'store/websitesSlice';
 
 const appReducer = combineReducers({
   users: usersReducer,

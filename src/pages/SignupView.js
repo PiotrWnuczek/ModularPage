@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { signupUser } from 'store/usersActions';
+import { signupUser } from 'store/usersSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Formik } from 'formik';
 import { Button, Grid, Typography } from '@mui/material';
+import { Formik } from 'formik';
 import FrontLayout from 'pages/FrontLayout';
 import TextInput from 'atoms/TextInput';
 
-const SignupView = ({ signupUser, error, auth }) => {
+const SignupView = () => {
+  const [info, setInfo] = useState(false);
+  const auth = useSelector(state => state.firebase.auth);
+  const error = useSelector(state => state.users.error);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [mistake, setMistake] = useState(false);
 
   return (auth.uid ?
-    <Navigate to={'/admin/' + auth.uid} /> :
+    <Navigate to={'/admin'} /> :
     <FrontLayout>
       <Typography variant='h4' m={2}>
         Sign Up
@@ -27,13 +30,13 @@ const SignupView = ({ signupUser, error, auth }) => {
         }}
         onSubmit={(values) => {
           if (values.password === values.confirm) {
-            signupUser({
+            dispatch(signupUser({
               firstname: values.firstname,
               lastname: values.lastname,
               email: values.email,
               password: values.password,
-            });
-          } else { setMistake(true) }
+            }));
+          } else { setInfo(true) }
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
@@ -107,7 +110,7 @@ const SignupView = ({ signupUser, error, auth }) => {
               Sign In
             </Button>
             {error && <p>{error}</p>}
-            {mistake && <p>Passowrds are not identical</p>}
+            {info && <p>Passowrds are not identical</p>}
           </form>
         )}
       </Formik>
@@ -115,14 +118,4 @@ const SignupView = ({ signupUser, error, auth }) => {
   )
 };
 
-const mapStateToProps = (state) => ({
-  error: state.users.error,
-  auth: state.firebase.auth,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  signupUser: (user) => dispatch(signupUser(user)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)
-  (SignupView);
+export default SignupView;

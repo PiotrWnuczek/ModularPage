@@ -38,7 +38,7 @@ const App = () => {
             element={access ? <WebsiteView admin /> : <Navigate to='/signin' />}
           />
           <Route
-            path='/admin/:id'
+            path='/admin'
             element={access ? <BoardView /> : <Navigate to='/signin' />}
           />
           <Route

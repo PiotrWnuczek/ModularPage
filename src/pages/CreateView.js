@@ -1,13 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { createWebsite } from 'store/websitesActions';
+import { createWebsite } from 'store/websitesSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { Formik } from 'formik';
 import MainLayout from 'pages/MainLayout';
 import TextInput from 'atoms/TextInput';
 
-const CreateView = ({ createWebsite, info, auth }) => {
+const CreateView = () => {
+  const error = useSelector(state => state.websites.error);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -19,8 +21,7 @@ const CreateView = ({ createWebsite, info, auth }) => {
             description: '',
           }}
           onSubmit={(values) => {
-            createWebsite(values);
-            navigate('/admin/' + auth.uid);
+            dispatch(createWebsite({ values, navigate }));
           }}
         >
           {({ values, handleChange, handleSubmit }) => (
@@ -54,7 +55,7 @@ const CreateView = ({ createWebsite, info, auth }) => {
               >
                 Create Website
               </Button>
-              {info && <p>{info}</p>}
+              {error && <p>{error}</p>}
             </form>
           )}
         </Formik>
@@ -63,14 +64,4 @@ const CreateView = ({ createWebsite, info, auth }) => {
   )
 };
 
-const mapStateToProps = (state) => ({
-  info: state.websites.info,
-  auth: state.firebase.auth,
-});
-
-const mapDispatchToPorps = (dispatch) => ({
-  createWebsite: (data) => dispatch(createWebsite(data)),
-});
-
-export default connect(mapStateToProps, mapDispatchToPorps)
-  (CreateView);
+export default CreateView;

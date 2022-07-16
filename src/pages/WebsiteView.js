@@ -1,16 +1,20 @@
 import React from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
-import { createSection } from 'store/websitesActions';
+import { createSection } from 'store/websitesSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { useFirestoreConnect } from 'react-redux-firebase';
+import { useParams } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
-import withRouter from 'assets/withRouter';
 import SiteLayout from 'pages/SiteLayout';
 import ContentSection from 'organisms/ContentSection';
 
-const WebsiteView = ({ createSection, auth, admin, website }) => {
-  const random = Math.random().toString(16).slice(2);
+const WebsiteView = ({ admin }) => {
+  const { id } = useParams();
+  const website = useSelector(state => state.firestore.data[id]);
+  const auth = useSelector(state => state.firebase.auth);
+  useFirestoreConnect([{ storeAs: id, collection: 'websites', doc: id }]);
+  const dispatch = useDispatch();
   const access = website && admin && auth.email === website.email;
+  const random = Math.random().toString(16).slice(2);
 
   return (
     <SiteLayout
@@ -20,16 +24,16 @@ const WebsiteView = ({ createSection, auth, admin, website }) => {
       <Box sx={{ p: 2, textAlign: 'center' }}>
         {website && website.sections.map((section, index) =>
           section.type === 'content' && <ContentSection
-            key={index}
+            key={index} section={section}
             admin={access}
             website={website}
-            section={section}
           />
         )}
         {website && !website.sections.length && <Button
-          onClick={() => createSection({
-            id: random, type: 'content',
-          }, website.name)}
+          onClick={() => dispatch(createSection({
+            values: { id: random, type: 'content' },
+            wid: website.name,
+          }))}
           variant='outlined'
           size='small'
         >
@@ -40,18 +44,4 @@ const WebsiteView = ({ createSection, auth, admin, website }) => {
   )
 };
 
-const mapStateToProps = (state, props) => ({
-  website: state.firestore.data[props.id],
-  auth: state.firebase.auth,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  createSection: (data, wid) => dispatch(createSection(data, wid)),
-});
-
-export default withRouter(compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect(props => [
-    { storeAs: props.id, collection: 'websites', doc: props.id },
-  ]),
-)(WebsiteView));
+export default WebsiteView;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { createSection, updateSection } from 'store/websitesActions';
+import { createSection, updateSection } from 'store/websitesSlice';
+import { useDispatch } from 'react-redux';
 import { Box, Typography } from '@mui/material';
 import { IconButton, Avatar } from '@mui/material';
 import { Add, Tune, Check } from '@mui/icons-material';
@@ -9,10 +9,11 @@ import TextInput from 'atoms/TextInput';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-const ContentSection = ({ createSection, updateSection, admin, website, section }) => {
-  const random = Math.random().toString(16).slice(2);
+const ContentSection = ({ admin, website, section }) => {
   const [title, setTitle] = useState(false);
   const [text, setText] = useState(false);
+  const dispatch = useDispatch();
+  const random = Math.random().toString(16).slice(2);
 
   return (
     <Box sx={{ py: admin ? 0 : 10, px: { xs: 5, md: 20 } }}>
@@ -39,7 +40,7 @@ const ContentSection = ({ createSection, updateSection, admin, website, section 
       {title && admin && <Formik
         initialValues={{ title: section.title || 'New Title' }}
         onSubmit={(values) => {
-          updateSection(values, section.id, website.name);
+          dispatch(updateSection({ values, sid: section.id, wid: website.name }));
           setTitle(false);
         }}
       >
@@ -78,7 +79,7 @@ const ContentSection = ({ createSection, updateSection, admin, website, section 
       {text && admin && <Formik
         initialValues={{ text: section.text || 'New Text' }}
         onSubmit={(values) => {
-          updateSection(values, section.id, website.name);
+          dispatch(updateSection({ values, sid: section.id, wid: website.name }));
           setText(false);
         }}
       >
@@ -117,9 +118,10 @@ const ContentSection = ({ createSection, updateSection, admin, website, section 
             cursor: 'pointer', bgcolor: 'info.main',
             '&:hover': { bgcolor: 'info.dark' },
           }}
-          onClick={() => createSection({
-            id: random, type: 'content',
-          }, website.name)}
+          onClick={() => dispatch(createSection({
+            values: { id: random, type: 'content' },
+            wid: website.name,
+          }))}
         >
           <Add />
         </Avatar>
@@ -128,10 +130,4 @@ const ContentSection = ({ createSection, updateSection, admin, website, section 
   )
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  createSection: (data, wid) => dispatch(createSection(data, wid)),
-  updateSection: (data, sid, wid) => dispatch(updateSection(data, sid, wid)),
-});
-
-export default connect(null, mapDispatchToProps)
-  (ContentSection);
+export default ContentSection;

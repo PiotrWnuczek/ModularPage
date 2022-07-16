@@ -1,17 +1,20 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { signinUser } from 'store/usersActions';
+import { signinUser } from 'store/usersSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Formik } from 'formik';
 import { Button, Typography } from '@mui/material';
+import { Formik } from 'formik';
 import FrontLayout from 'pages/FrontLayout';
 import TextInput from 'atoms/TextInput';
 
-const SigninView = ({ signinUser, error, auth }) => {
+const SigninView = () => {
+  const auth = useSelector(state => state.firebase.auth);
+  const error = useSelector(state => state.users.error);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (auth.uid ?
-    <Navigate to={'/admin/' + auth.uid} /> :
+    <Navigate to={'/admin'} /> :
     <FrontLayout>
       <Typography variant='h4' m={2}>
         Sign In
@@ -22,7 +25,7 @@ const SigninView = ({ signinUser, error, auth }) => {
           password: '',
         }}
         onSubmit={(values) => {
-          signinUser(values);
+          dispatch(signinUser(values));
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
@@ -67,14 +70,4 @@ const SigninView = ({ signinUser, error, auth }) => {
   )
 };
 
-const mapStateToProps = (state) => ({
-  error: state.users.error,
-  auth: state.firebase.auth,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  signinUser: (creds) => dispatch(signinUser(creds)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)
-  (SigninView);
+export default SigninView;

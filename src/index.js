@@ -1,21 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { createStore, applyMiddleware } from 'redux';
+import { createRoot } from 'react-dom/client';
+import { configureStore } from '@reduxjs/toolkit';
 import { useSelector, Provider } from 'react-redux';
-import { getFirebase, isLoaded } from 'react-redux-firebase';
-import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { getFirestore, createFirestoreInstance } from 'redux-firestore';
+import { getFirebase, isLoaded, ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import * as serviceWorkerRegistration from 'serviceWorkerRegistration.js';
 import appReducer from 'store/appReducer';
 import appDatabase from 'store/appDatabase';
-import thunk from 'redux-thunk';
 import App from 'App';
 import 'index.css';
-import * as serviceWorkerRegistration from 'serviceWorkerRegistration.js';
 
-const store = createStore(
-  appReducer,
-  applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
-);
+const store = configureStore({
+  reducer: appReducer,
+  middleware: getMiddleware => getMiddleware({
+    thunk: { extraArgument: { getFirebase, getFirestore } },
+    serializableCheck: false,
+  }),
+});
 
 const rrfConfig = {
   userProfile: 'users',
@@ -35,7 +36,8 @@ const AuthIsLoaded = ({ children }) => {
   return isLoaded(auth) ? children : <p>loading...</p>;
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
+
 root.render(
   <ReactReduxFirebaseProvider {...rrfProps}>
     <Provider store={store}>
