@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 /*import { useSelector } from 'react-redux';
 import { isLoaded, isEmpty } from 'react-redux-firebase';*/
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -12,6 +13,15 @@ import WebsiteView from 'pages/WebsiteView';
 import BoardView from 'pages/BoardView';
 import CreateView from 'pages/CreateView';*/
 import AboutView from 'about/AboutView';
+import PrivacyView from 'about/PrivacyView';
+import RulesView from 'about/RulesView';
+
+const ScrollTop = ({ children }) => {
+  const location = useLocation();
+  useEffect(() => window.scrollTo(0, 0), [location]);
+
+  return (children);
+};
 
 const App = () => {
   /*const auth = useSelector(state => state.firebase.auth);
@@ -27,9 +37,13 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Routes>
-          <Route path='/*' element={<AboutView />} />
-        </Routes>
+        <ScrollTop>
+          <Routes>
+            <Route path='/*' element={<AboutView />} />
+            <Route path='/privacy' element={<PrivacyView />} />
+            <Route path='/rules' element={<RulesView />} />
+          </Routes>
+        </ScrollTop>
         {/*<Routes>
           <Route exact path='/' element={<Navigate to='/about' />} />
           <Route path='/about' element={<AboutView />} />
