@@ -11,7 +11,7 @@ const FormSection = () => {
     fetch('https://api.sender.net/v2/subscribers', {
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNWM5ZWIzYzQxMDc0YmM4ZDM0ZWViMzA0NTRkZWFhYzEwOGE3MmFiZjczMWZjZDVhMWM0MzE1NmRlZmRkMTkwZGM1MTQxNmM3MzU5YzY0NzMiLCJpYXQiOjE2NTkyNTk3NzMuNjk1ODk2LCJuYmYiOjE2NTkyNTk3NzMuNjk1OTIzLCJleHAiOjQ4MTI4NjMzNzMuNjkzNDE1LCJzdWIiOiI3NDYwNTIiLCJzY29wZXMiOltdfQ.o_Fgwd9l0POsBeid4YHyjfylqkO7om-gysr4YsJ9UeTTvE7J_JEH1Zj9NUa93yGVYrMkulPt9hze97rfTYLH0Q',
+        'Authorization': 'Bearer ' + process.env.REACT_APP_SENDER,
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
