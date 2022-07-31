@@ -1,5 +1,6 @@
 {
   "name": "modularpage",
+  "homepage": "https://modularpage.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
