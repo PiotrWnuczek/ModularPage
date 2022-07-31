@@ -22,7 +22,7 @@ const BasicLayout = ({ children }) => {
           </Typography>
           <Button
             component={Link}
-            href='mailto:modularpagecom@gmail.com'
+            href='mailto:contact@piotrwnuczek.pl'
             variant='contained'
           >
             Kontakt

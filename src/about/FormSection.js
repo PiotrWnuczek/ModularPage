@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { TextField, Button } from '@mui/material';
 import { blue } from '@mui/material/colors';
@@ -7,19 +7,22 @@ import { Formik } from 'formik';
 const FormSection = () => {
   const [info, setInfo] = useState(false);
 
-  useEffect(() => {
+  const submit = (values) => {
+    const headers = {
+      'Authorization': 'Bearer ' + process.env.REACT_APP_SENDER,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
     fetch('https://api.sender.net/v2/subscribers', {
-      method: 'GET',
-      headers: {
-        'Authorization': 'Bearer ' + process.env.REACT_APP_SENDER,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(res => console.log(res.data))
-      .catch(err => console.error(err))
-  }, []);
+      method: 'POST', headers,
+      body: JSON.stringify({ 'email': values.email }),
+    }).then(() => {
+      fetch('https://api.sender.net/v2/subscribers/groups/e5773A', {
+        method: 'POST', headers,
+        body: JSON.stringify({ 'subscribers': [values.email] })
+      })
+    }).then(setInfo(true))
+  };
 
   return (
     <Box sx={{
@@ -48,9 +51,7 @@ const FormSection = () => {
       <Formik
         initialValues={{ email: '' }}
         onSubmit={(values, { resetForm }) => {
-          setInfo(true);
-          console.log(values);
-          resetForm();
+          submit(values); resetForm();
         }}
       >
         {({ values, handleChange, handleSubmit }) => (

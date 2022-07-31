@@ -11,7 +11,7 @@ const privacy = `
 
   Administratorem strony jest Piotr Wnuczek.
 
-  W razie jakichkolwiek wątpliwości związanych z polityką prywatności, w każdej chwili możesz skontaktować się z nami, wysyłając wiadomość na adres modularpagecom@gamil.com.
+  W razie jakichkolwiek wątpliwości związanych z polityką prywatności, w każdej chwili możesz skontaktować się z nami, wysyłając wiadomość na adres contact@piotrwnuczek.pl.
 
   #### Najważniejsze informacje
 
@@ -27,7 +27,7 @@ const privacy = `
 
   #### Wykaz powierzeń
 
-  Powierzamy przetwarzanie danych osobowych firmie MailerLite Limited, an Irish registered company at Ground Floor, 71 Lower Baggot Street, Dublin 2, D02 P593, Ireland – w celu korzystania z systemu mailingowego, w którym przetwarzane są Twoje dane, jeżeli zapisałeś się do newslettera.
+  Powierzamy przetwarzanie danych osobowych firmie UAB Sender.lt, located at Perkūnkiemio 4A, Vilnius, Lithuania – w celu korzystania z systemu mailingowego, w którym przetwarzane są Twoje dane, jeżeli zapisałeś się do newslettera.
 
   Wszystkie podmioty, którym powierzamy przetwarzanie danych osobowych gwarantują stosowanie odpowiednich środków ochrony i bezpieczeństwa danych osobowych wymaganych przez przepisy prawa.
 
