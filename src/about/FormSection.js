@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { TextField, Button } from '@mui/material';
 import { blue } from '@mui/material/colors';
 import { Formik } from 'formik';
-//import axios from 'axios';
 
 const FormSection = () => {
   const [info, setInfo] = useState(false);
+
+  useEffect(() => {
+    fetch('https://api.sender.net/v2/subscribers', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNWM5ZWIzYzQxMDc0YmM4ZDM0ZWViMzA0NTRkZWFhYzEwOGE3MmFiZjczMWZjZDVhMWM0MzE1NmRlZmRkMTkwZGM1MTQxNmM3MzU5YzY0NzMiLCJpYXQiOjE2NTkyNTk3NzMuNjk1ODk2LCJuYmYiOjE2NTkyNTk3NzMuNjk1OTIzLCJleHAiOjQ4MTI4NjMzNzMuNjkzNDE1LCJzdWIiOiI3NDYwNTIiLCJzY29wZXMiOltdfQ.o_Fgwd9l0POsBeid4YHyjfylqkO7om-gysr4YsJ9UeTTvE7J_JEH1Zj9NUa93yGVYrMkulPt9hze97rfTYLH0Q',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(res => console.log(res.data))
+      .catch(err => console.error(err))
+  }, []);
 
   return (
     <Box sx={{
@@ -34,34 +47,10 @@ const FormSection = () => {
       </Typography>
       <Formik
         initialValues={{ email: '' }}
-        onSubmit={(values) => {
-          /*axios.post('https://api.mailerlite.com/api/v2/groups/group_name/subscribers', {
-            email: values.email,
-            group_name: 'Modular Page'
-          }, {
-            headers: {
-              Accept: 'application/json',
-              'X-MailerLite-ApiDocs': 'true',
-              'Content-Type': 'application/json',
-              'X-MailerLite-ApiKey': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI0IiwianRpIjoiZWE5ZTkwODcwNzIxNmMzYjRkNDEwYjM3ZjM4ZjgwNTBlOGFhOGE5NGRmNDkwMmUwZTc4ZjhlMDQyZGNmYjgzNDVhZDY4OTlhZWI5YjY2ZmMiLCJpYXQiOjE2NTgzMjUzNzAuNzczMzgsIm5iZiI6MTY1ODMyNTM3MC43NzMzODUsImV4cCI6NDgxMzk5ODk3MC43NjQ1NjksInN1YiI6IjEyODI1OSIsInNjb3BlcyI6W119.w1xVAsgyETTjv0lu1auy0m4oJcp5S8El99Am4uhP7a5Gt9eNUPbW2zE3N3b6i-Fa03iJtDA_XqeG1sjFE-XWcPhSLldkONx2NYJMIWfo3-Ij-qm32-CKefQty5KF_4bfi61NWY8uuTcIcume77v7WDYLfZ8I23TNaROAsXF_zoLISr1hkBO3__uDFOyNvFUA9ra-SVFyQObHt7V6-11s96aH1DV5RBEz68O_Ky2U94HlEL5DWPxj2sUIeKxeKP2ltmqBvLLyf78XmsI0Gh-cbDCHPJsodot-nsInSAbRMYjJt2e5D5kA1HqRNyzFrsA8gPjyzLXkdr_JOZgSHnMSs_bs-PASu7PDx97iSAsvzwjLxkuFgnyb_E-z4heos-0vm99a6AhnmNfxtJwg0H0E0m_LGLL1Zrq46eUHHn8VxKNBrcdZv8oUOKz97orC3blIrgBm_ct7l9RPuxlwc2sM3WLDMig4gtxauaS8OxF00kJohr3C90M_RUNQlCNfht7SLbwIi_xhzCb9mDO3S2v5edrZTMQYL4hhj5NAGD45i5KCLwJToD0xUhfnbZfPuBi0Gz5ens-RUYn8fmklyYJpbGWJqvaQeEpRs8NvXNeccUYNKtITXBcI8h_DlfJnz7X9eQP5TyM0FO-RS6yomKDdMcM0GwRa8VXNNaAcS2Up0tw'
-            }
-          }).then(res => console.log(res));*/
-
-          fetch('https://api.mailerlite.com/api/v2/groups/group_name/subscribers', {
-            method: 'POST',
-            //mode: 'cors',
-            headers: {
-              Accept: 'application/json',
-              'X-MailerLite-ApiDocs': 'true',
-              'Content-Type': 'application/json',
-              'X-MailerLite-ApiKey': process.env.REACT_APP_MAILERLITE
-            },
-            body: JSON.stringify({ email: values.email, group_name: 'Modular Page' })
-          })
-            .then(setInfo(true))
-            .then(res => res.json())
-            .then(res => console.log(res))
-            .catch(err => console.error(err));
+        onSubmit={(values, { resetForm }) => {
+          setInfo(true);
+          console.log(values);
+          resetForm();
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
