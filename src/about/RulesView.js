@@ -9,7 +9,7 @@ const rules = `
 
   #### §1 Definicje
 
-  - Newsletter - nieodpłatna usługa świadczona drogą elektroniczną przez Usługodawcę polegająca na wysyłaniu Usługobiorcy na podany adres e-mail informacji dotyczących aplikacji ModularPage.
+  - Newsletter - nieodpłatna usługa świadczona drogą elektroniczną przez Usługodawcę polegająca na wysyłaniu Usługobiorcy na podany adres e-mail informacji dotyczących aplikacji Modular Page.
   - Konsument - konsument w rozumieniu art. 22 Kodeksu cywilnego.
   - Serwis - platforma internetowa prowadzona przez Usługodawcę pod domeną modularpage.com, za pośrednictwem której istnieje możliwość zapisania się do Newslettera.
   - Usługodawca - Piotr Wnuczek, kontakt: contact@piotrwnuczek.pl.

@@ -88,7 +88,7 @@ const FormSection = () => {
         sx={{ mt: 3, fontSize: { xs: 10, md: 12 } }}
         variant='body2'
       >
-        {info ? 'Dziękuję, więcej informacji znajdziesz w mailu, sprawdź swoją skrzynkę mailową.' : 'Klikając przycisk „zapisz się” wyrażasz zgodę na otrzymywanie na podany adres e-mail newslettera zawierającego informacje o aplikacji ModularPage. Możesz zrezygnować z newslettera w każdym czasie klikając w link „wypisz się z listy” w wiadomości marketingowej. Szczegółowe informacje o przetwarzaniu twoich danych osobowych znajdziesz w Polityce Prywatności.'}
+        {info ? 'Dziękuję, więcej informacji znajdziesz w mailu, sprawdź swoją skrzynkę mailową.' : 'Klikając przycisk „zapisz się” wyrażasz zgodę na otrzymywanie na podany adres e-mail newslettera zawierającego informacje o aplikacji Modular Page. Możesz zrezygnować z newslettera w każdym czasie klikając w link „wypisz się z listy” w wiadomości marketingowej. Szczegółowe informacje o przetwarzaniu twoich danych osobowych znajdziesz w Polityce Prywatności.'}
       </Typography>
     </Box>
   )
