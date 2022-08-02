@@ -14,7 +14,7 @@ const SigninView = () => {
   const navigate = useNavigate();
 
   return (auth.uid ?
-    <Navigate to={'/admin'} /> :
+    <Navigate to={'/board'} /> :
     <FrontLayout>
       <Typography variant='h4' m={2}>
         Sign In
