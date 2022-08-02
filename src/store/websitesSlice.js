@@ -9,7 +9,7 @@ export const createWebsite = createAsyncThunk(
       return await ref.doc(values.name).get().then((doc) => {
         !doc.exists && ref.doc(values.name).set({
           ...values, email, sections: [],
-        }).then(() => navigate('/admin'));
+        }).then(() => navigate('/board'));
       }).then(() => values);
     } catch (error) { throw error }
   },
@@ -23,7 +23,7 @@ export const updateWebsite = createAsyncThunk(
       return await ref.doc(wid).update({
         ...values,
       }).then(
-        () => navigate('/admin'),
+        () => navigate('/board'),
       ).then(() => values);
     } catch (error) { throw error }
   },
@@ -35,7 +35,7 @@ export const removeWebsite = createAsyncThunk(
     const ref = firestore.collection('websites');
     try {
       return await ref.doc(wid).delete().then(
-        () => navigate('/admin'),
+        () => navigate('/board'),
       ).then(() => wid);
     } catch (error) { throw error }
   },

@@ -4,7 +4,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Drawer, Avatar, List, ListItem } from '@mui/material';
 import { ListItemText, ListItemAvatar } from '@mui/material';
-import { Add, Dashboard, Logout, Preview } from '@mui/icons-material';
+import { Add, Dashboard, Logout } from '@mui/icons-material';
+import { Visibility, Edit } from '@mui/icons-material';
 
 const SideBar = ({ main, site, ...props }) => {
   const dispatch = useDispatch();
@@ -16,8 +17,8 @@ const SideBar = ({ main, site, ...props }) => {
       <List>
         <ListItem
           sx={{ textTransform: 'uppercase' }}
-          selected={location.pathname === '/admin'}
-          onClick={() => navigate('/admin')}
+          selected={location.pathname === '/board'}
+          onClick={() => navigate('/board')}
           button
         >
           <ListItemAvatar>
@@ -27,7 +28,7 @@ const SideBar = ({ main, site, ...props }) => {
           </ListItemAvatar>
           <ListItemText
             sx={{ display: { xs: 'none', md: 'block' } }}
-            secondary='Board'
+            secondary='Panel'
           />
         </ListItem>
         {main && <ListItem
@@ -48,16 +49,34 @@ const SideBar = ({ main, site, ...props }) => {
         </ListItem>}
         {site && <ListItem
           sx={{ textTransform: 'uppercase' }}
+          selected={location.pathname === '/' + site + '/draft'}
+          onClick={() => navigate('/' + site + '/draft')}
           button
         >
           <ListItemAvatar>
             <Avatar sx={{ bgcolor: 'primary.main' }}>
-              <Preview />
+              <Visibility />
             </Avatar>
           </ListItemAvatar>
           <ListItemText
             sx={{ display: { xs: 'none', md: 'block' } }}
             secondary='Preview'
+          />
+        </ListItem>}
+        {site && <ListItem
+          sx={{ textTransform: 'uppercase' }}
+          selected={location.pathname === '/' + site + '/admin'}
+          onClick={() => navigate('/' + site + '/admin')}
+          button
+        >
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: 'primary.main' }}>
+              <Edit />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            sx={{ display: { xs: 'none', md: 'block' } }}
+            secondary='Creator'
           />
         </ListItem>}
       </List>

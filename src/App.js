@@ -37,17 +37,21 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <ScrollTop>
-          <Routes>
-            <Route path='/*' element={<AboutView />} />
+          {window.location.host === 'app.modularpage.com' || 'localhost:3000' ? <Routes>
+            <Route path='/*' element={<Navigate to='/board' />} />
+            <Route path='/about' element={<AboutView />} />
             <Route path='/privacy' element={<PrivacyView />} />
             <Route path='/rules' element={<RulesView />} />
-            <Route path='/signin' element={0 ? <SigninView /> : <Navigate to='/' />} />
-            <Route path='/signup' element={0 ? <SignupView /> : <Navigate to='/' />} />
-            <Route path='/admin' element={access ? <BoardView /> : <Navigate to='/signin' />} />
+            <Route path='/signin' element={<SigninView />} />
+            <Route path='/signup' element={<SignupView />} />
+            <Route path='/board' element={access ? <BoardView /> : <Navigate to='/signin' />} />
             <Route path='/create' element={access ? <CreateView /> : <Navigate to='/signin' />} />
             <Route path='/:id/*' element={access ? <WebsiteView /> : <Navigate to='/signin' />} />
             <Route path='/:id/admin' element={access ? <WebsiteView admin /> : <Navigate to='/signin' />} />
-          </Routes>
+            <Route path='/:id/draft' element={access ? <WebsiteView draft /> : <Navigate to='/signin' />} />
+          </Routes> : <Routes>
+            <Route path='/*' element={<WebsiteView host={window.location.host} />} />
+          </Routes>}
         </ScrollTop>
       </BrowserRouter>
     </ThemeProvider>

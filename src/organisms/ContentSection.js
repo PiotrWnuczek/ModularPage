@@ -1,35 +1,21 @@
 import React, { useState } from 'react';
-import { createSection, updateSection } from 'store/websitesSlice';
+import { updateSection } from 'store/websitesSlice';
 import { useDispatch } from 'react-redux';
-import { Box, Typography } from '@mui/material';
-import { IconButton, Avatar } from '@mui/material';
-import { Add, Tune, Check } from '@mui/icons-material';
+import { Box, Typography, IconButton } from '@mui/material';
+import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 import TextInput from 'atoms/TextInput';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import ModuleLayout from 'organisms/ModuleLayout';
 
 const ContentSection = ({ admin, website, section }) => {
   const [title, setTitle] = useState(false);
   const [text, setText] = useState(false);
   const dispatch = useDispatch();
-  const random = Math.random().toString(16).slice(2);
 
   return (
-    <Box sx={{ py: admin ? 0 : 10, px: { xs: 5, md: 20 } }}>
-      {admin && <Box sx={{
-        pt: 3, pb: 1, display: 'flex',
-        alignItems: 'center', justifyContent: 'center'
-      }}>
-        <Avatar
-          sx={{
-            cursor: 'pointer', bgcolor: 'info.main',
-            '&:hover': { bgcolor: 'info.dark' },
-          }}
-        >
-          <Tune />
-        </Avatar>
-      </Box>}
+    <ModuleLayout admin={admin} website={website}>
       {!title && <Typography
         sx={{ cursor: admin && 'pointer' }}
         onClick={() => admin && setTitle(true)}
@@ -109,24 +95,7 @@ const ContentSection = ({ admin, website, section }) => {
           </form>
         )}
       </Formik>}
-      {admin && <Box sx={{
-        pb: 3, pt: 1, display: 'flex',
-        alignItems: 'center', justifyContent: 'center'
-      }}>
-        <Avatar
-          sx={{
-            cursor: 'pointer', bgcolor: 'info.main',
-            '&:hover': { bgcolor: 'info.dark' },
-          }}
-          onClick={() => dispatch(createSection({
-            values: { id: random, type: 'content' },
-            wid: website.name,
-          }))}
-        >
-          <Add />
-        </Avatar>
-      </Box>}
-    </Box>
+    </ModuleLayout>
   )
 };
 

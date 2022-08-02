@@ -19,7 +19,7 @@ const SiteLayout = ({ admin, website, children }) => {
         variant='temporary'
         open={sidebar}
         onClose={() => setSidebar(!sidebar)}
-        site
+        site={website && website.name}
       />}
       {admin && <Box sx={{ position: 'fixed', top: 20, left: 20 }}>
         <Avatar
