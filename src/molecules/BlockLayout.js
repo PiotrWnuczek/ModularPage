@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Avatar } from '@mui/material';
 import { Tune, DragIndicator } from '@mui/icons-material';
-import CreateDialog from 'molecules/CreateDialog';
-import RemoveDialog from 'molecules/RemoveDialog';
+import SectionCreate from 'atoms/SectionCreate';
+import SectionRemove from 'atoms/SectionRemove';
 
-const ModuleLayout = ({ children, admin, website }) => (
+const BlockLayout = ({ children, admin, website }) => (
   <Box sx={{ py: admin ? 0 : 6, px: { xs: 6, md: 24 } }}>
     {admin && <Box sx={{
       pt: 0.6, pb: 0.4, display: 'flex',
@@ -32,10 +32,10 @@ const ModuleLayout = ({ children, admin, website }) => (
       pb: 0.6, pt: 0.4, display: 'flex',
       alignItems: 'center', justifyContent: 'center',
     }}>
-      <CreateDialog wid={website.name} />
-      <RemoveDialog />
+      <SectionCreate wid={website.name} />
+      <SectionRemove />
     </Box>}
   </Box>
 );
 
-export default ModuleLayout;
+export default BlockLayout;

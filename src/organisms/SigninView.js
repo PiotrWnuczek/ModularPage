@@ -1,11 +1,11 @@
 import React from 'react';
-import { signinUser } from 'store/usersSlice';
+import { signinUser } from 'redux/usersSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
+import { TextField } from '@mui/material';
 import { Formik } from 'formik';
-import FrontLayout from 'pages/FrontLayout';
-import TextInput from 'atoms/TextInput';
+import FrontLayout from 'organisms/OriginLayout';
 
 const SigninView = () => {
   const auth = useSelector(state => state.firebase.auth);
@@ -30,21 +30,29 @@ const SigninView = () => {
       >
         {({ values, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <TextInput
+            <TextField
+              sx={{ mb: 2 }}
               onChange={handleChange}
               value={values.email}
+              placeholder='Email'
               label='Email'
               name='email'
               type='email'
+              variant='outlined'
+              fullWidth
               autoFocus
               required
             />
-            <TextInput
+            <TextField
+              sx={{ mb: 2 }}
               onChange={handleChange}
               value={values.password}
+              placeholder='Password'
               label='Password'
               name='password'
               type='password'
+              variant='outlined'
+              fullWidth
               required
             />
             <Button
@@ -62,7 +70,9 @@ const SigninView = () => {
             >
               Sign Up
             </Button>
-            {error && <p>{error.replace('Firebase: ', '').replace(/\(.+\)\.?/, '')}</p>}
+            {error && <p>
+              {error.replace('Firebase: ', '').replace(/\(.+\)\.?/, '')}
+            </p>}
           </form>
         )}
       </Formik>

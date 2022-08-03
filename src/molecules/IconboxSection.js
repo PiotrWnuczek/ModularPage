@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-const SectionDialog = () => (
+const IconboxSection = () => (
   <Box>
-    Section Dialog
+    Iconbox Section
   </Box>
 );
 
-export default SectionDialog;
+export default IconboxSection;

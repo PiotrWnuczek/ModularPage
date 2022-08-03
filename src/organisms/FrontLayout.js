@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Box, Dialog, Button } from '@mui/material';
 import { Typography, Avatar } from '@mui/material';
 import { Menu, Settings } from '@mui/icons-material';
-import SideBar from 'organisms/SideBar';
+import SideBar from 'molecules/SideBar';
 
-const SiteLayout = ({ admin, website, children }) => {
+const FrontLayout = ({ admin, website, children }) => {
   const [sidebar, setSidebar] = useState(false);
   const [dialog, setDialog] = useState(false);
   const width = { xs: 70, md: 160 };
@@ -74,4 +74,4 @@ const SiteLayout = ({ admin, website, children }) => {
   )
 };
 
-export default SiteLayout;
+export default FrontLayout;

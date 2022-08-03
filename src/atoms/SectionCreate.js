@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { createSection } from 'store/websitesSlice';
+import { createSection } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { Box, Dialog, DialogTitle } from '@mui/material';
 import { Avatar, List, ListItem } from '@mui/material';
 import { ListItemAvatar, ListItemText } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
-const CreateDialog = ({ wid }) => {
+const SectionCreate = ({ wid }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const random = Math.random().toString(16).slice(2);
@@ -64,4 +64,4 @@ const CreateDialog = ({ wid }) => {
   )
 };
 
-export default CreateDialog;
+export default SectionCreate;

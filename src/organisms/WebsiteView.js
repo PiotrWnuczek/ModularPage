@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { updateWebsite, createSection } from 'store/websitesSlice';
+import { updateWebsite, createSection } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { useParams } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
-import SiteLayout from 'pages/SiteLayout';
-import ContentSection from 'organisms/ContentSection';
-import GraphicSection from 'organisms/GraphicSection';
-import IconSection from 'organisms/IconSection';
-import MailingSection from 'organisms/MailingSection';
-import SellingSection from 'organisms/SellingSection';
+import SiteLayout from 'organisms/FrontLayout';
+import ContentSection from 'molecules/ContentSection';
+import GraphicSection from 'molecules/GraphicSection';
+import IconboxSection from 'molecules/IconboxSection';
+import MailingSection from 'molecules/MailingSection';
+import SellingSection from 'molecules/SellingSection';
 
 const WebsiteView = ({ admin, draft, host }) => {
   const { id } = useParams();
@@ -73,7 +73,7 @@ const WebsiteView = ({ admin, draft, host }) => {
                           admin={access}
                           website={website}
                         />}
-                        {item.type === 'icon' && <IconSection
+                        {item.type === 'icon' && <IconboxSection
                           section={item}
                           admin={access}
                           website={website}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { signoutUser } from 'store/usersSlice';
+import { signoutUser } from 'redux/usersSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Drawer, Avatar, List, ListItem } from '@mui/material';
@@ -28,7 +28,7 @@ const SideBar = ({ main, site, ...props }) => {
           </ListItemAvatar>
           <ListItemText
             sx={{ display: { xs: 'none', md: 'block' } }}
-            secondary='Panel'
+            secondary='Board'
           />
         </ListItem>
         {main && <ListItem

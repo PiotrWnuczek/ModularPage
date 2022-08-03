@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { signupUser } from 'store/usersSlice';
+import { signupUser } from 'redux/usersSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Button, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { Formik } from 'formik';
-import FrontLayout from 'pages/FrontLayout';
-import TextInput from 'atoms/TextInput';
+import FrontLayout from 'organisms/OriginLayout';
 
 const SignupView = () => {
   const [info, setInfo] = useState(false);
@@ -43,53 +43,73 @@ const SignupView = () => {
           <form onSubmit={handleSubmit}>
             <Grid container columnSpacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextInput
+                <TextField
+                  sx={{ mb: 2 }}
                   onChange={handleChange}
                   value={values.name}
+                  placeholder='First Name'
                   label='First Name'
                   name='firstname'
                   type='text'
+                  variant='outlined'
+                  fullWidth
                   autoFocus
                   required
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextInput
+                <TextField
+                  sx={{ mb: 2 }}
                   onChange={handleChange}
                   value={values.name}
+                  placeholder='Last Name'
                   label='Last Name'
                   name='lastname'
                   type='text'
+                  variant='outlined'
+                  fullWidth
                   required
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextInput
+                <TextField
+                  sx={{ mb: 2 }}
                   onChange={handleChange}
                   value={values.email}
+                  placeholder='Email'
                   label='Email'
                   name='email'
                   type='email'
+                  variant='outlined'
+                  fullWidth
                   required
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextInput
+                <TextField
+                  sx={{ mb: 2 }}
                   onChange={handleChange}
                   value={values.password}
+                  placeholder='Password'
                   label='Password'
                   name='password'
                   type='password'
+                  variant='outlined'
+                  fullWidth
                   required
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextInput
+                <TextField
+                  sx={{ mb: 2 }}
                   onChange={handleChange}
                   value={values.confirm}
+                  placeholder='Password'
                   label='Password'
                   name='confirm'
                   type='password'
+                  variant='outlined'
+                  fullWidth
                   required
                 />
               </Grid>
@@ -109,8 +129,12 @@ const SignupView = () => {
             >
               Sign In
             </Button>
-            {error && <p>{error.replace('Firebase: ', '').replace(/\(.+\)\.?/, '')}</p>}
-            {info && <p>Passowrds are not identical</p>}
+            {error && <p>
+              {error.replace('Firebase: ', '').replace(/\(.+\)\.?/, '')}
+            </p>}
+            {info && <p>
+              Passowrds are not identical
+            </p>}
           </form>
         )}
       </Formik>

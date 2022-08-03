@@ -1,11 +1,11 @@
 import React from 'react';
-import { createWebsite } from 'store/websitesSlice';
+import { createWebsite } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
+import { TextField } from '@mui/material';
 import { Formik } from 'formik';
-import MainLayout from 'pages/MainLayout';
-import TextInput from 'atoms/TextInput';
+import MainLayout from 'organisms/MainLayout';
 
 const CreateView = () => {
   const error = useSelector(state => state.websites.error);
@@ -26,23 +26,31 @@ const CreateView = () => {
         >
           {({ values, handleChange, handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              <TextInput
+              <TextField
+                sx={{ mb: 2 }}
                 onChange={handleChange}
                 value={values.name}
+                placeholder='Name'
                 label='Name'
                 name='name'
                 type='text'
                 size='small'
+                variant='outlined'
+                fullWidth
                 autoFocus
                 required
               />
-              <TextInput
+              <TextField
+                sx={{ mb: 2 }}
                 onChange={handleChange}
                 value={values.description}
+                placeholder='Description'
                 label='Description'
                 name='description'
                 type='text'
                 size='small'
+                variant='outlined'
+                fullWidth
                 multiline
                 minRows={4}
                 required

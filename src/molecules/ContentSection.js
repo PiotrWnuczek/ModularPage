@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { updateSection } from 'store/websitesSlice';
+import { updateSection } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
-import { Box, Typography, IconButton } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { TextField, IconButton } from '@mui/material';
 import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
-import TextInput from 'atoms/TextInput';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import ModuleLayout from 'organisms/ModuleLayout';
+import BlockLayout from 'molecules/BlockLayout';
 
 const ContentSection = ({ admin, website, section }) => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const ContentSection = ({ admin, website, section }) => {
   const [text, setText] = useState(false);
 
   return (
-    <ModuleLayout admin={admin} website={website}>
+    <BlockLayout admin={admin} website={website}>
       <Box sx={{ textAlign: 'center' }}>
         {!title && <Typography
           sx={{
@@ -37,14 +37,17 @@ const ContentSection = ({ admin, website, section }) => {
         >
           {({ values, handleChange, handleSubmit }) => (
             <form onBlur={handleSubmit} onSubmit={handleSubmit} autoComplete='off'>
-              <TextInput
+              <TextField
                 sx={{ my: 0 }}
                 onChange={handleChange}
                 value={values.title}
+                placeholder='Title'
                 label='Title'
                 name='title'
                 type='text'
                 size='small'
+                variant='outlined'
+                fullWidth
                 autoFocus
                 InputProps={{
                   endAdornment: <IconButton
@@ -81,14 +84,17 @@ const ContentSection = ({ admin, website, section }) => {
         >
           {({ values, handleChange, handleSubmit }) => (
             <form onBlur={handleSubmit} onSubmit={handleSubmit} autoComplete='off'>
-              <TextInput
+              <TextField
                 sx={{ mt: 1, mb: 0 }}
                 onChange={handleChange}
                 value={values.text}
+                placeholder='Text'
                 label='Text'
                 name='text'
                 type='text'
                 size='small'
+                variant='outlined'
+                fullWidth
                 multiline
                 rows={3}
                 autoFocus
@@ -106,7 +112,7 @@ const ContentSection = ({ admin, website, section }) => {
           )}
         </Formik>}
       </Box>
-    </ModuleLayout>
+    </BlockLayout>
   )
 };
 

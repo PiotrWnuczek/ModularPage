@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import SideBar from 'organisms/SideBar';
+import SideBar from 'molecules/SideBar';
 
 const MainLayout = ({ children }) => {
   const width = { xs: 70, md: 160 };

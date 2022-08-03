@@ -1,10 +1,10 @@
 import React from 'react';
 import { Grid, Box, Typography } from '@mui/material';
-import Picture from 'assets/picture.png';
-import ModuleLayout from 'organisms/ModuleLayout';
+import Picture from 'stock/picture.png';
+import BlockLayout from 'molecules/BlockLayout';
 
-const GraphicSection = ({ admin, website, section }) => (
-  <ModuleLayout admin={admin} website={website}>
+const GraphicSection = ({ admin, website }) => (
+  <BlockLayout admin={admin} website={website}>
     <Grid container>
       <Grid
         sx={{
@@ -51,7 +51,7 @@ const GraphicSection = ({ admin, website, section }) => (
         />
       </Grid>
     </Grid>
-  </ModuleLayout>
+  </BlockLayout>
 );
 
 export default GraphicSection;

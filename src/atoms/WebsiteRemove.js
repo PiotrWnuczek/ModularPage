@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box } from '@mui/material';
 
-const SectionDialog = () => (
+const WebsiteRemove = () => (
   <Box>
-    Section Dialog
+    Website Remove
   </Box>
 );
 
-export default SectionDialog;
+export default WebsiteRemove;

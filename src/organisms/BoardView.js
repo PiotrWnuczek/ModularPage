@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { Grid } from '@mui/material';
-import MainLayout from 'pages/MainLayout';
-import WebsiteCard from 'molecules/WebsiteCard';
+import MainLayout from 'organisms/MainLayout';
+import WebsiteCard from 'atoms/WebsiteCard';
 
 const BoardView = () => {
   const websites = useSelector(state => state.firestore.ordered.websites);

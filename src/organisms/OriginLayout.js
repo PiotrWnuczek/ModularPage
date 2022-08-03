@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Container, Button } from '@mui/material';
 import { Card, Typography, Link } from '@mui/material';
 
-const FrontLayout = ({ children }) => {
+const OriginLayout = ({ children }) => {
   const navigate = useNavigate();
 
   return (
@@ -49,4 +49,4 @@ const FrontLayout = ({ children }) => {
   )
 };
 
-export default FrontLayout;
+export default OriginLayout;

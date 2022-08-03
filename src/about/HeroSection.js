@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Box, Typography } from '@mui/material';
-import Picture from 'assets/picture.png';
+import Picture from 'stock/picture.png';
 
 const HeroSection = () => (
   <Grid

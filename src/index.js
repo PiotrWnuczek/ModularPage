@@ -5,8 +5,8 @@ import { useSelector, Provider } from 'react-redux';
 import { getFirestore, createFirestoreInstance } from 'redux-firestore';
 import { getFirebase, isLoaded, ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import * as serviceWorkerRegistration from 'serviceWorkerRegistration.js';
-import appReducer from 'store/appReducer';
-import appDatabase from 'store/appDatabase';
+import appReducer from 'redux/appReducer';
+import appDatabase from 'redux/appDatabase';
 import App from 'App';
 import 'index.css';
 

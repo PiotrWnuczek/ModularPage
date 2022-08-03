@@ -4,7 +4,7 @@ import { Dialog, DialogTitle, DialogActions } from '@mui/material';
 import { DialogContent, DialogContentText } from '@mui/material';
 import { Remove } from '@mui/icons-material';
 
-const RemoveDialog = () => {
+const SectionRemove = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -40,7 +40,7 @@ const RemoveDialog = () => {
             Cancel
           </Button>
           <Button
-            onClick={console.log('Remove')}
+            onClick={() => console.log('remove')}
             size='small'
             color='error'
           >
@@ -52,4 +52,4 @@ const RemoveDialog = () => {
   )
 };
 
-export default RemoveDialog;
+export default SectionRemove;
