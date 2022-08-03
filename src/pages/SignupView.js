@@ -109,7 +109,7 @@ const SignupView = () => {
             >
               Sign In
             </Button>
-            {error && <p>{error}</p>}
+            {error && <p>{error.replace('Firebase: ', '').replace(/\(.+\)\.?/, '')}</p>}
             {info && <p>Passowrds are not identical</p>}
           </form>
         )}

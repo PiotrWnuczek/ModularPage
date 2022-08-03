@@ -15,7 +15,7 @@ const ModuleLayout = ({ children, admin, website }) => {
   return (
     <Box sx={{ py: admin ? 0 : 6, px: { xs: 6, md: 24 } }}>
       {admin && <Box sx={{
-        pt: 1, display: 'flex',
+        pt: 0.6, pb: 0.4, display: 'flex',
         alignItems: 'center', justifyContent: 'center'
       }}>
         <Avatar
@@ -30,7 +30,7 @@ const ModuleLayout = ({ children, admin, website }) => {
       {children}
       {admin && <Box>
         <Box sx={{
-          pb: 1, display: 'flex',
+          pb: 0.6, pt: 0.4, display: 'flex',
           alignItems: 'center', justifyContent: 'center',
         }}>
           <Avatar

@@ -39,7 +39,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <ScrollTop>
-          {window.location.host === 'app.modularpage.com' ? <Routes>
+          {window.location.host === 'localhost:3000' ? <Routes>
             <Route path='/*' element={<Navigate to='/board' />} />
             <Route path='/about' element={<AboutView />} />
             <Route path='/privacy' element={<PrivacyView />} />
