@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
-import SiteLayout from 'organisms/FrontLayout';
+import FrontLayout from 'organisms/FrontLayout';
 import ContentSection from 'molecules/ContentSection';
 import GraphicSection from 'molecules/GraphicSection';
 import IconboxSection from 'molecules/IconboxSection';
@@ -39,7 +39,7 @@ const WebsiteView = ({ admin, draft, host }) => {
   };
 
   return (
-    <SiteLayout
+    <FrontLayout
       admin={access || vision}
       website={website}
     >
@@ -108,7 +108,7 @@ const WebsiteView = ({ admin, draft, host }) => {
       >
         Add Section
       </Button>}
-    </SiteLayout>
+    </FrontLayout>
   )
 };
 

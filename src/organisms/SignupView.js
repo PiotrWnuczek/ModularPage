@@ -5,7 +5,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { Grid, Typography } from '@mui/material';
 import { Button, TextField } from '@mui/material';
 import { Formik } from 'formik';
-import FrontLayout from 'organisms/OriginLayout';
+import OriginLayout from 'organisms/OriginLayout';
 
 const SignupView = () => {
   const [info, setInfo] = useState(false);
@@ -16,7 +16,7 @@ const SignupView = () => {
 
   return (auth.uid ?
     <Navigate to={'/board'} /> :
-    <FrontLayout>
+    <OriginLayout>
       <Typography variant='h4' m={2}>
         Sign Up
       </Typography>
@@ -138,7 +138,7 @@ const SignupView = () => {
           </form>
         )}
       </Formik>
-    </FrontLayout>
+    </OriginLayout>
   )
 };
 
