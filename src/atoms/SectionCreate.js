@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createSection } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
-import { Box, Dialog, DialogTitle } from '@mui/material';
+import { Box, Dialog, Typography } from '@mui/material';
 import { Avatar, List, ListItem } from '@mui/material';
 import { ListItemAvatar, ListItemText } from '@mui/material';
 import { Add } from '@mui/icons-material';
@@ -14,7 +14,7 @@ const SectionCreate = ({ wid }) => {
   const sections = [
     { name: 'Content Section', type: 'content' },
     { name: 'Graphic Section', type: 'graphic' },
-    { name: 'Iconbox Section', type: 'Iconbox' },
+    { name: 'Iconbox Section', type: 'iconbox' },
     { name: 'Mailing Section', type: 'mailing' },
     { name: 'Selling Section', type: 'selling' },
   ];
@@ -23,22 +23,27 @@ const SectionCreate = ({ wid }) => {
     <Box>
       <Avatar
         sx={{
-          mx: 0.3, cursor: 'pointer', bgcolor: 'info.main',
+          width: 30, height: 30, mx: 0.3,
+          cursor: 'pointer', bgcolor: 'info.main',
           '&:hover': { bgcolor: 'info.dark' },
         }}
         onClick={() => setOpen(true)}
       >
         <Add />
       </Avatar>
+
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
         onClose={() => setOpen(false)}
         fullWidth
       >
-        <DialogTitle>
-          Create Section
-        </DialogTitle>
+        <Typography
+          sx={{ p: 2 }}
+          variant='h5'
+        >
+          Create
+        </Typography>
         <List dense>
           {sections.map(section => <ListItem
             onClick={() => {

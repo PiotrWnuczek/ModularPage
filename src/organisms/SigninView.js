@@ -5,7 +5,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
 import { TextField } from '@mui/material';
 import { Formik } from 'formik';
-import OriginLayout from 'organisms/OriginLayout';
+import FrontLayout from 'organisms/FrontLayout';
 
 const SigninView = () => {
   const auth = useSelector(state => state.firebase.auth);
@@ -15,7 +15,7 @@ const SigninView = () => {
 
   return (auth.uid ?
     <Navigate to={'/board'} /> :
-    <OriginLayout>
+    <FrontLayout>
       <Typography variant='h4' m={2}>
         Sign In
       </Typography>
@@ -76,7 +76,7 @@ const SigninView = () => {
           </form>
         )}
       </Formik>
-    </OriginLayout>
+    </FrontLayout>
   )
 };
 

@@ -3,8 +3,12 @@ import { Grid, Box, Typography } from '@mui/material';
 import Picture from 'stock/picture.png';
 import BlockLayout from 'molecules/BlockLayout';
 
-const GraphicSection = ({ admin, website }) => (
-  <BlockLayout admin={admin} website={website}>
+const GraphicSection = ({ admin, website, section }) => (
+  <BlockLayout
+    admin={admin}
+    website={website}
+    section={section}
+  >
     <Grid container>
       <Grid
         sx={{

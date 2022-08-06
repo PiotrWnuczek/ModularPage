@@ -1,39 +1,35 @@
 import React from 'react';
 import { Box, Avatar } from '@mui/material';
-import { Tune, DragIndicator } from '@mui/icons-material';
+import { DragIndicator } from '@mui/icons-material';
 import SectionCreate from 'atoms/SectionCreate';
+import SectionOptions from 'atoms/SectionOptions';
 import SectionRemove from 'atoms/SectionRemove';
 
-const BlockLayout = ({ children, admin, website }) => (
+const BlockLayout = ({ children, admin, website, section }) => (
   <Box sx={{ py: admin ? 0 : 6, px: { xs: 6, md: 24 } }}>
     {admin && <Box sx={{
-      pt: 0.6, pb: 0.4, display: 'flex',
+      pt: 1.6, pb: 0.6, display: 'flex',
       alignItems: 'center', justifyContent: 'center',
     }}>
+      <SectionOptions section={section} />
       <Avatar
         sx={{
-          mx: 0.3, cursor: 'pointer', bgcolor: 'info.main',
+          width: 30, height: 30, mx: 0.3,
+          cursor: 'pointer', bgcolor: 'info.main',
           '&:hover': { bgcolor: 'info.dark' },
         }}
-      >
-        <Tune />
-      </Avatar>
-      <Avatar
-        sx={{
-          mx: 0.3, cursor: 'pointer', bgcolor: 'info.main',
-          '&:hover': { bgcolor: 'info.dark' },
-        }}
+        onClick={() => console.log('dnd')}
       >
         <DragIndicator />
       </Avatar>
     </Box>}
     {children}
     {admin && <Box sx={{
-      pb: 0.6, pt: 0.4, display: 'flex',
+      pb: 1.6, pt: 0.6, display: 'flex',
       alignItems: 'center', justifyContent: 'center',
     }}>
       <SectionCreate wid={website.name} />
-      <SectionRemove />
+      <SectionRemove sid={section.id} wid={website.name} />
     </Box>}
   </Box>
 );

@@ -15,12 +15,16 @@ const ContentSection = ({ admin, website, section }) => {
   const [text, setText] = useState(false);
 
   return (
-    <BlockLayout admin={admin} website={website}>
+    <BlockLayout
+      admin={admin}
+      website={website}
+      section={section}
+    >
       <Box sx={{ textAlign: 'center' }}>
         {!title && <Typography
           sx={{
             cursor: admin && 'pointer',
-            my: 1, fontSize: { xs: 26, md: 36 },
+            mb: 1, fontSize: { xs: 26, md: 36 },
             fontWeight: 600, letterSpacing: 2,
           }}
           onClick={() => admin && setTitle(true)}
@@ -62,19 +66,18 @@ const ContentSection = ({ admin, website, section }) => {
             </form>
           )}
         </Formik>}
-        {!text && <Typography
+        {!text && <Box
           sx={{
             cursor: admin && 'pointer',
-            my: 2, fontSize: { xs: 14, md: 18 },
+            mt: 1, fontSize: { xs: 14, md: 18 },
             fontWeight: 400, letterSpacing: 1,
           }}
           onClick={() => admin && setText(true)}
-          variant='subtitle1'
         >
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {section.text || 'New Text'}
           </ReactMarkdown>
-        </Typography>}
+        </Box>}
         {text && admin && <Formik
           initialValues={{ text: section.text || 'New Text' }}
           onSubmit={(values) => {
@@ -96,7 +99,7 @@ const ContentSection = ({ admin, website, section }) => {
                 variant='outlined'
                 fullWidth
                 multiline
-                rows={3}
+                minRows={3}
                 autoFocus
                 InputProps={{
                   endAdornment: <IconButton

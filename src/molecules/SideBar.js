@@ -5,9 +5,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Drawer, Avatar, List, ListItem } from '@mui/material';
 import { ListItemText, ListItemAvatar } from '@mui/material';
 import { Add, Dashboard, Logout } from '@mui/icons-material';
-import { Visibility, Edit } from '@mui/icons-material';
 
-const SideBar = ({ main, site, ...props }) => {
+const SideBar = ({ main, ...props }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,38 +44,6 @@ const SideBar = ({ main, site, ...props }) => {
           <ListItemText
             sx={{ display: { xs: 'none', md: 'block' } }}
             secondary='Create'
-          />
-        </ListItem>}
-        {site && <ListItem
-          sx={{ textTransform: 'uppercase' }}
-          selected={location.pathname === '/' + site + '/draft'}
-          onClick={() => navigate('/' + site + '/draft')}
-          button
-        >
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: 'primary.main' }}>
-              <Visibility />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            sx={{ display: { xs: 'none', md: 'block' } }}
-            secondary='Preview'
-          />
-        </ListItem>}
-        {site && <ListItem
-          sx={{ textTransform: 'uppercase' }}
-          selected={location.pathname === '/' + site + '/admin'}
-          onClick={() => navigate('/' + site + '/admin')}
-          button
-        >
-          <ListItemAvatar>
-            <Avatar sx={{ bgcolor: 'primary.main' }}>
-              <Edit />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText
-            sx={{ display: { xs: 'none', md: 'block' } }}
-            secondary='Creator'
           />
         </ListItem>}
       </List>

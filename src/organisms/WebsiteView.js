@@ -6,14 +6,15 @@ import { useParams } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
-import FrontLayout from 'organisms/FrontLayout';
+import WebsiteExit from 'atoms/WebsiteExit';
+import WebsiteOptions from 'atoms/WebsiteOptions';
 import ContentSection from 'molecules/ContentSection';
 import GraphicSection from 'molecules/GraphicSection';
 import IconboxSection from 'molecules/IconboxSection';
 import MailingSection from 'molecules/MailingSection';
 import SellingSection from 'molecules/SellingSection';
 
-const WebsiteView = ({ admin, draft, host }) => {
+const WebsiteView = ({ admin, host }) => {
   const { id } = useParams();
   const wid = id ? id : host;
   const website = useSelector(state => state.firestore.data[wid]);
@@ -23,7 +24,6 @@ const WebsiteView = ({ admin, draft, host }) => {
   const [data, setData] = useState(website && [...website.sections]);
   useEffect(() => { setData(website && [...website.sections]) }, [website]);
   const access = website && admin && auth.email === website.email;
-  const vision = website && draft && auth.email === website.email;
   const random = Math.random().toString(16).slice(2);
 
   const onDragEnd = ({ source, destination }) => {
@@ -39,10 +39,9 @@ const WebsiteView = ({ admin, draft, host }) => {
   };
 
   return (
-    <FrontLayout
-      admin={access || vision}
-      website={website}
-    >
+    <Box>
+      {access && <WebsiteExit />}
+      {access && <WebsiteOptions website={website} />}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (
@@ -98,17 +97,21 @@ const WebsiteView = ({ admin, draft, host }) => {
           )}
         </Droppable>
       </DragDropContext>
-      {website && !website.sections.length && <Button
-        onClick={() => dispatch(createSection({
-          values: { id: random, type: 'content' },
-          wid: website.name,
-        }))}
-        variant='outlined'
-        size='small'
+      {website && !website.sections.length && <Box
+        sx={{ textAlign: 'center', p: 4 }}
       >
-        Add Section
-      </Button>}
-    </FrontLayout>
+        <Button
+          onClick={() => dispatch(createSection({
+            values: { id: random, type: 'content' },
+            wid: website.name,
+          }))}
+          variant='outlined'
+          size='small'
+        >
+          Add Section
+        </Button>
+      </Box>}
+    </Box>
   )
 };
 

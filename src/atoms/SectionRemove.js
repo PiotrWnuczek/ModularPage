@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { Box, Avatar, Button } from '@mui/material';
-import { Dialog, DialogTitle, DialogActions } from '@mui/material';
-import { DialogContent, DialogContentText } from '@mui/material';
+import { removeSection } from 'redux/websitesSlice';
+import { useDispatch } from 'react-redux';
+import { Box, Dialog, Button } from '@mui/material';
+import { Typography, Avatar } from '@mui/material';
 import { Remove } from '@mui/icons-material';
 
-const SectionRemove = () => {
+const SectionRemove = ({ sid, wid }) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
   return (
     <Box>
       <Avatar
         sx={{
-          mx: 0.3, cursor: 'pointer', bgcolor: 'info.main',
+          width: 30, height: 30, mx: 0.3,
+          cursor: 'pointer', bgcolor: 'info.main',
           '&:hover': { bgcolor: 'info.dark' },
         }}
         onClick={() => setOpen(true)}
@@ -24,29 +27,33 @@ const SectionRemove = () => {
         onClose={() => setOpen(false)}
         fullWidth
       >
-        <DialogTitle>
-          Remove Section
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to remove the section?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => setOpen(false)}
-            size='small'
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => console.log('remove')}
-            size='small'
-            color='error'
-          >
+        <Box sx={{ p: 2 }}>
+          <Typography variant='h5'>
             Remove
-          </Button>
-        </DialogActions>
+          </Typography>
+          <Typography variant='subtitle1'>
+            Remove confirmation
+          </Typography>
+          <Box sx={{ textAlign: 'right' }}>
+            <Button
+              sx={{ mr: 1 }}
+              onClick={() => setOpen(false)}
+              size='small'
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => {
+                dispatch(removeSection({ sid, wid }));
+                setOpen(false);
+              }}
+              size='small'
+              color='error'
+            >
+              Remove
+            </Button>
+          </Box>
+        </Box>
       </Dialog>
     </Box>
   )

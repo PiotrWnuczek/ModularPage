@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { Grid } from '@mui/material';
 import MainLayout from 'organisms/MainLayout';
-import WebsiteCard from 'atoms/WebsiteCard';
+import WebsiteCard from 'molecules/WebsiteCard';
 
 const BoardView = () => {
   const websites = useSelector(state => state.firestore.ordered.websites);

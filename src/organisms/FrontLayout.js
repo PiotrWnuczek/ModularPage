@@ -1,75 +1,50 @@
-import React, { useState } from 'react';
-import { Box, Dialog, Button } from '@mui/material';
-import { Typography, Avatar } from '@mui/material';
-import { Menu, Settings } from '@mui/icons-material';
-import SideBar from 'molecules/SideBar';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, Container, Button } from '@mui/material';
+import { Card, Typography, Link } from '@mui/material';
 
-const FrontLayout = ({ admin, website, children }) => {
-  const [sidebar, setSidebar] = useState(false);
-  const [dialog, setDialog] = useState(false);
-  const width = { xs: 70, md: 160 };
+const FrontLayout = ({ children }) => {
+  const navigate = useNavigate();
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      {admin && <SideBar
-        sx={{
-          width, '& .MuiDrawer-paper':
-            { bgcolor: 'secondary.dark', justifyContent: 'space-between', width },
-        }}
-        variant='temporary'
-        open={sidebar}
-        onClose={() => setSidebar(!sidebar)}
-        site={website && website.name}
-      />}
-      {admin && <Box sx={{ position: 'fixed', top: 20, left: 20 }}>
-        <Avatar
+    <Box sx={{
+      height: '100vh', display: 'flex', textAlign: 'center',
+      alignItems: 'center', justifyContent: 'center',
+    }}>
+      <Container maxWidth='sm'>
+        <Card
           sx={{
-            cursor: 'pointer', bgcolor: 'primary.main',
-            '&:hover': { bgcolor: 'primary.dark' },
+            bgcolor: 'inherit', m: 2,
+            px: { xs: 2, md: 4 }, py: { xs: 3, md: 5 }
           }}
-          onClick={() => setSidebar(true)}
+          variant='outlined'
         >
-          <Menu />
-        </Avatar>
-      </Box>}
-      {admin && <Box>
-        <Box sx={{ position: 'fixed', top: 20, right: 20 }}>
-          <Avatar
-            sx={{
-              cursor: 'pointer', bgcolor: 'primary.main',
-              '&:hover': { bgcolor: 'primary.dark' },
-            }}
-            onClick={() => setDialog(true)}
+          {children}
+        </Card>
+        <Box sx={{
+          my: 1, display: 'flex', flexWrap: 'wrap',
+          alignItems: 'center', justifyContent: 'center',
+        }}>
+          <Typography>
+            Copyright © modularpage.com created by
+          </Typography>
+          <Link
+            sx={{ ml: 0.5 }}
+            href='https://piotrwnuczek.pl'
+            target='_blank'
+            underline='hover'
           >
-            <Settings />
-          </Avatar>
+            Piotr Wnuczek
+          </Link>
         </Box>
-        <Dialog
-          sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
-          open={dialog}
-          onClose={() => setDialog(false)}
-          fullWidth
+        <Button
+          sx={{ mx: 1 }}
+          onClick={() => navigate('/')}
+          size='small'
         >
-          <Box sx={{ p: 2 }}>
-            <Typography variant='h5'>
-              Settings
-            </Typography>
-            <Typography variant='subtitle1'>
-              {website && website.name} | {website && website.description}
-            </Typography>
-            <Button
-              onClick={() => setDialog(false)}
-              variant='outlined'
-              size='small'
-            >
-              Set
-            </Button>
-          </Box>
-        </Dialog>
-      </Box>}
-      <Box sx={{ flexGrow: 1 }}>
-        {children}
-      </Box>
+          About App
+        </Button>
+      </Container>
     </Box>
   )
 };

@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Dialog, Button } from '@mui/material';
 import { Typography, Avatar } from '@mui/material';
-import { Tune } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 
-const SectionOptions = ({ section }) => {
+const WebsiteExit = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   return (
     <Box>
-      <Avatar
-        sx={{
-          width: 30, height: 30, mx: 0.3,
-          cursor: 'pointer', bgcolor: 'info.main',
-          '&:hover': { bgcolor: 'info.dark' },
-        }}
-        onClick={() => setOpen(true)}
-      >
-        <Tune />
-      </Avatar>
+      <Box sx={{ position: 'fixed', top: 20, left: 20 }}>
+        <Avatar
+          sx={{
+            cursor: 'pointer', bgcolor: 'primary.main',
+            '&:hover': { bgcolor: 'primary.dark' },
+          }}
+          onClick={() => setOpen(true)}
+        >
+          <ArrowBack />
+        </Avatar>
+      </Box>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
@@ -26,20 +29,20 @@ const SectionOptions = ({ section }) => {
       >
         <Box sx={{ p: 2 }}>
           <Typography variant='h5'>
-            Settings
+            Exit
           </Typography>
           <Typography variant='subtitle1'>
-            {section && section.type}
+            Changes saved. Exit to board.
           </Typography>
           <Button
             onClick={() => {
-              console.log('set');
+              navigate('/board');
               setOpen(false);
             }}
             variant='outlined'
             size='small'
           >
-            Set
+            Exit
           </Button>
         </Box>
       </Dialog>
@@ -47,4 +50,4 @@ const SectionOptions = ({ section }) => {
   )
 };
 
-export default SectionOptions;
+export default WebsiteExit;
