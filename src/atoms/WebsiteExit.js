@@ -10,7 +10,7 @@ const WebsiteExit = () => {
 
   return (
     <Box>
-      <Box sx={{ position: 'fixed', top: 20, left: 20 }}>
+      <Box sx={{ position: 'fixed', top: 24, left: 24 }}>
         <Avatar
           sx={{
             cursor: 'pointer', bgcolor: 'primary.main',

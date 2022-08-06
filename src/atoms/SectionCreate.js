@@ -6,7 +6,7 @@ import { Avatar, List, ListItem } from '@mui/material';
 import { ListItemAvatar, ListItemText } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
-const SectionCreate = ({ wid }) => {
+const SectionCreate = ({ wid, start }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const random = Math.random().toString(16).slice(2);
@@ -23,15 +23,14 @@ const SectionCreate = ({ wid }) => {
     <Box>
       <Avatar
         sx={{
-          width: 30, height: 30, mx: 0.3,
-          cursor: 'pointer', bgcolor: 'info.main',
+          width: start ? 40 : 30, height: start ? 40 : 30,
+          mx: 0.3, cursor: 'pointer', bgcolor: 'info.main',
           '&:hover': { bgcolor: 'info.dark' },
         }}
         onClick={() => setOpen(true)}
       >
         <Add />
       </Avatar>
-
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}

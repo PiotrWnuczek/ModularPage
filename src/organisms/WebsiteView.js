@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { updateWebsite, createSection } from 'redux/websitesSlice';
+import { updateWebsite } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { useParams } from 'react-router-dom';
-import { Box, Button } from '@mui/material';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { Box } from '@mui/material';
 import WebsiteExit from 'atoms/WebsiteExit';
 import WebsiteOptions from 'atoms/WebsiteOptions';
-import ContentSection from 'molecules/ContentSection';
-import GraphicSection from 'molecules/GraphicSection';
-import IconboxSection from 'molecules/IconboxSection';
-import MailingSection from 'molecules/MailingSection';
-import SellingSection from 'molecules/SellingSection';
+import SectionCreate from 'atoms/SectionCreate';
+import BlockTemplate from 'molecules/BlockTemplate';
 
 const WebsiteView = ({ admin, host }) => {
   const { id } = useParams();
@@ -24,7 +21,6 @@ const WebsiteView = ({ admin, host }) => {
   const [data, setData] = useState(website && [...website.sections]);
   useEffect(() => { setData(website && [...website.sections]) }, [website]);
   const access = website && admin && auth.email === website.email;
-  const random = Math.random().toString(16).slice(2);
 
   const onDragEnd = ({ source, destination }) => {
     if (!destination) return;
@@ -42,7 +38,12 @@ const WebsiteView = ({ admin, host }) => {
     <Box>
       {access && <WebsiteExit />}
       {access && <WebsiteOptions website={website} />}
-      <DragDropContext onDragEnd={onDragEnd}>
+      {access && website && !website.sections.length && <Box
+        sx={{ py: 3, display: 'flex', justifyContent: 'center' }}
+      >
+        <SectionCreate wid={website.name} start />
+      </Box>}
+      {access && <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (
             <div
@@ -59,35 +60,13 @@ const WebsiteView = ({ admin, host }) => {
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      {...provided.dragHandleProps}
                     >
-                      <Box>
-                        {item.type === 'content' && <ContentSection
-                          section={item}
-                          admin={access}
-                          website={website}
-                        />}
-                        {item.type === 'graphic' && <GraphicSection
-                          section={item}
-                          admin={access}
-                          website={website}
-                        />}
-                        {item.type === 'icon' && <IconboxSection
-                          section={item}
-                          admin={access}
-                          website={website}
-                        />}
-                        {item.type === 'mailing' && <MailingSection
-                          section={item}
-                          admin={access}
-                          website={website}
-                        />}
-                        {item.type === 'selling' && <SellingSection
-                          section={item}
-                          admin={access}
-                          website={website}
-                        />}
-                      </Box>
+                      <BlockTemplate
+                        admin={access}
+                        website={website}
+                        section={item}
+                        drag={provided.dragHandleProps}
+                      />
                     </div>
                   )}
                 </Draggable>
@@ -96,21 +75,15 @@ const WebsiteView = ({ admin, host }) => {
             </div>
           )}
         </Droppable>
-      </DragDropContext>
-      {website && !website.sections.length && <Box
-        sx={{ textAlign: 'center', p: 4 }}
-      >
-        <Button
-          onClick={() => dispatch(createSection({
-            values: { id: random, type: 'content' },
-            wid: website.name,
-          }))}
-          variant='outlined'
-          size='small'
-        >
-          Add Section
-        </Button>
-      </Box>}
+      </DragDropContext>}
+      {!access && data && data.map(item =>
+        <BlockTemplate
+          admin={access}
+          website={website}
+          section={item}
+          key={item.id}
+        />
+      )}
     </Box>
   )
 };
