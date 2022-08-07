@@ -41,7 +41,7 @@ const WebsiteView = ({ admin, host }) => {
       {access && website && !website.sections.length && <Box
         sx={{ py: 3, display: 'flex', justifyContent: 'center' }}
       >
-        <SectionCreate wid={website.name} start />
+        <SectionCreate wid={website.name} index={0} start />
       </Box>}
       {access && <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
@@ -65,6 +65,7 @@ const WebsiteView = ({ admin, host }) => {
                         admin={access}
                         website={website}
                         section={item}
+                        index={index + 1}
                         drag={provided.dragHandleProps}
                       />
                     </div>

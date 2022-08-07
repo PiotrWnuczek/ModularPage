@@ -6,7 +6,7 @@ import { Avatar, List, ListItem } from '@mui/material';
 import { ListItemAvatar, ListItemText } from '@mui/material';
 import { Add } from '@mui/icons-material';
 
-const SectionCreate = ({ wid, start }) => {
+const SectionCreate = ({ wid, index, start }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const random = Math.random().toString(16).slice(2);
@@ -48,7 +48,7 @@ const SectionCreate = ({ wid, start }) => {
             onClick={() => {
               dispatch(createSection({
                 values: { id: random, type: section.type },
-                wid,
+                index, wid,
               }));
               setOpen(false);
             }}

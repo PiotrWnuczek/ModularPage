@@ -42,13 +42,17 @@ export const removeWebsite = createAsyncThunk(
 );
 
 export const createSection = createAsyncThunk(
-  'createSection', async ({ values, wid }, thunk) => {
+  'createSection', async ({ values, index, wid }, thunk) => {
     const firestore = thunk.extra.getFirestore();
     const sections = thunk.getState().firestore.data[wid].sections;
     const ref = firestore.collection('websites');
     try {
       return await ref.doc(wid).update({
-        sections: [...sections, { ...values }],
+        sections: [
+          ...sections.slice(0, index),
+          { ...values },
+          ...sections.slice(index),
+        ],
       }).then(() => values);
     } catch (error) { throw error }
   },

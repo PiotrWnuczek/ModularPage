@@ -1,3 +1,4 @@
-add section buttons
-delete website
 publish website
+adding graphic
+adding buttons
+new modules

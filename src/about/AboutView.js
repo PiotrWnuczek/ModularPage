@@ -57,7 +57,7 @@ const AboutView = () => {
           </Typography>
           <Link
             sx={{ ml: 0.5, fontSize: '70%' }}
-            href='https://piotrwnuczek.pl'
+            href='https://www.freepik.com/'
             target='_blank'
             underline='hover'
           >
