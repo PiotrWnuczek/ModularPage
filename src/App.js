@@ -33,14 +33,11 @@ const App = () => {
     },
   });
 
-  console.log(window.location.host);
-
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <ScrollTop>
           {window.location.host === 'localhost:3000' ? <Routes>
-            <Route path='/*' element={<Navigate to='/board' />} />
             <Route path='/about' element={<AboutView />} />
             <Route path='/privacy' element={<PrivacyView />} />
             <Route path='/rules' element={<RulesView />} />
@@ -50,7 +47,7 @@ const App = () => {
             <Route path='/create' element={access ? <CreateView /> : <Navigate to='/signin' />} />
             <Route path='/:id/*' element={access ? <WebsiteView /> : <Navigate to='/signin' />} />
             <Route path='/:id/admin' element={access ? <WebsiteView admin /> : <Navigate to='/signin' />} />
-            <Route path='/:id/draft' element={access ? <WebsiteView draft /> : <Navigate to='/signin' />} />
+            <Route path='/*' element={<Navigate to='/board' />} />
           </Routes> : <Routes>
             <Route path='/*' element={<WebsiteView host={window.location.host} />} />
           </Routes>}

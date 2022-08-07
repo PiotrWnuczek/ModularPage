@@ -1,4 +1,6 @@
 import React from 'react';
+import { updateWebsite } from 'redux/websitesSlice';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Box, Card, Grid, Typography, Button } from '@mui/material';
 import { Avatar, Link, FormControlLabel, Switch } from '@mui/material';
@@ -6,6 +8,7 @@ import { Edit, Web } from '@mui/icons-material';
 import WebsiteRemove from 'atoms/WebsiteRemove';
 
 const WebsiteCard = ({ website }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -59,8 +62,11 @@ const WebsiteCard = ({ website }) => {
           </Button>
           <FormControlLabel
             sx={{ mr: 3 }}
-            control={<Switch checked={true} size='small' />}
-            onChange={(e, value) => console.log(value)}
+            control={<Switch checked={website.public} size='small' />}
+            onChange={(e, value) => dispatch(updateWebsite({
+              values: { public: value },
+              wid: website.name,
+            }))}
             label='public'
           />
           <WebsiteRemove wid={website.name} />

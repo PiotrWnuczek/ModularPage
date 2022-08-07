@@ -8,14 +8,14 @@ import { Formik } from 'formik';
 import FrontLayout from 'organisms/FrontLayout';
 
 const SignupView = () => {
-  const [info, setInfo] = useState(false);
   const auth = useSelector(state => state.firebase.auth);
   const error = useSelector(state => state.users.error);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [info, setInfo] = useState(false);
 
   return (auth.uid ?
-    <Navigate to={'/board'} /> :
+    <Navigate to='/board' /> :
     <FrontLayout>
       <Typography variant='h4' m={2}>
         Sign Up

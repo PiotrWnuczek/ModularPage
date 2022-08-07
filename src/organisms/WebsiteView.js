@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { updateWebsite } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { Box } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import WebsiteExit from 'atoms/WebsiteExit';
 import WebsiteOptions from 'atoms/WebsiteOptions';
 import SectionCreate from 'atoms/SectionCreate';
@@ -18,6 +18,7 @@ const WebsiteView = ({ admin, host }) => {
   const auth = useSelector(state => state.firebase.auth);
   useFirestoreConnect([{ storeAs: wid, collection: 'websites', doc: wid }]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [data, setData] = useState(website && [...website.sections]);
   useEffect(() => { setData(website && [...website.sections]) }, [website]);
   const access = website && admin && auth.email === website.email;
@@ -77,14 +78,28 @@ const WebsiteView = ({ admin, host }) => {
           )}
         </Droppable>
       </DragDropContext>}
-      {!access && data && data.map(item =>
-        <BlockTemplate
-          admin={access}
-          website={website}
-          section={item}
-          key={item.id}
-        />
-      )}
+      {!access && website && website.public &&
+        data && data.map(item =>
+          <BlockTemplate
+            admin={access}
+            website={website}
+            section={item}
+            key={item.id}
+          />
+        )}
+      {!access && !(website && website.public) &&
+        <Box sx={{ textAlign: 'center', m: 5 }}>
+          <Typography variant='h6'>
+            Page not public
+          </Typography>
+          <Button
+            onClick={() => navigate('/')}
+            size='small'
+          >
+            Modular Page
+          </Button>
+        </Box>
+      }
     </Box>
   )
 };
