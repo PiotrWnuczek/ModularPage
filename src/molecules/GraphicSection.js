@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { updateSection } from 'redux/websitesSlice';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Box, Typography } from '@mui/material';
 import { TextField, IconButton } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
@@ -10,9 +11,11 @@ import remarkGfm from 'remark-gfm';
 import Picture from 'stock/picture.png';
 
 const GraphicSection = ({ admin, website, section }) => {
+  const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
   const [title, setTitle] = useState(false);
   const [text, setText] = useState(false);
+  const [info, setInfo] = useState(false);
 
   return (
     <Grid container>
@@ -128,12 +131,40 @@ const GraphicSection = ({ admin, website, section }) => {
       >
         <Box
           sx={{
-            width: '100%', height: 'auto',
-            maxWidth: 400,
+            cursor: admin && 'pointer', position: 'relative',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}
-          component='img'
-          src={Picture}
-        />
+          component='label'
+        >
+          <Box
+            sx={{
+              opacity: (info || loading) && 0.5,
+              width: '100%', height: 'auto', maxWidth: 400
+            }}
+            src={section.url || Picture}
+            component='img'
+          />
+          {admin && <Box
+            onChange={(e) => {
+              if (e.target.files[0] && e.target.files[0].size < 500 * 1024) {
+                dispatch(updateSection({
+                  file: e.target.files[0],
+                  sid: section.id,
+                  wid: website.name,
+                }));
+              } else { setInfo(true) }
+            }}
+            component='input'
+            type='file'
+            hidden
+          />}
+          <Box sx={{ position: 'absolute' }}>
+            {info && <Typography variant='h6'>
+              Maximum file size is 500 KB
+            </Typography>}
+            {loading && <CircularProgress size={100} />}
+          </Box>
+        </Box>
       </Grid>
     </Grid>
   )

@@ -129,12 +129,12 @@ const SignupView = () => {
             >
               Sign In
             </Button>
-            {error && <p>
+            {error && <Typography>
               {error.replace('Firebase: ', '').replace(/\(.+\)\.?/, '')}
-            </p>}
-            {info && <p>
+            </Typography>}
+            {info && <Typography>
               Passowrds are not identical
-            </p>}
+            </Typography>}
           </form>
         )}
       </Formik>
