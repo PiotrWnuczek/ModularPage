@@ -59,26 +59,16 @@ export const createSection = createAsyncThunk(
 );
 
 export const updateSection = createAsyncThunk(
-  'updateSection', async ({ values, file, sid, wid }, thunk) => {
-    const firebase = thunk.extra.getFirebase();
+  'updateSection', async ({ values, sid, wid }, thunk) => {
     const firestore = thunk.extra.getFirestore();
     const sections = thunk.getState().firestore.data[wid].sections;
-    const storage = firebase.storage().ref(wid).child(sid);
     const ref = firestore.collection('websites');
     try {
-      return await (
-        file ? storage.put(file).then(() => storage.getDownloadURL().then((url) => (
-          ref.doc(wid).update({
-            sections: sections.map(
-              section => section.id === sid ? { ...section, url } : section
-            ),
-          }).then(() => file)
-        ))) : ref.doc(wid).update({
-          sections: sections.map(
-            section => section.id === sid ? { ...section, ...values } : section
-          ),
-        }).then(() => values)
-      );
+      return await ref.doc(wid).update({
+        sections: sections.map(
+          section => section.id === sid ? { ...section, ...values } : section
+        ),
+      }).then(() => values);
     } catch (error) { throw error }
   },
 );
@@ -92,6 +82,25 @@ export const removeSection = createAsyncThunk(
       return await ref.doc(wid).update({
         sections: sections.filter(section => section.id !== sid),
       }).then(() => sid);
+    } catch (error) { throw error }
+  },
+);
+
+export const updateFile = createAsyncThunk(
+  'updateFile', async ({ file, sid, wid }, thunk) => {
+    const firebase = thunk.extra.getFirebase();
+    const firestore = thunk.extra.getFirestore();
+    const sections = thunk.getState().firestore.data[wid].sections;
+    const storage = firebase.storage().ref(wid).child(sid);
+    const ref = firestore.collection('websites');
+    try {
+      return await storage.put(file).then(() => storage.getDownloadURL().then((url) => (
+        ref.doc(wid).update({
+          sections: sections.map(
+            section => section.id === sid ? { ...section, url } : section
+          ),
+        }).then(() => file)
+      )));
     } catch (error) { throw error }
   },
 );
@@ -131,17 +140,13 @@ const websitesSlice = createSlice({
       console.log(action.type, action.error);
       return state;
     },
-    [updateSection.pending]: (state, action) => {
-      console.log(action.type, action.payload);
-      return { ...state, loading: true };
-    },
     [updateSection.fulfilled]: (state, action) => {
       console.log(action.type, action.payload);
-      return { ...state, loading: false };
+      return state;
     },
     [updateSection.rejected]: (state, action) => {
       console.log(action.type, action.error);
-      return { ...state, loading: false };
+      return state;
     },
     [removeSection.fulfilled]: (state, action) => {
       console.log(action.type, action.payload);
@@ -150,6 +155,18 @@ const websitesSlice = createSlice({
     [removeSection.rejected]: (state, action) => {
       console.log(action.type, action.error);
       return state;
+    },
+    [updateFile.pending]: (state, action) => {
+      console.log(action.type, action.payload);
+      return { ...state, loading: true };
+    },
+    [updateFile.fulfilled]: (state, action) => {
+      console.log(action.type, action.payload);
+      return { ...state, loading: false };
+    },
+    [updateFile.rejected]: (state, action) => {
+      console.log(action.type, action.error);
+      return { ...state, loading: false };
     },
   },
 });

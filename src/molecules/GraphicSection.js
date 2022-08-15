@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { updateSection } from 'redux/websitesSlice';
+import { updateSection, updateFile } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Box, Typography } from '@mui/material';
-import { TextField, IconButton } from '@mui/material';
+import { Grid, Box, Typography, Button } from '@mui/material';
+import { TextField, IconButton, Link } from '@mui/material';
 import { CircularProgress } from '@mui/material';
 import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Picture from 'stock/picture.png';
+import ButtonOptions from 'atoms/ButtonOptions';
 
 const GraphicSection = ({ admin, website, section }) => {
   const loading = useSelector(state => state.websites.loading);
@@ -41,7 +42,8 @@ const GraphicSection = ({ admin, website, section }) => {
           {title && admin && <Formik
             initialValues={{ title: section.title || 'New Title' }}
             onSubmit={(values) => {
-              dispatch(updateSection({ values, sid: section.id, wid: website.name }));
+              values.title !== section.title &&
+                dispatch(updateSection({ values, sid: section.id, wid: website.name }));
               setTitle(false);
             }}
           >
@@ -87,7 +89,8 @@ const GraphicSection = ({ admin, website, section }) => {
           {text && admin && <Formik
             initialValues={{ text: section.text || 'New Text' }}
             onSubmit={(values) => {
-              dispatch(updateSection({ values, sid: section.id, wid: website.name }));
+              values.text !== section.text &&
+                dispatch(updateSection({ values, sid: section.id, wid: website.name }));
               setText(false);
             }}
           >
@@ -120,6 +123,19 @@ const GraphicSection = ({ admin, website, section }) => {
               </form>
             )}
           </Formik>}
+          {admin && <ButtonOptions section={section} wid={website.name}>
+            <Button variant='contained'>
+              {section.button || 'New Button'}
+            </Button>
+          </ButtonOptions>}
+          {!admin && <Button
+            component={Link}
+            href={section.link || '#'}
+            target='_blank'
+            variant='contained'
+          >
+            {section.button || 'Button'}
+          </Button>}
         </Box>
       </Grid>
       <Grid
@@ -131,23 +147,23 @@ const GraphicSection = ({ admin, website, section }) => {
       >
         <Box
           sx={{
-            cursor: admin && 'pointer', position: 'relative',
+            cursor: admin && 'pointer', position: 'relative', textAlign: 'center',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}
           component='label'
         >
           <Box
             sx={{
-              opacity: (info || loading) && 0.5,
+              opacity: admin && (info || loading) && 0.5,
               width: '100%', height: 'auto', maxWidth: 400
             }}
             src={section.url || Picture}
             component='img'
           />
-          {admin && <Box
+          {admin && !info && <Box
             onChange={(e) => {
               if (e.target.files[0] && e.target.files[0].size < 500 * 1024) {
-                dispatch(updateSection({
+                dispatch(updateFile({
                   file: e.target.files[0],
                   sid: section.id,
                   wid: website.name,
@@ -158,12 +174,19 @@ const GraphicSection = ({ admin, website, section }) => {
             type='file'
             hidden
           />}
-          <Box sx={{ position: 'absolute' }}>
+          {admin && info && <Box
+            onClick={() => setInfo(false)}
+            component='input'
+            type='button'
+            hidden
+          />}
+          {admin && <Box sx={{ position: 'absolute' }}>
             {info && <Typography variant='h6'>
-              Maximum file size is 500 KB
+              Maximum file size is 500 KB <br />
+              Click to return to the previous file
             </Typography>}
             {loading && <CircularProgress size={100} />}
-          </Box>
+          </Box>}
         </Box>
       </Grid>
     </Grid>

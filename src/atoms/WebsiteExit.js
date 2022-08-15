@@ -35,6 +35,7 @@ const WebsiteExit = () => {
             Changes saved. Exit to board.
           </Typography>
           <Button
+            sx={{ mt: 1 }}
             onClick={() => {
               navigate('/board');
               setOpen(false);

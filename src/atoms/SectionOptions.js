@@ -32,6 +32,7 @@ const SectionOptions = ({ section }) => {
             {section && section.type}
           </Typography>
           <Button
+            sx={{ mt: 1 }}
             onClick={() => {
               console.log('set');
               setOpen(false);

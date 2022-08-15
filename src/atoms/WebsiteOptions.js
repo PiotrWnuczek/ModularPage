@@ -33,6 +33,7 @@ const WebsiteOptions = ({ website }) => {
             {website && website.name}
           </Typography>
           <Button
+            sx={{ mt: 1 }}
             onClick={() => {
               console.log('set');
               setOpen(false);
