@@ -23,7 +23,7 @@ const ScrollTop = ({ children }) => {
 };
 
 const App = () => {
-  const active = false;
+  const active = true;
   const host = 'localhost:3000';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
