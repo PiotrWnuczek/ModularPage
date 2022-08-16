@@ -4,7 +4,7 @@ import { TextField, Button } from '@mui/material';
 import { blue } from '@mui/material/colors';
 import { Formik } from 'formik';
 
-const FormSection = () => {
+const FormSection = ({ lang }) => {
   const [info, setInfo] = useState(false);
 
   const submit = (values) => {
@@ -36,7 +36,8 @@ const FormSection = () => {
         }}
         variant='h2'
       >
-        Zapisz się na listę oczekujących
+        {lang === 'en' && 'Subscribe to the waiting list'}
+        {lang === 'pl' && 'Zapisz się na listę oczekujących'}
       </Typography>
       <Typography
         sx={{
@@ -45,8 +46,8 @@ const FormSection = () => {
         }}
         variant='subtitle2'
       >
-        Wybierz minimalizm i szybkość zamiast przeklikiwać się
-        przez setki opcji rozbudowanych kreatorów
+        {lang === 'en' && 'Choose minimalism and speed instead of clicking through hundreds of options of extensive wizards'}
+        {lang === 'pl' && 'Wybierz minimalizm i szybkość zamiast przeklikiwać się przez setki opcji rozbudowanych kreatorów'}
       </Typography>
       <Formik
         initialValues={{ email: '' }}
@@ -77,7 +78,8 @@ const FormSection = () => {
                   variant='contained'
                   fullWidth
                 >
-                  Zapisz się
+                  {lang === 'en' && 'Sign up'}
+                  {lang === 'pl' && 'Zapisz się'}
                 </Button>
               </Grid>
             </Grid>
@@ -88,7 +90,12 @@ const FormSection = () => {
         sx={{ mt: 3, fontSize: { xs: 10, md: 12 } }}
         variant='body2'
       >
-        {info ? 'Dziękuję, więcej informacji znajdziesz w mailu, sprawdź swoją skrzynkę mailową.' : 'Klikając przycisk „zapisz się” wyrażasz zgodę na otrzymywanie na podany adres e-mail newslettera zawierającego informacje o aplikacji Modular Page. Możesz zrezygnować z newslettera w każdym czasie klikając w link „wypisz się z listy” w wiadomości marketingowej. Szczegółowe informacje o przetwarzaniu twoich danych osobowych znajdziesz w Polityce Prywatności.'}
+        {lang === 'en' && (info ?
+          'Thank you, more information can be found in the e-mail, check your e-mail address.' :
+          'By clicking the "sign up" button, you agree to receive a newsletter containing information about the Modular Page application to the e-mail address provided. You can unsubscribe from the newsletter at any time by clicking the "unsubscribe" link in the marketing message. Detailed information on the processing of your personal data can be found in the Privacy Policy.')}
+        {lang === 'pl' && (info ?
+          'Dziękuję, więcej informacji znajdziesz w mailu, sprawdź swoją skrzynkę mailową.' :
+          'Klikając przycisk „zapisz się” wyrażasz zgodę na otrzymywanie na podany adres e-mail newslettera zawierającego informacje o aplikacji Modular Page. Możesz zrezygnować z newslettera w każdym czasie klikając w link „wypisz się z listy” w wiadomości marketingowej. Szczegółowe informacje o przetwarzaniu twoich danych osobowych znajdziesz w Polityce Prywatności.')}
       </Typography>
     </Box>
   )

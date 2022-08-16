@@ -5,13 +5,13 @@ import BasicLayout from 'about/BasicLayout';
 import HeroSection from 'about/HeroSection';
 import FormSection from 'about/FormSection';
 
-const AboutView = () => {
+const AboutView = ({ lang }) => {
   const navigate = useNavigate();
 
   return (
-    <BasicLayout>
-      <HeroSection />
-      <FormSection />
+    <BasicLayout lang={lang}>
+      <HeroSection lang={lang} />
+      <FormSection lang={lang} />
       <Box sx={{ p: 5, bgcolor: 'secondary.light' }}>
         <Box sx={{
           display: 'flex', flexWrap: 'wrap',
@@ -19,17 +19,19 @@ const AboutView = () => {
         }}>
           <Button
             sx={{ mx: 1 }}
-            onClick={() => navigate('/privacy')}
+            onClick={() => navigate('/' + lang + '/privacy')}
             size='small'
           >
-            Polityka Prywatności
+            {lang === 'en' && 'Privacy Policy'}
+            {lang === 'pl' && 'Polityka Prywatności'}
           </Button>
           <Button
             sx={{ mx: 1 }}
-            onClick={() => navigate('/rules')}
+            onClick={() => navigate('/' + lang + '/rules')}
             size='small'
           >
-            Regulamin Newslettera
+            {lang === 'en' && 'Newsletter Rules'}
+            {lang === 'pl' && 'Regulamin Newslettera'}
           </Button>
         </Box>
         <Box sx={{

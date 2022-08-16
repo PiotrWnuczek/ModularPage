@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Box, Typography } from '@mui/material';
 import Picture from 'stock/picture.png';
 
-const HeroSection = () => (
+const HeroSection = ({ lang }) => (
   <Grid
     sx={{ py: 5, px: { xs: 5, md: 30 } }}
     container
@@ -22,7 +22,8 @@ const HeroSection = () => (
           }}
           variant='h1'
         >
-          Uruchom stronę internetową dla twojego produktu w kilka minut
+          {lang === 'en' && 'Launch a website for your product in minutes'}
+          {lang === 'pl' && 'Uruchom stronę internetową dla twojego produktu w kilka minut'}
         </Typography>
         <Typography
           sx={{
@@ -31,7 +32,8 @@ const HeroSection = () => (
           }}
           variant='subtitle1'
         >
-          Zbuduj stronę z kilku prostych modułów w przeciągu minut, dołącz formularz zapisu na listę mailingową lub przycisk płatności w kilku kliknięciach
+          {lang === 'en' && 'Build a website from a few simple modules in minutes, attach a form to sign up for a mailing list or a payment button in a few clicks'}
+          {lang === 'pl' && 'Zbuduj stronę z kilku prostych modułów w przeciągu minut, dołącz formularz zapisu na listę mailingową lub przycisk płatności w kilku kliknięciach'}
         </Typography>
       </Box>
     </Grid>

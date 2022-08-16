@@ -4,7 +4,59 @@ import BasicLayout from 'about/BasicLayout';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-const privacy = `
+const privacyEn = `
+  ### Privacy policy
+
+  In this document you will find the rules for the processing of personal data and the use of cookies in connection with the use of the modularpage.com website.
+
+  The website administrator is Piotr Wnuczek.
+
+  In case of any doubts related to the privacy policy, you can contact us at any time by sending a message to the address contact@piotrwnuczek.pl.
+
+  #### The most important information
+
+  By subscribing to the newsletter or contacting us, you provide us with your personal data, and we guarantee that your data will remain confidential, secure and will not be disclosed to any third parties without your express consent.
+
+  We entrust the processing of personal data only to verified and trusted entities providing services related to the processing of personal data.
+
+  We use Google Analytics analytical tools that collect information about your website visits, such as the subpages you have displayed, the time you spent on the website or the transitions between individual subpages. For this purpose, Google LLC cookies are used for the Google Analytics service.
+
+  #### Security
+
+  We guarantee the confidentiality of all personal data provided to us. We ensure that all security and personal data protection measures required by the provisions on the protection of personal data are taken. Personal data is collected with due diligence and properly protected against access by unauthorized persons.
+
+  #### List of assignments
+
+  We entrust the processing of personal data to UAB Sender.lt, located at Perkūnkiemio 4A, Vilnius, Lithuania - in order to use the mailing system in which your data is processed, if you subscribed to the newsletter.
+
+  All entities entrusted with the processing of personal data guarantee the application of appropriate measures for the protection and security of personal data required by law.
+
+  #### Newsletter
+
+  If you want to subscribe to the newsletter, you must provide us with your e-mail address via the newsletter subscription form.
+
+  The data provided to us when subscribing to the newsletter is used to send you the newsletter, and the legal basis for their processing is your consent expressed when subscribing to the newsletter.
+
+  The data is processed as part of the MailerLite mailing system and stored on a server provided by MailerLite.
+
+  The data will be processed for the duration of the newsletter, unless you unsubscribe earlier, which will delete your data from the database.
+
+  You can correct your data stored in the newsletter database at any time, as well as request their removal by resigning from receiving the newsletter. You also have the right to data portability.
+
+  #### E-mail contact
+
+  By contacting us via e-mail, including sending an inquiry via the contact form, you naturally provide us with your e-mail address as the sender's address. In addition, you can also include other personal data in the text of the message.
+
+  In this case, your data is processed in order to contact you, and the basis for processing is your consent resulting from initiating contact with us. The legal basis for processing after the end of contact is the justified purpose of archiving correspondence for internal purposes.
+
+  The content of the correspondence may be archived and we are not able to clearly determine when it will be deleted. You have the right to request a history of correspondence with us (if it is subject to archiving), as well as request its removal, unless its archiving is justified due to our overriding interests, e.g. defense against potential claims on your part.
+
+  #### Cookies
+
+  Our website, like most modern websites, uses cookies to track website statistics, such as the number of visitors, type of operating system and web browser used to browse the website, time spent on the website, subpages visited, etc. We use Google Analytics in this regard, which involves the use of Google LLC cookies.
+`;
+
+const privacyPl = `
   ### Polityka Prywatności
 
   W tym dokumencie znajdziesz zasady przetwarzania danych osobowych oraz wykorzystywania plików cookies w związku z korzystaniem ze strony internetowej modularpage.com.
@@ -56,10 +108,17 @@ const privacy = `
   Nasza strona, podobnie jak większość współczesnych stron internetowych, wykorzystuje cookies do śledzenia statystyk strony, takich jak liczba osób odwiedzających, rodzaj systemu operacyjnego i przeglądarki internetowej wykorzystywanej do przeglądania strony, czas spędzony na stronie, odwiedzane podstrony etc. Korzystamy w tym zakresie z Google Analytics, co wiąże się z wykorzystaniem plików cookies firmy Google LLC.
 `;
 
-const PrivacyView = () => (
-  <BasicLayout>
+const PrivacyView = ({ lang }) => (
+  <BasicLayout lang={lang}>
     <Box sx={{ py: 2, px: { xs: 5, md: 20 } }}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]} children={privacy} />
+      {lang === 'en' && <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        children={privacyEn}
+      />}
+      {lang === 'pl' && <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        children={privacyPl}
+      />}
     </Box>
   </BasicLayout>
 );

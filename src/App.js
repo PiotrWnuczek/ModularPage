@@ -23,6 +23,8 @@ const ScrollTop = ({ children }) => {
 };
 
 const App = () => {
+  const active = false;
+  const host = 'localhost:3000';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
   const theme = createTheme({
@@ -36,11 +38,14 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <ScrollTop>
-          {window.location.host === 'localhost:3000' ? <Routes>
-            <Route path='/about' element={<AboutView />} />
-            <Route path='/privacy' element={<PrivacyView />} />
-            <Route path='/rules' element={<RulesView />} />
+        {active && <ScrollTop>
+          {window.location.host === host ? <Routes>
+            <Route path='/en' element={<AboutView lang='en' />} />
+            <Route path='/pl' element={<AboutView lang='pl' />} />
+            <Route path='/en/privacy' element={<PrivacyView lang='en' />} />
+            <Route path='/pl/privacy' element={<PrivacyView lang='pl' />} />
+            <Route path='/en/rules' element={<RulesView lang='en' />} />
+            <Route path='/pl/rules' element={<RulesView lang='pl' />} />
             <Route path='/signin' element={<SigninView />} />
             <Route path='/signup' element={<SignupView />} />
             <Route path='/board' element={access ? <BoardView /> : <Navigate to='/signin' />} />
@@ -51,7 +56,18 @@ const App = () => {
           </Routes> : <Routes>
             <Route path='/*' element={<WebsiteView host={window.location.host} />} />
           </Routes>}
-        </ScrollTop>
+        </ScrollTop>}
+        {!active && <ScrollTop>
+          <Routes>
+            <Route path='/en' element={<AboutView lang='en' />} />
+            <Route path='/pl' element={<AboutView lang='pl' />} />
+            <Route path='/en/privacy' element={<PrivacyView lang='en' />} />
+            <Route path='/pl/privacy' element={<PrivacyView lang='pl' />} />
+            <Route path='/en/rules' element={<RulesView lang='en' />} />
+            <Route path='/pl/rules' element={<RulesView lang='pl' />} />
+            <Route path='/*' element={<Navigate to='/en' />} />
+          </Routes>
+        </ScrollTop>}
       </BrowserRouter>
     </ThemeProvider>
   )
