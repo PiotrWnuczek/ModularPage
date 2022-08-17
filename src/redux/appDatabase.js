@@ -1,9 +1,10 @@
 import firebase from 'firebase/compat/app';
-import 'firebase/compat/analytics';
-import 'firebase/compat/firestore';
-import 'firebase/compat/database';
 import 'firebase/compat/auth';
+import 'firebase/compat/database';
+import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
+import 'firebase/compat/functions';
+import 'firebase/compat/analytics';
 
 firebase.initializeApp({
   apiKey: 'AIzaSyDPmdrdhIhUBmaar-42pgjlorzpSwucm6Y',
@@ -15,7 +16,8 @@ firebase.initializeApp({
   measurementId: 'G-FZFHBV2S54',
 });
 
-firebase.analytics();
 firebase.firestore().settings({ timestampsInSnapshots: true, merge: true });
+firebase.functions().useEmulator('localhost', 5001);
+firebase.analytics();
 
 export default firebase;

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
-import { Grid } from '@mui/material';
+import { useFirebase } from 'react-redux-firebase';
+import { Grid, Box, Button } from '@mui/material';
 import MainLayout from 'organisms/MainLayout';
 import WebsiteCard from 'molecules/WebsiteCard';
 
@@ -9,6 +10,13 @@ const BoardView = () => {
   const websites = useSelector(state => state.firestore.ordered.websites);
   const auth = useSelector(state => state.firebase.auth);
   useFirestoreConnect([{ collection: 'websites', where: [['email', '==', auth.email]] }]);
+  const firebase = useFirebase();
+  const cloudFunction = () => {
+    const test = firebase.functions().httpsCallable('test');
+    test({ uid: 'uid' }).then((result) => {
+      console.log(result)
+    });
+  };
 
   return (
     <MainLayout>
@@ -19,6 +27,11 @@ const BoardView = () => {
           </Grid>
         )}
       </Grid>
+      <Box sx={{ p: 2 }}>
+        <Button onClick={() => cloudFunction()}>
+          Test
+        </Button>
+      </Box>
     </MainLayout>
   )
 };
