@@ -12,10 +12,8 @@ const BoardView = () => {
   useFirestoreConnect([{ collection: 'websites', where: [['email', '==', auth.email]] }]);
   const firebase = useFirebase();
   const cloudFunction = () => {
-    const test = firebase.functions().httpsCallable('test');
-    test({ uid: 'uid' }).then((result) => {
-      console.log(result)
-    });
+    const sender = firebase.functions().httpsCallable('sender');
+    sender({ email: 'piotrantoniwnuczek@gmail.com', group: 'e5773A' }).then((result) => console.log(result));
   };
 
   return (
