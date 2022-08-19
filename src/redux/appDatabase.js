@@ -17,8 +17,8 @@ firebase.initializeApp({
 });
 
 firebase.firestore().settings({ timestampsInSnapshots: true, merge: true });
-firebase.functions().useEmulator('localhost', 5001);
-//firebase.functions();
+//firebase.functions().useEmulator('localhost', 5001);
+firebase.functions();
 firebase.analytics();
 
 export default firebase;
