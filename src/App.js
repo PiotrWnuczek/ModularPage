@@ -10,6 +10,7 @@ import { ThemeProvider } from '@mui/material';
 import SigninView from 'organisms/SigninView';
 import SignupView from 'organisms/SignupView';
 import WebsiteView from 'organisms/WebsiteView';
+import AccountView from 'organisms/AccountView';
 import BoardView from 'organisms/BoardView';
 import CreateView from 'organisms/CreateView';
 import AboutView from 'about/AboutView';
@@ -27,6 +28,7 @@ const App = () => {
   const host = 'localhost:3000';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
+
   const theme = createTheme({
     typography: { fontFamily: 'Lato' },
     palette: {
@@ -48,6 +50,7 @@ const App = () => {
             <Route path='/pl/rules' element={<RulesView lang='pl' />} />
             <Route path='/signin' element={<SigninView />} />
             <Route path='/signup' element={<SignupView />} />
+            <Route path='/account' element={access ? <AccountView /> : <Navigate to='/signin' />} />
             <Route path='/board' element={access ? <BoardView /> : <Navigate to='/signin' />} />
             <Route path='/create' element={access ? <CreateView /> : <Navigate to='/signin' />} />
             <Route path='/:id/*' element={access ? <WebsiteView /> : <Navigate to='/signin' />} />

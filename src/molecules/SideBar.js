@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Drawer, Avatar, List, ListItem } from '@mui/material';
 import { ListItemText, ListItemAvatar } from '@mui/material';
-import { Add, Dashboard, Logout } from '@mui/icons-material';
+import { Add, Dashboard, Logout, Person } from '@mui/icons-material';
 
 const SideBar = ({ main, ...props }) => {
   const dispatch = useDispatch();
@@ -14,6 +14,22 @@ const SideBar = ({ main, ...props }) => {
   return (
     <Drawer {...props}>
       <List>
+        <ListItem
+          sx={{ textTransform: 'uppercase' }}
+          selected={location.pathname === '/account'}
+          onClick={() => navigate('/account')}
+          button
+        >
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: 'primary.main' }}>
+              <Person />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText
+            sx={{ display: { xs: 'none', md: 'block' } }}
+            secondary='Account'
+          />
+        </ListItem>
         <ListItem
           sx={{ textTransform: 'uppercase' }}
           selected={location.pathname === '/board'}

@@ -10,7 +10,7 @@ import Picture from 'stock/picture.png';
 import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
 
-const GraphicSection = ({ admin, website, section }) => {
+const GraphicSection = ({ admin, section, wid }) => {
   const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
   const [info, setInfo] = useState(false);
@@ -29,7 +29,7 @@ const GraphicSection = ({ admin, website, section }) => {
             type='title'
             admin={admin}
             section={section}
-            wid={website.name}
+            wid={wid}
           >
             <Typography
               sx={{
@@ -45,7 +45,7 @@ const GraphicSection = ({ admin, website, section }) => {
             type='text'
             admin={admin}
             section={section}
-            wid={website.name}
+            wid={wid}
           >
             <Box sx={{
               mt: 1, fontSize: { xs: 14, md: 18 },
@@ -56,7 +56,7 @@ const GraphicSection = ({ admin, website, section }) => {
               </ReactMarkdown>
             </Box>
           </TextEditor>
-          {admin && <ButtonOptions section={section} wid={website.name}>
+          {admin && <ButtonOptions section={section} wid={wid}>
             <Button variant='outlined'>
               {section.button || 'New Button'}
             </Button>
@@ -97,9 +97,7 @@ const GraphicSection = ({ admin, website, section }) => {
             onChange={(e) => {
               if (e.target.files[0] && e.target.files[0].size < 500 * 1024) {
                 dispatch(createFile({
-                  file: e.target.files[0],
-                  sid: section.id,
-                  wid: website.name,
+                  file: e.target.files[0], sid: section.id, wid,
                 }));
               } else { setInfo(true) }
             }}

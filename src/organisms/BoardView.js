@@ -1,7 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
-import { Grid } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Grid, Box, Avatar } from '@mui/material';
+import { Add } from '@mui/icons-material';
 import MainLayout from 'organisms/MainLayout';
 import WebsiteCard from 'molecules/WebsiteCard';
 
@@ -9,6 +11,7 @@ const BoardView = () => {
   const websites = useSelector(state => state.firestore.ordered.websites);
   const auth = useSelector(state => state.firebase.auth);
   useFirestoreConnect([{ collection: 'websites', where: [['email', '==', auth.email]] }]);
+  const navigate = useNavigate();
 
   return (
     <MainLayout>
@@ -19,6 +22,18 @@ const BoardView = () => {
           </Grid>
         )}
       </Grid>
+      <Box sx={{ position: 'fixed', bottom: 33, right: 33 }}>
+        <Avatar
+          sx={{
+            width: 55, height: 55,
+            cursor: 'pointer', bgcolor: 'primary.main',
+            '&:hover': { bgcolor: 'primary.dark' },
+          }}
+          onClick={() => navigate('/create')}
+        >
+          <Add />
+        </Avatar>
+      </Box>
     </MainLayout>
   )
 };

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { updateSection } from 'redux/websitesSlice';
+import { updateSection, updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
-import { Box, TextField, IconButton } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
+import { TextField } from '@mui/material';
 import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 
@@ -20,8 +21,12 @@ const TextEditor = ({ children, type, admin, section, wid }) => {
       {text && admin && type === 'title' && <Formik
         initialValues={{ title: section.title || 'New Title' }}
         onSubmit={(values) => {
-          values.title !== section.title &&
+          section.id && (values.title !== section.title) &&
             dispatch(updateSection({ values, sid: section.id, wid }));
+          section.type === 'header' && (values.title !== section.title) &&
+            dispatch(updateWebsite({
+              values: { header: { ...section, ...values } }, wid,
+            }));
           setText(false);
         }}
       >
@@ -55,8 +60,12 @@ const TextEditor = ({ children, type, admin, section, wid }) => {
       {text && admin && type === 'text' && <Formik
         initialValues={{ text: section.text || 'New Text' }}
         onSubmit={(values) => {
-          values.text !== section.text &&
+          section.id && (values.text !== section.text) &&
             dispatch(updateSection({ values, sid: section.id, wid }));
+          section.type === 'footer' && (values.text !== section.text) &&
+            dispatch(updateWebsite({
+              values: { footer: { ...section, ...values } }, wid,
+            }));
           setText(false);
         }}
       >

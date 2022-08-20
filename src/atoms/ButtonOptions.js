@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { updateSection } from 'redux/websitesSlice';
+import { updateSection, updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { Box, Dialog, Typography } from '@mui/material';
 import { Button, TextField } from '@mui/material';
@@ -33,8 +33,14 @@ const ButtonOptions = ({ children, section, wid }) => {
               link: section.link || '#',
             }}
             onSubmit={(values) => {
-              (values.button !== section.button || values.link !== section.link) &&
+              section.id &&
+                (values.button !== section.button || values.link !== section.link) &&
                 dispatch(updateSection({ values, sid: section.id, wid }));
+              section.type === 'header' &&
+                (values.button !== section.button || values.link !== section.link) &&
+                dispatch(updateWebsite({
+                  values: { header: { ...section, ...values } }, wid,
+                }));
               setOpen(false);
             }}
           >

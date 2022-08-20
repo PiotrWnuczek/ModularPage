@@ -46,7 +46,9 @@ const WebsiteView = ({ admin, host }) => {
       >
         <SectionCreate wid={website.name} index={0} start />
       </Box>}
-      {website && website.public && <HeaderSection />}
+      {website && website.public && website.header && <HeaderSection
+        admin={access} header={website.header} wid={website.name}
+      />}
       {access && <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (
@@ -67,8 +69,8 @@ const WebsiteView = ({ admin, host }) => {
                     >
                       <BlockTemplate
                         admin={access}
-                        website={website}
                         section={item}
+                        wid={website.name}
                         index={index + 1}
                         drag={provided.dragHandleProps}
                       />
@@ -85,12 +87,14 @@ const WebsiteView = ({ admin, host }) => {
         data && data.map(item =>
           <BlockTemplate
             admin={access}
-            website={website}
             section={item}
+            wid={website.name}
             key={item.id}
           />
         )}
-      {website && website.public && <FooterSection />}
+      {website && website.public && website.footer && <FooterSection
+        admin={access} footer={website.footer} wid={website.name}
+      />}
       {!access && !(website && website.public) &&
         <Box sx={{ textAlign: 'center', m: 5 }}>
           <Typography variant='h6'>

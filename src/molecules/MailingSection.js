@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 import FormOptions from 'atoms/FormOptions';
 
-const MailingSection = ({ admin, website, section }) => {
+const MailingSection = ({ admin, section, wid }) => {
   const firebase = useFirebase();
   const senderFunction = (email) => {
     const sender = firebase.functions().httpsCallable('sender');
@@ -21,7 +21,7 @@ const MailingSection = ({ admin, website, section }) => {
         type='title'
         admin={admin}
         section={section}
-        wid={website.name}
+        wid={wid}
       >
         <Typography
           sx={{
@@ -37,7 +37,7 @@ const MailingSection = ({ admin, website, section }) => {
         type='text'
         admin={admin}
         section={section}
-        wid={website.name}
+        wid={wid}
       >
         <Box sx={{
           mt: 1, fontSize: { xs: 14, md: 18 },
@@ -48,7 +48,7 @@ const MailingSection = ({ admin, website, section }) => {
           </ReactMarkdown>
         </Box>
       </TextEditor>
-      {admin && <FormOptions section={section} wid={website.name}>
+      {admin && <FormOptions section={section} wid={wid}>
         <Grid sx={{ px: { xs: 5, md: 10 } }} container spacing={1}>
           <Grid item xs={12} sm={9}>
             <TextField

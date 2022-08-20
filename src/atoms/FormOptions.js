@@ -34,8 +34,8 @@ const FormOptions = ({ children, section, wid }) => {
           </Typography>
           <Formik
             initialValues={{
-              sender: (profile && profile.sender) || 'New Sender Key',
-              group: section.group || 'New Sender Group',
+              sender: (profile && profile.sender) || 'Sender Key',
+              group: section.group || 'Sender Group',
               button: section.button || 'Subscribe',
             }}
             onSubmit={(values) => {

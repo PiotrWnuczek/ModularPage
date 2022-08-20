@@ -1,19 +1,14 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useFirestoreConnect } from 'react-redux-firebase';
 import { Box, Button, Dialog } from '@mui/material';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import PaymentOptions from 'atoms/PaymentOptions';
 
-const SellingSection = ({ admin, website, section }) => {
-  const auth = useSelector(state => state.firebase.auth);
-  const profile = useSelector(state => state.firestore.data[auth.uid]);
-  useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
+const SellingSection = ({ admin, section, wid }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <Box sx={{ p: 2, textAlign: 'center' }}>
-      {admin && <PaymentOptions section={section} wid={website.name}>
+      {admin && <PaymentOptions section={section} wid={wid}>
         <Button variant='outlined'>
           {section.button || 'But Now'}
         </Button>
@@ -31,7 +26,7 @@ const SellingSection = ({ admin, website, section }) => {
         fullWidth
       >
         <Box sx={{ p: 2, textAlign: 'center' }}>
-          <PayPalScriptProvider options={{ 'client-id': profile && profile.paypal }}>
+          <PayPalScriptProvider options={{ 'client-id': section.paypal }}>
             <PayPalButtons
               createOrder={(d, actions) => actions.order.create({
                 purchase_units: [{

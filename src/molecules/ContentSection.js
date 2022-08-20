@@ -5,13 +5,13 @@ import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
 
-const ContentSection = ({ admin, website, section }) => (
+const ContentSection = ({ admin, section, wid }) => (
   <Box sx={{ textAlign: 'center' }}>
     <TextEditor
       type='title'
       admin={admin}
       section={section}
-      wid={website.name}
+      wid={wid}
     >
       <Typography
         sx={{
@@ -27,7 +27,7 @@ const ContentSection = ({ admin, website, section }) => (
       type='text'
       admin={admin}
       section={section}
-      wid={website.name}
+      wid={wid}
     >
       <Box sx={{
         mt: 1, fontSize: { xs: 14, md: 18 },
@@ -38,7 +38,7 @@ const ContentSection = ({ admin, website, section }) => (
         </ReactMarkdown>
       </Box>
     </TextEditor>
-    {admin && <ButtonOptions section={section} wid={website.name}>
+    {admin && <ButtonOptions section={section} wid={wid}>
       <Button variant='outlined'>
         {section.button || 'New Button'}
       </Button>

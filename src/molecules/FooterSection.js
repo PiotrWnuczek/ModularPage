@@ -1,19 +1,26 @@
 import React from 'react';
-import { Box, Typography, Link } from '@mui/material';
+import { Box } from '@mui/material';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import TextEditor from 'atoms/TextEditor';
 
-const FooterSection = () => (
-  <Box sx={{ p: 5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <Typography>
-      Copyright © modularpage.com created by
-    </Typography>
-    <Link
-      sx={{ ml: 0.5 }}
-      href='https://piotrwnuczek.pl'
-      target='_blank'
-      underline='hover'
+const FooterSection = ({ admin, footer, wid }) => (
+  <Box sx={{ py: 6, px: { xs: 6, md: 24 }, textAlign: 'center' }}>
+    <TextEditor
+      type='text'
+      admin={admin}
+      section={footer}
+      wid={wid}
     >
-      Piotr Wnuczek
-    </Link>
+      <Box sx={{
+        mt: 1, fontSize: { xs: 14, md: 18 },
+        fontWeight: 400, letterSpacing: 1,
+      }}>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {footer.text || 'New Text'}
+        </ReactMarkdown>
+      </Box>
+    </TextEditor>
   </Box>
 );
 

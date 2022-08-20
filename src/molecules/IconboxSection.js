@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { Notes } from '@mui/icons-material';
 
-const IconBox = () => (
+const IconBox = ({ section }) => (
   <Grid
     sx={{ display: 'flex', justifyContent: 'center' }}
     item xs={12} md={4}
@@ -13,21 +13,21 @@ const IconBox = () => (
       }}>
         <Notes sx={{ mr: 1 }} />
         <Typography variant='h5'>
-          Iconbox
+          {section.title || 'New Title'}
         </Typography>
       </Box>
       <Typography variant='subtitle1'>
-        Lorem ipsum dolor sit amet, lorem ipsum dolor sit amet, lorem ipsum dolor sit amet
+        {section.text || 'New Text'}
       </Typography>
     </Box>
   </Grid>
 );
 
-const IconboxSection = () => (
+const IconboxSection = ({ section }) => (
   <Grid container spacing={2}>
-    <IconBox />
-    <IconBox />
-    <IconBox />
+    <IconBox section={section} />
+    <IconBox section={section} />
+    <IconBox section={section} />
   </Grid>
 );
 

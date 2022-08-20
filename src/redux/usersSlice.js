@@ -23,6 +23,7 @@ export const signupUser = createAsyncThunk(
           email: values.email,
           firstname: values.firstname,
           lastname: values.lastname,
+          plan: 'free',
         })
       )).then(() => values);
     } catch (error) { throw error }

@@ -50,7 +50,7 @@ const CreateView = () => {
                 </Avatar>
               }
               title='Custom Domain'
-              subheader='Pro Option (e.g. YourDomainName.com)'
+              subheader='Premium Option (e.g. YourDomainName.com)'
             />
           </CardActionArea>
         </Card>

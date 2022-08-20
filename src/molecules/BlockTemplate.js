@@ -10,7 +10,7 @@ import IconboxSection from 'molecules/IconboxSection';
 import MailingSection from 'molecules/MailingSection';
 import SellingSection from 'molecules/SellingSection';
 
-const BlockTemplate = ({ admin, website, section, index, drag }) => {
+const BlockTemplate = ({ admin, section, wid, index, drag }) => {
   const [hover, setHover] = useState(false);
 
   return (
@@ -41,27 +41,27 @@ const BlockTemplate = ({ admin, website, section, index, drag }) => {
       </Box>}
       {section.type === 'content' && <ContentSection
         admin={admin}
-        website={website}
+        wid={wid}
         section={section}
       />}
       {section.type === 'graphic' && <GraphicSection
         admin={admin}
-        website={website}
+        wid={wid}
         section={section}
       />}
       {section.type === 'iconbox' && <IconboxSection
         admin={admin}
-        website={website}
+        wid={wid}
         section={section}
       />}
       {section.type === 'mailing' && <MailingSection
         admin={admin}
-        website={website}
+        wid={wid}
         section={section}
       />}
       {section.type === 'selling' && <SellingSection
         admin={admin}
-        website={website}
+        wid={wid}
         section={section}
       />}
       {admin && <Box sx={{
@@ -69,9 +69,9 @@ const BlockTemplate = ({ admin, website, section, index, drag }) => {
         display: { xs: 'flex', md: hover ? 'flex' : 'none' },
         alignItems: 'center', justifyContent: 'center',
       }}>
-        <SectionCreate wid={website.name} index={index} />
+        <SectionCreate wid={wid} index={index} />
         <SectionRemove
-          sid={section.id} wid={website.name}
+          sid={section.id} wid={wid}
           file={section.type === 'graphic'}
         />
       </Box>}
