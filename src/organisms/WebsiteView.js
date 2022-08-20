@@ -10,6 +10,8 @@ import WebsiteExit from 'atoms/WebsiteExit';
 import WebsiteOptions from 'atoms/WebsiteOptions';
 import SectionCreate from 'atoms/SectionCreate';
 import BlockTemplate from 'molecules/BlockTemplate';
+import HeaderSection from 'molecules/HeaderSection';
+import FooterSection from 'molecules/FooterSection';
 
 const WebsiteView = ({ admin, host }) => {
   const { id } = useParams();
@@ -44,6 +46,7 @@ const WebsiteView = ({ admin, host }) => {
       >
         <SectionCreate wid={website.name} index={0} start />
       </Box>}
+      {website && website.public && <HeaderSection />}
       {access && <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId='droppable'>
           {(provided) => (
@@ -87,6 +90,7 @@ const WebsiteView = ({ admin, host }) => {
             key={item.id}
           />
         )}
+      {website && website.public && <FooterSection />}
       {!access && !(website && website.public) &&
         <Box sx={{ textAlign: 'center', m: 5 }}>
           <Typography variant='h6'>

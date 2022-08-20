@@ -70,7 +70,10 @@ const BlockTemplate = ({ admin, website, section, index, drag }) => {
         alignItems: 'center', justifyContent: 'center',
       }}>
         <SectionCreate wid={website.name} index={index} />
-        <SectionRemove sid={section.id} wid={website.name} />
+        <SectionRemove
+          sid={section.id} wid={website.name}
+          file={section.type === 'graphic'}
+        />
       </Box>}
     </Box>
   )

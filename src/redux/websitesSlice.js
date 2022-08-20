@@ -86,8 +86,8 @@ export const removeSection = createAsyncThunk(
   },
 );
 
-export const updateFile = createAsyncThunk(
-  'updateFile', async ({ file, sid, wid }, thunk) => {
+export const createFile = createAsyncThunk(
+  'createFile', async ({ file, sid, wid }, thunk) => {
     const firebase = thunk.extra.getFirebase();
     const firestore = thunk.extra.getFirestore();
     const sections = thunk.getState().firestore.data[wid].sections;
@@ -102,6 +102,15 @@ export const updateFile = createAsyncThunk(
         }).then(() => file)
       )));
     } catch (error) { throw error }
+  },
+);
+
+export const removeFile = createAsyncThunk(
+  'removeFile', async ({ sid, wid }, thunk) => {
+    const firebase = thunk.extra.getFirebase();
+    const storage = firebase.storage().ref(wid).child(sid);
+    try { return await storage.delete().then(() => sid) }
+    catch (error) { throw error }
   },
 );
 
@@ -156,17 +165,25 @@ const websitesSlice = createSlice({
       console.log(action.type, action.error);
       return state;
     },
-    [updateFile.pending]: (state, action) => {
+    [createFile.pending]: (state, action) => {
       console.log(action.type, action.payload);
       return { ...state, loading: true };
     },
-    [updateFile.fulfilled]: (state, action) => {
+    [createFile.fulfilled]: (state, action) => {
       console.log(action.type, action.payload);
       return { ...state, loading: false };
     },
-    [updateFile.rejected]: (state, action) => {
+    [createFile.rejected]: (state, action) => {
       console.log(action.type, action.error);
       return { ...state, loading: false };
+    },
+    [removeFile.fulfilled]: (state, action) => {
+      console.log(action.type, action.payload);
+      return state;
+    },
+    [removeFile.rejected]: (state, action) => {
+      console.log(action.type, action.error);
+      return state;
     },
   },
 });

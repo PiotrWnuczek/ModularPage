@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import { updateSection, updateFile } from 'redux/websitesSlice';
+import { createFile } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Box, Typography, Button } from '@mui/material';
-import { TextField, IconButton, Link } from '@mui/material';
+import { Link } from '@mui/material';
 import { CircularProgress } from '@mui/material';
-import { Check } from '@mui/icons-material';
-import { Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Picture from 'stock/picture.png';
+import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
 
 const GraphicSection = ({ admin, website, section }) => {
   const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
-  const [title, setTitle] = useState(false);
-  const [text, setText] = useState(false);
   const [info, setInfo] = useState(false);
 
   return (
@@ -28,103 +25,39 @@ const GraphicSection = ({ admin, website, section }) => {
         item xs={12} sm={6}
       >
         <Box sx={{ textAlign: 'center', width: '100%' }}>
-          {!title && <Typography
-            sx={{
-              cursor: admin && 'pointer',
-              mb: 1, fontSize: { xs: 26, md: 36 },
-              fontWeight: 600, letterSpacing: 2,
-            }}
-            onClick={() => admin && setTitle(true)}
-            variant='h1'
+          <TextEditor
+            type='title'
+            admin={admin}
+            section={section}
+            wid={website.name}
           >
-            {section.title || 'New Title'}
-          </Typography>}
-          {title && admin && <Formik
-            initialValues={{ title: section.title || 'New Title' }}
-            onSubmit={(values) => {
-              values.title !== section.title &&
-                dispatch(updateSection({ values, sid: section.id, wid: website.name }));
-              setTitle(false);
-            }}
+            <Typography
+              sx={{
+                mb: 1, fontSize: { xs: 26, md: 36 },
+                fontWeight: 600, letterSpacing: 2,
+              }}
+              variant='h1'
+            >
+              {section.title || 'New Title'}
+            </Typography>
+          </TextEditor>
+          <TextEditor
+            type='text'
+            admin={admin}
+            section={section}
+            wid={website.name}
           >
-            {({ values, handleChange, handleSubmit }) => (
-              <form onBlur={handleSubmit} onSubmit={handleSubmit} autoComplete='off'>
-                <TextField
-                  sx={{ my: 0 }}
-                  onChange={handleChange}
-                  value={values.title}
-                  placeholder='Title'
-                  label='Title'
-                  name='title'
-                  type='text'
-                  size='small'
-                  variant='outlined'
-                  fullWidth
-                  autoFocus
-                  InputProps={{
-                    endAdornment: <IconButton
-                      sx={{ mx: -1 }}
-                      type='submit'
-                      size='small'
-                    >
-                      <Check />
-                    </IconButton>
-                  }}
-                />
-              </form>
-            )}
-          </Formik>}
-          {!text && <Box
-            sx={{
-              cursor: admin && 'pointer',
+            <Box sx={{
               mt: 1, fontSize: { xs: 14, md: 18 },
               fontWeight: 400, letterSpacing: 1,
-            }}
-            onClick={() => admin && setText(true)}
-          >
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {section.text || 'New Text'}
-            </ReactMarkdown>
-          </Box>}
-          {text && admin && <Formik
-            initialValues={{ text: section.text || 'New Text' }}
-            onSubmit={(values) => {
-              values.text !== section.text &&
-                dispatch(updateSection({ values, sid: section.id, wid: website.name }));
-              setText(false);
-            }}
-          >
-            {({ values, handleChange, handleSubmit }) => (
-              <form onBlur={handleSubmit} onSubmit={handleSubmit} autoComplete='off'>
-                <TextField
-                  sx={{ mt: 1, mb: 0 }}
-                  onChange={handleChange}
-                  value={values.text}
-                  placeholder='Text'
-                  label='Text'
-                  name='text'
-                  type='text'
-                  size='small'
-                  variant='outlined'
-                  fullWidth
-                  multiline
-                  minRows={3}
-                  autoFocus
-                  InputProps={{
-                    endAdornment: <IconButton
-                      sx={{ mx: -1, mb: -0.5, mt: 'auto' }}
-                      type='submit'
-                      size='small'
-                    >
-                      <Check />
-                    </IconButton>
-                  }}
-                />
-              </form>
-            )}
-          </Formik>}
+            }}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {section.text || 'New Text'}
+              </ReactMarkdown>
+            </Box>
+          </TextEditor>
           {admin && <ButtonOptions section={section} wid={website.name}>
-            <Button variant='contained'>
+            <Button variant='outlined'>
               {section.button || 'New Button'}
             </Button>
           </ButtonOptions>}
@@ -132,9 +65,9 @@ const GraphicSection = ({ admin, website, section }) => {
             component={Link}
             href={section.link || '#'}
             target='_blank'
-            variant='contained'
+            variant='outlined'
           >
-            {section.button || 'Button'}
+            {section.button || 'New Button'}
           </Button>}
         </Box>
       </Grid>
@@ -163,7 +96,7 @@ const GraphicSection = ({ admin, website, section }) => {
           {admin && !info && <Box
             onChange={(e) => {
               if (e.target.files[0] && e.target.files[0].size < 500 * 1024) {
-                dispatch(updateFile({
+                dispatch(createFile({
                   file: e.target.files[0],
                   sid: section.id,
                   wid: website.name,

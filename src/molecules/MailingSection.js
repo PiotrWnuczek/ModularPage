@@ -3,6 +3,9 @@ import { useFirebase } from 'react-redux-firebase';
 import { Box, Grid, Typography } from '@mui/material';
 import { TextField, Button } from '@mui/material';
 import { Formik } from 'formik';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import TextEditor from 'atoms/TextEditor';
 import FormOptions from 'atoms/FormOptions';
 
 const MailingSection = ({ admin, website, section }) => {
@@ -14,25 +17,37 @@ const MailingSection = ({ admin, website, section }) => {
 
   return (
     <Box sx={{ textAlign: 'center' }}>
-      <Typography
-        sx={{
-          my: 1, fontSize: { xs: 22, md: 32 },
-          fontWeight: 600, letterSpacing: 2,
-        }}
-        variant='h2'
+      <TextEditor
+        type='title'
+        admin={admin}
+        section={section}
+        wid={website.name}
       >
-        Zapisz się na listę oczekujących
-      </Typography>
-      <Typography
-        sx={{
-          my: 2, fontSize: { xs: 12, md: 16 },
+        <Typography
+          sx={{
+            mb: 1, fontSize: { xs: 26, md: 36 },
+            fontWeight: 600, letterSpacing: 2,
+          }}
+          variant='h1'
+        >
+          {section.title || 'New Title'}
+        </Typography>
+      </TextEditor>
+      <TextEditor
+        type='text'
+        admin={admin}
+        section={section}
+        wid={website.name}
+      >
+        <Box sx={{
+          mt: 1, fontSize: { xs: 14, md: 18 },
           fontWeight: 400, letterSpacing: 1,
-        }}
-        variant='subtitle2'
-      >
-        Wybierz minimalizm i szybkość zamiast przeklikiwać się
-        przez setki opcji rozbudowanych kreatorów
-      </Typography>
+        }}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {section.text || 'New Text'}
+          </ReactMarkdown>
+        </Box>
+      </TextEditor>
       {admin && <FormOptions section={section} wid={website.name}>
         <Grid sx={{ px: { xs: 5, md: 10 } }} container spacing={1}>
           <Grid item xs={12} sm={9}>

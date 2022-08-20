@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { removeSection } from 'redux/websitesSlice';
+import { removeSection, removeFile } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { Box, Dialog, Button } from '@mui/material';
 import { Typography, Avatar } from '@mui/material';
 import { Remove } from '@mui/icons-material';
 
-const SectionRemove = ({ sid, wid }) => {
+const SectionRemove = ({ sid, wid, file }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
@@ -45,6 +45,7 @@ const SectionRemove = ({ sid, wid }) => {
             <Button
               onClick={() => {
                 dispatch(removeSection({ sid, wid }));
+                file && dispatch(removeFile({ sid, wid }));
                 setOpen(false);
               }}
               size='small'

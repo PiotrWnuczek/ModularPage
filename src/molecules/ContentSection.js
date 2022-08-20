@@ -1,117 +1,57 @@
-import React, { useState } from 'react';
-import { updateSection } from 'redux/websitesSlice';
-import { useDispatch } from 'react-redux';
-import { Box, Typography } from '@mui/material';
-import { TextField, IconButton } from '@mui/material';
-import { Check } from '@mui/icons-material';
-import { Formik } from 'formik';
+import React from 'react';
+import { Box, Typography, Button, Link } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import TextEditor from 'atoms/TextEditor';
+import ButtonOptions from 'atoms/ButtonOptions';
 
-const ContentSection = ({ admin, website, section }) => {
-  const dispatch = useDispatch();
-  const [title, setTitle] = useState(false);
-  const [text, setText] = useState(false);
-
-  return (
-    <Box sx={{ textAlign: 'center' }}>
-      {!title && <Typography
+const ContentSection = ({ admin, website, section }) => (
+  <Box sx={{ textAlign: 'center' }}>
+    <TextEditor
+      type='title'
+      admin={admin}
+      section={section}
+      wid={website.name}
+    >
+      <Typography
         sx={{
-          cursor: admin && 'pointer',
           mb: 1, fontSize: { xs: 26, md: 36 },
           fontWeight: 600, letterSpacing: 2,
         }}
-        onClick={() => admin && setTitle(true)}
         variant='h1'
       >
         {section.title || 'New Title'}
-      </Typography>}
-      {title && admin && <Formik
-        initialValues={{ title: section.title || 'New Title' }}
-        onSubmit={(values) => {
-          values.title !== section.title &&
-            dispatch(updateSection({ values, sid: section.id, wid: website.name }));
-          setTitle(false);
-        }}
-      >
-        {({ values, handleChange, handleSubmit }) => (
-          <form onBlur={handleSubmit} onSubmit={handleSubmit} autoComplete='off'>
-            <TextField
-              sx={{ my: 0 }}
-              onChange={handleChange}
-              value={values.title}
-              placeholder='Title'
-              label='Title'
-              name='title'
-              type='text'
-              size='small'
-              variant='outlined'
-              fullWidth
-              autoFocus
-              InputProps={{
-                endAdornment: <IconButton
-                  sx={{ mx: -1 }}
-                  type='submit'
-                  size='small'
-                >
-                  <Check />
-                </IconButton>
-              }}
-            />
-          </form>
-        )}
-      </Formik>}
-      {!text && <Box
-        sx={{
-          cursor: admin && 'pointer',
-          mt: 1, fontSize: { xs: 14, md: 18 },
-          fontWeight: 400, letterSpacing: 1,
-        }}
-        onClick={() => admin && setText(true)}
-      >
+      </Typography>
+    </TextEditor>
+    <TextEditor
+      type='text'
+      admin={admin}
+      section={section}
+      wid={website.name}
+    >
+      <Box sx={{
+        mt: 1, fontSize: { xs: 14, md: 18 },
+        fontWeight: 400, letterSpacing: 1,
+      }}>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {section.text || 'New Text'}
         </ReactMarkdown>
-      </Box>}
-      {text && admin && <Formik
-        initialValues={{ text: section.text || 'New Text' }}
-        onSubmit={(values) => {
-          values.text !== section.text &&
-            dispatch(updateSection({ values, sid: section.id, wid: website.name }));
-          setText(false);
-        }}
-      >
-        {({ values, handleChange, handleSubmit }) => (
-          <form onBlur={handleSubmit} onSubmit={handleSubmit} autoComplete='off'>
-            <TextField
-              sx={{ mt: 1, mb: 0 }}
-              onChange={handleChange}
-              value={values.text}
-              placeholder='Text'
-              label='Text'
-              name='text'
-              type='text'
-              size='small'
-              variant='outlined'
-              fullWidth
-              multiline
-              minRows={3}
-              autoFocus
-              InputProps={{
-                endAdornment: <IconButton
-                  sx={{ mx: -1, mb: -0.5, mt: 'auto' }}
-                  type='submit'
-                  size='small'
-                >
-                  <Check />
-                </IconButton>
-              }}
-            />
-          </form>
-        )}
-      </Formik>}
-    </Box>
-  )
-};
+      </Box>
+    </TextEditor>
+    {admin && <ButtonOptions section={section} wid={website.name}>
+      <Button variant='outlined'>
+        {section.button || 'New Button'}
+      </Button>
+    </ButtonOptions>}
+    {!admin && <Button
+      component={Link}
+      href={section.link || '#'}
+      target='_blank'
+      variant='outlined'
+    >
+      {section.button || 'New Button'}
+    </Button>}
+  </Box>
+);
 
 export default ContentSection;

@@ -8,7 +8,7 @@ const WebsiteOptions = ({ website }) => {
 
   return (
     <Box>
-      <Box sx={{ position: 'fixed', top: 24, right: 24 }}>
+      <Box sx={{ position: 'fixed', top: 44, right: 44, zIndex: 2000 }}>
         <Avatar
           sx={{
             cursor: 'pointer', bgcolor: 'primary.main',
