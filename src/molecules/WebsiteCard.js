@@ -2,9 +2,10 @@ import React from 'react';
 import { updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Box, Card, Grid, Typography, Button } from '@mui/material';
-import { Avatar, Link, FormControlLabel, Switch } from '@mui/material';
-import { Edit, Web } from '@mui/icons-material';
+import { Box, Card, Grid, Typography } from '@mui/material';
+import { Button, IconButton, Avatar } from '@mui/material';
+import { Link, FormControlLabel, Switch } from '@mui/material';
+import { Edit, InsertLink, Web } from '@mui/icons-material';
 import WebsiteRemove from 'atoms/WebsiteRemove';
 
 const WebsiteCard = ({ website }) => {
@@ -30,17 +31,20 @@ const WebsiteCard = ({ website }) => {
           <Box>
             <Typography variant='h6'>
               {website.name}
+              <IconButton
+                sx={{ mx: 1 }}
+                component={Link}
+                href={'/' + website.name}
+                target='_blank'
+                color='primary'
+                size='small'
+              >
+                <InsertLink />
+              </IconButton>
             </Typography>
-            <Typography variant='subtitle1'>
+            <Typography variant='body2'>
               {website.description}
             </Typography>
-            <Link
-              href={'/' + website.name}
-              target='_blank'
-              underline='hover'
-            >
-              {website.name}
-            </Link>
           </Box>
         </Grid>
         <Grid

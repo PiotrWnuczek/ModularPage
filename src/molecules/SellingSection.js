@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useFirestoreConnect } from 'react-redux-firebase';
 import { Box, Button, Dialog } from '@mui/material';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import PaymentOptions from 'atoms/PaymentOptions';
 
-const SellingSection = () => {
+const SellingSection = ({ admin, website, section }) => {
+  const auth = useSelector(state => state.firebase.auth);
+  const profile = useSelector(state => state.firestore.data[auth.uid]);
+  useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   const [open, setOpen] = useState(false);
 
   return (
     <Box sx={{ p: 2, textAlign: 'center' }}>
-      <Button
+      {admin && <PaymentOptions section={section} wid={website.name}>
+        <Button variant='outlined'>
+          {section.button || 'But Now'}
+        </Button>
+      </PaymentOptions>}
+      {!admin && <Button
         variant='outlined'
         onClick={() => setOpen(true)}
       >
-        PayPal
-      </Button>
+        {section.button || 'But Now'}
+      </Button>}
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
@@ -20,14 +31,15 @@ const SellingSection = () => {
         fullWidth
       >
         <Box sx={{ p: 2, textAlign: 'center' }}>
-          <PayPalScriptProvider options={{
-            'client-id': 'AQWWuLYWFILTdH_OqT_sXZ-fFzwMf7MBA0_psb1H5w3kbpHW3mh0vgLLaugwTQ9Tkq3rI8by3uhqFn8O'
-          }}>
+          <PayPalScriptProvider options={{ 'client-id': profile && profile.paypal }}>
             <PayPalButtons
               createOrder={(d, actions) => actions.order.create({
                 purchase_units: [{
-                  description: 'Product',
-                  amount: { currency_code: 'USD', value: 1 },
+                  description: section.product || 'New Product',
+                  amount: {
+                    currency_code: section.currency || 'USD',
+                    value: Number(section.price) || 0,
+                  },
                 }],
               })}
               onApprove={(d, actions) => actions.order.capture().then((details) => {

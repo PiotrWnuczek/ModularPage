@@ -52,7 +52,7 @@ const MailingSection = ({ admin, website, section }) => {
               variant='contained'
               fullWidth
             >
-              Zapisz się
+              {section.button}
             </Button>
           </Grid>
         </Grid>
@@ -87,7 +87,7 @@ const MailingSection = ({ admin, website, section }) => {
                   variant='contained'
                   fullWidth
                 >
-                  Zapisz się
+                  {section.button}
                 </Button>
               </Grid>
             </Grid>

@@ -29,7 +29,8 @@ const ContentSection = ({ admin, website, section }) => {
       {title && admin && <Formik
         initialValues={{ title: section.title || 'New Title' }}
         onSubmit={(values) => {
-          dispatch(updateSection({ values, sid: section.id, wid: website.name }));
+          values.title !== section.title &&
+            dispatch(updateSection({ values, sid: section.id, wid: website.name }));
           setTitle(false);
         }}
       >
@@ -75,7 +76,8 @@ const ContentSection = ({ admin, website, section }) => {
       {text && admin && <Formik
         initialValues={{ text: section.text || 'New Text' }}
         onSubmit={(values) => {
-          dispatch(updateSection({ values, sid: section.id, wid: website.name }));
+          values.text !== section.text &&
+            dispatch(updateSection({ values, sid: section.id, wid: website.name }));
           setText(false);
         }}
       >
