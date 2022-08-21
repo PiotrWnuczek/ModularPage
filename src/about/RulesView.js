@@ -89,11 +89,11 @@ const RulesView = ({ lang }) => (
     <Box sx={{ py: 2, px: { xs: 5, md: 20 } }}>
       {lang === 'en' && <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        childern={rulesEn}
+        children={rulesEn}
       />}
       {lang === 'pl' && <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        childern={rulesPl}
+        children={rulesPl}
       />}
     </Box>
   </BasicLayout>

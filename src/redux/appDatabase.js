@@ -7,13 +7,13 @@ import 'firebase/compat/functions';
 import 'firebase/compat/analytics';
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyDPmdrdhIhUBmaar-42pgjlorzpSwucm6Y',
-  authDomain: 'modularpage-db.firebaseapp.com',
-  projectId: 'modularpage-db',
-  storageBucket: 'modularpage-db.appspot.com',
-  messagingSenderId: '44283863791',
-  appId: '1:44283863791:web:7e7b8bc3bbf624fbf6f11a',
-  measurementId: 'G-FZFHBV2S54',
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASURMENT_ID,
 });
 
 firebase.firestore().settings({ timestampsInSnapshots: true, merge: true });

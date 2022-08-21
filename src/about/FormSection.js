@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 
 const FormSection = ({ lang }) => {
   const [info, setInfo] = useState(false);
-
+  const group = lang === 'en' ? 'e57WNY' : 'e5773A';
   const submit = (values) => {
     const headers = {
       'Authorization': 'Bearer ' + process.env.REACT_APP_SENDER,
@@ -17,7 +17,7 @@ const FormSection = ({ lang }) => {
       method: 'POST', headers,
       body: JSON.stringify({ 'email': values.email }),
     }).then(() => {
-      fetch('https://api.sender.net/v2/subscribers/groups/e5773A', {
+      fetch('https://api.sender.net/v2/subscribers/groups/' + group, {
         method: 'POST', headers,
         body: JSON.stringify({ 'subscribers': [values.email] })
       })
