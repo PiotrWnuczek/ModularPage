@@ -11,7 +11,10 @@ const PaymentOptions = ({ children, section, wid }) => {
 
   return (
     <Box>
-      <Box onClick={() => setOpen(true)}>
+      <Box
+        sx={{ cursor: 'pointer' }}
+        onClick={() => setOpen(true)}
+      >
         {children}
       </Box>
       <Dialog

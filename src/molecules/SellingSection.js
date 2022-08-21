@@ -1,52 +1,81 @@
 import React, { useState } from 'react';
-import { Box, Button, Dialog } from '@mui/material';
+import { Grid, Box, Typography, Button, Card, Dialog } from '@mui/material';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import PaymentOptions from 'atoms/PaymentOptions';
 
-const SellingSection = ({ admin, section, wid }) => {
+const ProductCard = ({ admin, section, wid }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Box sx={{ p: 2, textAlign: 'center' }}>
-      {admin && <PaymentOptions section={section} wid={wid}>
-        <Button variant='outlined'>
-          {section.button || 'But Now'}
-        </Button>
-      </PaymentOptions>}
-      {!admin && <Button
+    <Grid item xs={12} md={4}>
+      <Card
+        sx={{ bgcolor: 'inherit', borderRadius: 2 }}
         variant='outlined'
-        onClick={() => setOpen(true)}
-      >
-        {section.button || 'But Now'}
-      </Button>}
-      <Dialog
-        sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
-        open={open}
-        onClose={() => setOpen(false)}
-        fullWidth
       >
         <Box sx={{ p: 2, textAlign: 'center' }}>
-          <PayPalScriptProvider options={{ 'client-id': section.paypal }}>
-            <PayPalButtons
-              createOrder={(d, actions) => actions.order.create({
-                purchase_units: [{
-                  description: section.product || 'New Product',
-                  amount: {
-                    currency_code: section.currency || 'USD',
-                    value: Number(section.price) || 0,
-                  },
-                }],
-              })}
-              onApprove={(d, actions) => actions.order.capture().then((details) => {
-                const name = details.payer.name.given_name;
-                console.log(name);
-              })}
-            />
-          </PayPalScriptProvider>
+          <Typography variant='h5'>
+            {section.title || 'New Title'}
+          </Typography>
+          <Typography variant='subtitle1'>
+            {section.text || 'New Text'}
+          </Typography>
+          {admin && <PaymentOptions section={section} wid={wid}>
+            <Typography>
+              {section.price || '0'}{' '}
+              {section.currency || 'USD'}
+            </Typography>
+            <Button variant='outlined'>
+              {section.button || 'Buy Now'}
+            </Button>
+          </PaymentOptions>}
+          {!admin && <Typography>
+            {section.price || '0'}{' '}
+            {section.currency || 'USD'}
+          </Typography>}
+          {!admin && <Button
+            variant='outlined'
+            onClick={() => setOpen(true)}
+          >
+            {section.button || 'Buy Now'}
+          </Button>}
+          <Dialog
+            sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
+            open={open}
+            onClose={() => setOpen(false)}
+            fullWidth
+          >
+            <Box sx={{ p: 2, textAlign: 'center' }}>
+              <PayPalScriptProvider options={{ 'client-id': section.paypal }}>
+                <PayPalButtons
+                  createOrder={(d, actions) => actions.order.create({
+                    purchase_units: [{
+                      description: section.product || 'New Product',
+                      amount: {
+                        currency_code: section.currency || 'USD',
+                        value: Number(section.price) || 0,
+                      },
+                    }],
+                  })}
+                  onApprove={(d, actions) => actions.order.capture().then((details) => {
+                    const name = details.payer.name.given_name;
+                    console.log(name);
+                  })}
+                />
+              </PayPalScriptProvider>
+            </Box>
+          </Dialog>
         </Box>
-      </Dialog>
-    </Box>
+      </Card>
+    </Grid>
   )
 };
+
+const SellingSection = ({ admin, section, wid }) => (
+  <Grid container spacing={2}>
+    <ProductCard admin={admin} section={section} wid={wid} />
+    <ProductCard admin={admin} section={section} wid={wid} />
+    <ProductCard admin={admin} section={section} wid={wid} />
+  </Grid>
+);
 
 export default SellingSection;

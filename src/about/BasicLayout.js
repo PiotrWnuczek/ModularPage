@@ -16,25 +16,25 @@ const BasicLayout = ({ children, lang }) => {
             <Typography
               sx={{
                 cursor: 'pointer', fontSize: { xs: 14, md: 18 },
-                fontWeight: 600, letterSpacing: 1,
+                fontWeight: 600, letterSpacing: 1, mr: 1,
               }}
               onClick={() => navigate('/' + lang)}
               variant='subtitle1'
             >
               Modular Page
             </Typography>
-            {lang === 'pl' && <IconButton
-              sx={{ mx: 2 }}
-              onClick={() => navigate('/en')}
-            >
-              <SvgIcon children={<English />} />
-            </IconButton>}
-            {lang === 'en' && <IconButton
-              sx={{ mx: 2 }}
-              onClick={() => navigate('/pl')}
-            >
-              <SvgIcon children={<Polish />} />
-            </IconButton>}
+            <IconButton onClick={() => navigate('/en')}>
+              <SvgIcon
+                sx={{ fontSize: 12 }}
+                children={<English />}
+              />
+            </IconButton>
+            <IconButton onClick={() => navigate('/pl')}>
+              <SvgIcon
+                sx={{ fontSize: 12 }}
+                children={<Polish />}
+              />
+            </IconButton>
           </Box>
           <Button
             component={Link}

@@ -24,11 +24,11 @@ const ScrollTop = ({ children }) => {
 };
 
 const App = () => {
-  const active = true;
+  const active = false;
   const host = 'localhost:3000';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
-
+  const pl = window.navigator.language.includes('pl');
   const theme = createTheme({
     typography: { fontFamily: 'Lato' },
     palette: {
@@ -68,7 +68,7 @@ const App = () => {
             <Route path='/pl/privacy' element={<PrivacyView lang='pl' />} />
             <Route path='/en/rules' element={<RulesView lang='en' />} />
             <Route path='/pl/rules' element={<RulesView lang='pl' />} />
-            <Route path='/*' element={<Navigate to='/en' />} />
+            <Route path='/*' element={pl ? <Navigate to='/pl' /> : <Navigate to='/en' />} />
           </Routes>
         </ScrollTop>}
       </BrowserRouter>
