@@ -6,7 +6,7 @@ import { TextField } from '@mui/material';
 import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 
-const TextEditor = ({ children, type, admin, section, wid }) => {
+const TextEditor = ({ children, type, admin, section, wid, item }) => {
   const dispatch = useDispatch();
   const [text, setText] = useState(false);
 
@@ -19,10 +19,20 @@ const TextEditor = ({ children, type, admin, section, wid }) => {
         {children}
       </Box>}
       {text && admin && type === 'title' && <Formik
-        initialValues={{ title: section.title || 'New Title' }}
+        initialValues={{
+          title: (!item && section.title) || (item && item.title) || 'New Title'
+        }}
         onSubmit={(values) => {
-          section.id && (values.title !== section.title) &&
+          section.id && !item && (values.title !== section.title) &&
             dispatch(updateSection({ values, sid: section.id, wid }));
+          section.id && item && (values.title !== item.title) &&
+            dispatch(updateSection({
+              values: {
+                items: section.items && section.items.map(
+                  it => it.id === item.id ? { ...it, ...values } : it
+                ),
+              }, sid: section.id, wid,
+            }));
           section.type === 'header' && (values.title !== section.title) &&
             dispatch(updateWebsite({
               values: { header: { ...section, ...values } }, wid,
