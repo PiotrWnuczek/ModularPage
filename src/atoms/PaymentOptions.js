@@ -5,9 +5,14 @@ import { Box, Dialog, Typography } from '@mui/material';
 import { Button, TextField } from '@mui/material';
 import { Formik } from 'formik';
 
-const PaymentOptions = ({ children, section, wid }) => {
+const PaymentOptions = ({ children, section, wid, idx }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const paypal = idx ? 'paypal' + idx : 'paypal';
+  const button = idx ? 'button' + idx : 'button';
+  const product = idx ? 'product' + idx : 'product';
+  const currency = idx ? 'currency' + idx : 'currency';
+  const price = idx ? 'price' + idx : 'price';
 
   return (
     <Box>
@@ -32,23 +37,23 @@ const PaymentOptions = ({ children, section, wid }) => {
           </Typography>
           <Formik
             initialValues={{
-              paypal: section.paypal || 'PayPal Id',
-              button: section.button || 'Buy Now',
-              product: section.product || 'New Product',
-              currency: section.currency || 'USD',
-              price: section.price || '0',
+              [paypal]: section[paypal] || 'PayPal Id',
+              [button]: section[button] || 'Buy Now',
+              [product]: section[product] || 'New Product',
+              [currency]: section[currency] || 'USD',
+              [price]: section[price] || '0',
             }}
             onSubmit={(values) => {
-              (values.paypal !== section.paypal || values.button !== section.button ||
-                values.product !== section.product || values.currency !== section.currency ||
-                values.price !== section.price) &&
+              (values[paypal] !== section[paypal] || values[button] !== section[button] ||
+                values[product] !== section[product] || values[currency] !== section[currency] ||
+                values[price] !== section[price]) &&
                 dispatch(updateSection({
                   values: {
-                    paypal: values.paypal,
-                    button: values.button,
-                    product: values.product,
-                    currency: values.currency,
-                    price: values.price,
+                    [paypal]: values[paypal],
+                    [button]: values[button],
+                    [product]: values[product],
+                    [currency]: values[currency],
+                    [price]: values[price],
                   },
                   sid: section.id, wid,
                 }));
@@ -60,10 +65,10 @@ const PaymentOptions = ({ children, section, wid }) => {
                 <TextField
                   sx={{ my: 1 }}
                   onChange={handleChange}
-                  value={values.paypal}
+                  value={values[paypal]}
+                  name={paypal}
                   placeholder='PayPal Id'
                   label='PayPal Id'
-                  name='paypal'
                   type='text'
                   size='small'
                   variant='outlined'
@@ -73,10 +78,10 @@ const PaymentOptions = ({ children, section, wid }) => {
                 <TextField
                   sx={{ my: 1 }}
                   onChange={handleChange}
-                  value={values.button}
+                  value={values[button]}
+                  name={button}
                   placeholder='Button Text'
                   label='Button Text'
-                  name='button'
                   type='text'
                   size='small'
                   variant='outlined'
@@ -85,10 +90,10 @@ const PaymentOptions = ({ children, section, wid }) => {
                 <TextField
                   sx={{ my: 1 }}
                   onChange={handleChange}
-                  value={values.product}
+                  value={values[product]}
+                  name={product}
                   placeholder='Product Name'
                   label='Product Name'
-                  name='product'
                   type='text'
                   size='small'
                   variant='outlined'
@@ -97,10 +102,10 @@ const PaymentOptions = ({ children, section, wid }) => {
                 <TextField
                   sx={{ my: 1 }}
                   onChange={handleChange}
-                  value={values.currency}
+                  value={values[currency]}
+                  name={currency}
                   placeholder='Currency Code'
                   label='Currency Code'
-                  name='currency'
                   type='text'
                   size='small'
                   variant='outlined'
@@ -109,10 +114,10 @@ const PaymentOptions = ({ children, section, wid }) => {
                 <TextField
                   sx={{ my: 1 }}
                   onChange={handleChange}
-                  value={values.price}
+                  value={values[price]}
+                  name={price}
                   placeholder='Price Value'
                   label='Price Value'
-                  name='price'
                   type='text'
                   size='small'
                   variant='outlined'

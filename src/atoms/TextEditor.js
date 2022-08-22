@@ -6,38 +6,30 @@ import { TextField } from '@mui/material';
 import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 
-const TextEditor = ({ children, type, admin, section, wid, item }) => {
+const TextEditor = ({ children, type, admin, section, wid, idx }) => {
   const dispatch = useDispatch();
-  const [text, setText] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const title = idx ? 'title' + idx : 'title';
+  const text = idx ? 'text' + idx : 'text';
 
   return (
     <Box>
-      {!text && <Box
+      {!edit && <Box
         sx={{ cursor: admin && 'pointer' }}
-        onClick={() => admin && setText(true)}
+        onClick={() => admin && setEdit(true)}
       >
         {children}
       </Box>}
-      {text && admin && type === 'title' && <Formik
-        initialValues={{
-          title: (!item && section.title) || (item && item.title) || 'New Title'
-        }}
+      {edit && admin && type === 'title' && <Formik
+        initialValues={{ [title]: section[title] || 'Add Title' }}
         onSubmit={(values) => {
-          section.id && !item && (values.title !== section.title) &&
+          section.id && (values[title] !== section[title]) &&
             dispatch(updateSection({ values, sid: section.id, wid }));
-          section.id && item && (values.title !== item.title) &&
-            dispatch(updateSection({
-              values: {
-                items: section.items && section.items.map(
-                  it => it.id === item.id ? { ...it, ...values } : it
-                ),
-              }, sid: section.id, wid,
-            }));
-          section.type === 'header' && (values.title !== section.title) &&
+          section.type === 'header' && (values[title] !== section[title]) &&
             dispatch(updateWebsite({
               values: { header: { ...section, ...values } }, wid,
             }));
-          setText(false);
+          setEdit(false);
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
@@ -45,10 +37,10 @@ const TextEditor = ({ children, type, admin, section, wid, item }) => {
             <TextField
               sx={{ my: 0 }}
               onChange={handleChange}
-              value={values.title}
+              value={values[title]}
+              name={title}
               placeholder='Title'
               label='Title'
-              name='title'
               type='text'
               size='small'
               variant='outlined'
@@ -67,16 +59,16 @@ const TextEditor = ({ children, type, admin, section, wid, item }) => {
           </form>
         )}
       </Formik>}
-      {text && admin && type === 'text' && <Formik
-        initialValues={{ text: section.text || 'New Text' }}
+      {edit && admin && type === 'text' && <Formik
+        initialValues={{ [text]: section[text] || 'Add Text' }}
         onSubmit={(values) => {
-          section.id && (values.text !== section.text) &&
+          section.id && (values[text] !== section[text]) &&
             dispatch(updateSection({ values, sid: section.id, wid }));
-          section.type === 'footer' && (values.text !== section.text) &&
+          section.type === 'footer' && (values[text] !== section[text]) &&
             dispatch(updateWebsite({
               values: { footer: { ...section, ...values } }, wid,
             }));
-          setText(false);
+          setEdit(false);
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
@@ -84,10 +76,10 @@ const TextEditor = ({ children, type, admin, section, wid, item }) => {
             <TextField
               sx={{ my: 1 }}
               onChange={handleChange}
-              value={values.text}
+              value={values[text]}
+              name={text}
               placeholder='Text'
               label='Text'
-              name='text'
               type='text'
               size='small'
               variant='outlined'

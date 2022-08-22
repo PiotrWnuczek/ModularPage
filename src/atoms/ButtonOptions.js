@@ -5,9 +5,11 @@ import { Box, Dialog, Typography } from '@mui/material';
 import { Button, TextField } from '@mui/material';
 import { Formik } from 'formik';
 
-const ButtonOptions = ({ children, section, wid }) => {
+const ButtonOptions = ({ children, section, wid, idx }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const button = idx ? 'button' + idx : 'button';
+  const link = idx ? 'link' + idx : 'link';
 
   return (
     <Box>
@@ -32,15 +34,15 @@ const ButtonOptions = ({ children, section, wid }) => {
           </Typography>
           <Formik
             initialValues={{
-              button: section.button || 'New Button',
-              link: section.link || '#',
+              [button]: section[button] || 'New Button',
+              [link]: section[link] || '#',
             }}
             onSubmit={(values) => {
               section.id &&
-                (values.button !== section.button || values.link !== section.link) &&
+                (values[button] !== section[button] || values[link] !== section[link]) &&
                 dispatch(updateSection({ values, sid: section.id, wid }));
               section.type === 'header' &&
-                (values.button !== section.button || values.link !== section.link) &&
+                (values[button] !== section[button] || values[link] !== section[link]) &&
                 dispatch(updateWebsite({
                   values: { header: { ...section, ...values } }, wid,
                 }));
@@ -52,10 +54,10 @@ const ButtonOptions = ({ children, section, wid }) => {
                 <TextField
                   sx={{ my: 1 }}
                   onChange={handleChange}
-                  value={values.button}
+                  value={values[button]}
+                  name={button}
                   placeholder='Text'
                   label='Text'
-                  name='button'
                   type='text'
                   size='small'
                   variant='outlined'
@@ -65,7 +67,7 @@ const ButtonOptions = ({ children, section, wid }) => {
                 <TextField
                   sx={{ my: 1 }}
                   onChange={handleChange}
-                  value={values.link}
+                  value={values[link]}
                   placeholder='Url'
                   label='Url'
                   name='link'

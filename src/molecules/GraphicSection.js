@@ -56,19 +56,27 @@ const GraphicSection = ({ admin, section, wid }) => {
               </ReactMarkdown>
             </Box>
           </TextEditor>
-          {admin && <ButtonOptions section={section} wid={wid}>
-            <Button variant='outlined'>
-              {section.button || 'New Button'}
-            </Button>
-          </ButtonOptions>}
-          {!admin && <Button
-            component={Link}
-            href={section.link || '#'}
-            target='_blank'
-            variant='outlined'
+          {[1, 2].map(idx => <Box
+            sx={{ display: 'inline-block', mx: 0.5 }}
+            key={idx}
           >
-            {section.button || 'New Button'}
-          </Button>}
+            {admin && <ButtonOptions
+              section={section}
+              wid={wid} idx={idx}
+            >
+              <Button variant='outlined'>
+                {section['button' + idx] || 'New Button'}
+              </Button>
+            </ButtonOptions>}
+            {!admin && <Button
+              component={Link}
+              href={section.link || '#'}
+              target='_blank'
+              variant='outlined'
+            >
+              {section['button' + idx] || 'New Button'}
+            </Button>}
+          </Box>)}
         </Box>
       </Grid>
       <Grid

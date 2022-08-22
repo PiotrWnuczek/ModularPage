@@ -11,9 +11,12 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 
-const IconBox = ({ admin, section, wid, item }) => {
+const IconBox = ({ admin, section, wid, idx }) => {
   const dispatch = useDispatch();
-  const [icon, setIcon] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const icon = idx ? 'icon' + idx : 'icon';
+  const title = idx ? 'title' + idx : 'title';
+  const text = idx ? 'text' + idx : 'text';
 
   return (
     <Grid
@@ -24,23 +27,20 @@ const IconBox = ({ admin, section, wid, item }) => {
         <Box sx={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          {!icon && <Box
-            sx={{ cursor: admin && 'pointer', mr: 1 }}
-            onClick={() => admin && setIcon(true)}
-            component={icons[item.icon] ? icons[item.icon] : icons.Add}
+          {!edit && <Box
+            sx={{
+              cursor: admin && 'pointer',
+              mr: 1, fontSize: 32, color: 'primary.main',
+            }}
+            onClick={() => admin && setEdit(true)}
+            component={icons[section[icon]] || icons.Add}
           />}
-          {icon && admin && <Formik
-            initialValues={{ icon: item.icon || 'Add' }}
+          {edit && admin && <Formik
+            initialValues={{ [icon]: section[icon] || 'Add' }}
             onSubmit={(values) => {
-              values.icon !== item.icon &&
-                dispatch(updateSection({
-                  values: {
-                    items: section.items && section.items.map(
-                      it => it.id === item.id ? { ...it, ...values } : it
-                    ),
-                  }, sid: section.id, wid,
-                }));
-              setIcon(false);
+              values[icon] !== section[icon] &&
+                dispatch(updateSection({ values, sid: section.id, wid }));
+              setEdit(false);
             }}
           >
             {({ values, handleChange, handleSubmit }) => (
@@ -48,10 +48,10 @@ const IconBox = ({ admin, section, wid, item }) => {
                 <TextField
                   sx={{ my: 0 }}
                   onChange={handleChange}
-                  value={values.icon}
+                  value={values[icon]}
+                  name={icon}
                   placeholder='Icon'
                   label='Icon'
-                  name='icon'
                   type='text'
                   size='small'
                   variant='outlined'
@@ -75,7 +75,7 @@ const IconBox = ({ admin, section, wid, item }) => {
             admin={admin}
             section={section}
             wid={wid}
-            item={item}
+            idx={idx}
           >
             <Typography
               sx={{
@@ -84,7 +84,7 @@ const IconBox = ({ admin, section, wid, item }) => {
               }}
               variant='h1'
             >
-              {item.title || 'New Title'}
+              {section[title] || 'New Title'}
             </Typography>
           </TextEditor>
         </Box>
@@ -93,14 +93,14 @@ const IconBox = ({ admin, section, wid, item }) => {
           admin={admin}
           section={section}
           wid={wid}
-          item={item}
+          idx={idx}
         >
           <Box sx={{
             fontSize: { xs: 14, md: 18 },
             fontWeight: 400, letterSpacing: 1,
           }}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {item.text || 'New Text'}
+              {section[text] || 'New Text'}
             </ReactMarkdown>
           </Box>
         </TextEditor>
@@ -109,27 +109,13 @@ const IconBox = ({ admin, section, wid, item }) => {
   )
 };
 
-const IconboxSection = ({ admin, section, wid }) => {
-  const items = [{ id: 'i1' }, { id: 'i2' }, { id: 'i3' }];
-
-  return (
-    <Grid container spacing={2}>
-      {section.items && section.items.map(item =>
-        <IconBox
-          section={section}
-          admin={admin} wid={wid}
-          item={item} key={item.id}
-        />
-      )}
-      {!section.items && items.map(item =>
-        <IconBox
-          section={{ ...section, items }}
-          admin={admin} wid={wid}
-          item={item} key={item.id}
-        />
-      )}
-    </Grid>
-  )
-};
+const IconboxSection = ({ admin, section, wid }) => (
+  <Grid container spacing={2}>
+    {[1, 2, 3].map(idx => <IconBox
+      key={idx} idx={idx} admin={admin}
+      section={section} wid={wid}
+    />)}
+  </Grid>
+);
 
 export default IconboxSection;
