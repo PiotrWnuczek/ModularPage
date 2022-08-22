@@ -8,7 +8,7 @@ const WebsiteOptions = ({ website }) => {
 
   return (
     <Box>
-      <Box sx={{ position: 'fixed', top: 44, right: 44, zIndex: 2000 }}>
+      <Box sx={{ position: 'fixed', top: 44, right: 44, zIndex: 1200 }}>
         <Avatar
           sx={{
             cursor: 'pointer', bgcolor: 'primary.main',
@@ -38,7 +38,7 @@ const WebsiteOptions = ({ website }) => {
               console.log('set');
               setOpen(false);
             }}
-            variant='outlined'
+            variant='contained'
             size='small'
           >
             Set

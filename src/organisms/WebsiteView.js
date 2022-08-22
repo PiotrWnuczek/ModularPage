@@ -42,11 +42,11 @@ const WebsiteView = ({ admin, host }) => {
       {access && <WebsiteExit />}
       {access && <WebsiteOptions website={website} />}
       {access && website && !website.sections.length && <Box
-        sx={{ py: 3, display: 'flex', justifyContent: 'center' }}
+        sx={{ py: 5.5, display: 'flex', justifyContent: 'center' }}
       >
         <SectionCreate wid={website.name} index={0} start />
       </Box>}
-      {website && website.public && website.header && <HeaderSection
+      {website && website.header && (website.public || access) && <HeaderSection
         admin={access} header={website.header} wid={website.name}
       />}
       {access && <DragDropContext onDragEnd={onDragEnd}>
@@ -92,7 +92,7 @@ const WebsiteView = ({ admin, host }) => {
             key={item.id}
           />
         )}
-      {website && website.public && website.footer && <FooterSection
+      {website && website.footer && (website.public || access) && <FooterSection
         admin={access} footer={website.footer} wid={website.name}
       />}
       {!access && !(website && website.public) &&

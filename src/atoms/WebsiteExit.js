@@ -10,7 +10,7 @@ const WebsiteExit = () => {
 
   return (
     <Box>
-      <Box sx={{ position: 'fixed', top: 44, left: 44, zIndex: 2000 }}>
+      <Box sx={{ position: 'fixed', top: 44, left: 44, zIndex: 1200 }}>
         <Avatar
           sx={{
             cursor: 'pointer', bgcolor: 'primary.main',
@@ -40,7 +40,7 @@ const WebsiteExit = () => {
               navigate('/board');
               setOpen(false);
             }}
-            variant='outlined'
+            variant='contained'
             size='small'
           >
             Exit

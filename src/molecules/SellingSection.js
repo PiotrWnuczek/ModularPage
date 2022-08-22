@@ -63,7 +63,7 @@ const ProductCard = ({ admin, section, wid, idx }) => {
               {section[price] || '0'}{' '}
               {section[currency] || 'USD'}
             </Typography>
-            <Button variant='outlined'>
+            <Button variant='contained'>
               {section[button] || 'Buy Now'}
             </Button>
           </PaymentOptions>}
@@ -72,7 +72,7 @@ const ProductCard = ({ admin, section, wid, idx }) => {
             {section[currency] || 'USD'}
           </Typography>}
           {!admin && <Button
-            variant='outlined'
+            variant='contained'
             onClick={() => setOpen(true)}
           >
             {section[button] || 'Buy Now'}

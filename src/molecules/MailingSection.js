@@ -67,7 +67,7 @@ const MailingSection = ({ admin, section, wid }) => {
               variant='contained'
               fullWidth
             >
-              {section.button}
+              {section.button || 'Subscribe'}
             </Button>
           </Grid>
         </Grid>
@@ -102,7 +102,7 @@ const MailingSection = ({ admin, section, wid }) => {
                   variant='contained'
                   fullWidth
                 >
-                  {section.button}
+                  {section.button || 'Subscribe'}
                 </Button>
               </Grid>
             </Grid>

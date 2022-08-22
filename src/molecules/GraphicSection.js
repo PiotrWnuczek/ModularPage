@@ -64,7 +64,7 @@ const GraphicSection = ({ admin, section, wid }) => {
               section={section}
               wid={wid} idx={idx}
             >
-              <Button variant='outlined'>
+              <Button variant='contained'>
                 {section['button' + idx] || 'New Button'}
               </Button>
             </ButtonOptions>}
@@ -72,7 +72,7 @@ const GraphicSection = ({ admin, section, wid }) => {
               component={Link}
               href={section.link || '#'}
               target='_blank'
-              variant='outlined'
+              variant='contained'
             >
               {section['button' + idx] || 'New Button'}
             </Button>}

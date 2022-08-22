@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createWebsite } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { useFirestoreConnect } from 'react-redux-firebase';
 import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
 import { Card, CardHeader, Avatar } from '@mui/material';
@@ -8,13 +9,29 @@ import { TextField, CardActionArea } from '@mui/material';
 import { Dns, Wysiwyg } from '@mui/icons-material';
 import { Formik } from 'formik';
 import MainLayout from 'organisms/MainLayout';
+import WarningWindow from 'atoms/WarningWindow';
 
 const CreateView = () => {
   const error = useSelector(state => state.websites.error);
+  const auth = useSelector(state => state.firebase.auth);
+  const profile = useSelector(state => state.firestore.data[auth.uid]);
+  useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [domain, setDomain] = useState('app');
   const [template, setTemplate] = useState('landing');
+  const [warning, setWarning] = useState(false);
+  const sections = template === 'landing' ? [
+    { id: Math.random().toString(16).slice(2), type: 'graphic' },
+    { id: Math.random().toString(16).slice(2), type: 'iconbox' },
+    { id: Math.random().toString(16).slice(2), type: 'mailing' },
+    { id: Math.random().toString(16).slice(2), type: 'content' },
+  ] : template === 'product' ? [
+    { id: Math.random().toString(16).slice(2), type: 'graphic' },
+    { id: Math.random().toString(16).slice(2), type: 'iconbox' },
+    { id: Math.random().toString(16).slice(2), type: 'selling' },
+    { id: Math.random().toString(16).slice(2), type: 'content' },
+  ] : [];
 
   return (
     <MainLayout>
@@ -42,7 +59,9 @@ const CreateView = () => {
           sx={{ my: 1, bgcolor: 'secondary.light', borderRadius: 2 }}
           variant='outlined'
         >
-          <CardActionArea onClick={() => setDomain('custom')}>
+          <CardActionArea onClick={() => profile.plan === 'premium' ?
+            setDomain('custom') : setWarning(true)
+          }>
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: domain === 'custom' && 'primary.main' }}>
@@ -109,23 +128,18 @@ const CreateView = () => {
           Add name and description
         </Typography>
         <Formik
-          initialValues={{
-            name: '',
-            description: '',
-          }}
-          onSubmit={(values) => {
-            dispatch(createWebsite({
-              values: { ...values, domain, template },
-              navigate,
-            }));
-          }}
+          initialValues={{ name: '', description: '' }}
+          onSubmit={(values) => dispatch(createWebsite({
+            values: { ...values, domain, template, sections },
+            navigate,
+          }))}
         >
           {({ values, handleChange, handleSubmit }) => (
             <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
               <TextField
                 sx={{ my: 1 }}
                 onChange={handleChange}
-                value={values.name}
+                value={domain === 'app' ? values.name.replace(/\./g, '') : values.name}
                 placeholder={domain === 'app' ? 'Website Name' : 'Domain Name'}
                 label={domain === 'app' ? 'Website Name' : 'Domain Name'}
                 name='name'
@@ -163,7 +177,16 @@ const CreateView = () => {
           Create Website
         </Button>
       </Box>
-    </MainLayout>
+      <WarningWindow
+        warning={warning} setWarning={setWarning}
+        text={<Typography>
+          To add custom domain upgrade your plan to premium
+        </Typography>}
+        button={<Button onClick={() => navigate('/account')}>
+          Upgrade Plan
+        </Button>}
+      />
+    </MainLayout >
   )
 };
 

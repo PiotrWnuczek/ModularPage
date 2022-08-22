@@ -37,7 +37,7 @@ const SectionOptions = ({ section }) => {
               console.log('set');
               setOpen(false);
             }}
-            variant='outlined'
+            variant='contained'
             size='small'
           >
             Set
