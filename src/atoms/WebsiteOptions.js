@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Dialog, Button } from '@mui/material';
+import { Box, Dialog, Button, Divider } from '@mui/material';
 import { Typography, Avatar } from '@mui/material';
 import { Settings } from '@mui/icons-material';
 
@@ -26,12 +26,26 @@ const WebsiteOptions = ({ website }) => {
         fullWidth
       >
         <Box sx={{ p: 2 }}>
-          <Typography variant='h5'>
-            Settings
+          <Typography
+            sx={{ textTransform: 'capitalize' }}
+            variant='h5'
+          >
+            {website && website.name} Website Settings
           </Typography>
-          <Typography variant='subtitle1'>
-            {website && website.name}
-          </Typography>
+          <Box>
+            <Typography>
+              Text <br />
+              Color <br />
+              Background <br />
+              Components
+            </Typography>
+            <Divider />
+            <Typography>
+              Standard <br />
+              Wide <br />
+              Narrow
+            </Typography>
+          </Box>
           <Button
             sx={{ mt: 1 }}
             onClick={() => {

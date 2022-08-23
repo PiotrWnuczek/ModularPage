@@ -9,7 +9,6 @@ export const createWebsite = createAsyncThunk(
       return await ref.doc(values.name).get().then((doc) => {
         !doc.exists && ref.doc(values.name).set({
           ...values, email, public: false,
-          header: { type: 'header' }, footer: { type: 'footer' },
         }).then(() => navigate && navigate('/board'));
       }).then(() => values);
     } catch (error) { throw error }

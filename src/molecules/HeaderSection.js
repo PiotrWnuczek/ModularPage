@@ -32,6 +32,7 @@ const HeaderSection = ({ admin, header, wid }) => (
         {!admin && <Button
           component={Link}
           href={header.link || '#'}
+          target='_blank'
           variant='contained'
         >
           {header.button || 'New Button'}

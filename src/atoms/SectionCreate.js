@@ -5,18 +5,17 @@ import { Box, Dialog, Typography } from '@mui/material';
 import { Avatar, List, ListItem } from '@mui/material';
 import { ListItemAvatar, ListItemText } from '@mui/material';
 import { Add } from '@mui/icons-material';
+import { content, graphic, iconbox, mailing, selling } from 'stock/sections';
 
 const SectionCreate = ({ wid, index, start }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const random = Math.random().toString(16).slice(2);
-
   const sections = [
-    { name: 'Content Section', type: 'content' },
-    { name: 'Graphic Section', type: 'graphic' },
-    { name: 'Iconbox Section', type: 'iconbox' },
-    { name: 'Mailing Section', type: 'mailing' },
-    { name: 'Selling Section', type: 'selling' },
+    { name: 'Content Section', template: content },
+    { name: 'Graphic Section', template: graphic },
+    { name: 'Iconbox Section', template: iconbox },
+    { name: 'Mailing Section', template: mailing },
+    { name: 'Selling Section', template: selling },
   ];
 
   return (
@@ -47,12 +46,11 @@ const SectionCreate = ({ wid, index, start }) => {
           {sections.map(section => <ListItem
             onClick={() => {
               dispatch(createSection({
-                values: { id: random, type: section.type },
-                index, wid,
+                values: section.template, index, wid,
               }));
               setOpen(false);
             }}
-            key={section.type}
+            key={section.name}
             button
           >
             <ListItemAvatar>

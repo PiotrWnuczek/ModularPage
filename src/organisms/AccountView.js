@@ -15,13 +15,13 @@ const AccountView = () => {
     <MainLayout>
       <Box sx={{ p: 2 }}>
         <Typography sx={{ mb: 1 }}>
-          Email: {profile.email}
+          Email: {profile && profile.email}
         </Typography>
         <Typography sx={{ mb: 1 }}>
-          Plan: {profile.plan}
+          Plan: {profile && profile.plan}
         </Typography>
         <Button
-          onClick={() => profile.plan !== 'premium' &&
+          onClick={() => profile && (profile.plan !== 'premium') &&
             dispatch(updateProfile({
               values: { plan: 'premium' }, id: auth.uid,
             }))}

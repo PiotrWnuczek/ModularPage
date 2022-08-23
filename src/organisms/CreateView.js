@@ -8,6 +8,8 @@ import { Card, CardHeader, Avatar } from '@mui/material';
 import { TextField, CardActionArea } from '@mui/material';
 import { Dns, Wysiwyg } from '@mui/icons-material';
 import { Formik } from 'formik';
+import { header, footer } from 'stock/sections';
+import { content, graphic, iconbox, mailing, selling } from 'stock/sections';
 import MainLayout from 'organisms/MainLayout';
 import WarningWindow from 'atoms/WarningWindow';
 
@@ -22,15 +24,9 @@ const CreateView = () => {
   const [template, setTemplate] = useState('landing');
   const [warning, setWarning] = useState(false);
   const sections = template === 'landing' ? [
-    { id: Math.random().toString(16).slice(2), type: 'graphic' },
-    { id: Math.random().toString(16).slice(2), type: 'iconbox' },
-    { id: Math.random().toString(16).slice(2), type: 'mailing' },
-    { id: Math.random().toString(16).slice(2), type: 'content' },
+    graphic, iconbox, mailing, content,
   ] : template === 'product' ? [
-    { id: Math.random().toString(16).slice(2), type: 'graphic' },
-    { id: Math.random().toString(16).slice(2), type: 'iconbox' },
-    { id: Math.random().toString(16).slice(2), type: 'selling' },
-    { id: Math.random().toString(16).slice(2), type: 'content' },
+    graphic, iconbox, selling, content,
   ] : [];
 
   return (
@@ -130,7 +126,7 @@ const CreateView = () => {
         <Formik
           initialValues={{ name: '', description: '' }}
           onSubmit={(values) => dispatch(createWebsite({
-            values: { ...values, domain, template, sections },
+            values: { ...values, domain, template, sections, header, footer },
             navigate,
           }))}
         >
