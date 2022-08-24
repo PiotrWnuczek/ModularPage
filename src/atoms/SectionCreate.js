@@ -3,7 +3,6 @@ import { createSection } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { Box, Dialog, Typography } from '@mui/material';
 import { Avatar, List, ListItem } from '@mui/material';
-import { ListItemAvatar, ListItemText } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { content, graphic, iconbox, mailing, selling } from 'stock/sections';
 
@@ -37,10 +36,10 @@ const SectionCreate = ({ wid, index, start }) => {
         fullWidth
       >
         <Typography
-          sx={{ p: 2 }}
+          sx={{ p: 2, pb: 1 }}
           variant='h5'
         >
-          Create
+          Create New Section
         </Typography>
         <List dense>
           {sections.map(section => <ListItem
@@ -50,15 +49,14 @@ const SectionCreate = ({ wid, index, start }) => {
               }));
               setOpen(false);
             }}
-            key={section.name}
-            button
+            key={section.name} button
           >
-            <ListItemAvatar>
-              <Avatar>
-                <Add />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={section.name} />
+            <Avatar sx={{ bgcolor: 'primary.main' }}>
+              <Add />
+            </Avatar>
+            <Typography sx={{ ml: 1 }}>
+              Add {section.name}
+            </Typography>
           </ListItem>)}
         </List>
       </Dialog>

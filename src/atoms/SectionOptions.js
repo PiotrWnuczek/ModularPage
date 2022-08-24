@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
-import { Box, Dialog, Button, Divider } from '@mui/material';
-import { Typography, Avatar } from '@mui/material';
-import { Tune } from '@mui/icons-material';
+import { Box, Dialog, Button } from '@mui/material';
+import { Typography, Avatar, Divider } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { Tune, GridView, Widgets } from '@mui/icons-material';
+import StyleEditor from 'atoms/StyleEditor';
 
 const SectionOptions = ({ section }) => {
   const [open, setOpen] = useState(false);
+  const [style, setStyle] = useState({
+    fontsize: 'm',
+    fontcolor: '#555555',
+    accentcolor: '#1565c0',
+    backgroundcolor: '#f5f5f5',
+  });
+  const [layout, setLayout] = useState({
+    quantity: '2',
+    variant: 'narrow',
+  });
 
   return (
     <Box>
@@ -31,24 +43,41 @@ const SectionOptions = ({ section }) => {
           >
             {section && section.type} Section Settings
           </Typography>
-          <Box>
-            <Typography>
-              Text <br />
-              Color <br />
-              Background <br />
-              Components
-            </Typography>
-            <Divider />
-            <Typography>
-              Standard <br />
-              Wide <br />
-              Narrow
-            </Typography>
+          <StyleEditor style={style} setStyle={setStyle} />
+          <Divider />
+          <Box sx={{ py: 2 }}>
+            {['narrow', 'wide'].map(item =>
+              <Box
+                sx={{ my: 1, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                onClick={() => setLayout({ ...layout, variant: item })}
+                key={item}
+              >
+                <Avatar sx={{ bgcolor: layout.variant === item && 'primary.main' }}>
+                  <GridView />
+                </Avatar>
+                <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
+                  {item} Layout Variant
+                </Typography>
+              </Box>
+            )}
+            <ToggleButtonGroup
+              sx={{ my: 1 }}
+              value={layout.quantity}
+              onChange={(e) => setLayout({ ...layout, quantity: e.target.value })}
+              color='primary'
+              size='small'
+            >
+              <ToggleButton value='1'>
+                <Widgets /> One Button
+              </ToggleButton>
+              <ToggleButton value='2'>
+                <Widgets /> Two Buttons
+              </ToggleButton>
+            </ToggleButtonGroup>
           </Box>
           <Button
-            sx={{ mt: 1 }}
             onClick={() => {
-              console.log('set');
+              console.log(style, layout);
               setOpen(false);
             }}
             variant='contained'

@@ -38,7 +38,10 @@ const WebsiteView = ({ admin, host }) => {
   };
 
   return (
-    <Box>
+    <Box sx={{
+      color: (website && website.style && website.style.fontcolor) || '#444444',
+      bgcolor: (website && website.style && website.style.backgroundcolor) || '#f5f5f5',
+    }}>
       {access && <WebsiteExit />}
       {access && <WebsiteOptions website={website} />}
       {access && website && !website.sections.length && <Box

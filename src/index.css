@@ -8,6 +8,12 @@
 
 body {
   font-family: 'Lato';
+  color: #444444;
   background: #f5f5f5;
   margin: 0;
+}
+
+.picker .react-colorful {
+  width: 150px;
+  height: 150px;
 }
