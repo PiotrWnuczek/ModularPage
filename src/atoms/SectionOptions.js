@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { updateSection } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
+import { useTheme } from '@mui/material/styles';
 import { Box, Dialog, Button } from '@mui/material';
 import { Typography, Avatar, Divider } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
@@ -10,16 +11,25 @@ import _ from 'lodash';
 
 const SectionOptions = ({ section, wid }) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const ss = section.style;
   const [open, setOpen] = useState(false);
   const [style, setStyle] = useState({
-    fontsize: (section.style && section.style.fontsize) || 'm',
-    fontcolor: (section.style && section.style.fontcolor) || '#444444',
-    accentcolor: (section.style && section.style.accentcolor) || '#1976d2',
-    backgroundcolor: (section.style && section.style.backgroundcolor) || '#f5f5f5',
+    fontsize: (ss && ss.fontsize) || theme.fontsize,
+    fontcolor: (ss && ss.fontcolor) || theme.palette.fontcolor.main,
+    accentcolor: (ss && ss.accentcolor) || theme.palette.accentcolor.main,
+    backgroundcolor: (ss && ss.backgroundcolor) || theme.palette.backgroundcolor.main,
   });
+  useEffect(() => {
+    setStyle({
+      fontsize: (ss && ss.fontsize) || theme.fontsize,
+      fontcolor: (ss && ss.fontcolor) || theme.palette.fontcolor.main,
+      accentcolor: (ss && ss.accentcolor) || theme.palette.accentcolor.main,
+      backgroundcolor: (ss && ss.backgroundcolor) || theme.palette.backgroundcolor.main,
+    })
+  }, [ss, theme]);
   const [layout, setLayout] = useState({
-    quantity: '2',
-    variant: 'narrow',
+    quantity: '2', variant: 'narrow',
   });
 
   return (

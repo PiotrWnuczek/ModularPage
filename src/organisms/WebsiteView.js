@@ -26,13 +26,24 @@ const WebsiteView = ({ admin, host }) => {
   const [data, setData] = useState(website && [...website.sections]);
   useEffect(() => { setData(website && [...website.sections]) }, [website]);
   const access = website && admin && auth.email === website.email;
-  const style = website && website.style;
+  const ws = website && website.style;
   const theme = createTheme({
     palette: {
-      fontcolor: { main: (style && style.fontcolor) || '#444444' },
-      accentcolor: { main: (style && style.accentcolor) || '#1976d2', contrastText: '#ffffff' },
-      backgroundcolor: { main: (style && style.backgroundcolor) || '#f5f5f5' },
+      fontcolor: { main: (ws && ws.fontcolor) || '#444444' },
+      accentcolor: { main: (ws && ws.accentcolor) || '#1976d2', contrastText: '#ffffff' },
+      backgroundcolor: { main: (ws && ws.backgroundcolor) || '#f5f5f5' },
     },
+    typography: {
+      title: {
+        fontSize: (ws && ws.fontsize === 'l') ? 42 : 36, fontWeight: 600, letterSpacing: 2,
+        [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 32 : 26 },
+      },
+      text: {
+        fontSize: (ws && ws.fontsize === 'l') ? 22 : 18, fontWeight: 400, letterSpacing: 1,
+        [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 18 : 14 },
+      },
+    },
+    fontsize: (ws && ws.fontsize) || 'm',
   });
   const onDragEnd = ({ source, destination }) => {
     if (!destination) return;

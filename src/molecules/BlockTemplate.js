@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material';
 import { Box, Avatar } from '@mui/material';
 import { DragIndicator } from '@mui/icons-material';
@@ -14,14 +13,27 @@ import SellingSection from 'molecules/SellingSection';
 
 const BlockTemplate = ({ admin, section, wid, index, drag }) => {
   const [hover, setHover] = useState(false);
-  const style = section && section.style;
-  const theme = style ? createTheme({
-    palette: {
-      fontcolor: { main: style.fontcolor || '#444444' },
-      accentcolor: { main: style.accentcolor || '#1976d2', contrastText: '#ffffff' },
-      backgroundcolor: { main: style.backgroundcolor || '#f5f5f5' },
-    },
-  }) : {};
+  const ss = section && section.style;
+  const theme = (outer) => ({
+    ...outer,
+    palette: ss ? {
+      ...outer.palette,
+      fontcolor: { main: ss.fontcolor || '#444444' },
+      accentcolor: { main: ss.accentcolor || '#1976d2', contrastText: '#ffffff' },
+      backgroundcolor: { main: ss.backgroundcolor || '#f5f5f5' },
+    } : outer.palette,
+    typography: ss ? {
+      ...outer.typography,
+      title: {
+        fontSize: (ss && ss.fontsize === 'l') ? 42 : 36, fontWeight: 600, letterSpacing: 2,
+        [outer.breakpoints.down('md')]: { fontSize: (ss && ss.fontsize === 'l') ? 32 : 26 },
+      },
+      text: {
+        fontSize: (ss && ss.fontsize === 'l') ? 22 : 18, fontWeight: 400, letterSpacing: 1,
+        [outer.breakpoints.down('md')]: { fontSize: (ss && ss.fontsize === 'l') ? 18 : 14 },
+      },
+    } : outer.typography,
+  });
 
   return (
     <ThemeProvider theme={theme}>
