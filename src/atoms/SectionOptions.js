@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
+import { updateSection } from 'redux/websitesSlice';
+import { useDispatch } from 'react-redux';
 import { Box, Dialog, Button } from '@mui/material';
 import { Typography, Avatar, Divider } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { Tune, GridView, Widgets } from '@mui/icons-material';
 import StyleEditor from 'atoms/StyleEditor';
+import _ from 'lodash';
 
-const SectionOptions = ({ section }) => {
+const SectionOptions = ({ section, wid }) => {
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [style, setStyle] = useState({
-    fontsize: 'm',
-    fontcolor: '#555555',
-    accentcolor: '#1565c0',
-    backgroundcolor: '#f5f5f5',
+    fontsize: (section.style && section.style.fontsize) || 'm',
+    fontcolor: (section.style && section.style.fontcolor) || '#444444',
+    accentcolor: (section.style && section.style.accentcolor) || '#1976d2',
+    backgroundcolor: (section.style && section.style.backgroundcolor) || '#f5f5f5',
   });
   const [layout, setLayout] = useState({
     quantity: '2',
@@ -23,8 +27,8 @@ const SectionOptions = ({ section }) => {
       <Avatar
         sx={{
           width: 30, height: 30, mx: 0.3,
-          cursor: 'pointer', bgcolor: 'info.main',
-          '&:hover': { bgcolor: 'info.dark' },
+          cursor: 'pointer', bgcolor: 'primary.main',
+          '&:hover': { bgcolor: 'primary.dark' },
         }}
         onClick={() => setOpen(true)}
       >
@@ -66,18 +70,25 @@ const SectionOptions = ({ section }) => {
               onChange={(e) => setLayout({ ...layout, quantity: e.target.value })}
               color='primary'
               size='small'
+              exclusive
             >
+              <ToggleButton value='0'>
+                <Widgets sx={{ mr: 1 }} /> Zero Button
+              </ToggleButton>
               <ToggleButton value='1'>
-                <Widgets /> One Button
+                <Widgets sx={{ mr: 1 }} /> One Button
               </ToggleButton>
               <ToggleButton value='2'>
-                <Widgets /> Two Buttons
+                <Widgets sx={{ mr: 1 }} /> Two Buttons
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
           <Button
             onClick={() => {
-              console.log(style, layout);
+              !_.isEqual(style, section.style) &&
+                dispatch(updateSection({
+                  values: { style }, sid: section.id, wid,
+                }));
               setOpen(false);
             }}
             variant='contained'

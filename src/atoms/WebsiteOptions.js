@@ -11,9 +11,9 @@ const WebsiteOptions = ({ website }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [style, setStyle] = useState({
-    accentcolor: (website.style && website.style.accentcolor) || '#1565c0',
     fontsize: (website.style && website.style.fontsize) || 'm',
-    fontcolor: (website.style && website.style.fontcolor) || '#555555',
+    fontcolor: (website.style && website.style.fontcolor) || '#444444',
+    accentcolor: (website.style && website.style.accentcolor) || '#1976d2',
     backgroundcolor: (website.style && website.style.backgroundcolor) || '#f5f5f5',
   });
 

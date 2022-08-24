@@ -6,7 +6,7 @@ import ButtonOptions from 'atoms/ButtonOptions';
 
 const HeaderSection = ({ admin, header, wid }) => (
   <Box>
-    <AppBar color='secondary' elevation={0}>
+    <AppBar color='backgroundcolor' elevation={0}>
       <Toolbar sx={{ justifyContent: 'space-between', mx: { xs: 5, md: 30 } }}>
         <TextEditor
           type='title'
@@ -16,8 +16,8 @@ const HeaderSection = ({ admin, header, wid }) => (
         >
           <Typography
             sx={{
-              fontSize: { xs: 14, md: 18 },
-              fontWeight: 600, letterSpacing: 1,
+              color: 'fontcolor.main', letterSpacing: 1,
+              fontSize: { xs: 14, md: 18 }, fontWeight: 600,
             }}
             variant='subtitle1'
           >
@@ -25,7 +25,10 @@ const HeaderSection = ({ admin, header, wid }) => (
           </Typography>
         </TextEditor>
         {admin && <ButtonOptions section={header} wid={wid}>
-          <Button variant='contained'>
+          <Button
+            variant='contained'
+            color='accentcolor'
+          >
             {header.button || 'New Button'}
           </Button>
         </ButtonOptions>}
@@ -34,6 +37,7 @@ const HeaderSection = ({ admin, header, wid }) => (
           href={header.link || '#'}
           target='_blank'
           variant='contained'
+          color='accentcolor'
         >
           {header.button || 'New Button'}
         </Button>}

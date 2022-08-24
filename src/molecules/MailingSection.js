@@ -52,7 +52,7 @@ const MailingSection = ({ admin, section, wid }) => {
         <Grid sx={{ px: { xs: 5, md: 10 } }} container spacing={1}>
           <Grid item xs={12} sm={9}>
             <TextField
-              sx={{ backgroundColor: 'secondary.light', borderRadius: 1 }}
+              sx={{ bgolor: 'backgroundcolor.main', borderRadius: 1 }}
               placeholder='Email'
               name='email'
               autoComplete='off'
@@ -65,6 +65,7 @@ const MailingSection = ({ admin, section, wid }) => {
             <Button
               sx={{ py: 0.85 }}
               variant='contained'
+              color='accentcolor'
               fullWidth
             >
               {section.button || 'Subscribe'}
@@ -75,8 +76,7 @@ const MailingSection = ({ admin, section, wid }) => {
       {!admin && <Formik
         initialValues={{ email: '' }}
         onSubmit={(values, { resetForm }) => {
-          senderFunction(values.email);
-          resetForm();
+          senderFunction(values.email); resetForm();
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
@@ -84,7 +84,7 @@ const MailingSection = ({ admin, section, wid }) => {
             <Grid sx={{ px: { xs: 5, md: 10 } }} container spacing={1}>
               <Grid item xs={12} sm={9}>
                 <TextField
-                  sx={{ backgroundColor: 'secondary.light', borderRadius: 1 }}
+                  sx={{ bgolor: 'backgroundcolor.main', borderRadius: 1 }}
                   onChange={handleChange}
                   value={values.email}
                   placeholder='Email'
@@ -100,6 +100,7 @@ const MailingSection = ({ admin, section, wid }) => {
                   sx={{ py: 0.85 }}
                   type='submit'
                   variant='contained'
+                  color='accentcolor'
                   fullWidth
                 >
                   {section.button || 'Subscribe'}

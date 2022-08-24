@@ -46,7 +46,10 @@ const ContentSection = ({ admin, section, wid }) => (
         section={section}
         wid={wid} idx={idx}
       >
-        <Button variant='contained'>
+        <Button
+          variant='contained'
+          color='accentcolor'
+        >
           {section['button' + idx] || 'New Button'}
         </Button>
       </ButtonOptions>}
@@ -55,6 +58,7 @@ const ContentSection = ({ admin, section, wid }) => (
         href={section.link || '#'}
         target='_blank'
         variant='contained'
+        color='accentcolor'
       >
         {section['button' + idx] || 'New Button'}
       </Button>}

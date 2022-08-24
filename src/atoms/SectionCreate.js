@@ -22,8 +22,8 @@ const SectionCreate = ({ wid, index, start }) => {
       <Avatar
         sx={{
           width: start ? 40 : 30, height: start ? 40 : 30,
-          mx: 0.3, cursor: 'pointer', bgcolor: 'info.main',
-          '&:hover': { bgcolor: 'info.dark' },
+          mx: 0.3, cursor: 'pointer', bgcolor: 'primary.main',
+          '&:hover': { bgcolor: 'primary.dark' },
         }}
         onClick={() => setOpen(true)}
       >

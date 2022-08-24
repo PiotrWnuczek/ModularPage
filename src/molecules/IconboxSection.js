@@ -30,7 +30,7 @@ const IconBox = ({ admin, section, wid, idx }) => {
           {!edit && <Box
             sx={{
               cursor: admin && 'pointer',
-              mr: 1, fontSize: 32, color: 'primary.main',
+              mr: 1, fontSize: 32, color: 'accentcolor.main',
             }}
             onClick={() => admin && setEdit(true)}
             component={icons[section[icon]] || icons.Add}

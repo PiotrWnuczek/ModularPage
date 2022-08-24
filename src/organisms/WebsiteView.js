@@ -5,6 +5,8 @@ import { useFirestoreConnect } from 'react-redux-firebase';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { createTheme } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material';
 import { Box, Button, Typography } from '@mui/material';
 import WebsiteExit from 'atoms/WebsiteExit';
 import WebsiteOptions from 'atoms/WebsiteOptions';
@@ -24,7 +26,14 @@ const WebsiteView = ({ admin, host }) => {
   const [data, setData] = useState(website && [...website.sections]);
   useEffect(() => { setData(website && [...website.sections]) }, [website]);
   const access = website && admin && auth.email === website.email;
-
+  const style = website && website.style;
+  const theme = createTheme({
+    palette: {
+      fontcolor: { main: (style && style.fontcolor) || '#444444' },
+      accentcolor: { main: (style && style.accentcolor) || '#1976d2', contrastText: '#ffffff' },
+      backgroundcolor: { main: (style && style.backgroundcolor) || '#f5f5f5' },
+    },
+  });
   const onDragEnd = ({ source, destination }) => {
     if (!destination) return;
     const items = data;
@@ -38,80 +47,79 @@ const WebsiteView = ({ admin, host }) => {
   };
 
   return (
-    <Box sx={{
-      color: (website && website.style && website.style.fontcolor) || '#444444',
-      bgcolor: (website && website.style && website.style.backgroundcolor) || '#f5f5f5',
-    }}>
-      {access && <WebsiteExit />}
-      {access && <WebsiteOptions website={website} />}
-      {access && website && !website.sections.length && <Box
-        sx={{ py: 5.5, display: 'flex', justifyContent: 'center' }}
-      >
-        <SectionCreate wid={website.name} index={0} start />
-      </Box>}
-      {website && website.header && (website.public || access) && <HeaderSection
-        admin={access} header={website.header} wid={website.name}
-      />}
-      {access && <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId='droppable'>
-          {(provided) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-            >
-              {data && data.map((item, index) => (
-                <Draggable
-                  key={item.id}
-                  draggableId={item.id}
-                  index={index}
-                >
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                    >
-                      <BlockTemplate
-                        admin={access}
-                        section={item}
-                        wid={website.name}
-                        index={index + 1}
-                        drag={provided.dragHandleProps}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
+    <ThemeProvider theme={theme}>
+      <Box sx={{ color: 'fontcolor.main', bgcolor: 'backgroundcolor.main' }}>
+        {access && <WebsiteExit />}
+        {access && <WebsiteOptions website={website} />}
+        {access && website && !website.sections.length && <Box
+          sx={{ py: 5.5, display: 'flex', justifyContent: 'center' }}
+        >
+          <SectionCreate wid={website.name} index={0} start />
+        </Box>}
+        {website && website.header && (website.public || access) && <HeaderSection
+          admin={access} header={website.header} wid={website.name}
+        />}
+        {access && <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId='droppable'>
+            {(provided) => (
+              <div
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {data && data.map((item, index) => (
+                  <Draggable
+                    key={item.id}
+                    draggableId={item.id}
+                    index={index}
+                  >
+                    {(provided) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                      >
+                        <BlockTemplate
+                          admin={access}
+                          section={item}
+                          wid={website.name}
+                          index={index + 1}
+                          drag={provided.dragHandleProps}
+                        />
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>}
+        {!access && website && website.public &&
+          data && data.map(item =>
+            <BlockTemplate
+              admin={access}
+              section={item}
+              wid={website.name}
+              key={item.id}
+            />
           )}
-        </Droppable>
-      </DragDropContext>}
-      {!access && website && website.public &&
-        data && data.map(item =>
-          <BlockTemplate
-            admin={access}
-            section={item}
-            wid={website.name}
-            key={item.id}
-          />
-        )}
-      {website && website.footer && (website.public || access) && <FooterSection
-        admin={access} footer={website.footer} wid={website.name}
-      />}
-      {!access && !(website && website.public) &&
-        <Box sx={{ textAlign: 'center', m: 5 }}>
-          <Typography variant='h6'>
-            Page not public
-          </Typography>
-          <Button
-            onClick={() => navigate('/')}
-            size='small'
-          >
-            Modular Page
-          </Button>
-        </Box>
-      }
-    </Box>
+        {website && website.footer && (website.public || access) && <FooterSection
+          admin={access} footer={website.footer} wid={website.name}
+        />}
+        {!access && !(website && website.public) &&
+          <Box sx={{ textAlign: 'center', m: 5 }}>
+            <Typography variant='h6'>
+              Page not public
+            </Typography>
+            <Button
+              onClick={() => navigate('/')}
+              size='small'
+            >
+              Modular Page
+            </Button>
+          </Box>
+        }
+      </Box>
+    </ThemeProvider>
   )
 };
 

@@ -39,12 +39,13 @@ const StyleEditor = ({ style, setStyle }) => {
         onChange={(e) => setStyle({ ...style, fontsize: e.target.value })}
         color='primary'
         size='small'
+        exclusive
       >
         <ToggleButton value='m'>
-          <FormatSize /> Medium Font Size
+          <FormatSize sx={{ mr: 1 }} /> Medium Font Size
         </ToggleButton>
         <ToggleButton value='l'>
-          <FormatSize /> Large Font Size
+          <FormatSize sx={{ mr: 1 }} /> Large Font Size
         </ToggleButton>
       </ToggleButtonGroup>
     </Box>

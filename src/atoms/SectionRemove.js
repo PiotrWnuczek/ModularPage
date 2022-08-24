@@ -14,8 +14,8 @@ const SectionRemove = ({ sid, wid, file }) => {
       <Avatar
         sx={{
           width: 30, height: 30, mx: 0.3,
-          cursor: 'pointer', bgcolor: 'info.main',
-          '&:hover': { bgcolor: 'info.dark' },
+          cursor: 'pointer', bgcolor: 'primary.main',
+          '&:hover': { bgcolor: 'primary.dark' },
         }}
         onClick={() => setOpen(true)}
       >
