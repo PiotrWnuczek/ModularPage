@@ -32,11 +32,8 @@ const GraphicSection = ({ admin, section, wid }) => {
             wid={wid}
           >
             <Typography
-              sx={{
-                mb: 1, fontSize: { xs: 26, md: 36 },
-                fontWeight: 600, letterSpacing: 2,
-              }}
-              variant='h1'
+              sx={{ mb: 1 }}
+              variant='title'
             >
               {section.title || 'New Title'}
             </Typography>
@@ -47,14 +44,14 @@ const GraphicSection = ({ admin, section, wid }) => {
             section={section}
             wid={wid}
           >
-            <Box sx={{
-              mt: 1, fontSize: { xs: 14, md: 18 },
-              fontWeight: 400, letterSpacing: 1,
-            }}>
+            <Typography
+              sx={{ mt: 1 }}
+              variant='text'
+            >
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {section.text || 'New Text'}
               </ReactMarkdown>
-            </Box>
+            </Typography>
           </TextEditor>
           {[1, 2].map(idx => <Box
             sx={{ display: 'inline-block', mx: 0.5 }}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
@@ -12,14 +12,13 @@ const FooterSection = ({ admin, footer, wid }) => (
       section={footer}
       wid={wid}
     >
-      <Box sx={{
-        mt: 1, fontSize: { xs: 14, md: 18 },
-        fontWeight: 400, letterSpacing: 1,
-      }}>
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {footer.text || 'New Text'}
-        </ReactMarkdown>
-      </Box>
+      <Typography variant='text'>
+        <Box sx={{ fontSize: '90%' }}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {footer.text || 'New Text'}
+          </ReactMarkdown>
+        </Box>
+      </Typography>
     </TextEditor>
   </Box>
 );

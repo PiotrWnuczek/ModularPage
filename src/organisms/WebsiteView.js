@@ -30,17 +30,17 @@ const WebsiteView = ({ admin, host }) => {
   const theme = createTheme({
     palette: {
       fontcolor: { main: (ws && ws.fontcolor) || '#444444' },
-      accentcolor: { main: (ws && ws.accentcolor) || '#1976d2', contrastText: '#ffffff' },
+      accentcolor: { main: (ws && ws.accentcolor) || '#1976d2', contrastText: 'white' },
       backgroundcolor: { main: (ws && ws.backgroundcolor) || '#f5f5f5' },
     },
     typography: {
       title: {
-        fontSize: (ws && ws.fontsize === 'l') ? 42 : 36, fontWeight: 600, letterSpacing: 2,
-        [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 32 : 26 },
+        fontSize: (ws && ws.fontsize === 'l') ? 36 : 32, fontWeight: 600, letterSpacing: 2,
+        [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 32 : 28 },
       },
       text: {
-        fontSize: (ws && ws.fontsize === 'l') ? 22 : 18, fontWeight: 400, letterSpacing: 1,
-        [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 18 : 14 },
+        fontSize: (ws && ws.fontsize === 'l') ? 18 : 16, fontWeight: 400, letterSpacing: 1,
+        [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 16 : 14 },
       },
     },
     fontsize: (ws && ws.fontsize) || 'm',

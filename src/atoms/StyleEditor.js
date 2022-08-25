@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Box, Grid, Typography, Avatar } from '@mui/material';
+import { updateSection, updateWebsite } from 'redux/websitesSlice';
+import { useDispatch } from 'react-redux';
+import { Box, Grid, Button, Typography, Avatar } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { Colorize, ColorLens, FormatSize } from '@mui/icons-material';
 import { HexColorPicker } from 'react-colorful';
 
-const StyleEditor = ({ style, setStyle }) => {
+const StyleEditor = ({ style, setStyle, sid, wid }) => {
+  const dispatch = useDispatch();
   const [picker, setPicker] = useState('fontcolor');
 
   return (
@@ -25,29 +28,38 @@ const StyleEditor = ({ style, setStyle }) => {
               </Typography>
             </Box>
           )}
+          <ToggleButtonGroup
+            sx={{ my: 1 }}
+            value={style.fontsize}
+            onChange={(e) => setStyle({ ...style, fontsize: e.target.value })}
+            color='primary'
+            size='small'
+            exclusive
+          >
+            <ToggleButton value='m'>
+              <FormatSize sx={{ mr: 1 }} /> Medium Font Size
+            </ToggleButton>
+            <ToggleButton value='l'>
+              <FormatSize sx={{ mr: 1 }} /> Large Font Size
+            </ToggleButton>
+          </ToggleButtonGroup>
         </Grid>
         <Grid item xs={12} md={4} className='picker'>
           <HexColorPicker
             color={style[picker]}
             onChange={(color) => setStyle({ ...style, [picker]: color })}
           />
+          <Button
+            sx={{ mx: 0.5, mt: 2 }}
+            onClick={() => {
+              wid && sid && dispatch(updateSection({ values: { style: null }, sid, wid }));
+              wid && !sid && dispatch(updateWebsite({ values: { style: null }, wid }));
+            }}
+          >
+            Reset To Default
+          </Button>
         </Grid>
       </Grid>
-      <ToggleButtonGroup
-        sx={{ my: 1 }}
-        value={style.fontsize}
-        onChange={(e) => setStyle({ ...style, fontsize: e.target.value })}
-        color='primary'
-        size='small'
-        exclusive
-      >
-        <ToggleButton value='m'>
-          <FormatSize sx={{ mr: 1 }} /> Medium Font Size
-        </ToggleButton>
-        <ToggleButton value='l'>
-          <FormatSize sx={{ mr: 1 }} /> Large Font Size
-        </ToggleButton>
-      </ToggleButtonGroup>
     </Box>
   )
 };

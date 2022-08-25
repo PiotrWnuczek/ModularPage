@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
+import { useTheme } from '@mui/material/styles';
 import { Box, Button, Avatar } from '@mui/material';
 import { Dialog, Typography } from '@mui/material';
 import { Settings } from '@mui/icons-material';
 import StyleEditor from 'atoms/StyleEditor';
-import _ from 'lodash';
 
 const WebsiteOptions = ({ website }) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [style, setStyle] = useState({
-    fontsize: (website.style && website.style.fontsize) || 'm',
-    fontcolor: (website.style && website.style.fontcolor) || '#444444',
-    accentcolor: (website.style && website.style.accentcolor) || '#1976d2',
-    backgroundcolor: (website.style && website.style.backgroundcolor) || '#f5f5f5',
+    fontsize: theme.fontsize,
+    fontcolor: theme.palette.fontcolor.main,
+    accentcolor: theme.palette.accentcolor.main,
+    backgroundcolor: theme.palette.backgroundcolor.main,
   });
+  useEffect(() => {
+    setStyle({
+      fontsize: theme.fontsize,
+      fontcolor: theme.palette.fontcolor.main,
+      accentcolor: theme.palette.accentcolor.main,
+      backgroundcolor: theme.palette.backgroundcolor.main,
+    })
+  }, [theme]);
 
   return (
     <Box>
@@ -43,10 +52,16 @@ const WebsiteOptions = ({ website }) => {
           >
             {website && website.name} Website Settings
           </Typography>
-          <StyleEditor style={style} setStyle={setStyle} />
+          <StyleEditor
+            style={style} setStyle={setStyle}
+            wid={website.style && website.name}
+          />
           <Button
             onClick={() => {
-              !_.isEqual(style, website.style) &&
+              (style.fontsize !== theme.fontsize ||
+                style.fontcolor !== theme.palette.fontcolor.main ||
+                style.accentcolor !== theme.palette.accentcolor.main ||
+                style.backgroundcolor !== theme.palette.backgroundcolor.main) &&
                 dispatch(updateWebsite({
                   values: { style }, wid: website.name,
                 }));

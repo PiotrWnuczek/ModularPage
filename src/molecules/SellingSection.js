@@ -18,7 +18,7 @@ const ProductCard = ({ admin, section, wid, idx }) => {
   return (
     <Grid item xs={12} md={4}>
       <Card
-        sx={{ bgcolor: 'inherit', borderRadius: 2 }}
+        sx={{ color: 'fontcolor.main', bgcolor: 'inherit', borderRadius: 2 }}
         variant='outlined'
       >
         <Box sx={{ p: 2, textAlign: 'center' }}>
@@ -29,14 +29,10 @@ const ProductCard = ({ admin, section, wid, idx }) => {
             wid={wid}
             idx={idx}
           >
-            <Typography
-              sx={{
-                fontSize: { xs: 18, md: 26 },
-                fontWeight: 600, letterSpacing: 2,
-              }}
-              variant='h1'
-            >
-              {section[title] || 'New Title'}
+            <Typography variant='title'>
+              <Box sx={{ fontSize: '70%' }}>
+                {section[title] || 'New Title'}
+              </Box>
             </Typography>
           </TextEditor>
           <TextEditor
@@ -46,22 +42,23 @@ const ProductCard = ({ admin, section, wid, idx }) => {
             wid={wid}
             idx={idx}
           >
-            <Box sx={{
-              fontSize: { xs: 14, md: 18 },
-              fontWeight: 400, letterSpacing: 1,
-            }}>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {section[text] || 'New Text'}
-              </ReactMarkdown>
-            </Box>
+            <Typography variant='text'>
+              <Box sx={{ fontSize: '90%' }}>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {section[text] || 'New Text'}
+                </ReactMarkdown>
+              </Box>
+            </Typography>
           </TextEditor>
           {admin && <PaymentOptions
             section={section}
             wid={wid} idx={idx}
           >
-            <Typography>
-              {section[price] || '0'}{' '}
-              {section[currency] || 'USD'}
+            <Typography variant='text'>
+              <Box sx={{ fontSize: '90%' }}>
+                {section[price] || '0'}{' '}
+                {section[currency] || 'USD'}
+              </Box>
             </Typography>
             <Button
               variant='contained'

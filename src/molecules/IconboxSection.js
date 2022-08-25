@@ -77,14 +77,10 @@ const IconBox = ({ admin, section, wid, idx }) => {
             wid={wid}
             idx={idx}
           >
-            <Typography
-              sx={{
-                fontSize: { xs: 18, md: 26 },
-                fontWeight: 600, letterSpacing: 2,
-              }}
-              variant='h1'
-            >
-              {section[title] || 'New Title'}
+            <Typography variant='title'>
+              <Box sx={{ fontSize: '70%' }}>
+                {section[title] || 'New Title'}
+              </Box>
             </Typography>
           </TextEditor>
         </Box>
@@ -95,14 +91,13 @@ const IconBox = ({ admin, section, wid, idx }) => {
           wid={wid}
           idx={idx}
         >
-          <Box sx={{
-            fontSize: { xs: 14, md: 18 },
-            fontWeight: 400, letterSpacing: 1,
-          }}>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {section[text] || 'New Text'}
-            </ReactMarkdown>
-          </Box>
+          <Typography variant='text'>
+            <Box sx={{ fontSize: '90%' }}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {section[text] || 'New Text'}
+              </ReactMarkdown>
+            </Box>
+          </Typography>
         </TextEditor>
       </Box>
     </Grid>

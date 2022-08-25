@@ -7,29 +7,28 @@ import { Typography, Avatar, Divider } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { Tune, GridView, Widgets } from '@mui/icons-material';
 import StyleEditor from 'atoms/StyleEditor';
-import _ from 'lodash';
 
 const SectionOptions = ({ section, wid }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const ss = section.style;
   const [open, setOpen] = useState(false);
   const [style, setStyle] = useState({
-    fontsize: (ss && ss.fontsize) || theme.fontsize,
-    fontcolor: (ss && ss.fontcolor) || theme.palette.fontcolor.main,
-    accentcolor: (ss && ss.accentcolor) || theme.palette.accentcolor.main,
-    backgroundcolor: (ss && ss.backgroundcolor) || theme.palette.backgroundcolor.main,
+    fontsize: theme.fontsize,
+    fontcolor: theme.palette.fontcolor.main,
+    accentcolor: theme.palette.accentcolor.main,
+    backgroundcolor: theme.palette.backgroundcolor.main,
   });
   useEffect(() => {
     setStyle({
-      fontsize: (ss && ss.fontsize) || theme.fontsize,
-      fontcolor: (ss && ss.fontcolor) || theme.palette.fontcolor.main,
-      accentcolor: (ss && ss.accentcolor) || theme.palette.accentcolor.main,
-      backgroundcolor: (ss && ss.backgroundcolor) || theme.palette.backgroundcolor.main,
+      fontsize: theme.fontsize,
+      fontcolor: theme.palette.fontcolor.main,
+      accentcolor: theme.palette.accentcolor.main,
+      backgroundcolor: theme.palette.backgroundcolor.main,
     })
-  }, [ss, theme]);
+  }, [theme]);
   const [layout, setLayout] = useState({
-    quantity: '2', variant: 'narrow',
+    quantity: '2',
+    variant: 'narrow',
   });
 
   return (
@@ -57,7 +56,11 @@ const SectionOptions = ({ section, wid }) => {
           >
             {section && section.type} Section Settings
           </Typography>
-          <StyleEditor style={style} setStyle={setStyle} />
+          <StyleEditor
+            style={style} setStyle={setStyle}
+            sid={section.style && section.id}
+            wid={section.style && wid}
+          />
           <Divider />
           <Box sx={{ py: 2 }}>
             {['narrow', 'wide'].map(item =>
@@ -95,7 +98,10 @@ const SectionOptions = ({ section, wid }) => {
           </Box>
           <Button
             onClick={() => {
-              !_.isEqual(style, section.style) &&
+              (style.fontsize !== theme.fontsize ||
+                style.fontcolor !== theme.palette.fontcolor.main ||
+                style.accentcolor !== theme.palette.accentcolor.main ||
+                style.backgroundcolor !== theme.palette.backgroundcolor.main) &&
                 dispatch(updateSection({
                   values: { style }, sid: section.id, wid,
                 }));

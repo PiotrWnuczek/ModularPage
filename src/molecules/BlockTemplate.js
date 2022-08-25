@@ -13,24 +13,24 @@ import SellingSection from 'molecules/SellingSection';
 
 const BlockTemplate = ({ admin, section, wid, index, drag }) => {
   const [hover, setHover] = useState(false);
-  const ss = section && section.style;
+  const ss = section.style;
   const theme = (outer) => ({
     ...outer,
     palette: ss ? {
       ...outer.palette,
-      fontcolor: { main: ss.fontcolor || '#444444' },
-      accentcolor: { main: ss.accentcolor || '#1976d2', contrastText: '#ffffff' },
-      backgroundcolor: { main: ss.backgroundcolor || '#f5f5f5' },
+      fontcolor: { main: ss.fontcolor },
+      accentcolor: { main: ss.accentcolor, contrastText: 'white' },
+      backgroundcolor: { main: ss.backgroundcolor },
     } : outer.palette,
     typography: ss ? {
       ...outer.typography,
       title: {
-        fontSize: (ss && ss.fontsize === 'l') ? 42 : 36, fontWeight: 600, letterSpacing: 2,
-        [outer.breakpoints.down('md')]: { fontSize: (ss && ss.fontsize === 'l') ? 32 : 26 },
+        fontSize: ss.fontsize === 'l' ? 36 : 32, fontWeight: 600, letterSpacing: 2,
+        [outer.breakpoints.down('md')]: { fontSize: ss.fontsize === 'l' ? 32 : 28 },
       },
       text: {
-        fontSize: (ss && ss.fontsize === 'l') ? 22 : 18, fontWeight: 400, letterSpacing: 1,
-        [outer.breakpoints.down('md')]: { fontSize: (ss && ss.fontsize === 'l') ? 18 : 14 },
+        fontSize: ss.fontsize === 'l' ? 18 : 16, fontWeight: 400, letterSpacing: 1,
+        [outer.breakpoints.down('md')]: { fontSize: ss.fontsize === 'l' ? 16 : 14 },
       },
     } : outer.typography,
   });
