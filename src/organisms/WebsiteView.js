@@ -8,6 +8,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material';
 import { Box, Button, Typography } from '@mui/material';
+import { Helmet } from 'react-helmet';
 import WebsiteExit from 'atoms/WebsiteExit';
 import WebsiteOptions from 'atoms/WebsiteOptions';
 import SectionCreate from 'atoms/SectionCreate';
@@ -60,6 +61,9 @@ const WebsiteView = ({ admin, host }) => {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ color: 'fontcolor.main', bgcolor: 'backgroundcolor.main' }}>
+        <Helmet>
+          <title>{website && website.name}</title>
+        </Helmet>
         {access && <WebsiteExit />}
         {access && <WebsiteOptions website={website} />}
         {access && website && !website.sections.length && <Box

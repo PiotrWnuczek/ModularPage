@@ -14,20 +14,18 @@ const ProductCard = ({ admin, section, wid, idx }) => {
   const product = idx ? 'product' + idx : 'product';
   const currency = idx ? 'currency' + idx : 'currency';
   const price = idx ? 'price' + idx : 'price';
+  const sl = section.layout;
 
   return (
-    <Grid item xs={12} md={4}>
+    <Grid item xs={12} md={sl ? 12 / sl.quantity : 6}>
       <Card
         sx={{ color: 'fontcolor.main', bgcolor: 'inherit', borderRadius: 2 }}
         variant='outlined'
       >
         <Box sx={{ p: 2, textAlign: 'center' }}>
           <TextEditor
-            type='title'
-            admin={admin}
-            section={section}
-            wid={wid}
-            idx={idx}
+            admin={admin} section={section}
+            wid={wid} idx={idx} type='title'
           >
             <Typography variant='title'>
               <Box sx={{ fontSize: '70%' }}>
@@ -36,11 +34,8 @@ const ProductCard = ({ admin, section, wid, idx }) => {
             </Typography>
           </TextEditor>
           <TextEditor
-            type='text'
-            admin={admin}
-            section={section}
-            wid={wid}
-            idx={idx}
+            admin={admin} section={section}
+            wid={wid} idx={idx} type='text'
           >
             <Typography variant='text'>
               <Box sx={{ fontSize: '90%' }}>
@@ -51,8 +46,7 @@ const ProductCard = ({ admin, section, wid, idx }) => {
             </Typography>
           </TextEditor>
           {admin && <PaymentOptions
-            section={section}
-            wid={wid} idx={idx}
+            section={section} wid={wid} idx={idx}
           >
             <Typography variant='text'>
               <Box sx={{ fontSize: '90%' }}>
@@ -61,23 +55,29 @@ const ProductCard = ({ admin, section, wid, idx }) => {
               </Box>
             </Typography>
             <Button
+              sx={{ mt: 1 }}
               variant='contained'
               color='accentcolor'
             >
               {section[button] || 'Buy Now'}
             </Button>
           </PaymentOptions>}
-          {!admin && <Typography>
-            {section[price] || '0'}{' '}
-            {section[currency] || 'USD'}
-          </Typography>}
-          {!admin && <Button
-            variant='contained'
-            color='accentcolor'
-            onClick={() => setOpen(true)}
-          >
-            {section[button] || 'Buy Now'}
-          </Button>}
+          {!admin && <Box>
+            <Typography variant='text'>
+              <Box sx={{ fontSize: '90%' }}>
+                {section[price] || '0'}{' '}
+                {section[currency] || 'USD'}
+              </Box>
+            </Typography>
+            <Button
+              sx={{ mt: 1 }}
+              onClick={() => setOpen(true)}
+              variant='contained'
+              color='accentcolor'
+            >
+              {section[button] || 'Buy Now'}
+            </Button>
+          </Box>}
           <Dialog
             sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
             open={open}
@@ -110,13 +110,19 @@ const ProductCard = ({ admin, section, wid, idx }) => {
   )
 };
 
-const SellingSection = ({ admin, section, wid }) => (
-  <Grid container spacing={2}>
-    {[1, 2, 3].map(idx => <ProductCard
-      key={idx} idx={idx} admin={admin}
-      section={section} wid={wid}
-    />)}
-  </Grid>
-);
+const SellingSection = ({ admin, section, wid }) => {
+  const sl = section.layout;
+
+  return (
+    <Grid container spacing={2}>
+      {Array.from({ length: sl ? Number(sl.quantity) : 2 }, (_, i) => ++i).map(idx =>
+        <ProductCard
+          key={idx} idx={idx} admin={admin}
+          section={section} wid={wid}
+        />
+      )}
+    </Grid>
+  )
+};
 
 export default SellingSection;

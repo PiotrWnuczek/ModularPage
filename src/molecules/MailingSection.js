@@ -18,10 +18,8 @@ const MailingSection = ({ admin, section, wid }) => {
   return (
     <Box sx={{ textAlign: 'center' }}>
       <TextEditor
-        type='title'
-        admin={admin}
-        section={section}
-        wid={wid}
+        admin={admin} section={section}
+        wid={wid} type='title'
       >
         <Typography
           sx={{ mb: 1 }}
@@ -31,10 +29,8 @@ const MailingSection = ({ admin, section, wid }) => {
         </Typography>
       </TextEditor>
       <TextEditor
-        type='text'
-        admin={admin}
-        section={section}
-        wid={wid}
+        admin={admin} section={section}
+        wid={wid} type='text'
       >
         <Typography
           sx={{ mt: 1 }}

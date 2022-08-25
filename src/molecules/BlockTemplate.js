@@ -13,6 +13,7 @@ import SellingSection from 'molecules/SellingSection';
 
 const BlockTemplate = ({ admin, section, wid, index, drag }) => {
   const [hover, setHover] = useState(false);
+  const sl = section.layout;
   const ss = section.style;
   const theme = (outer) => ({
     ...outer,
@@ -39,17 +40,18 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
     <ThemeProvider theme={theme}>
       <Box
         sx={{
+          py: 6, px: sl && sl.variant === 'wide' ?
+            { xs: 4, md: 14 } : { xs: 6, md: 24 },
+          position: 'relative', display: 'flex', justifyContent: 'center',
           color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
-          py: { xs: admin ? 0 : 6, md: admin && hover ? 0 : 6 },
-          px: { xs: 6, md: 24 },
         }}
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
       >
         {admin && <Box sx={{
           pt: 1.6, pb: 0.6,
+          position: 'absolute', top: 0,
           display: { xs: 'flex', md: hover ? 'flex' : 'none' },
-          alignItems: 'center', justifyContent: 'center',
         }}>
           <SectionOptions section={section} wid={wid} />
           <Avatar
@@ -90,8 +92,8 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
         />}
         {admin && <Box sx={{
           pb: 1.6, pt: 0.6,
+          position: 'absolute', bottom: 0,
           display: { xs: 'flex', md: hover ? 'flex' : 'none' },
-          alignItems: 'center', justifyContent: 'center',
         }}>
           <SectionCreate wid={wid} index={index} />
           <SectionRemove

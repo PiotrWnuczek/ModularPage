@@ -14,6 +14,7 @@ const GraphicSection = ({ admin, section, wid }) => {
   const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
   const [info, setInfo] = useState(false);
+  const sl = section.layout;
 
   return (
     <Grid container>
@@ -26,10 +27,8 @@ const GraphicSection = ({ admin, section, wid }) => {
       >
         <Box sx={{ textAlign: 'center', width: '100%' }}>
           <TextEditor
-            type='title'
-            admin={admin}
-            section={section}
-            wid={wid}
+            admin={admin} section={section}
+            wid={wid} type='title'
           >
             <Typography
               sx={{ mb: 1 }}
@@ -39,10 +38,8 @@ const GraphicSection = ({ admin, section, wid }) => {
             </Typography>
           </TextEditor>
           <TextEditor
-            type='text'
-            admin={admin}
-            section={section}
-            wid={wid}
+            admin={admin} section={section}
+            wid={wid} type='text'
           >
             <Typography
               sx={{ mt: 1 }}
@@ -53,31 +50,33 @@ const GraphicSection = ({ admin, section, wid }) => {
               </ReactMarkdown>
             </Typography>
           </TextEditor>
-          {[1, 2].map(idx => <Box
-            sx={{ display: 'inline-block', mx: 0.5 }}
-            key={idx}
-          >
-            {admin && <ButtonOptions
-              section={section}
-              wid={wid} idx={idx}
+          {Array.from({ length: sl ? Number(sl.quantity) : 2 }, (_, i) => ++i).map(idx =>
+            <Box
+              sx={{ display: 'inline-block', mx: 0.5 }}
+              key={idx}
             >
-              <Button
+              {admin && <ButtonOptions
+                section={section}
+                wid={wid} idx={idx}
+              >
+                <Button
+                  variant='contained'
+                  color='accentcolor'
+                >
+                  {section['button' + idx] || 'New Button'}
+                </Button>
+              </ButtonOptions>}
+              {!admin && <Button
+                component={Link}
+                href={section.link || '#'}
+                target='_blank'
                 variant='contained'
                 color='accentcolor'
               >
                 {section['button' + idx] || 'New Button'}
-              </Button>
-            </ButtonOptions>}
-            {!admin && <Button
-              component={Link}
-              href={section.link || '#'}
-              target='_blank'
-              variant='contained'
-              color='accentcolor'
-            >
-              {section['button' + idx] || 'New Button'}
-            </Button>}
-          </Box>)}
+              </Button>}
+            </Box>
+          )}
         </Box>
       </Grid>
       <Grid
@@ -97,7 +96,7 @@ const GraphicSection = ({ admin, section, wid }) => {
           <Box
             sx={{
               opacity: admin && (info || loading) && 0.5,
-              width: '100%', height: 'auto', maxWidth: 400
+              width: '100%', height: 'auto', maxWidth: 400,
             }}
             src={section.url || Picture}
             component='img'

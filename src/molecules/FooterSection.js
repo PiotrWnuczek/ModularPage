@@ -7,10 +7,8 @@ import TextEditor from 'atoms/TextEditor';
 const FooterSection = ({ admin, footer, wid }) => (
   <Box sx={{ py: 6, px: { xs: 6, md: 24 }, textAlign: 'center' }}>
     <TextEditor
-      type='text'
-      admin={admin}
-      section={footer}
-      wid={wid}
+      admin={admin} section={footer}
+      wid={wid} type='text'
     >
       <Typography variant='text'>
         <Box sx={{ fontSize: '90%' }}>

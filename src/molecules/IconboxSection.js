@@ -17,11 +17,12 @@ const IconBox = ({ admin, section, wid, idx }) => {
   const icon = idx ? 'icon' + idx : 'icon';
   const title = idx ? 'title' + idx : 'title';
   const text = idx ? 'text' + idx : 'text';
+  const sl = section.layout;
 
   return (
     <Grid
       sx={{ display: 'flex', justifyContent: 'center' }}
-      item xs={12} md={4}
+      item xs={12} md={sl ? 12 / sl.quantity : 4}
     >
       <Box sx={{ textAlign: 'center' }}>
         <Box sx={{
@@ -71,11 +72,8 @@ const IconBox = ({ admin, section, wid, idx }) => {
             )}
           </Formik>}
           <TextEditor
-            type='title'
-            admin={admin}
-            section={section}
-            wid={wid}
-            idx={idx}
+            admin={admin} section={section}
+            wid={wid} idx={idx} type='title'
           >
             <Typography variant='title'>
               <Box sx={{ fontSize: '70%' }}>
@@ -85,11 +83,8 @@ const IconBox = ({ admin, section, wid, idx }) => {
           </TextEditor>
         </Box>
         <TextEditor
-          type='text'
-          admin={admin}
-          section={section}
-          wid={wid}
-          idx={idx}
+          admin={admin} section={section}
+          wid={wid} idx={idx} type='text'
         >
           <Typography variant='text'>
             <Box sx={{ fontSize: '90%' }}>
@@ -104,13 +99,19 @@ const IconBox = ({ admin, section, wid, idx }) => {
   )
 };
 
-const IconboxSection = ({ admin, section, wid }) => (
-  <Grid container spacing={2}>
-    {[1, 2, 3].map(idx => <IconBox
-      key={idx} idx={idx} admin={admin}
-      section={section} wid={wid}
-    />)}
-  </Grid>
-);
+const IconboxSection = ({ admin, section, wid }) => {
+  const sl = section.layout;
+
+  return (
+    <Grid container spacing={2}>
+      {Array.from({ length: sl ? Number(sl.quantity) : 3 }, (_, i) => ++i).map(idx =>
+        <IconBox
+          key={idx} idx={idx} admin={admin}
+          section={section} wid={wid}
+        />
+      )}
+    </Grid>
+  )
+};
 
 export default IconboxSection;

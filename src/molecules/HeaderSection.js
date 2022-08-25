@@ -11,10 +11,8 @@ const HeaderSection = ({ admin, header, wid }) => (
         color: 'fontcolor.main', justifyContent: 'space-between', mx: { xs: 5, md: 30 },
       }}>
         <TextEditor
-          type='title'
-          admin={admin}
-          section={header}
-          wid={wid}
+          admin={admin} section={header}
+          wid={wid} type='title'
         >
           <Typography variant='title'>
             <Box sx={{ fontSize: '60%' }}>

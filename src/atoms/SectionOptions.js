@@ -7,6 +7,7 @@ import { Typography, Avatar, Divider } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { Tune, GridView, Widgets } from '@mui/icons-material';
 import StyleEditor from 'atoms/StyleEditor';
+import _ from 'lodash';
 
 const SectionOptions = ({ section, wid }) => {
   const dispatch = useDispatch();
@@ -26,10 +27,12 @@ const SectionOptions = ({ section, wid }) => {
       backgroundcolor: theme.palette.backgroundcolor.main,
     })
   }, [theme]);
+  const sl = section.layout;
   const [layout, setLayout] = useState({
-    quantity: '2',
-    variant: 'narrow',
+    quantity: (sl && sl.quantity) || '2',
+    variant: (sl && sl.variant) || 'narrow',
   });
+  const itemize = section.type === 'iconbox' || section.type === 'selling';
 
   return (
     <Box>
@@ -85,14 +88,17 @@ const SectionOptions = ({ section, wid }) => {
               size='small'
               exclusive
             >
-              <ToggleButton value='0'>
-                <Widgets sx={{ mr: 1 }} /> Zero Button
+              <ToggleButton value={itemize ? '1' : '0'}>
+                <Widgets sx={{ mr: 1 }} />
+                {itemize ? 'One Block Element' : 'Zero Buttons'}
               </ToggleButton>
-              <ToggleButton value='1'>
-                <Widgets sx={{ mr: 1 }} /> One Button
+              <ToggleButton value={itemize ? '2' : '1'}>
+                <Widgets sx={{ mr: 1 }} />
+                {itemize ? 'Two Block Elements' : 'One Button'}
               </ToggleButton>
-              <ToggleButton value='2'>
-                <Widgets sx={{ mr: 1 }} /> Two Buttons
+              <ToggleButton value={itemize ? '3' : '2'}>
+                <Widgets sx={{ mr: 1 }} />
+                {itemize ? 'Three Block Elements' : 'Two Buttons'}
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
@@ -104,6 +110,10 @@ const SectionOptions = ({ section, wid }) => {
                 style.backgroundcolor !== theme.palette.backgroundcolor.main) &&
                 dispatch(updateSection({
                   values: { style }, sid: section.id, wid,
+                }));
+              !_.isEqual(layout, section.layout) &&
+                dispatch(updateSection({
+                  values: { layout }, sid: section.id, wid,
                 }));
               setOpen(false);
             }}
