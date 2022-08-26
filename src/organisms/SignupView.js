@@ -26,12 +26,12 @@ const SignupView = () => {
           confirm: '',
         }}
         onSubmit={(values) => {
-          if (values.password === values.confirm) {
+          values.password === values.confirm &&
             dispatch(signupUser({
               email: values.email,
               password: values.password,
             }));
-          } else { setInfo(true) }
+          values.password !== values.confirm && setInfo(true);
         }}
       >
         {({ values, handleChange, handleSubmit }) => (

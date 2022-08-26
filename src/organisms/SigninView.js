@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 import { signinUser } from 'redux/usersSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -11,6 +12,11 @@ const SigninView = () => {
   const error = useSelector(state => state.users.error);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [reset, setReset] = useState(false);
+  const send = async (email) => {
+    await sendPasswordResetEmail(getAuth(), email);
+    console.log('Password email sent')
+  };
 
   return (auth.uid ?
     <Navigate to='/board' /> :
@@ -24,7 +30,9 @@ const SigninView = () => {
           password: '',
         }}
         onSubmit={(values) => {
-          dispatch(signinUser(values));
+          !reset && dispatch(signinUser(values));
+          reset && send(values.email);
+          reset && setReset(false);
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
@@ -43,7 +51,7 @@ const SigninView = () => {
               autoFocus
               required
             />
-            <TextField
+            {!reset && <TextField
               sx={{ mb: 2 }}
               onChange={handleChange}
               value={values.password}
@@ -55,7 +63,7 @@ const SigninView = () => {
               size='small'
               fullWidth
               required
-            />
+            />}
             <Button
               sx={{ mb: 1 }}
               type='submit'
@@ -63,16 +71,25 @@ const SigninView = () => {
               size='small'
               fullWidth
             >
-              Sign In
+              {!reset ? 'Sign In' : 'Reset Password'}
             </Button>
             <br />
             <Button
+              sx={{ mb: 1 }}
               onClick={() => navigate('/signup')}
               variant='outlined'
               size='small'
               fullWidth
             >
               Sign Up
+            </Button>
+            <Button
+              onClick={() => setReset(!reset)}
+              variant='outlined'
+              size='small'
+              fullWidth
+            >
+              {!reset ? 'Reset Password' : 'Sign In'}
             </Button>
             {error && <Typography>
               {error.replace('Firebase: ', '').replace(/\(.+\)\.?/, '')}
