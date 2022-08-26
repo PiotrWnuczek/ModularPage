@@ -25,3 +25,17 @@ exports.sender = functions.https.onCall((data, context) => {
     })
   }).then(() => 'sender')
 });
+
+exports.mailerlite = functions.https.onCall((data, context) => {
+  const ref = admin.firestore().collection('users').doc(context.auth.uid);
+  return ref.get().then(resp => {
+    axios.post('https://api.mailerlite.com/api/v2/groups/' + data.group + '/subscribers',
+      { 'email': data.email }, {
+      headers: {
+        'X-MailerLite-ApiKey': resp.data().mailerlite,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+  }).then(() => 'mailerlite')
+});

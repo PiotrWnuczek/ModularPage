@@ -1,12 +1,48 @@
 import React, { useState } from 'react';
-import { Grid, Box, Typography, Button, Card, Dialog } from '@mui/material';
+import { loadStripe } from '@stripe/stripe-js';
+import { useStripe, useElements } from '@stripe/react-stripe-js';
+import { CardElement, Elements } from '@stripe/react-stripe-js';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
+import { Grid, Box, Typography, Button, Card, Dialog } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 import PaymentOptions from 'atoms/PaymentOptions';
 
+const StripeBox = () => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const stripeSubmit = async (e) => {
+    e.preventDefault();
+    if (!stripe || !elements) { return; }
+    const payload = await stripe.createPaymentMethod({
+      type: 'card',
+      card: elements.getElement(CardElement),
+    });
+    console.log(payload);
+  };
+
+  return (
+    <form onSubmit={stripeSubmit}>
+      <Box sx={{ mb: 2 }}>
+        <CardElement options={{
+          style: { base: { fontSize: '18px' } },
+        }} />
+      </Box>
+      <Button
+        disabled={!stripe || !elements}
+        variant='contained'
+        type='submit'
+        size='small'
+      >
+        Pay Now With Stripe
+      </Button>
+    </form>
+  )
+};
+
 const ProductCard = ({ admin, section, wid, idx }) => {
+  const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
   const [open, setOpen] = useState(false);
   const title = idx ? 'title' + idx : 'title';
   const text = idx ? 'text' + idx : 'text';
@@ -71,7 +107,7 @@ const ProductCard = ({ admin, section, wid, idx }) => {
             </Typography>
             <Button
               sx={{ mt: 1 }}
-              onClick={() => setOpen(true)}
+              onClick={() => section.selling && setOpen(true)}
               variant='contained'
               color='accentcolor'
             >
@@ -84,7 +120,7 @@ const ProductCard = ({ admin, section, wid, idx }) => {
             onClose={() => setOpen(false)}
             fullWidth
           >
-            <Box sx={{ p: 2, textAlign: 'center' }}>
+            {section.selling === 'paypal' && <Box sx={{ p: 2, textAlign: 'center' }}>
               <PayPalScriptProvider options={{ 'client-id': section.paypal }}>
                 <PayPalButtons
                   createOrder={(d, actions) => actions.order.create({
@@ -102,7 +138,12 @@ const ProductCard = ({ admin, section, wid, idx }) => {
                   })}
                 />
               </PayPalScriptProvider>
-            </Box>
+            </Box>}
+            {section.selling === 'stripe' && <Box sx={{ p: 2 }}>
+              <Elements stripe={stripePromise}>
+                <StripeBox />
+              </Elements>
+            </Box>}
           </Dialog>
         </Box>
       </Card>

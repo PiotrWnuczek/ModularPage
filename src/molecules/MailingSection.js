@@ -14,6 +14,10 @@ const MailingSection = ({ admin, section, wid }) => {
     const sender = firebase.functions().httpsCallable('sender');
     sender({ email, group: section.group }).then((result) => console.log(result));
   };
+  const mailerliteFunction = (email) => {
+    const mailerlite = firebase.functions().httpsCallable('mailerlite');
+    mailerlite({ email, group: section.group }).then((result) => console.log(result));
+  };
 
   return (
     <Box sx={{ textAlign: 'center' }}>
@@ -69,7 +73,9 @@ const MailingSection = ({ admin, section, wid }) => {
       {!admin && <Formik
         initialValues={{ email: '' }}
         onSubmit={(values, { resetForm }) => {
-          senderFunction(values.email); resetForm();
+          section.mailing === 'sender' && senderFunction(values.email);
+          section.mailing === 'mailerlite' && mailerliteFunction(values.email);
+          resetForm();
         }}
       >
         {({ values, handleChange, handleSubmit }) => (

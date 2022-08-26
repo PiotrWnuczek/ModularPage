@@ -3,7 +3,8 @@ import { updateProfile } from 'redux/usersSlice';
 import { updateSection } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
-import { Box, Dialog, Typography } from '@mui/material';
+import { Dialog, Typography } from '@mui/material';
+import { Box, MenuItem, Select } from '@mui/material';
 import { Button, TextField } from '@mui/material';
 import { Formik } from 'formik';
 
@@ -13,6 +14,7 @@ const FormOptions = ({ children, section, wid }) => {
   useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [mailing, setMailing] = useState('sender');
 
   return (
     <Box>
@@ -35,34 +37,49 @@ const FormOptions = ({ children, section, wid }) => {
           <Typography variant='subtitle1'>
             Set mailing form
           </Typography>
+          <Select
+            sx={{ my: 1 }}
+            value={mailing}
+            onChange={(e) => setMailing(e.target.value)}
+            size='small'
+            fullWidth
+          >
+            <MenuItem value='sender'>
+              Sender
+            </MenuItem>
+            <MenuItem value='mailerlite'>
+              Mailerlite
+            </MenuItem>
+          </Select>
           <Formik
             initialValues={{
-              sender: (profile && profile.sender) || 'Sender Key',
-              group: section.group || 'Sender Group',
+              key: (profile && profile[mailing]) || 'Api Key',
+              group: section.group || 'Group Id',
               button: section.button || 'Subscribe',
             }}
             onSubmit={(values) => {
               profile && (values.sender !== profile.sender) &&
                 dispatch(updateProfile({
-                  values: { sender: values.sender }, id: auth.uid,
+                  values: { [mailing]: values.key }, id: auth.uid,
                 }));
               (values.group !== section.group || values.button !== section.button) &&
                 dispatch(updateSection({
-                  values: { group: values.group, button: values.button },
+                  values: { group: values.group, button: values.button, mailing },
                   sid: section.id, wid,
                 }));
               setOpen(false);
             }}
+            enableReinitialize
           >
             {({ values, handleChange, handleSubmit }) => (
               <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
                 <TextField
                   sx={{ my: 1 }}
                   onChange={handleChange}
-                  value={values.sender}
-                  placeholder='Sender Key'
-                  label='Sender Key'
-                  name='sender'
+                  value={values.key}
+                  name='key'
+                  placeholder='Api Key'
+                  label='Api Key'
                   type='text'
                   size='small'
                   variant='outlined'
@@ -73,9 +90,9 @@ const FormOptions = ({ children, section, wid }) => {
                   sx={{ my: 1 }}
                   onChange={handleChange}
                   value={values.group}
+                  name='group'
                   placeholder='Group Id'
                   label='Group Id'
-                  name='group'
                   type='text'
                   size='small'
                   variant='outlined'
@@ -85,9 +102,9 @@ const FormOptions = ({ children, section, wid }) => {
                   sx={{ my: 1 }}
                   onChange={handleChange}
                   value={values.button}
+                  name='button'
                   placeholder='Button Text'
                   label='Button Text'
-                  name='button'
                   type='text'
                   size='small'
                   variant='outlined'
@@ -100,7 +117,7 @@ const FormOptions = ({ children, section, wid }) => {
             sx={{ mt: 1 }}
             type='submit'
             form='confirm'
-            variant='outlined'
+            variant='contained'
             size='small'
           >
             Set
