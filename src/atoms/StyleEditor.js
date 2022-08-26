@@ -55,6 +55,8 @@ const StyleEditor = ({ style, setStyle, sid, wid }) => {
               wid && sid && dispatch(updateSection({ values: { style: null }, sid, wid }));
               wid && !sid && dispatch(updateWebsite({ values: { style: null }, wid }));
             }}
+            variant='outlined'
+            size='small'
           >
             Reset To Default
           </Button>

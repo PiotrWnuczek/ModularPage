@@ -41,7 +41,7 @@ const SectionCreate = ({ wid, index, start }) => {
         >
           Create New Section
         </Typography>
-        <List dense>
+        <List sx={{ mb: 1 }} dense>
           {sections.map(section => <ListItem
             onClick={() => {
               dispatch(createSection({

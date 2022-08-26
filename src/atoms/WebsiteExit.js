@@ -29,13 +29,12 @@ const WebsiteExit = () => {
       >
         <Box sx={{ p: 2 }}>
           <Typography variant='h5'>
-            Exit
+            Exit Editor
           </Typography>
-          <Typography variant='subtitle1'>
-            Changes saved. Exit to board.
+          <Typography sx={{ my: 1 }}>
+            Changes are saved, exit to board.
           </Typography>
           <Button
-            sx={{ mt: 1 }}
             onClick={() => {
               navigate('/board');
               setOpen(false);
@@ -43,7 +42,15 @@ const WebsiteExit = () => {
             variant='contained'
             size='small'
           >
-            Exit
+            Exit Editor
+          </Button>
+          <Button
+            sx={{ ml: 1 }}
+            onClick={() => setOpen(false)}
+            variant='outlined'
+            size='small'
+          >
+            Cancel
           </Button>
         </Box>
       </Dialog>

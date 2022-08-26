@@ -1,8 +1,8 @@
 import React from 'react';
-import { Box, Dialog, Button } from '@mui/material';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { Dialog, Button } from '@mui/material';
 
-const WarningWindow = ({ warning, setWarning, content, button }) => (
+const WarningWindow = ({ warning, setWarning, title, text, button }) => (
   <Dialog
     sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
     open={warning}
@@ -11,21 +11,20 @@ const WarningWindow = ({ warning, setWarning, content, button }) => (
   >
     <Box sx={{ p: 2 }}>
       <Typography variant='h5'>
-        Warning
+        {title}
       </Typography>
-      <Box>
-        {content}
-      </Box>
-      <Box sx={{ textAlign: 'right' }}>
-        <Button
-          sx={{ mr: 1 }}
-          onClick={() => setWarning(false)}
-          size='small'
-        >
-          Cancel
-        </Button>
-        {button}
-      </Box>
+      <Typography sx={{ py: 1 }}>
+        {text}
+      </Typography>
+      {button}
+      <Button
+        sx={{ ml: 1 }}
+        onClick={() => setWarning(false)}
+        variant='outlined'
+        size='small'
+      >
+        Cancel
+      </Button>
     </Box>
   </Dialog>
 );

@@ -120,7 +120,15 @@ const SectionOptions = ({ section, wid }) => {
             variant='contained'
             size='small'
           >
-            Set
+            Confirm Settings
+          </Button>
+          <Button
+            sx={{ ml: 1 }}
+            onClick={() => setOpen(false)}
+            variant='outlined'
+            size='small'
+          >
+            Cancel
           </Button>
         </Box>
       </Dialog>

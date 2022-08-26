@@ -27,58 +27,59 @@ const WebsiteRemove = ({ wid }) => {
       >
         <Box sx={{ p: 2 }}>
           <Typography variant='h5'>
-            Remove
+            Remove Website
           </Typography>
-          <Typography variant='subtitle1'>
-            Remove confirmation (Enter website name to confirm)
-          </Typography>
-          <Formik
-            initialValues={{ name: '' }}
-            onSubmit={(values) => {
-              if (values.name === wid) {
-                dispatch(removeWebsite({ wid }));
-                setOpen(false);
-              } else { setInfo(true) }
-            }}
-          >
-            {({ values, handleChange, handleSubmit }) => (
-              <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
-                <TextField
-                  sx={{ my: 1 }}
-                  onChange={handleChange}
-                  value={values.name}
-                  placeholder='Name'
-                  label='Name'
-                  name='name'
-                  type='text'
-                  size='small'
-                  variant='outlined'
-                  fullWidth
-                  autoFocus
-                />
-              </form>
-            )}
-          </Formik>
-          {info && <Typography variant='subtitle1'>
-            Invalid website name (Try again)
-          </Typography>}
-          <Box sx={{ textAlign: 'right' }}>
-            <Button
-              sx={{ mr: 1 }}
-              onClick={() => setOpen(false)}
-              size='small'
+          <Box sx={{ my: 1 }}>
+            <Typography>
+              Confirm website removing, enter website name.
+            </Typography>
+            <Formik
+              initialValues={{ name: '' }}
+              onSubmit={(values) => {
+                if (values.name === wid) {
+                  dispatch(removeWebsite({ wid }));
+                  setOpen(false);
+                } else { setInfo(true) }
+              }}
             >
-              Cancel
-            </Button>
-            <Button
-              type='submit'
-              form='confirm'
-              size='small'
-              color='error'
-            >
-              Remove
-            </Button>
+              {({ values, handleChange, handleSubmit }) => (
+                <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
+                  <TextField
+                    sx={{ my: 1 }}
+                    onChange={handleChange}
+                    value={values.name}
+                    placeholder='Name'
+                    label='Name'
+                    name='name'
+                    type='text'
+                    variant='outlined'
+                    size='small'
+                    fullWidth
+                    autoFocus
+                  />
+                </form>
+              )}
+            </Formik>
+            {info && <Typography>
+              Invalid website name, try again.
+            </Typography>}
           </Box>
+          <Button
+            type='submit'
+            form='confirm'
+            variant='contained'
+            size='small'
+          >
+            Confirm Remove
+          </Button>
+          <Button
+            sx={{ ml: 1 }}
+            onClick={() => setOpen(false)}
+            variant='outlined'
+            size='small'
+          >
+            Cancel
+          </Button>
         </Box>
       </Dialog>
     </Box>

@@ -29,7 +29,7 @@ const WebsiteCard = ({ website }) => {
             <Web />
           </Avatar>
           <Box>
-            <Typography variant='h6'>
+            <Typography sx={{ fontSize: 24 }}>
               {website.name}
               <IconButton
                 sx={{ mx: 1 }}
@@ -42,8 +42,8 @@ const WebsiteCard = ({ website }) => {
                 <InsertLink />
               </IconButton>
             </Typography>
-            <Typography variant='body2'>
-              {website.description}
+            <Typography sx={{ textTransform: 'capitalize' }}>
+              {website.domain} Domain
             </Typography>
           </Box>
         </Grid>
@@ -62,7 +62,7 @@ const WebsiteCard = ({ website }) => {
             variant='contained'
             size='small'
           >
-            Edit
+            Open Editor
           </Button>
           <FormControlLabel
             sx={{ mr: 3 }}

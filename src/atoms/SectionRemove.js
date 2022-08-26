@@ -29,31 +29,30 @@ const SectionRemove = ({ sid, wid, file }) => {
       >
         <Box sx={{ p: 2 }}>
           <Typography variant='h5'>
-            Remove
+            Section Remove
           </Typography>
-          <Typography variant='subtitle1'>
-            Remove confirmation
+          <Typography sx={{ my: 1 }}>
+            Confirm section removing.
           </Typography>
-          <Box sx={{ textAlign: 'right' }}>
-            <Button
-              sx={{ mr: 1 }}
-              onClick={() => setOpen(false)}
-              size='small'
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                dispatch(removeSection({ sid, wid }));
-                file && dispatch(removeFile({ sid, wid }));
-                setOpen(false);
-              }}
-              size='small'
-              color='error'
-            >
-              Remove
-            </Button>
-          </Box>
+          <Button
+            onClick={() => {
+              dispatch(removeSection({ sid, wid }));
+              file && dispatch(removeFile({ sid, wid }));
+              setOpen(false);
+            }}
+            variant='contained'
+            size='small'
+          >
+            Confirm Remove
+          </Button>
+          <Button
+            sx={{ ml: 1 }}
+            onClick={() => setOpen(false)}
+            variant='outlined'
+            size='small'
+          >
+            Cancel
+          </Button>
         </Box>
       </Dialog>
     </Box>

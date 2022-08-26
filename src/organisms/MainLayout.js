@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import SideBar from 'molecules/SideBar';
 
 const MainLayout = ({ children }) => {
-  const width = { xs: 70, md: 160 };
+  const width = { xs: 72, md: 162 };
 
   return (
     <Box sx={{ display: 'flex' }}>

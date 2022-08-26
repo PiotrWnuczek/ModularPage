@@ -31,10 +31,7 @@ const App = () => {
   const pl = window.navigator.language.includes('pl');
   const theme = createTheme({
     typography: { fontFamily: 'Lato' },
-    palette: {
-      secondary: { light: grey[50], main: grey[100], dark: blueGrey[50] },
-      info: { light: grey[600], main: grey[700], dark: grey[800] },
-    },
+    palette: { secondary: { light: grey[50], main: grey[100], dark: blueGrey[50] } },
   });
 
   return (
@@ -55,6 +52,7 @@ const App = () => {
             <Route path='/create' element={access ? <CreateView /> : <Navigate to='/signin' />} />
             <Route path='/:id/*' element={access ? <WebsiteView /> : <Navigate to='/signin' />} />
             <Route path='/:id/admin' element={access ? <WebsiteView admin /> : <Navigate to='/signin' />} />
+            <Route path='/about' element={pl ? <Navigate to='/pl' /> : <Navigate to='/en' />} />
             <Route path='/*' element={<Navigate to='/board' />} />
           </Routes> : <Routes>
             <Route path='/*' element={<WebsiteView host={window.location.host} />} />

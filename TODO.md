@@ -1,3 +1,2 @@
-adding buttons
-new modules
-create templates
+stripe integration
+domain emails

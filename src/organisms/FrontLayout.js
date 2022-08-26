@@ -14,15 +14,15 @@ const FrontLayout = ({ children }) => {
       <Container maxWidth='sm'>
         <Card
           sx={{
-            bgcolor: 'inherit', m: 2,
-            px: { xs: 2, md: 4 }, py: { xs: 3, md: 5 }
+            bgcolor: 'inherit', borderRadius: 2, m: 2,
+            px: { xs: 2, md: 4 }, py: { xs: 2, md: 4 }
           }}
           variant='outlined'
         >
           {children}
         </Card>
         <Box sx={{
-          my: 1, display: 'flex', flexWrap: 'wrap',
+          py: 1, display: 'flex', flexWrap: 'wrap',
           alignItems: 'center', justifyContent: 'center',
         }}>
           <Typography>
@@ -38,8 +38,7 @@ const FrontLayout = ({ children }) => {
           </Link>
         </Box>
         <Button
-          sx={{ mx: 1 }}
-          onClick={() => navigate('/')}
+          onClick={() => navigate('/about')}
           size='small'
         >
           About App

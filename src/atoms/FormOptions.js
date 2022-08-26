@@ -32,95 +32,105 @@ const FormOptions = ({ children, section, wid }) => {
       >
         <Box sx={{ p: 2 }}>
           <Typography variant='h5'>
-            Settings
+            Form Settings
           </Typography>
-          <Typography variant='subtitle1'>
-            Set mailing form
-          </Typography>
-          <Select
-            sx={{ my: 1 }}
-            value={mailing}
-            onChange={(e) => setMailing(e.target.value)}
-            size='small'
-            fullWidth
-          >
-            <MenuItem value='sender'>
-              Sender
-            </MenuItem>
-            <MenuItem value='mailerlite'>
-              Mailerlite
-            </MenuItem>
-          </Select>
-          <Formik
-            initialValues={{
-              key: (profile && profile[mailing]) || 'Api Key',
-              group: section.group || 'Group Id',
-              button: section.button || 'Subscribe',
-            }}
-            onSubmit={(values) => {
-              profile && (values.sender !== profile.sender) &&
-                dispatch(updateProfile({
-                  values: { [mailing]: values.key }, id: auth.uid,
-                }));
-              (values.group !== section.group || values.button !== section.button) &&
-                dispatch(updateSection({
-                  values: { group: values.group, button: values.button, mailing },
-                  sid: section.id, wid,
-                }));
-              setOpen(false);
-            }}
-            enableReinitialize
-          >
-            {({ values, handleChange, handleSubmit }) => (
-              <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
-                <TextField
-                  sx={{ my: 1 }}
-                  onChange={handleChange}
-                  value={values.key}
-                  name='key'
-                  placeholder='Api Key'
-                  label='Api Key'
-                  type='text'
-                  size='small'
-                  variant='outlined'
-                  fullWidth
-                  autoFocus
-                />
-                <TextField
-                  sx={{ my: 1 }}
-                  onChange={handleChange}
-                  value={values.group}
-                  name='group'
-                  placeholder='Group Id'
-                  label='Group Id'
-                  type='text'
-                  size='small'
-                  variant='outlined'
-                  fullWidth
-                />
-                <TextField
-                  sx={{ my: 1 }}
-                  onChange={handleChange}
-                  value={values.button}
-                  name='button'
-                  placeholder='Button Text'
-                  label='Button Text'
-                  type='text'
-                  size='small'
-                  variant='outlined'
-                  fullWidth
-                />
-              </form>
-            )}
-          </Formik>
+          <Box sx={{ py: 1 }}>
+            <Typography>
+              Set form options.
+            </Typography>
+            <Select
+              sx={{ my: 1 }}
+              value={mailing}
+              onChange={(e) => setMailing(e.target.value)}
+              size='small'
+              fullWidth
+              autoFocus
+            >
+              <MenuItem value='sender'>
+                Sender
+              </MenuItem>
+              <MenuItem value='mailerlite'>
+                Mailerlite
+              </MenuItem>
+            </Select>
+            <Formik
+              initialValues={{
+                key: (profile && profile[mailing]) || 'Api Key',
+                group: section.group || 'Group Id',
+                button: section.button || 'Subscribe',
+              }}
+              onSubmit={(values) => {
+                profile && (values.sender !== profile.sender) &&
+                  dispatch(updateProfile({
+                    values: { [mailing]: values.key },
+                    id: auth.uid,
+                  }));
+                (values.group !== section.group || values.button !== section.button) &&
+                  dispatch(updateSection({
+                    values: { group: values.group, button: values.button, mailing },
+                    sid: section.id, wid,
+                  }));
+                setOpen(false);
+              }}
+              enableReinitialize
+            >
+              {({ values, handleChange, handleSubmit }) => (
+                <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
+                  <TextField
+                    sx={{ my: 1 }}
+                    onChange={handleChange}
+                    value={values.key}
+                    name='key'
+                    placeholder='Api Key'
+                    label='Api Key'
+                    type='text'
+                    variant='outlined'
+                    size='small'
+                    fullWidth
+                  />
+                  <TextField
+                    sx={{ my: 1 }}
+                    onChange={handleChange}
+                    value={values.group}
+                    name='group'
+                    placeholder='Group Id'
+                    label='Group Id'
+                    type='text'
+                    variant='outlined'
+                    size='small'
+                    fullWidth
+                  />
+                  <TextField
+                    sx={{ my: 1 }}
+                    onChange={handleChange}
+                    value={values.button}
+                    name='button'
+                    placeholder='Button Text'
+                    label='Button Text'
+                    type='text'
+                    variant='outlined'
+                    size='small'
+                    fullWidth
+                  />
+                </form>
+              )}
+            </Formik>
+          </Box>
           <Button
-            sx={{ mt: 1 }}
             type='submit'
             form='confirm'
             variant='contained'
             size='small'
           >
-            Set
+            Confirm Settings
+          </Button>
+          <Button
+            sx={{ ml: 1 }}
+            onClick={() => setOpen(false)}
+            variant='outlined'
+            size='small'
+          >
+            Cancel
           </Button>
         </Box>
       </Dialog>

@@ -32,8 +32,8 @@ const CreateView = () => {
   return (
     <MainLayout>
       <Box sx={{ p: 2 }}>
-        <Typography variant='body1'>
-          Select domain variant
+        <Typography variant='h6'>
+          Select Domain Variant
         </Typography>
         <Card
           sx={{ my: 1, bgcolor: 'secondary.light', borderRadius: 2 }}
@@ -47,7 +47,7 @@ const CreateView = () => {
                 </Avatar>
               }
               title='App Domain'
-              subheader='Free Option (e.g. modularpage.com/YourWebsiteName)'
+              subheader='Free - modularpage.com/YourWebsiteName'
             />
           </CardActionArea>
         </Card>
@@ -65,12 +65,12 @@ const CreateView = () => {
                 </Avatar>
               }
               title='Custom Domain'
-              subheader='Premium Option (e.g. YourDomainName.com)'
+              subheader='Premium - YourDomain.com - set your DNS to: ns1.small.pl, ns2.small.pl'
             />
           </CardActionArea>
         </Card>
-        <Typography variant='body1'>
-          Select page temaplate
+        <Typography variant='h6'>
+          Select Page Temaplate
         </Typography>
         <Card
           sx={{ my: 1, bgcolor: 'secondary.light', borderRadius: 2 }}
@@ -84,7 +84,7 @@ const CreateView = () => {
                 </Avatar>
               }
               title='Landing Page'
-              subheader='Page with mailing form'
+              subheader='Page template with mailing form'
             />
           </CardActionArea>
         </Card>
@@ -100,7 +100,7 @@ const CreateView = () => {
                 </Avatar>
               }
               title='Product Page'
-              subheader='Page with payments buttons'
+              subheader='Page template with payment buttons'
             />
           </CardActionArea>
         </Card>
@@ -120,11 +120,11 @@ const CreateView = () => {
             />
           </CardActionArea>
         </Card>
-        <Typography variant='body1'>
-          Add name and description
+        <Typography variant='h6'>
+          Create New Website
         </Typography>
         <Formik
-          initialValues={{ name: '', description: '' }}
+          initialValues={{ name: '' }}
           onSubmit={(values) => dispatch(createWebsite({
             values: { ...values, domain, template, sections, header, footer },
             navigate,
@@ -145,21 +145,6 @@ const CreateView = () => {
                 fullWidth
                 required
               />
-              <TextField
-                sx={{ my: 1 }}
-                onChange={handleChange}
-                value={values.description}
-                placeholder='Project Description'
-                label='Project Description'
-                name='description'
-                type='text'
-                size='small'
-                variant='outlined'
-                fullWidth
-                multiline
-                minRows={2}
-                required
-              />
             </form>
           )}
         </Formik>
@@ -169,16 +154,21 @@ const CreateView = () => {
           type='submit'
           form='confirm'
           variant='contained'
+          size='small'
         >
           Create Website
         </Button>
       </Box>
       <WarningWindow
-        warning={warning} setWarning={setWarning}
-        text={<Typography>
-          To add custom domain upgrade your plan to premium
-        </Typography>}
-        button={<Button onClick={() => navigate('/account')}>
+        warning={warning}
+        setWarning={setWarning}
+        title='Upgrade Plan'
+        text='To add custom domain upgrade your plan to premium.'
+        button={<Button
+          onClick={() => navigate('/account')}
+          variant='contained'
+          size='small'
+        >
           Upgrade Plan
         </Button>}
       />

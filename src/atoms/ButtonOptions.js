@@ -3,13 +3,17 @@ import { updateSection, updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { Box, Dialog, Typography } from '@mui/material';
 import { Button, TextField } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { Tab } from '@mui/icons-material';
 import { Formik } from 'formik';
 
 const ButtonOptions = ({ children, section, wid, idx }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [target, setTarget] = useState('new');
   const button = idx ? 'button' + idx : 'button';
   const link = idx ? 'link' + idx : 'link';
+  const tab = idx ? 'tab' + idx : 'tab';
 
   return (
     <Box>
@@ -27,66 +31,92 @@ const ButtonOptions = ({ children, section, wid, idx }) => {
       >
         <Box sx={{ p: 2 }}>
           <Typography variant='h5'>
-            Settings
+            Boutton Settings
           </Typography>
-          <Typography variant='subtitle1'>
-            Set button text and url
-          </Typography>
-          <Formik
-            initialValues={{
-              [button]: section[button] || 'New Button',
-              [link]: section[link] || '#',
-            }}
-            onSubmit={(values) => {
-              section.id &&
-                (values[button] !== section[button] || values[link] !== section[link]) &&
-                dispatch(updateSection({ values, sid: section.id, wid }));
-              section.type === 'header' &&
-                (values[button] !== section[button] || values[link] !== section[link]) &&
-                dispatch(updateWebsite({
-                  values: { header: { ...section, ...values } }, wid,
-                }));
-              setOpen(false);
-            }}
-          >
-            {({ values, handleChange, handleSubmit }) => (
-              <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
-                <TextField
-                  sx={{ my: 1 }}
-                  onChange={handleChange}
-                  value={values[button]}
-                  name={button}
-                  placeholder='Text'
-                  label='Text'
-                  type='text'
-                  size='small'
-                  variant='outlined'
-                  fullWidth
-                  autoFocus
-                />
-                <TextField
-                  sx={{ my: 1 }}
-                  onChange={handleChange}
-                  value={values[link]}
-                  placeholder='Url'
-                  label='Url'
-                  name='link'
-                  type='text'
-                  size='small'
-                  variant='outlined'
-                  fullWidth
-                />
-              </form>
-            )}
-          </Formik>
+          <Box sx={{ py: 1 }}>
+            <Typography>
+              Set button options.
+            </Typography>
+            <Formik
+              initialValues={{
+                [button]: section[button] || 'New Button',
+                [link]: section[link] || '#',
+              }}
+              onSubmit={(values) => {
+                section.id &&
+                  (section[tab] !== target || values[button] !== section[button] ||
+                    values[link] !== section[link]) &&
+                  dispatch(updateSection({ values, sid: section.id, wid }));
+                section.type === 'header' &&
+                  (section[tab] !== target || values[button] !== section[button] ||
+                    values[link] !== section[link]) &&
+                  dispatch(updateWebsite({
+                    values: { header: { ...section, ...values } }, wid,
+                  }));
+                setOpen(false);
+              }}
+            >
+              {({ values, handleChange, handleSubmit }) => (
+                <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
+                  <TextField
+                    sx={{ my: 1 }}
+                    onChange={handleChange}
+                    value={values[button]}
+                    name={button}
+                    placeholder='Text'
+                    label='Text'
+                    type='text'
+                    variant='outlined'
+                    size='small'
+                    fullWidth
+                    autoFocus
+                  />
+                  <TextField
+                    sx={{ my: 1 }}
+                    onChange={handleChange}
+                    value={values[link]}
+                    placeholder='Url'
+                    label='Url'
+                    name='link'
+                    type='text'
+                    variant='outlined'
+                    size='small'
+                    fullWidth
+                  />
+                </form>
+              )}
+            </Formik>
+            <ToggleButtonGroup
+              sx={{ my: 1 }}
+              value={target}
+              onChange={(e) => setTarget(e.target.value)}
+              color='primary'
+              size='small'
+              exclusive
+            >
+              <ToggleButton value='new'>
+                <Tab sx={{ mr: 1 }} /> Open in New Tab
+              </ToggleButton>
+              <ToggleButton value='this'>
+                <Tab sx={{ mr: 1 }} /> Open in This Tab
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
           <Button
-            sx={{ mt: 1 }}
             type='submit'
             form='confirm'
+            variant='contained'
+            size='small'
+          >
+            Confirm Settings
+          </Button>
+          <Button
+            sx={{ ml: 1 }}
+            onClick={() => setOpen(false)}
             variant='outlined'
             size='small'
           >
-            Set
+            Cancel
           </Button>
         </Box>
       </Dialog>

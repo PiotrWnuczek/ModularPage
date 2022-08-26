@@ -14,20 +14,30 @@ const AccountView = () => {
   return (
     <MainLayout>
       <Box sx={{ p: 2 }}>
-        <Typography sx={{ mb: 1 }}>
-          Email: {profile && profile.email}
+        <Typography variant='h6'>
+          Account Details
         </Typography>
-        <Typography sx={{ mb: 1 }}>
-          Plan: {profile && profile.plan}
+        <Box sx={{ py: 2 }}>
+          <Typography sx={{ mb: 1 }}>
+            Email: {profile && profile.email}
+          </Typography>
+          <Typography sx={{ mb: 1 }}>
+            Plan: {profile && profile.plan}
+          </Typography>
+        </Box>
+        <Typography variant='h6'>
+          Account Options
         </Typography>
         <Button
+          sx={{ my: 1 }}
           onClick={() => profile && (profile.plan !== 'premium') &&
             dispatch(updateProfile({
               values: { plan: 'premium' }, id: auth.uid,
             }))}
-          variant='outlined'
+          variant='contained'
+          size='small'
         >
-          Update to Premium
+          Upgrade Plan
         </Button>
       </Box>
     </MainLayout>
