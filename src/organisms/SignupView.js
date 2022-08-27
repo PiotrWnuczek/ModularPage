@@ -21,23 +21,24 @@ const SignupView = () => {
       </Typography>
       <Formik
         initialValues={{
-          email: '',
-          password: '',
-          confirm: '',
+          email: '', password: '',
+          confirm: '', code: '',
         }}
         onSubmit={(values) => {
           values.password === values.confirm &&
+            values.code === process.env.REACT_APP_CODE &&
             dispatch(signupUser({
               email: values.email,
               password: values.password,
             }));
-          values.password !== values.confirm && setInfo(true);
+          values.password !== values.confirm && setInfo('password');
+          values.code !== process.env.REACT_APP_CODE && setInfo('code');
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ my: 1 }}
               onChange={handleChange}
               value={values.email}
               name='email'
@@ -50,7 +51,7 @@ const SignupView = () => {
               required
             />
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ my: 1 }}
               onChange={handleChange}
               value={values.password}
               name='password'
@@ -63,7 +64,7 @@ const SignupView = () => {
               required
             />
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ my: 1 }}
               onChange={handleChange}
               value={values.confirm}
               name='confirm'
@@ -75,8 +76,21 @@ const SignupView = () => {
               fullWidth
               required
             />
+            <TextField
+              sx={{ my: 1 }}
+              onChange={handleChange}
+              value={values.code}
+              name='code'
+              placeholder='Code'
+              label='Code'
+              type='text'
+              variant='outlined'
+              size='small'
+              fullWidth
+              required
+            />
             <Button
-              sx={{ mb: 1 }}
+              sx={{ my: 1 }}
               type='submit'
               variant='contained'
               size='small'
@@ -84,8 +98,8 @@ const SignupView = () => {
             >
               Sign Up
             </Button>
-            <br />
             <Button
+              sx={{ mb: 1 }}
               onClick={() => navigate('/signin')}
               variant='outlined'
               size='small'
@@ -97,7 +111,8 @@ const SignupView = () => {
               {error.replace('Firebase: ', '').replace(/\(.+\)\.?/, '')}
             </Typography>}
             {info && <Typography>
-              Passowrds are not identical
+              {info === 'password' && 'Passowrds are not identical.'}
+              {info === 'code' && 'Code is invalid.'}
             </Typography>}
           </form>
         )}

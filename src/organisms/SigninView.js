@@ -26,8 +26,7 @@ const SigninView = () => {
       </Typography>
       <Formik
         initialValues={{
-          email: '',
-          password: '',
+          email: '', password: '',
         }}
         onSubmit={(values) => {
           !reset && dispatch(signinUser(values));
@@ -38,7 +37,7 @@ const SigninView = () => {
         {({ values, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ my: 1 }}
               onChange={handleChange}
               value={values.email}
               name='email'
@@ -52,7 +51,7 @@ const SigninView = () => {
               required
             />
             {!reset && <TextField
-              sx={{ mb: 2 }}
+              sx={{ my: 1 }}
               onChange={handleChange}
               value={values.password}
               name='password'
@@ -65,7 +64,7 @@ const SigninView = () => {
               required
             />}
             <Button
-              sx={{ mb: 1 }}
+              sx={{ my: 1 }}
               type='submit'
               variant='contained'
               size='small'
@@ -73,7 +72,6 @@ const SigninView = () => {
             >
               {!reset ? 'Sign In' : 'Reset Password'}
             </Button>
-            <br />
             <Button
               sx={{ mb: 1 }}
               onClick={() => navigate('/signup')}

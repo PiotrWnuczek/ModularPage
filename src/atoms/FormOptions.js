@@ -14,7 +14,7 @@ const FormOptions = ({ children, section, wid }) => {
   useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [mailing, setMailing] = useState('sender');
+  const [mailing, setMailing] = useState(section.mailing || 'sender');
 
   return (
     <Box>
@@ -60,7 +60,7 @@ const FormOptions = ({ children, section, wid }) => {
                 button: section.button || 'Subscribe',
               }}
               onSubmit={(values) => {
-                profile && (values.sender !== profile.sender) &&
+                profile && (values.key !== profile[mailing]) &&
                   dispatch(updateProfile({
                     values: { [mailing]: values.key },
                     id: auth.uid,

@@ -6,7 +6,7 @@ export const signinUser = createAsyncThunk(
     try {
       return await firebase.auth().signInWithEmailAndPassword(
         values.email, values.password,
-      ).then(() => values);
+      ).then(() => values.email);
     } catch (error) { throw error }
   },
 );
@@ -20,12 +20,9 @@ export const signupUser = createAsyncThunk(
         values.email, values.password,
       ).then((resp) => (
         firestore.collection('users').doc(resp.user.uid).set({
-          email: values.email,
-          firstname: values.firstname,
-          lastname: values.lastname,
-          plan: 'free',
+          email: values.email, plan: 'free',
         })
-      )).then(() => values);
+      )).then(() => values.email);
     } catch (error) { throw error }
   },
 );

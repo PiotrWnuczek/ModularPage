@@ -1,41 +1,39 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const axios = require('axios');
+
 admin.initializeApp();
 
-exports.sender = functions.https.onCall((data, context) => {
+exports.sender = functions.https.onCall(async (data, context) => {
   const ref = admin.firestore().collection('users').doc(context.auth.uid);
-  return ref.get().then(resp => {
-    axios.post('https://api.sender.net/v2/subscribers',
-      { 'email': data.email }, {
-      headers: {
-        'Authorization': 'Bearer ' + resp.data().sender,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    }).then(() => {
-      axios.post('https://api.sender.net/v2/subscribers/groups/' + data.group,
-        { 'subscribers': [data.email] }, {
-        headers: {
-          'Authorization': 'Bearer ' + resp.data().sender,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      })
-    })
-  }).then(() => 'sender')
+  const sender = await ref.get().then(res => res.data().sender);
+  const headers = {
+    'Authorization': 'Bearer ' + sender,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
+  await axios.post(
+    'https://api.sender.net/v2/subscribers',
+    { 'email': data.email }, { headers }
+  );
+  await axios.post(
+    'https://api.sender.net/v2/subscribers/groups/' + data.group,
+    { 'subscribers': [data.email] }, { headers },
+  );
+  return 'sender';
 });
 
-exports.mailerlite = functions.https.onCall((data, context) => {
+exports.mailerlite = functions.https.onCall(async (data, context) => {
   const ref = admin.firestore().collection('users').doc(context.auth.uid);
-  return ref.get().then(resp => {
-    axios.post('https://api.mailerlite.com/api/v2/groups/' + data.group + '/subscribers',
-      { 'email': data.email }, {
-      headers: {
-        'X-MailerLite-ApiKey': resp.data().mailerlite,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    })
-  }).then(() => 'mailerlite')
+  const mailerlite = await ref.get().then(res => res.data().mailerlite);
+  const headers = {
+    'X-MailerLite-ApiKey': mailerlite,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
+  await axios.post(
+    'https://api.mailerlite.com/api/v2/groups/group_name/subscribers',
+    { 'email': data.email, 'group_name': data.group }, { headers }
+  );
+  return 'mailerlite';
 });
