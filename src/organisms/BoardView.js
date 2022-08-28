@@ -1,8 +1,10 @@
 import React from 'react';
+import { useFirebase } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { useNavigate } from 'react-router-dom';
-import { Grid, Box, Avatar, Typography } from '@mui/material';
+import { Grid, Box, Avatar } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import MainLayout from 'organisms/MainLayout';
 import WebsiteCard from 'molecules/WebsiteCard';
@@ -12,6 +14,11 @@ const BoardView = () => {
   const auth = useSelector(state => state.firebase.auth);
   useFirestoreConnect([{ collection: 'websites', where: [['email', '==', auth.email]] }]);
   const navigate = useNavigate();
+  const firebase = useFirebase();
+  const stripeFunction = () => {
+    const stripe = firebase.functions().httpsCallable('stripe');
+    stripe().then((result) => window.location.replace(result.data));
+  };
 
   return (
     <MainLayout>
@@ -39,6 +46,11 @@ const BoardView = () => {
         >
           <Add />
         </Avatar>
+      </Box>
+      <Box sx={{ p: 2 }}>
+        <Button onClick={() => stripeFunction()}>
+          Test Stripe
+        </Button>
       </Box>
     </MainLayout>
   )
