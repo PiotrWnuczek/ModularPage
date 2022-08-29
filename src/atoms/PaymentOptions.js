@@ -10,7 +10,6 @@ const PaymentOptions = ({ children, section, wid, idx }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [selling, setSelling] = useState('paypal');
-  const paypal = idx ? 'paypal' + idx : 'paypal';
   const button = idx ? 'button' + idx : 'button';
   const product = idx ? 'product' + idx : 'product';
   const currency = idx ? 'currency' + idx : 'currency';
@@ -55,19 +54,19 @@ const PaymentOptions = ({ children, section, wid, idx }) => {
             </Select>
             <Formik
               initialValues={{
-                [paypal]: section[paypal] || 'PayPal Id',
+                paypal: section.paypal || 'PayPal Id',
                 [button]: section[button] || 'Buy Now',
                 [product]: section[product] || 'New Product',
                 [currency]: section[currency] || 'USD',
                 [price]: section[price] || '0',
               }}
               onSubmit={(values) => {
-                (values[paypal] !== section[paypal] || values[button] !== section[button] ||
+                (values.paypal !== section.paypal || values[button] !== section[button] ||
                   values[product] !== section[product] || values[currency] !== section[currency] ||
                   values[price] !== section[price]) &&
                   dispatch(updateSection({
                     values: {
-                      [paypal]: values[paypal],
+                      paypal: values.paypal,
                       [button]: values[button],
                       [product]: values[product],
                       [currency]: values[currency],
@@ -83,8 +82,8 @@ const PaymentOptions = ({ children, section, wid, idx }) => {
                   <TextField
                     sx={{ my: 1 }}
                     onChange={handleChange}
-                    value={values[paypal]}
-                    name={paypal}
+                    value={values.paypal}
+                    name='paypal'
                     placeholder='PayPal Id'
                     label='PayPal Id'
                     type='text'

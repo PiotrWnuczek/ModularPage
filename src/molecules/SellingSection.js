@@ -1,48 +1,15 @@
 import React, { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { useStripe, useElements } from '@stripe/react-stripe-js';
-import { CardElement, Elements } from '@stripe/react-stripe-js';
+import { useFirebase } from 'react-redux-firebase';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
-import { Grid, Box, Typography, Button, Card, Dialog } from '@mui/material';
+import { Grid, Box, Button, Typography } from '@mui/material';
+import { Card, Dialog, TextField } from '@mui/material';
+import { Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 import PaymentOptions from 'atoms/PaymentOptions';
 
-const StripeBox = () => {
-  const stripe = useStripe();
-  const elements = useElements();
-  const stripeSubmit = async (e) => {
-    e.preventDefault();
-    if (!stripe || !elements) { return; }
-    const payload = await stripe.createPaymentMethod({
-      type: 'card',
-      card: elements.getElement(CardElement),
-    });
-    console.log(payload);
-  };
-
-  return (
-    <form onSubmit={stripeSubmit}>
-      <Box sx={{ mb: 2 }}>
-        <CardElement options={{
-          style: { base: { fontSize: '18px' } },
-        }} />
-      </Box>
-      <Button
-        disabled={!stripe || !elements}
-        variant='contained'
-        type='submit'
-        size='small'
-      >
-        Pay Now With Stripe
-      </Button>
-    </form>
-  )
-};
-
 const ProductCard = ({ admin, section, wid, idx }) => {
-  const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
   const [open, setOpen] = useState(false);
   const title = idx ? 'title' + idx : 'title';
   const text = idx ? 'text' + idx : 'text';
@@ -51,6 +18,11 @@ const ProductCard = ({ admin, section, wid, idx }) => {
   const currency = idx ? 'currency' + idx : 'currency';
   const price = idx ? 'price' + idx : 'price';
   const sl = section.layout;
+  const firebase = useFirebase();
+  const stripeFunction = () => {
+    const stripe = firebase.functions().httpsCallable('stripe');
+    stripe().then((result) => window.location.replace(result.data));
+  };
 
   return (
     <Grid item xs={12} md={sl ? 12 / sl.quantity : 6}>
@@ -107,7 +79,7 @@ const ProductCard = ({ admin, section, wid, idx }) => {
             </Typography>
             <Button
               sx={{ mt: 1 }}
-              onClick={() => section.selling && setOpen(true)}
+              onClick={() => (section.selling || 1) && setOpen(true)}
               variant='contained'
               color='accentcolor'
             >
@@ -120,7 +92,7 @@ const ProductCard = ({ admin, section, wid, idx }) => {
             onClose={() => setOpen(false)}
             fullWidth
           >
-            {section.selling === 'paypal' && <Box sx={{ p: 2, textAlign: 'center' }}>
+            {(section.selling === 'paypal' || 1) && <Box sx={{ p: 2, textAlign: 'center' }}>
               <PayPalScriptProvider options={{ 'client-id': section.paypal }}>
                 <PayPalButtons
                   createOrder={(d, actions) => actions.order.create({
@@ -131,18 +103,47 @@ const ProductCard = ({ admin, section, wid, idx }) => {
                         value: Number(section[price]) || 0,
                       },
                     }],
+                    application_context: {
+                      shipping_preference: 'NO_SHIPPING',
+                    },
                   })}
                   onApprove={(d, actions) => actions.order.capture().then((details) => {
-                    const name = details.payer.name.given_name;
-                    console.log(name);
+                    const payer = details.payer;
+                    console.log(payer);
                   })}
                 />
               </PayPalScriptProvider>
             </Box>}
-            {section.selling === 'stripe' && <Box sx={{ p: 2 }}>
-              <Elements stripe={stripePromise}>
-                <StripeBox />
-              </Elements>
+            {section.selling === 'stripe' && <Box sx={{ p: 2, textAlign: 'center' }}>
+              <Formik
+                initialValues={{ email: '' }}
+                onSubmit={(values) => console.log(values)}
+              >
+                {({ values, handleChange, handleSubmit }) => (
+                  <form onSubmit={handleSubmit}>
+                    <TextField
+                      sx={{ my: 1 }}
+                      onChange={handleChange}
+                      value={values.email}
+                      name='email'
+                      placeholder='Email'
+                      label='Email'
+                      type='email'
+                      variant='outlined'
+                      size='small'
+                      fullWidth
+                      autoFocus
+                      required
+                    />
+                  </form>
+                )}
+              </Formik>
+              <Button
+                onClick={() => stripeFunction()}
+                variant='contained'
+              >
+                Pay Now by Stripe
+              </Button>
             </Box>}
           </Dialog>
         </Box>
