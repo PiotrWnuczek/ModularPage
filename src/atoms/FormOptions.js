@@ -93,8 +93,8 @@ const FormOptions = ({ children, section, wid }) => {
                     onChange={handleChange}
                     value={values.group}
                     name='group'
-                    placeholder='Group Id'
-                    label='Group Id'
+                    placeholder={mailing === 'sender' ? 'Group Id' : 'Group Name'}
+                    label={mailing === 'sender' ? 'Group Id' : 'Group Name'}
                     type='text'
                     variant='outlined'
                     size='small'

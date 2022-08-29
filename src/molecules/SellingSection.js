@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useFirebase } from 'react-redux-firebase';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { Grid, Box, Button, Typography } from '@mui/material';
@@ -9,8 +10,9 @@ import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 import PaymentOptions from 'atoms/PaymentOptions';
 
-const ProductCard = ({ admin, section, wid, idx }) => {
-  const [open, setOpen] = useState(false);
+const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
+  const [payment, setPayment] = useState(false);
+  const selling = idx ? 'selling' + idx : 'selling';
   const title = idx ? 'title' + idx : 'title';
   const text = idx ? 'text' + idx : 'text';
   const button = idx ? 'button' + idx : 'button';
@@ -19,9 +21,12 @@ const ProductCard = ({ admin, section, wid, idx }) => {
   const price = idx ? 'price' + idx : 'price';
   const sl = section.layout;
   const firebase = useFirebase();
-  const stripeFunction = () => {
+  const stripeFunction = (values) => {
     const stripe = firebase.functions().httpsCallable('stripe');
-    stripe().then((result) => window.location.replace(result.data));
+    stripe({
+      ...values, url: window.location.href,
+      product: section[product],
+    }).then((result) => window.location.replace(result.data));
   };
 
   return (
@@ -79,7 +84,7 @@ const ProductCard = ({ admin, section, wid, idx }) => {
             </Typography>
             <Button
               sx={{ mt: 1 }}
-              onClick={() => (section.selling || 1) && setOpen(true)}
+              onClick={() => section[selling] && setPayment(true)}
               variant='contained'
               color='accentcolor'
             >
@@ -88,13 +93,14 @@ const ProductCard = ({ admin, section, wid, idx }) => {
           </Box>}
           <Dialog
             sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
-            open={open}
-            onClose={() => setOpen(false)}
+            open={payment}
+            onClose={() => setPayment(false)}
             fullWidth
           >
-            {(section.selling === 'paypal' || 1) && <Box sx={{ p: 2, textAlign: 'center' }}>
+            {section[selling] === 'paypal' && <Box sx={{ p: 2, textAlign: 'center' }}>
               <PayPalScriptProvider options={{ 'client-id': section.paypal }}>
                 <PayPalButtons
+                  style={{ color: 'blue' }}
                   createOrder={(d, actions) => actions.order.create({
                     purchase_units: [{
                       description: section[product] || 'New Product',
@@ -103,24 +109,21 @@ const ProductCard = ({ admin, section, wid, idx }) => {
                         value: Number(section[price]) || 0,
                       },
                     }],
-                    application_context: {
-                      shipping_preference: 'NO_SHIPPING',
-                    },
+                    application_context: { shipping_preference: 'NO_SHIPPING' },
                   })}
-                  onApprove={(d, actions) => actions.order.capture().then((details) => {
-                    const payer = details.payer;
-                    console.log(payer);
+                  onApprove={(d, actions) => actions.order.capture().then(() => {
+                    setPayment(false); setSuccess(true);
                   })}
                 />
               </PayPalScriptProvider>
             </Box>}
-            {section.selling === 'stripe' && <Box sx={{ p: 2, textAlign: 'center' }}>
+            {section[selling] === 'stripe' && <Box sx={{ p: 2, textAlign: 'center' }}>
               <Formik
                 initialValues={{ email: '' }}
-                onSubmit={(values) => console.log(values)}
+                onSubmit={(values) => stripeFunction(values)}
               >
                 {({ values, handleChange, handleSubmit }) => (
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleSubmit} id='confirm'>
                     <TextField
                       sx={{ my: 1 }}
                       onChange={handleChange}
@@ -139,8 +142,10 @@ const ProductCard = ({ admin, section, wid, idx }) => {
                 )}
               </Formik>
               <Button
-                onClick={() => stripeFunction()}
+                type='submit'
+                form='confirm'
                 variant='contained'
+                fullWidth
               >
                 Pay Now by Stripe
               </Button>
@@ -153,16 +158,42 @@ const ProductCard = ({ admin, section, wid, idx }) => {
 };
 
 const SellingSection = ({ admin, section, wid }) => {
+  const [success, setSuccess] = useState(false);
+  const [params, setParams] = useSearchParams();
+  useEffect(() => {
+    params.has('success') && setSuccess(true);
+    setParams(false);
+  }, [params, setParams]);
   const sl = section.layout;
 
   return (
     <Grid container spacing={2}>
       {Array.from({ length: sl ? Number(sl.quantity) : 2 }, (_, i) => ++i).map(idx =>
         <ProductCard
-          key={idx} idx={idx} admin={admin}
-          section={section} wid={wid}
+          key={idx} idx={idx} wid={wid} admin={admin}
+          section={section} setSuccess={setSuccess}
         />
       )}
+      <Dialog
+        sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
+        open={success}
+        onClose={() => setSuccess(false)}
+        fullWidth
+      >
+        <Box sx={{ p: 2, textAlign: 'center' }}>
+          <Typography variant='h5'>
+            Payment Success
+          </Typography>
+          <Button
+            sx={{ mt: 2 }}
+            onClick={() => (setSuccess(false))}
+            variant='contained'
+            size='small'
+          >
+            Return to Page
+          </Button>
+        </Box>
+      </Dialog>
     </Grid>
   )
 };

@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
+import { updateProfile } from 'redux/usersSlice';
 import { updateSection } from 'redux/websitesSlice';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useFirestoreConnect } from 'react-redux-firebase';
 import { Box, Dialog, Typography } from '@mui/material';
 import { Button, TextField } from '@mui/material';
 import { Select, MenuItem } from '@mui/material';
 import { Formik } from 'formik';
 
 const PaymentOptions = ({ children, section, wid, idx }) => {
+  const auth = useSelector(state => state.firebase.auth);
+  const profile = useSelector(state => state.firestore.data[auth.uid]);
+  useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [selling, setSelling] = useState('paypal');
+  const [selling, setSelling] = useState(section['selling' + idx] || 'paypal');
   const button = idx ? 'button' + idx : 'button';
   const product = idx ? 'product' + idx : 'product';
   const currency = idx ? 'currency' + idx : 'currency';
@@ -54,38 +59,50 @@ const PaymentOptions = ({ children, section, wid, idx }) => {
             </Select>
             <Formik
               initialValues={{
-                paypal: section.paypal || 'PayPal Id',
+                key: selling === 'paypal' ?
+                  (section.paypal || 'Api Key') : ((profile && profile.stripe) || 'Api Key'),
                 [button]: section[button] || 'Buy Now',
                 [product]: section[product] || 'New Product',
                 [currency]: section[currency] || 'USD',
                 [price]: section[price] || '0',
               }}
               onSubmit={(values) => {
-                (values.paypal !== section.paypal || values[button] !== section[button] ||
-                  values[product] !== section[product] || values[currency] !== section[currency] ||
-                  values[price] !== section[price]) &&
+                selling === 'paypal' && values.key !== section.paypal &&
+                  dispatch(updateSection({
+                    values: { paypal: values.key },
+                    sid: section.id, wid,
+                  }));
+                selling === 'stripe' && profile && (values.key !== profile[selling]) &&
+                  dispatch(updateProfile({
+                    values: { [selling]: values.key },
+                    id: auth.uid,
+                  }));
+                (values[button] !== section[button] || values[product] !== section[product] ||
+                  values[currency] !== section[currency] || values[price] !== section[price] ||
+                  section['selling' + idx] !== selling) &&
                   dispatch(updateSection({
                     values: {
-                      paypal: values.paypal,
                       [button]: values[button],
                       [product]: values[product],
                       [currency]: values[currency],
                       [price]: values[price],
+                      ['selling' + idx]: selling,
                     },
                     sid: section.id, wid,
                   }));
                 setOpen(false);
               }}
+              enableReinitialize
             >
               {({ values, handleChange, handleSubmit }) => (
                 <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
                   <TextField
                     sx={{ my: 1 }}
                     onChange={handleChange}
-                    value={values.paypal}
-                    name='paypal'
-                    placeholder='PayPal Id'
-                    label='PayPal Id'
+                    value={values.key}
+                    name='key'
+                    placeholder='Api Key'
+                    label='Api Key'
                     type='text'
                     variant='outlined'
                     size='small'
@@ -108,8 +125,8 @@ const PaymentOptions = ({ children, section, wid, idx }) => {
                     onChange={handleChange}
                     value={values[product]}
                     name={product}
-                    placeholder='Product Name'
-                    label='Product Name'
+                    placeholder={selling === 'paypal' ? 'Product Name' : 'Price Id'}
+                    label={selling === 'paypal' ? 'Product Name' : 'Price Id'}
                     type='text'
                     variant='outlined'
                     size='small'
