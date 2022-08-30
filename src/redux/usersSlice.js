@@ -20,9 +20,9 @@ export const signupUser = createAsyncThunk(
         values.email, values.password,
       ).then((resp) => (
         firestore.collection('users').doc(resp.user.uid).set({
-          email: values.email, premium: null,
+          email: values.email,
           limit: { all: 3, custom: 0 },
-          date: new Date(),
+          premium: new Date(), date: new Date(),
         })
       )).then(() => values.email);
     } catch (error) { throw error }

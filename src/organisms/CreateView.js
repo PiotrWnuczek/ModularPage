@@ -18,7 +18,7 @@ const CreateView = () => {
   const auth = useSelector(state => state.firebase.auth);
   const profile = useSelector(state => state.firestore.data[auth.uid]);
   const websites = useSelector(state => state.firestore.ordered.websites);
-  const domains = websites.filter(website => website.domain === 'custom').length;
+  const domains = websites && websites.filter(website => website.domain === 'custom').length;
   useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   useFirestoreConnect([{ collection: 'websites', where: [['email', '==', auth.email]] }]);
   const dispatch = useDispatch();
@@ -59,7 +59,7 @@ const CreateView = () => {
           variant='outlined'
         >
           <CardActionArea onClick={() => {
-            profile.premium < new Date() ? setWarning('plan') : setDomain('custom');
+            profile.premium.toDate() < new Date() ? setWarning('plan') : setDomain('custom');
           }}>
             <CardHeader
               avatar={

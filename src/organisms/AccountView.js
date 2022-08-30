@@ -10,6 +10,8 @@ const AccountView = () => {
   const profile = useSelector(state => state.firestore.data[auth.uid]);
   useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   const dispatch = useDispatch();
+  const present = new Date();
+  const future = present.setMonth(present.getMonth() + 1);
 
   return (
     <MainLayout>
@@ -22,7 +24,7 @@ const AccountView = () => {
             Email: {profile && profile.email}
           </Typography>
           <Typography sx={{ mb: 1 }}>
-            Plan: {profile && profile.plan}
+            Premium: {(profile && profile.premium.toDate().toISOString()) || 'inactive'}
           </Typography>
         </Box>
         <Typography variant='h6'>
@@ -30,14 +32,14 @@ const AccountView = () => {
         </Typography>
         <Button
           sx={{ my: 1 }}
-          onClick={() => profile && (profile.plan !== 'premium') &&
+          onClick={() => (profile && profile.premium.toDate()) < new Date() &&
             dispatch(updateProfile({
-              values: { plan: 'premium' }, id: auth.uid,
+              values: { premium: new Date(future) }, id: auth.uid,
             }))}
           variant='contained'
           size='small'
         >
-          Upgrade Plan
+          Activate Premium
         </Button>
       </Box>
     </MainLayout>
