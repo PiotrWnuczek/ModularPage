@@ -125,7 +125,7 @@ const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
                 {({ values, handleChange, handleSubmit }) => (
                   <form onSubmit={handleSubmit} id='confirm'>
                     <TextField
-                      sx={{ my: 1 }}
+                      sx={{ mb: 2 }}
                       onChange={handleChange}
                       value={values.email}
                       name='email'

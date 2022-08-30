@@ -13,9 +13,10 @@ const SigninView = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [reset, setReset] = useState(false);
+  const [info, setInfo] = useState(false);
   const send = async (email) => {
     await sendPasswordResetEmail(getAuth(), email);
-    console.log('Password email sent')
+    setInfo('reset');
   };
 
   return (auth.uid ?
@@ -91,6 +92,9 @@ const SigninView = () => {
             </Button>
             {error && <Typography>
               {error.replace('Firebase: ', '').replace(/\(.+\)\.?/, '')}
+            </Typography>}
+            {info && <Typography>
+              {info === 'reset' && 'Password reset email sent.'}
             </Typography>}
           </form>
         )}

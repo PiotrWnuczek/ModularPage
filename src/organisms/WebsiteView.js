@@ -26,7 +26,7 @@ const WebsiteView = ({ admin, host }) => {
   const navigate = useNavigate();
   const [data, setData] = useState(website && [...website.sections]);
   useEffect(() => { setData(website && [...website.sections]) }, [website]);
-  const access = website && admin && auth.email === website.email;
+  const access = website && admin && auth.uid === website.uid;
   const ws = website && website.style;
   const theme = createTheme({
     palette: {

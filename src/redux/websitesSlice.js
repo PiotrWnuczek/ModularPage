@@ -3,13 +3,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const createWebsite = createAsyncThunk(
   'createWebsite', async ({ values, navigate }, thunk) => {
     const firestore = thunk.extra.getFirestore();
-    const email = thunk.getState().firebase.auth.email;
+    const auth = thunk.getState().firebase.auth;
     const ref = firestore.collection('websites');
     try {
       const doc = await ref.doc(values.name).get();
       if (doc.exists) throw new Error('exist');
       if (!doc.exists) return await ref.doc(values.name).set({
-        ...values, email, public: false,
+        ...values, public: false, email: auth.email, uid: auth.uid,
       }).then(
         () => navigate && navigate('/board')
       ).then(() => values);
@@ -33,9 +33,14 @@ export const updateWebsite = createAsyncThunk(
 
 export const removeWebsite = createAsyncThunk(
   'removeWebsite', async ({ wid, navigate }, thunk) => {
+    const firebase = thunk.extra.getFirebase();
     const firestore = thunk.extra.getFirestore();
     const ref = firestore.collection('websites');
+    const storage = firebase.storage().ref(wid);
     try {
+      await storage.listAll().then(
+        dir => dir.items.forEach(item => console.log(item)),
+      );
       return await ref.doc(wid).delete().then(
         () => navigate && navigate('/board'),
       ).then(() => wid);

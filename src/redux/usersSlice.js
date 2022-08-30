@@ -33,7 +33,7 @@ export const updateProfile = createAsyncThunk(
     const ref = firestore.collection('users').doc(id);
     try {
       return await ref.update({
-        ...values,
+        ...values, date: new Date(),
       }).then(() => values);
     } catch (error) { throw error }
   },

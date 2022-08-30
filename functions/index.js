@@ -1,6 +1,8 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const axios = require('axios');
+const nodemailer = require('nodemailer');
+
 admin.initializeApp();
 
 exports.sender = functions.https.onCall(async (data, context) => {
@@ -54,4 +56,28 @@ exports.stripe = functions.https.onCall(async (data, context) => {
     cancel_url: data.url + '?cancel=true',
   });
   return session.url;
+});
+
+exports.email = functions.firestore.document('websites/{id}').onCreate((snap, context) => {
+  const transporter = nodemailer.createTransport({
+    host: 'mail0.small.pl',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'contact@modularpage.com',
+      pass: 'modularMP(00)'
+    }
+  });
+  const mailOptions = {
+    from: 'Modular Page',
+    to: 'contact@piotrwnuczek.pl',
+    subject: '[Modular Page Admin] New Website',
+    html: 'Website: ' + context.params.id + ' Email: ' + snap.data().email,
+  };
+  if (snap.data().domain === 'custom') {
+    return transporter.sendMail(mailOptions, (error, data) => {
+      if (error) console.log(error);
+      if (data) console.log('email');
+    });
+  } else { return 'email' };
 });
