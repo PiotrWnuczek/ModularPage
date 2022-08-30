@@ -58,7 +58,7 @@ exports.stripe = functions.https.onCall(async (data, context) => {
   return session.url;
 });
 
-exports.email = functions.firestore.document('websites/{id}').onCreate((snap, context) => {
+exports.domaincreate = functions.firestore.document('websites/{id}').onCreate((snap, context) => {
   const transporter = nodemailer.createTransport({
     host: 'mail0.small.pl',
     port: 465,
@@ -71,8 +71,32 @@ exports.email = functions.firestore.document('websites/{id}').onCreate((snap, co
   const mailOptions = {
     from: 'Modular Page',
     to: 'contact@piotrwnuczek.pl',
-    subject: '[Modular Page Admin] New Website',
-    html: 'Website: ' + context.params.id + ' Email: ' + snap.data().email,
+    subject: '[Modular Page Admin] Domain Create',
+    html: 'Domain: ' + context.params.id + ' Email: ' + snap.data().email,
+  };
+  if (snap.data().domain === 'custom') {
+    return transporter.sendMail(mailOptions, (error, data) => {
+      if (error) console.log(error);
+      if (data) console.log('email');
+    });
+  } else { return 'email' };
+});
+
+exports.domainremove = functions.firestore.document('websites/{id}').onDelete((snap, context) => {
+  const transporter = nodemailer.createTransport({
+    host: 'mail0.small.pl',
+    port: 465,
+    secure: true,
+    auth: {
+      user: 'contact@modularpage.com',
+      pass: 'modularMP(00)'
+    }
+  });
+  const mailOptions = {
+    from: 'Modular Page',
+    to: 'contact@piotrwnuczek.pl',
+    subject: '[Modular Page Admin] Domain Remove',
+    html: 'Domain: ' + context.params.id + ' Email: ' + snap.data().email,
   };
   if (snap.data().domain === 'custom') {
     return transporter.sendMail(mailOptions, (error, data) => {

@@ -17,7 +17,10 @@ const CreateView = () => {
   const error = useSelector(state => state.websites.error);
   const auth = useSelector(state => state.firebase.auth);
   const profile = useSelector(state => state.firestore.data[auth.uid]);
+  const websites = useSelector(state => state.firestore.ordered.websites);
+  const domains = websites.filter(website => website.domain === 'custom').length;
   useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
+  useFirestoreConnect([{ collection: 'websites', where: [['email', '==', auth.email]] }]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [domain, setDomain] = useState('app');
@@ -55,9 +58,9 @@ const CreateView = () => {
           sx={{ my: 1, bgcolor: 'secondary.light', borderRadius: 2 }}
           variant='outlined'
         >
-          <CardActionArea onClick={() => profile.plan === 'premium' ?
-            setDomain('custom') : setWarning(true)
-          }>
+          <CardActionArea onClick={() => {
+            profile.premium < new Date() ? setWarning('plan') : setDomain('custom');
+          }}>
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: domain === 'custom' && 'primary.main' }}>
@@ -125,10 +128,21 @@ const CreateView = () => {
         </Typography>
         <Formik
           initialValues={{ name: '' }}
-          onSubmit={(values) => dispatch(createWebsite({
-            values: { ...values, domain, template, sections, header, footer },
-            navigate,
-          }))}
+          onSubmit={(values) => {
+            domain === 'app' && websites.length < profile.limit.all &&
+              dispatch(createWebsite({
+                values: { ...values, domain, template, sections, header, footer },
+                navigate,
+              }));
+            domain === 'custom' && websites.length < profile.limit.all &&
+              domains.length < profile.limits.custom &&
+              dispatch(createWebsite({
+                values: { ...values, domain, template, sections, header, footer },
+                navigate,
+              }));
+            websites.length >= profile.limit.all && setWarning('all');
+            domains.length >= profile.limits.custom && setWarning('custom');
+          }}
         >
           {({ values, handleChange, handleSubmit }) => (
             <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
@@ -160,10 +174,14 @@ const CreateView = () => {
         </Button>
       </Box>
       <WarningWindow
-        warning={warning}
+        warning={warning ? true : false}
         setWarning={setWarning}
         title='Upgrade Plan'
-        text='To add custom domain upgrade your plan to premium.'
+        text={
+          warning === 'plan' ?
+            'To add custom domain upgrade your plan to premium.' :
+            'Your ' + warning + ' domains limit has expired, upgrade your plan to premium.'
+        }
         button={<Button
           onClick={() => navigate('/account')}
           variant='contained'

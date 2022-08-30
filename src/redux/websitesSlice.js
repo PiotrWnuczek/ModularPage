@@ -39,7 +39,7 @@ export const removeWebsite = createAsyncThunk(
     const storage = firebase.storage().ref(wid);
     try {
       await storage.listAll().then(
-        dir => dir.items.forEach(item => console.log(item)),
+        dir => dir.items.forEach(item => item.delete()),
       );
       return await ref.doc(wid).delete().then(
         () => navigate && navigate('/board'),

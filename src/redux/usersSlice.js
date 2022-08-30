@@ -20,7 +20,9 @@ export const signupUser = createAsyncThunk(
         values.email, values.password,
       ).then((resp) => (
         firestore.collection('users').doc(resp.user.uid).set({
-          email: values.email, plan: 'free',
+          email: values.email, premium: null,
+          limit: { all: 3, custom: 0 },
+          date: new Date(),
         })
       )).then(() => values.email);
     } catch (error) { throw error }
@@ -33,7 +35,7 @@ export const updateProfile = createAsyncThunk(
     const ref = firestore.collection('users').doc(id);
     try {
       return await ref.update({
-        ...values, date: new Date(),
+        ...values,
       }).then(() => values);
     } catch (error) { throw error }
   },
