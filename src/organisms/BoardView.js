@@ -6,6 +6,7 @@ import { Grid, Box, Typography, Avatar } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import MainLayout from 'organisms/MainLayout';
 import WebsiteCard from 'molecules/WebsiteCard';
+import ImageOptions from 'atoms/ImageOptions';
 
 const BoardView = () => {
   const websites = useSelector(state => state.firestore.ordered.websites);
@@ -39,6 +40,9 @@ const BoardView = () => {
         >
           <Add />
         </Avatar>
+      </Box>
+      <Box sx={{ p: 2 }}>
+        <ImageOptions />
       </Box>
     </MainLayout>
   )
