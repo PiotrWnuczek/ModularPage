@@ -9,12 +9,12 @@ import { Select, MenuItem } from '@mui/material';
 import { Formik } from 'formik';
 
 const PaymentOptions = ({ children, section, wid, idx }) => {
+  const [open, setOpen] = useState(false);
+  const [selling, setSelling] = useState(section['selling' + idx] || 'paypal');
   const auth = useSelector(state => state.firebase.auth);
   const profile = useSelector(state => state.firestore.data[auth.uid]);
   useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
-  const [selling, setSelling] = useState(section['selling' + idx] || 'paypal');
   const button = idx ? 'button' + idx : 'button';
   const product = idx ? 'product' + idx : 'product';
   const currency = idx ? 'currency' + idx : 'currency';

@@ -3,17 +3,19 @@ import { createWebsite } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, Button } from '@mui/material';
-import { Card, CardHeader, Avatar } from '@mui/material';
+import { Box, Card, Button, Dialog } from '@mui/material';
+import { Typography, CardHeader, Avatar } from '@mui/material';
 import { TextField, CardActionArea } from '@mui/material';
 import { Dns, Wysiwyg } from '@mui/icons-material';
 import { Formik } from 'formik';
 import { header, footer } from 'stock/sections';
 import { content, graphic, iconbox, mailing, selling } from 'stock/sections';
 import MainLayout from 'organisms/MainLayout';
-import WarningWindow from 'atoms/WarningWindow';
 
 const CreateView = () => {
+  const [domain, setDomain] = useState('app');
+  const [template, setTemplate] = useState('landing');
+  const [info, setInfo] = useState(false);
   const error = useSelector(state => state.websites.error);
   const auth = useSelector(state => state.firebase.auth);
   const profile = useSelector(state => state.firestore.data[auth.uid]);
@@ -23,9 +25,6 @@ const CreateView = () => {
   useFirestoreConnect([{ collection: 'websites', where: [['email', '==', auth.email]] }]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [domain, setDomain] = useState('app');
-  const [template, setTemplate] = useState('landing');
-  const [warning, setWarning] = useState(false);
   const sections = template === 'landing' ? [
     graphic, iconbox, mailing, content,
   ] : template === 'product' ? [
@@ -59,7 +58,7 @@ const CreateView = () => {
           variant='outlined'
         >
           <CardActionArea onClick={() => {
-            profile.premium.toDate() < new Date() ? setWarning('plan') : setDomain('custom');
+            profile.premium.toDate() < new Date() ? setInfo('plan') : setDomain('custom');
           }}>
             <CardHeader
               avatar={
@@ -140,8 +139,8 @@ const CreateView = () => {
                 values: { ...values, domain, template, sections, header, footer },
                 navigate,
               }));
-            websites.length >= profile.limit.all && setWarning('all');
-            domains.length >= profile.limits.custom && setWarning('custom');
+            websites.length >= profile.limit.all && setInfo('all');
+            domains.length >= profile.limits.custom && setInfo('custom');
           }}
         >
           {({ values, handleChange, handleSubmit }) => (
@@ -173,23 +172,38 @@ const CreateView = () => {
           Create Website
         </Button>
       </Box>
-      <WarningWindow
-        warning={warning ? true : false}
-        setWarning={setWarning}
-        title='Upgrade Plan'
-        text={
-          warning === 'plan' ?
-            'To add custom domain upgrade your plan to premium.' :
-            'Your ' + warning + ' domains limit has expired, upgrade your plan to premium.'
-        }
-        button={<Button
-          onClick={() => navigate('/account')}
-          variant='contained'
-          size='small'
-        >
-          Upgrade Plan
-        </Button>}
-      />
+      <Dialog
+        sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
+        open={info ? true : false}
+        onClose={() => setInfo(false)}
+        fullWidth
+      >
+        <Box sx={{ p: 2 }}>
+          <Typography variant='h5'>
+            Upgrade Plan
+          </Typography>
+          <Typography sx={{ py: 1 }}>
+            {info === 'plan' ?
+              'To add custom domain upgrade your plan to premium.' :
+              'Your ' + info + ' domains limit has expired, upgrade your plan to premium.'}
+          </Typography>
+          <Button
+            onClick={() => navigate('/account')}
+            variant='contained'
+            size='small'
+          >
+            Upgrade Plan
+          </Button>
+          <Button
+            sx={{ ml: 1 }}
+            onClick={() => setInfo(false)}
+            variant='outlined'
+            size='small'
+          >
+            Cancel
+          </Button>
+        </Box>
+      </Dialog>
     </MainLayout >
   )
 };

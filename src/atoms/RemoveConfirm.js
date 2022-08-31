@@ -6,7 +6,7 @@ import { Button, IconButton, TextField } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { Formik } from 'formik';
 
-const WebsiteRemove = ({ wid }) => {
+const RemoveConfirm = ({ sid, wid, file }) => {
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState(false);
   const dispatch = useDispatch();
@@ -86,4 +86,4 @@ const WebsiteRemove = ({ wid }) => {
   )
 };
 
-export default WebsiteRemove;
+export default RemoveConfirm;

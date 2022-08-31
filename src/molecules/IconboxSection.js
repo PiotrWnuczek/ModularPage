@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
-import { updateSection } from 'redux/websitesSlice';
-import { useDispatch } from 'react-redux';
-import { Box, Typography } from '@mui/material';
-import { Grid, IconButton } from '@mui/material';
-import { TextField } from '@mui/material';
-import { Check } from '@mui/icons-material';
-import { Formik } from 'formik';
+import React from 'react';
+import { Box, Grid, Typography } from '@mui/material';
 import * as icons from '@mui/icons-material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
+import IconOptions from 'atoms/IconOptions';
 
 const IconBox = ({ admin, section, wid, idx }) => {
-  const dispatch = useDispatch();
-  const [edit, setEdit] = useState(false);
   const icon = idx ? 'icon' + idx : 'icon';
   const title = idx ? 'title' + idx : 'title';
   const text = idx ? 'text' + idx : 'text';
@@ -28,49 +21,15 @@ const IconBox = ({ admin, section, wid, idx }) => {
         <Box sx={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          {!edit && <Box
-            sx={{
-              cursor: admin && 'pointer',
-              mr: 1, fontSize: 32, color: 'accentcolor.main',
-            }}
-            onClick={() => admin && setEdit(true)}
-            component={icons[section[icon]] || icons.Add}
-          />}
-          {edit && admin && <Formik
-            initialValues={{ [icon]: section[icon] || 'Add' }}
-            onSubmit={(values) => {
-              values[icon] !== section[icon] &&
-                dispatch(updateSection({ values, sid: section.id, wid }));
-              setEdit(false);
-            }}
+          <IconOptions
+            admin={admin} section={section}
+            wid={wid} idx={idx}
           >
-            {({ values, handleChange, handleSubmit }) => (
-              <form onBlur={handleSubmit} onSubmit={handleSubmit} autoComplete='off'>
-                <TextField
-                  sx={{ my: 0 }}
-                  onChange={handleChange}
-                  value={values[icon]}
-                  name={icon}
-                  placeholder='Icon'
-                  label='Icon'
-                  type='text'
-                  size='small'
-                  variant='outlined'
-                  fullWidth
-                  autoFocus
-                  InputProps={{
-                    endAdornment: <IconButton
-                      sx={{ mx: -1 }}
-                      type='submit'
-                      size='small'
-                    >
-                      <Check />
-                    </IconButton>
-                  }}
-                />
-              </form>
-            )}
-          </Formik>}
+            <Box
+              sx={{ mr: 1, fontSize: 32, color: 'accentcolor.main' }}
+              component={icons[section[icon]] || icons.Add}
+            />
+          </IconOptions>
           <TextEditor
             admin={admin} section={section}
             wid={wid} idx={idx} type='title'

@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { createFile } from 'redux/websitesSlice';
+import { useSelector, useDispatch } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
-import { Box, Paper, Typography } from '@mui/material';
-import { Dialog, Button, Alert, AlertTitle } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { Dialog, Alert, AlertTitle } from '@mui/material';
+import { Paper, CircularProgress } from '@mui/material';
 
-const ImageOptions = ({ children, section, wid }) => {
+const ImageOptions = ({ children, admin, section, wid }) => {
   const [open, setOpen] = useState(false);
+  const [info, setInfo] = useState(false);
+  const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: 'image/*', maxFiles: 1,
@@ -14,13 +18,25 @@ const ImageOptions = ({ children, section, wid }) => {
   return (
     <Box>
       <Box
-        sx={{ cursor: 'pointer' }}
-        onClick={() => setOpen(true)}
+        sx={{
+          cursor: admin && 'pointer', position: 'relative', textAlign: 'center',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}
+        onClick={() => {
+          admin && !info && setOpen(true);
+          admin && info && setInfo(false);
+        }}
       >
-        {children}
-        <Button onClick={() => setOpen(true)}>
-          Test
-        </Button>
+        <Box sx={{ opacity: admin && (info || loading) && 0.5 }}>
+          {children}
+        </Box>
+        {admin && <Box sx={{ position: 'absolute' }}>
+          {info && <Typography variant='h6'>
+            Maximum file size is 500 KB <br />
+            Click to return to the previous file
+          </Typography>}
+          {loading && <CircularProgress size={100} />}
+        </Box>}
       </Box>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
@@ -30,12 +46,9 @@ const ImageOptions = ({ children, section, wid }) => {
       >
         <Box sx={{ p: 2 }}>
           <Typography variant='h5'>
-            Graphic Upload
+            Image Upload
           </Typography>
           <Box sx={{ py: 1 }}>
-            <Typography>
-              Upload new graphic.
-            </Typography>
             <Alert
               sx={{ my: 1, py: 0, px: 1, borderRadius: 2 }}
               variant='outlined'
@@ -45,10 +58,8 @@ const ImageOptions = ({ children, section, wid }) => {
               <AlertTitle>
                 Info about section
               </AlertTitle>
-              This is an info alert — check it out! <br />
               Lorem ipsum dolor sit amet.
             </Alert>
-
             <Paper
               sx={{ my: 1, p: 2, borderRadius: 2, textAlign: 'center' }}
               {...getRootProps()}
@@ -60,17 +71,23 @@ const ImageOptions = ({ children, section, wid }) => {
               </Typography>
             </Paper>
             <Typography>
-              Selected: {acceptedFiles[0].path}
+              Selected: {acceptedFiles[0] && acceptedFiles[0].path}
             </Typography>
-
           </Box>
           <Button
-            type='submit'
-            form='confirm'
+            onClick={() => {
+              acceptedFiles[0] && acceptedFiles[0].size < 500 * 1024 &&
+                dispatch(createFile({
+                  file: acceptedFiles[0], sid: section.id, wid,
+                }));
+              acceptedFiles[0] && acceptedFiles[0].size >= 500 * 1024 &&
+                setInfo(true);
+              setOpen(false);
+            }}
             variant='contained'
             size='small'
           >
-            Upload Graphic
+            Upload Image
           </Button>
           <Button
             sx={{ ml: 1 }}

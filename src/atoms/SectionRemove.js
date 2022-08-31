@@ -6,8 +6,8 @@ import { Typography, Avatar } from '@mui/material';
 import { Remove } from '@mui/icons-material';
 
 const SectionRemove = ({ sid, wid, file }) => {
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <Box>

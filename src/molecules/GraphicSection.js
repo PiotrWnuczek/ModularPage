@@ -1,27 +1,22 @@
-import React, { useState } from 'react';
-import { createFile } from 'redux/websitesSlice';
-import { useSelector, useDispatch } from 'react-redux';
-import { Grid, Box, Typography, Button } from '@mui/material';
-import { Link } from '@mui/material';
-import { CircularProgress } from '@mui/material';
+import React from 'react';
+import { Grid, Box, Button } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Picture from 'stock/picture.png';
 import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
+import ImageOptions from 'atoms/ImageOptions';
 
 const GraphicSection = ({ admin, section, wid }) => {
-  const loading = useSelector(state => state.websites.loading);
-  const dispatch = useDispatch();
-  const [info, setInfo] = useState(false);
   const sl = section.layout;
 
   return (
     <Grid container>
       <Grid
         sx={{
-          px: 2, display: 'flex', alignItems: 'center',
-          justifyContent: 'center',
+          px: 2, alignItems: 'center',
+          display: 'flex', justifyContent: 'center',
         }}
         item xs={12} sm={6}
       >
@@ -81,52 +76,18 @@ const GraphicSection = ({ admin, section, wid }) => {
       </Grid>
       <Grid
         sx={{
-          px: 2, display: 'flex', alignItems: 'center',
-          justifyContent: 'center',
+          px: 2, justifyContent: 'center',
+          display: 'flex', alignItems: 'center',
         }}
         item xs={12} sm={6}
       >
-        <Box
-          sx={{
-            cursor: admin && 'pointer', position: 'relative', textAlign: 'center',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-          component='label'
-        >
+        <ImageOptions admin={admin} section={section} wid={wid}>
           <Box
-            sx={{
-              opacity: admin && (info || loading) && 0.5,
-              width: '100%', height: 'auto', maxWidth: 400,
-            }}
+            sx={{ width: '100%', height: 'auto', maxWidth: 400 }}
             src={section.url || Picture}
             component='img'
           />
-          {admin && !info && <Box
-            onChange={(e) => {
-              if (e.target.files[0] && e.target.files[0].size < 500 * 1024) {
-                dispatch(createFile({
-                  file: e.target.files[0], sid: section.id, wid,
-                }));
-              } else { setInfo(true) }
-            }}
-            component='input'
-            type='file'
-            hidden
-          />}
-          {admin && info && <Box
-            onClick={() => setInfo(false)}
-            component='input'
-            type='button'
-            hidden
-          />}
-          {admin && <Box sx={{ position: 'absolute' }}>
-            {info && <Typography variant='h6'>
-              Maximum file size is 500 KB <br />
-              Click to return to the previous file
-            </Typography>}
-            {loading && <CircularProgress size={100} />}
-          </Box>}
-        </Box>
+        </ImageOptions>
       </Grid>
     </Grid>
   )

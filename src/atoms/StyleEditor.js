@@ -7,8 +7,8 @@ import { Colorize, ColorLens, FormatSize } from '@mui/icons-material';
 import { HexColorPicker } from 'react-colorful';
 
 const StyleEditor = ({ style, setStyle, sid, wid }) => {
-  const dispatch = useDispatch();
   const [picker, setPicker] = useState('fontcolor');
+  const dispatch = useDispatch();
 
   return (
     <Box sx={{ py: 2 }}>

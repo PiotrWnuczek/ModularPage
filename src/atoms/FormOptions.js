@@ -9,12 +9,12 @@ import { Button, TextField } from '@mui/material';
 import { Formik } from 'formik';
 
 const FormOptions = ({ children, section, wid }) => {
+  const [open, setOpen] = useState(false);
+  const [mailing, setMailing] = useState(section.mailing || 'sender');
   const auth = useSelector(state => state.firebase.auth);
   const profile = useSelector(state => state.firestore.data[auth.uid]);
   useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
-  const [mailing, setMailing] = useState(section.mailing || 'sender');
 
   return (
     <Box>

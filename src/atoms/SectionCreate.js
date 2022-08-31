@@ -7,8 +7,8 @@ import { Add } from '@mui/icons-material';
 import { content, graphic, iconbox, mailing, selling } from 'stock/sections';
 
 const SectionCreate = ({ wid, index, start }) => {
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
   const sections = [
     { name: 'Content Section', template: content },
     { name: 'Graphic Section', template: graphic },

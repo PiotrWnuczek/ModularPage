@@ -9,7 +9,7 @@ import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material';
 import { Box, Button, Typography } from '@mui/material';
 import { Helmet } from 'react-helmet';
-import WebsiteExit from 'atoms/WebsiteExit';
+import WebsiteFinish from 'atoms/WebsiteFinish';
 import WebsiteOptions from 'atoms/WebsiteOptions';
 import SectionCreate from 'atoms/SectionCreate';
 import BlockTemplate from 'molecules/BlockTemplate';
@@ -64,7 +64,7 @@ const WebsiteView = ({ admin, host }) => {
         <Helmet>
           <title>{website && website.name}</title>
         </Helmet>
-        {access && <WebsiteExit />}
+        {access && <WebsiteFinish />}
         {access && <WebsiteOptions website={website} />}
         {access && website && !website.sections.length && <Box
           sx={{ py: 5.5, display: 'flex', justifyContent: 'center' }}

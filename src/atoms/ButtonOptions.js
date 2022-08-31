@@ -8,9 +8,9 @@ import { Tab } from '@mui/icons-material';
 import { Formik } from 'formik';
 
 const ButtonOptions = ({ children, section, wid, idx }) => {
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [target, setTarget] = useState('new');
+  const dispatch = useDispatch();
   const button = idx ? 'button' + idx : 'button';
   const link = idx ? 'link' + idx : 'link';
   const tab = idx ? 'tab' + idx : 'tab';

@@ -6,7 +6,7 @@ import { Drawer, Avatar, List, ListItem } from '@mui/material';
 import { ListItemText, ListItemAvatar } from '@mui/material';
 import { Add, Dashboard, Logout, Person } from '@mui/icons-material';
 
-const SideBar = ({ main, ...props }) => {
+const SideMenu = ({ main, ...props }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -84,4 +84,4 @@ const SideBar = ({ main, ...props }) => {
   )
 };
 
-export default SideBar;
+export default SideMenu;

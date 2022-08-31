@@ -7,8 +7,8 @@ import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 
 const TextEditor = ({ children, type, admin, section, wid, idx }) => {
-  const dispatch = useDispatch();
   const [edit, setEdit] = useState(false);
+  const dispatch = useDispatch();
   const title = idx ? 'title' + idx : 'title';
   const text = idx ? 'text' + idx : 'text';
 
@@ -21,7 +21,7 @@ const TextEditor = ({ children, type, admin, section, wid, idx }) => {
         {children}
       </Box>}
       {edit && admin && type === 'title' && <Formik
-        initialValues={{ [title]: section[title] || 'Add Title' }}
+        initialValues={{ [title]: section[title] || 'New Title' }}
         onSubmit={(values) => {
           section.id && (values[title] !== section[title]) &&
             dispatch(updateSection({ values, sid: section.id, wid }));
@@ -60,7 +60,7 @@ const TextEditor = ({ children, type, admin, section, wid, idx }) => {
         )}
       </Formik>}
       {edit && admin && type === 'text' && <Formik
-        initialValues={{ [text]: section[text] || 'Add Text' }}
+        initialValues={{ [text]: section[text] || 'New Text' }}
         onSubmit={(values) => {
           section.id && (values[text] !== section[text]) &&
             dispatch(updateSection({ values, sid: section.id, wid }));

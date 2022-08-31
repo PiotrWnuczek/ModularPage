@@ -4,9 +4,9 @@ import { Box, Dialog, Button } from '@mui/material';
 import { Typography, Avatar } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
-const WebsiteExit = () => {
-  const navigate = useNavigate();
+const WebsiteFinish = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <Box>
@@ -58,4 +58,4 @@ const WebsiteExit = () => {
   )
 };
 
-export default WebsiteExit;
+export default WebsiteFinish;

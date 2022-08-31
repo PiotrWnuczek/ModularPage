@@ -1,13 +1,13 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import SideBar from 'molecules/SideBar';
+import SideMenu from 'molecules/SideMenu';
 
 const MainLayout = ({ children }) => {
   const width = { xs: 72, md: 162 };
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <SideBar
+      <SideMenu
         sx={{
           width, '& .MuiDrawer-paper':
             { bgcolor: 'secondary.dark', justifyContent: 'space-between', width },
