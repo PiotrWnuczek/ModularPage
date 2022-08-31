@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { updateSection } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
-import { Box, Typography } from '@mui/material';
-import { TextField, IconButton } from '@mui/material';
-import { Check } from '@mui/icons-material';
-import { Formik } from 'formik';
+import { Box, Typography, TextField } from '@mui/material';
 import { Dialog, Button, Alert, AlertTitle } from '@mui/material';
+import * as icons from '@mui/icons-material';
+import { Formik } from 'formik';
 
 const IconOptions = ({ children, admin, section, wid, idx }) => {
-  const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
   const icon = idx ? 'icon' + idx : 'icon';
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(section[icon]);
+  const dispatch = useDispatch();
 
   return (
     <Box>
@@ -51,32 +51,32 @@ const IconOptions = ({ children, admin, section, wid, idx }) => {
               }}
             >
               {({ values, handleChange, handleSubmit }) => (
-                <form onBlur={handleSubmit} onSubmit={handleSubmit} autoComplete='off'>
+                <form
+                  onChange={(e) => setValue(e.target.value)}
+                  onSubmit={handleSubmit} id='confirm' autoComplete='off'
+                >
                   <TextField
-                    sx={{ my: 0 }}
+                    sx={{ my: 1 }}
                     onChange={handleChange}
                     value={values[icon]}
                     name={icon}
                     placeholder='Icon'
                     label='Icon'
                     type='text'
-                    size='small'
                     variant='outlined'
+                    size='small'
                     fullWidth
                     autoFocus
-                    InputProps={{
-                      endAdornment: <IconButton
-                        sx={{ mx: -1 }}
-                        type='submit'
-                        size='small'
-                      >
-                        <Check />
-                      </IconButton>
-                    }}
                   />
                 </form>
               )}
             </Formik>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Typography>
+                {icons[value] ? 'Selected icon: ' : 'Select icon'}
+              </Typography>
+              <Box component={icons[value]} />
+            </Box>
           </Box>
           <Button
             type='submit'

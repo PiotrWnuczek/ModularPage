@@ -134,13 +134,13 @@ const CreateView = () => {
                 navigate,
               }));
             domain === 'custom' && websites.length < profile.limit.all &&
-              domains.length < profile.limits.custom &&
+              domains.length < profile.limit.custom &&
               dispatch(createWebsite({
                 values: { ...values, domain, template, sections, header, footer },
                 navigate,
               }));
             websites.length >= profile.limit.all && setInfo('all');
-            domains.length >= profile.limits.custom && setInfo('custom');
+            domains.length >= profile.limit.custom && setInfo('custom');
           }}
         >
           {({ values, handleChange, handleSubmit }) => (

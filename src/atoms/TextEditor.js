@@ -81,8 +81,8 @@ const TextEditor = ({ children, type, admin, section, wid, idx }) => {
               placeholder='Text'
               label='Text'
               type='text'
-              size='small'
               variant='outlined'
+              size='small'
               fullWidth
               multiline
               minRows={3}

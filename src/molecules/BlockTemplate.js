@@ -4,7 +4,7 @@ import { Box, Avatar } from '@mui/material';
 import { DragIndicator } from '@mui/icons-material';
 import SectionCreate from 'atoms/SectionCreate';
 import SectionOptions from 'atoms/SectionOptions';
-import SectionRemove from 'atoms/SectionRemove';
+import RemoveConfirm from 'atoms/RemoveConfirm';
 import ContentSection from 'molecules/ContentSection';
 import GraphicSection from 'molecules/GraphicSection';
 import IconboxSection from 'molecules/IconboxSection';
@@ -96,8 +96,8 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
           display: { xs: 'flex', md: hover ? 'flex' : 'none' },
         }}>
           <SectionCreate wid={wid} index={index} />
-          <SectionRemove
-            sid={section.id} wid={wid}
+          <RemoveConfirm
+            sid={section.id} wid={wid} type='section'
             file={section.type === 'graphic'}
           />
         </Box>}

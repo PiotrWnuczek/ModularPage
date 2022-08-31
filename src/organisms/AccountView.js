@@ -34,7 +34,7 @@ const AccountView = () => {
           Account Options
         </Typography>
         <Button
-          onClick={() => setOpen(true)}
+          onClick={() => (profile && profile.premium.toDate()) < new Date() && setOpen(true)}
           variant='contained'
           size='small'
         >

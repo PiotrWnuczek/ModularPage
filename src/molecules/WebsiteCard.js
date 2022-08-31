@@ -6,7 +6,7 @@ import { Box, Card, Grid, Typography } from '@mui/material';
 import { Button, IconButton, Avatar } from '@mui/material';
 import { Link, FormControlLabel, Switch } from '@mui/material';
 import { Edit, InsertLink, Web } from '@mui/icons-material';
-import WebsiteRemove from 'atoms/WebsiteRemove';
+import RemoveConfirm from 'atoms/RemoveConfirm';
 
 const WebsiteCard = ({ website }) => {
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const WebsiteCard = ({ website }) => {
             }))}
             label='public'
           />
-          <WebsiteRemove wid={website.name} />
+          <RemoveConfirm wid={website.name} type='website' />
         </Grid>
       </Grid>
     </Card>

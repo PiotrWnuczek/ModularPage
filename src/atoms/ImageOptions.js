@@ -12,7 +12,7 @@ const ImageOptions = ({ children, admin, section, wid }) => {
   const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*', maxFiles: 1,
+    accept: { 'image/*': ['.jpeg', '.png'] }
   });
 
   return (
@@ -61,7 +61,7 @@ const ImageOptions = ({ children, admin, section, wid }) => {
               Lorem ipsum dolor sit amet.
             </Alert>
             <Paper
-              sx={{ my: 1, p: 2, borderRadius: 2, textAlign: 'center' }}
+              sx={{ my: 2, p: 2, borderRadius: 2, textAlign: 'center' }}
               {...getRootProps()}
               variant='outlined'
             >
@@ -71,7 +71,7 @@ const ImageOptions = ({ children, admin, section, wid }) => {
               </Typography>
             </Paper>
             <Typography>
-              Selected: {acceptedFiles[0] && acceptedFiles[0].path}
+              {acceptedFiles[0] ? 'Selected image: ' + acceptedFiles[0].path : 'Select image'}
             </Typography>
           </Box>
           <Button

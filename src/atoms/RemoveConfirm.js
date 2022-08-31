@@ -1,24 +1,35 @@
 import React, { useState } from 'react';
 import { removeWebsite } from 'redux/websitesSlice';
+import { removeSection, removeFile } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
-import { Box, Dialog, Typography } from '@mui/material';
+import { Box, Dialog, Typography, Avatar } from '@mui/material';
 import { Button, IconButton, TextField } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { Delete, Remove } from '@mui/icons-material';
 import { Formik } from 'formik';
 
-const RemoveConfirm = ({ sid, wid, file }) => {
+const RemoveConfirm = ({ type, sid, wid, file }) => {
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState(false);
   const dispatch = useDispatch();
 
   return (
     <Box>
-      <IconButton
+      {type === 'website' && <IconButton
         onClick={() => setOpen(true)}
         size='small'
       >
         <Delete />
-      </IconButton>
+      </IconButton>}
+      {type === 'section' && <Avatar
+        sx={{
+          width: 30, height: 30, mx: 0.3,
+          cursor: 'pointer', bgcolor: 'primary.main',
+          '&:hover': { bgcolor: 'primary.dark' },
+        }}
+        onClick={() => setOpen(true)}
+      >
+        <Remove />
+      </Avatar>}
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
@@ -26,14 +37,18 @@ const RemoveConfirm = ({ sid, wid, file }) => {
         fullWidth
       >
         <Box sx={{ p: 2 }}>
-          <Typography variant='h5'>
-            Remove Website
+          <Typography
+            sx={{ textTransform: 'capitalize' }}
+            variant='h5'
+          >
+            Remove {type}
           </Typography>
           <Box sx={{ my: 1 }}>
             <Typography>
-              Confirm website removing, enter website name.
+              {type === 'website' && 'Confirm website removing, enter website name.'}
+              {type === 'section' && 'Confirm section removing.'}
             </Typography>
-            <Formik
+            {type === 'website' && <Formik
               initialValues={{ name: '' }}
               onSubmit={(values) => {
                 if (values.name === wid) {
@@ -59,19 +74,30 @@ const RemoveConfirm = ({ sid, wid, file }) => {
                   />
                 </form>
               )}
-            </Formik>
-            {info && <Typography>
+            </Formik>}
+            {type === 'website' && info && <Typography>
               Invalid website name, try again.
             </Typography>}
           </Box>
-          <Button
+          {type === 'website' && <Button
             type='submit'
             form='confirm'
             variant='contained'
             size='small'
           >
             Confirm Remove
-          </Button>
+          </Button>}
+          {type === 'section' && <Button
+            onClick={() => {
+              dispatch(removeSection({ sid, wid }));
+              file && dispatch(removeFile({ sid, wid }));
+              setOpen(false);
+            }}
+            variant='contained'
+            size='small'
+          >
+            Confirm Remove
+          </Button>}
           <Button
             sx={{ ml: 1 }}
             onClick={() => setOpen(false)}
