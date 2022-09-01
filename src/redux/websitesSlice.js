@@ -9,7 +9,8 @@ export const createWebsite = createAsyncThunk(
       const doc = await ref.doc(values.name).get();
       if (doc.exists) throw new Error('exist');
       if (!doc.exists) return await ref.doc(values.name).set({
-        ...values, public: false, email: auth.email, uid: auth.uid,
+        ...values, public: false, title: values.name,
+        email: auth.email, uid: auth.uid,
       }).then(
         () => navigate && navigate('/board')
       ).then(() => values);
@@ -102,7 +103,10 @@ export const createFile = createAsyncThunk(
     const ref = firestore.collection('websites');
     try {
       const url = await storage.put(file).then(() => storage.getDownloadURL());
-      return await ref.doc(wid).update({
+      if (sid === 'favicon') return await ref.doc(wid).update({
+        favicon: url,
+      }).then(() => file);
+      if (sid !== 'favicon') return await ref.doc(wid).update({
         sections: sections.map(
           section => section.id === sid ? { ...section, url } : section
         ),

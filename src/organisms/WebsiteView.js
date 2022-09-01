@@ -62,7 +62,9 @@ const WebsiteView = ({ admin, host }) => {
     <ThemeProvider theme={theme}>
       <Box sx={{ color: 'fontcolor.main', bgcolor: 'backgroundcolor.main' }}>
         <Helmet>
-          <title>{website && website.name}</title>
+          <title>{website && website.title}</title>
+          <meta name='description' content={website && website.description} />
+          <link rel='icon' href={website && website.favicon} />
         </Helmet>
         {access && <WebsiteFinish />}
         {access && <WebsiteOptions website={website} />}

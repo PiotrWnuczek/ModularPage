@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { Box, Grid, Button, Typography, Avatar } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { Colorize, ColorLens, FormatSize } from '@mui/icons-material';
-import { HexColorPicker } from 'react-colorful';
+import { TwitterPicker } from 'react-color';
 
-const StyleEditor = ({ style, setStyle, sid, wid }) => {
+const StyleEditor = ({ style, setStyle, reset, sid, wid }) => {
   const [picker, setPicker] = useState('fontcolor');
   const dispatch = useDispatch();
 
@@ -46,18 +46,24 @@ const StyleEditor = ({ style, setStyle, sid, wid }) => {
             </ToggleButton>
           </ToggleButtonGroup>
         </Grid>
-        <Grid item xs={12} md={4} className='picker'>
-          <HexColorPicker
+        <Grid item xs={12} md={4}>
+          <TwitterPicker
             color={style[picker]}
-            onChange={(color) => setStyle({ ...style, [picker]: color })}
+            onChangeComplete={(color) => setStyle({ ...style, [picker]: color.hex })}
+            colors={[
+              '#777777', '#666666', '#555555', '#444444', '#1976d2', '#2e7d32',
+              '#ed6c02', '#01579b', '#f5f5f5', '#e5e5e5', '#e3f2fd', '#fffde7',
+            ]}
+            triangle='hide'
+            width='170px'
           />
           <Button
-            sx={{ mx: 0.5, mt: 2 }}
+            sx={{ mx: 2.5, my: 1 }}
             onClick={() => {
               wid && sid && dispatch(updateSection({ values: { style: null }, sid, wid }));
               wid && !sid && dispatch(updateWebsite({ values: { style: null }, wid }));
+              reset();
             }}
-            variant='outlined'
             size='small'
           >
             Reset To Default

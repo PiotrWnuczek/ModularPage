@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { updateWebsite } from 'redux/websitesSlice';
+import { updateWebsite, createFile } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Box, Button, Avatar } from '@mui/material';
-import { Dialog, Typography } from '@mui/material';
+import { Box, Dialog, Typography } from '@mui/material';
+import { Button, Avatar, Divider } from '@mui/material';
+import { TextField } from '@mui/material';
 import { Settings } from '@mui/icons-material';
+import { Formik } from 'formik';
 import StyleEditor from 'atoms/StyleEditor';
 
 const WebsiteOptions = ({ website }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [style, setStyle] = useState({
+  const initial = {
     fontsize: theme.fontsize,
     fontcolor: theme.palette.fontcolor.main,
     accentcolor: theme.palette.accentcolor.main,
     backgroundcolor: theme.palette.backgroundcolor.main,
-  });
+  };
+  const [style, setStyle] = useState(initial);
+  const reset = () => setStyle(initial);
   useEffect(() => {
     setStyle({
       fontsize: theme.fontsize,
@@ -52,8 +56,70 @@ const WebsiteOptions = ({ website }) => {
           >
             {website && website.name} Website Settings
           </Typography>
+          <Box sx={{ py: 2 }}>
+            <Formik
+              initialValues={{
+                title: website.title || 'Meta Title',
+                description: website.description || 'Meta Description',
+              }}
+              onSubmit={(values) => {
+                (values.title !== website.title ||
+                  values.description !== website.description) &&
+                  dispatch(updateWebsite({ values, wid: website.name }));
+              }}
+            >
+              {({ values, handleChange, handleSubmit }) => (
+                <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
+                  <TextField
+                    sx={{ my: 1 }}
+                    onChange={handleChange}
+                    value={values.title}
+                    name='title'
+                    placeholder='Meta Title'
+                    label='Meta Title'
+                    type='text'
+                    variant='outlined'
+                    size='small'
+                    fullWidth
+                    autoFocus
+                  />
+                  <TextField
+                    sx={{ my: 1 }}
+                    onChange={handleChange}
+                    value={values.description}
+                    name='description'
+                    placeholder='Meta Description'
+                    label='Meta Description'
+                    type='text'
+                    variant='outlined'
+                    size='small'
+                    fullWidth
+                  />
+                </form>
+              )}
+            </Formik>
+            <Button
+              sx={{ mt: 1 }}
+              component='label'
+              variant='contained'
+              size='small'
+            >
+              Upload Favicon
+              <Box
+                component='input'
+                onChange={e => dispatch(createFile({
+                  file: e.target.files[0],
+                  wid: website.name, sid: 'favicon',
+                }))}
+                type='file'
+                accept='image/x-icon'
+                hidden
+              />
+            </Button>
+          </Box>
+          <Divider />
           <StyleEditor
-            style={style} setStyle={setStyle}
+            style={style} setStyle={setStyle} reset={reset}
             wid={website.style && website.name}
           />
           <Button
@@ -67,6 +133,8 @@ const WebsiteOptions = ({ website }) => {
                 }));
               setOpen(false);
             }}
+            type='submit'
+            form='confirm'
             variant='contained'
             size='small'
           >

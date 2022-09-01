@@ -91,9 +91,9 @@ const ButtonOptions = ({ children, section, wid, idx }) => {
                     sx={{ my: 1 }}
                     onChange={handleChange}
                     value={values[link]}
+                    name={link}
                     placeholder='Url'
                     label='Url'
-                    name='link'
                     type='text'
                     variant='outlined'
                     size='small'

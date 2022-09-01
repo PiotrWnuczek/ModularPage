@@ -13,12 +13,14 @@ const SectionOptions = ({ section, wid }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [style, setStyle] = useState({
+  const initial = {
     fontsize: theme.fontsize,
     fontcolor: theme.palette.fontcolor.main,
     accentcolor: theme.palette.accentcolor.main,
     backgroundcolor: theme.palette.backgroundcolor.main,
-  });
+  };
+  const [style, setStyle] = useState(initial);
+  const reset = () => setStyle(initial);
   useEffect(() => {
     setStyle({
       fontsize: theme.fontsize,
@@ -60,7 +62,7 @@ const SectionOptions = ({ section, wid }) => {
             {section && section.type} Section Settings
           </Typography>
           <StyleEditor
-            style={style} setStyle={setStyle}
+            style={style} setStyle={setStyle} reset={reset}
             sid={section.style && section.id}
             wid={section.style && wid}
           />
