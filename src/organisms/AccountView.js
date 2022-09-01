@@ -13,33 +13,36 @@ const AccountView = () => {
   const profile = useSelector(state => state.firestore.data[auth.uid]);
   useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   const dispatch = useDispatch();
-  const present = new Date();
-  const future = present.setMonth(present.getMonth() + 1);
+  const future = new Date(new Date().setMonth(new Date().getMonth() + 1));
 
   return (
     <MainLayout>
       <Box sx={{ p: 2 }}>
-        <Typography variant='h6'>
+        <Typography
+          sx={{ mb: 2 }}
+          variant='h6'
+        >
           Account Details
         </Typography>
-        <Box sx={{ py: 2 }}>
-          <Typography sx={{ mb: 1 }}>
-            Email: {profile && profile.email}
-          </Typography>
-          <Typography sx={{ mb: 1 }}>
-            Premium: {(profile && moment(profile.premium.toDate()).calendar()) || 'inactive'}
-          </Typography>
-        </Box>
-        <Typography variant='h6'>
-          Account Options
+        <Typography sx={{ mb: 1 }}>
+          Email: {profile && profile.email}
         </Typography>
-        <Button
-          onClick={() => (profile && profile.premium.toDate()) < new Date() && setOpen(true)}
+        <Typography sx={{ mb: 1 }}>
+          Custom Domains Limit: {profile && profile.limit.custom}
+        </Typography>
+        <Typography sx={{ mb: 1 }}>
+          All Websites Limit: {profile && profile.limit.all}
+        </Typography>
+        <Typography sx={{ mb: 1 }}>
+          Premium: {(profile && moment(profile.premium.toDate()).calendar()) || 'inactive'}
+        </Typography>
+        {(profile && profile.premium.toDate()) < new Date() && <Button
+          onClick={() => setOpen(true)}
           variant='contained'
           size='small'
         >
           Activate Premium
-        </Button>
+        </Button>}
       </Box>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
@@ -55,11 +58,10 @@ const AccountView = () => {
             Activate premium for one month.
           </Typography>
           <Button
-            sx={{ my: 1 }}
             onClick={() => {
               (profile && profile.premium.toDate()) < new Date() &&
                 dispatch(updateProfile({
-                  values: { premium: new Date(future) }, id: auth.uid,
+                  values: { premium: future }, id: auth.uid,
                 }));
               setOpen(false);
             }}

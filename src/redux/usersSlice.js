@@ -15,14 +15,16 @@ export const signupUser = createAsyncThunk(
   'signupUser', async (values, thunk) => {
     const firebase = thunk.extra.getFirebase();
     const firestore = thunk.extra.getFirestore();
+    const future = new Date(new Date().setMonth(new Date().getMonth() + 1));
     try {
       return await firebase.auth().createUserWithEmailAndPassword(
         values.email, values.password,
       ).then((resp) => (
         firestore.collection('users').doc(resp.user.uid).set({
           email: values.email,
-          limit: { all: 3, custom: 0 },
-          premium: new Date(), date: new Date(),
+          date: new Date(),
+          premium: future,
+          limit: { all: 5, custom: 3 },
         })
       )).then(() => values.email);
     } catch (error) { throw error }

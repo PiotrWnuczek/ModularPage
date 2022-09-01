@@ -75,5 +75,7 @@ export const header = {
 
 export const footer = {
   type: 'footer',
-  text: 'Copywrite © all rights reserved.'
+  textinfo: 'Copywrite © all rights reserved.',
+  textrules: 'This document contains rules and privacy of the website: (your website address). The website administrator is: (your data)',
+  titlerules: 'Rules and Privacy',
 };

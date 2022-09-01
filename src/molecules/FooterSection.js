@@ -26,7 +26,7 @@ const FooterSection = ({ admin, footer, wid }) => {
         onClick={() => setOpen(true)}
         size='small'
       >
-        Website Rules
+        Rules and Privacy
       </Button>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}

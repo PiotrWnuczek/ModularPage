@@ -20,7 +20,7 @@ const CreateView = () => {
   const auth = useSelector(state => state.firebase.auth);
   const profile = useSelector(state => state.firestore.data[auth.uid]);
   const websites = useSelector(state => state.firestore.ordered.websites);
-  const domains = websites && websites.filter(website => website.domain === 'custom').length;
+  const domains = websites && websites.filter(website => website.domain === 'custom');
   useFirestoreConnect([{ storeAs: auth.uid, collection: 'users', doc: auth.uid }]);
   useFirestoreConnect([{ collection: 'websites', where: [['email', '==', auth.email]] }]);
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const CreateView = () => {
                 </Avatar>
               }
               title='App Domain'
-              subheader='Free - modularpage.com/YourWebsiteName'
+              subheader='Free - modularpage.com/YourName - Without connecting domain'
             />
           </CardActionArea>
         </Card>
@@ -67,7 +67,7 @@ const CreateView = () => {
                 </Avatar>
               }
               title='Custom Domain'
-              subheader='Premium - YourDomain.com - set your DNS to: ns1.small.pl, ns2.small.pl'
+              subheader='Premium - YourDomain.com - You will receive mail with DNS'
             />
           </CardActionArea>
         </Card>
