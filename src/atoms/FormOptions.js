@@ -3,10 +3,28 @@ import { updateProfile } from 'redux/usersSlice';
 import { updateSection } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
-import { Dialog, Typography } from '@mui/material';
-import { Box, MenuItem, Select } from '@mui/material';
-import { Button, TextField } from '@mui/material';
+import { Box, Dialog, Typography } from '@mui/material';
+import { Button, Alert, AlertTitle } from '@mui/material';
+import { Select, TextField, MenuItem } from '@mui/material';
 import { Formik } from 'formik';
+import ReactMarkdown from 'react-markdown';
+
+const aboutsender = `
+* You select [sender.net](https://sender.net/),
+you can also select [mailerlite.com](https://mailerlite.com/)
+* Add API key, open [API keys](https://app.sender.net/settings/tokens),
+copy key and paste below
+* Add Group ID, open [groups](https://app.sender.net/subscribers/tags),
+view group, copy Group ID and paste below
+`;
+const aboutmailerlite = `
+* You select [mailerlite.com](https://mailerlite.com/),
+you can also select [sender.net](https://sender.net/)
+* Add API key, open [API keys](https://dashboard.mailerlite.com/integrations/api),
+copy key and paste below
+* Add Group Name, open [groups](https://dashboard.mailerlite.com/groups),
+copy Group Name and paste below
+`;
 
 const FormOptions = ({ children, section, wid }) => {
   const [open, setOpen] = useState(false);
@@ -35,9 +53,19 @@ const FormOptions = ({ children, section, wid }) => {
             Form Settings
           </Typography>
           <Box sx={{ py: 1 }}>
-            <Typography>
-              Set form options.
-            </Typography>
+            <Alert
+              sx={{ mb: 1, py: 0, px: 1 }}
+              severity='info'
+            >
+              <AlertTitle>
+                Set form options
+              </AlertTitle>
+              <ReactMarkdown
+                children={mailing === 'sender' ? aboutsender : aboutmailerlite}
+                linkTarget='_blank'
+                className='about'
+              />
+            </Alert>
             <Select
               sx={{ my: 1 }}
               value={mailing}

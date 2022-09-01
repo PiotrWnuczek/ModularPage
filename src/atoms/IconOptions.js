@@ -5,6 +5,12 @@ import { Box, Typography, TextField } from '@mui/material';
 import { Dialog, Button, Alert, AlertTitle } from '@mui/material';
 import * as icons from '@mui/icons-material';
 import { Formik } from 'formik';
+import ReactMarkdown from 'react-markdown';
+
+const about = `
+* Search for icons on [mui.com](https://mui.com/material-ui/material-icons/)
+* Add icon name, be aware of the case of letters 
+`;
 
 const IconOptions = ({ children, admin, section, wid, idx }) => {
   const icon = idx ? 'icon' + idx : 'icon';
@@ -32,15 +38,17 @@ const IconOptions = ({ children, admin, section, wid, idx }) => {
           </Typography>
           <Box sx={{ py: 1 }}>
             <Alert
-              sx={{ my: 1, py: 0, px: 1, borderRadius: 2 }}
-              variant='outlined'
+              sx={{ mb: 2, py: 0, px: 1 }}
               severity='info'
-              size='small'
             >
               <AlertTitle>
-                Info about section
+                Select Icon
               </AlertTitle>
-              Lorem ipsum dolor sit amet.
+              <ReactMarkdown
+                children={about}
+                linkTarget='_blank'
+                className='about'
+              />
             </Alert>
             <Formik
               initialValues={{ [icon]: section[icon] || 'Add' }}

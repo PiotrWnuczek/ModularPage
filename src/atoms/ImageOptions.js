@@ -5,6 +5,14 @@ import { useDropzone } from 'react-dropzone';
 import { Box, Button, Typography } from '@mui/material';
 import { Dialog, Alert, AlertTitle } from '@mui/material';
 import { Paper, CircularProgress } from '@mui/material';
+import ReactMarkdown from 'react-markdown';
+
+const about = `
+* Add graphics smaller than 0.5 MB
+* Compress files on [compresspng.com](https://compresspng.com)
+* Search for illustrations on [freepik.com](https://freepik.com)
+* Search for images on [pixabay.com](https://pixabay.com)
+`;
 
 const ImageOptions = ({ children, admin, section, wid }) => {
   const [open, setOpen] = useState(false);
@@ -32,8 +40,7 @@ const ImageOptions = ({ children, admin, section, wid }) => {
         </Box>
         {admin && <Box sx={{ position: 'absolute' }}>
           {info && <Typography variant='h6'>
-            Maximum file size is 500 KB <br />
-            Click to return to the previous file
+            Maximum file size is 0.5 MB <br /> Click to return to the previous file
           </Typography>}
           {loading && <CircularProgress size={100} />}
         </Box>}
@@ -50,18 +57,20 @@ const ImageOptions = ({ children, admin, section, wid }) => {
           </Typography>
           <Box sx={{ py: 1 }}>
             <Alert
-              sx={{ my: 1, py: 0, px: 1, borderRadius: 2 }}
-              variant='outlined'
+              sx={{ mb: 2, py: 0, px: 1 }}
               severity='info'
-              size='small'
             >
               <AlertTitle>
-                Info about section
+                Upload new image
               </AlertTitle>
-              Lorem ipsum dolor sit amet.
+              <ReactMarkdown
+                children={about}
+                linkTarget='_blank'
+                className='about'
+              />
             </Alert>
             <Paper
-              sx={{ my: 2, p: 2, borderRadius: 2, textAlign: 'center' }}
+              sx={{ my: 1, p: 2, textAlign: 'center' }}
               {...getRootProps()}
               variant='outlined'
             >

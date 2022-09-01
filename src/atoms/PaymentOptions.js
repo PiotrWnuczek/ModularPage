@@ -4,9 +4,25 @@ import { updateSection } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { Box, Dialog, Typography } from '@mui/material';
-import { Button, TextField } from '@mui/material';
-import { Select, MenuItem } from '@mui/material';
+import { Button, TextField, Select } from '@mui/material';
+import { MenuItem, Alert, AlertTitle } from '@mui/material';
 import { Formik } from 'formik';
+import ReactMarkdown from 'react-markdown';
+
+const aboutpaypal = `
+* You select [paypal.com](https://paypal.com/),
+you can also select [stripe.com](https://stripe.com/)
+* Add API key, open [Client ID](https://app.sender.net/settings/tokens),
+copy key and paste below
+* Add Button Text, Product Name and Price
+`;
+const aboutstripe = `
+* You select [stripe.com](https://stripe.com/),
+you can also select [paypal.com](https://paypal.com/)
+* Add API key, open [API keys](https://dashboard.mailerlite.com/integrations/api),
+copy key and paste below
+* Add Button Text, Price ID and Price
+`;
 
 const PaymentOptions = ({ children, section, wid, idx }) => {
   const [open, setOpen] = useState(false);
@@ -39,9 +55,19 @@ const PaymentOptions = ({ children, section, wid, idx }) => {
             Payment Settings
           </Typography>
           <Box sx={{ py: 1 }}>
-            <Typography>
-              Set payment options.
-            </Typography>
+            <Alert
+              sx={{ mb: 1, py: 0, px: 1 }}
+              severity='info'
+            >
+              <AlertTitle>
+                Set payment options
+              </AlertTitle>
+              <ReactMarkdown
+                children={selling === 'paypal' ? aboutpaypal : aboutstripe}
+                linkTarget='_blank'
+                className='about'
+              />
+            </Alert>
             <Select
               sx={{ my: 1 }}
               value={selling}

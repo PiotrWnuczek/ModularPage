@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import { updateSection, updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
-import { Box, Dialog, Typography } from '@mui/material';
-import { Button, TextField } from '@mui/material';
+import { Box, Dialog, Typography, Button } from '@mui/material';
+import { TextField, Alert, AlertTitle } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { Tab } from '@mui/icons-material';
 import { Formik } from 'formik';
+import ReactMarkdown from 'react-markdown';
+
+const about = `
+* Set button text and url
+* Select new or current card 
+`;
 
 const ButtonOptions = ({ children, section, wid, idx }) => {
   const [open, setOpen] = useState(false);
@@ -34,9 +40,19 @@ const ButtonOptions = ({ children, section, wid, idx }) => {
             Boutton Settings
           </Typography>
           <Box sx={{ py: 1 }}>
-            <Typography>
-              Set button options.
-            </Typography>
+            <Alert
+              sx={{ mb: 2, py: 0, px: 1 }}
+              severity='info'
+            >
+              <AlertTitle>
+                Set button options
+              </AlertTitle>
+              <ReactMarkdown
+                children={about}
+                linkTarget='_blank'
+                className='about'
+              />
+            </Alert>
             <Formik
               initialValues={{
                 [button]: section[button] || 'New Button',
@@ -95,10 +111,12 @@ const ButtonOptions = ({ children, section, wid, idx }) => {
               exclusive
             >
               <ToggleButton value='new'>
-                <Tab sx={{ mr: 1 }} /> Open in New Tab
+                <Tab sx={{ mr: 1 }} />
+                Open in New Tab
               </ToggleButton>
               <ToggleButton value='this'>
-                <Tab sx={{ mr: 1 }} /> Open in This Tab
+                <Tab sx={{ mr: 1 }} />
+                Open in This Tab
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>

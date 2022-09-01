@@ -37,10 +37,12 @@ const StyleEditor = ({ style, setStyle, sid, wid }) => {
             exclusive
           >
             <ToggleButton value='m'>
-              <FormatSize sx={{ mr: 1 }} /> Medium Font Size
+              <FormatSize sx={{ mr: 1 }} />
+              Medium Font Size
             </ToggleButton>
             <ToggleButton value='l'>
-              <FormatSize sx={{ mr: 1 }} /> Large Font Size
+              <FormatSize sx={{ mr: 1 }} />
+              Large Font Size
             </ToggleButton>
           </ToggleButtonGroup>
         </Grid>
