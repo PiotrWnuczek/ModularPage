@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { updateWebsite, createFile } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
+import { useDropzone } from 'react-dropzone';
 import { Box, Dialog, Typography } from '@mui/material';
 import { Button, Avatar, Divider } from '@mui/material';
-import { TextField } from '@mui/material';
+import { TextField, Paper } from '@mui/material';
 import { Settings } from '@mui/icons-material';
 import { Formik } from 'formik';
 import StyleEditor from 'atoms/StyleEditor';
@@ -29,6 +30,10 @@ const WebsiteOptions = ({ website }) => {
       backgroundcolor: theme.palette.backgroundcolor.main,
     })
   }, [theme]);
+  const { acceptedFiles, fileRejections, getRootProps, getInputProps } = useDropzone({
+    accept: { 'image/x-icon': ['.ico'] },
+    validator: (file) => (file.size > 500 * 1024 && { message: 'File is larger than 0.5 MB' }),
+  });
 
   return (
     <Box>
@@ -98,24 +103,19 @@ const WebsiteOptions = ({ website }) => {
                 </form>
               )}
             </Formik>
-            <Button
-              sx={{ mt: 1 }}
-              component='label'
-              variant='contained'
-              size='small'
+            <Paper
+              sx={{ my: 1, p: 2, textAlign: 'center', cursor: 'pointer' }}
+              {...getRootProps()}
+              variant='outlined'
             >
-              Upload Favicon
-              <Box
-                component='input'
-                onChange={e => dispatch(createFile({
-                  file: e.target.files[0],
-                  wid: website.name, sid: 'favicon',
-                }))}
-                type='file'
-                accept='image/x-icon'
-                hidden
-              />
-            </Button>
+              <Box {...getInputProps()} />
+              <Typography>
+                {fileRejections[0] && fileRejections[0].errors[0].message}
+                {acceptedFiles[0] && 'Selected favicon: ' + acceptedFiles[0].path}
+                {!fileRejections[0] && !acceptedFiles[0] && 'Select favicon (.ico file)'}
+                <br /> Drag and drop or click to {acceptedFiles[0] ? 'change' : 'select'} favicon
+              </Typography>
+            </Paper>
           </Box>
           <Divider />
           <StyleEditor
@@ -130,6 +130,10 @@ const WebsiteOptions = ({ website }) => {
                 style.backgroundcolor !== theme.palette.backgroundcolor.main) &&
                 dispatch(updateWebsite({
                   values: { style }, wid: website.name,
+                }));
+              acceptedFiles[0] &&
+                dispatch(createFile({
+                  file: acceptedFiles[0], sid: 'favicon', wid: website.name,
                 }));
               setOpen(false);
             }}

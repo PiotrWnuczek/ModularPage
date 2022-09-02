@@ -176,8 +176,8 @@ const websitesSlice = createSlice({
       return state;
     },
     [createFile.pending]: (state, action) => {
-      console.log(action.type, action.payload);
-      return { ...state, loading: true };
+      console.log(action.meta.arg);
+      return { ...state, loading: action.meta.arg.sid };
     },
     [createFile.fulfilled]: (state, action) => {
       console.log(action.type, action.payload);

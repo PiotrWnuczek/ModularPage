@@ -35,7 +35,7 @@ const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
         sx={{ color: 'fontcolor.main', bgcolor: 'inherit', borderRadius: 2 }}
         variant='outlined'
       >
-        <Box sx={{ p: 2, textAlign: 'center' }}>
+        <Box sx={{ p: 2, textAlign: (sl && sl.align) || 'center' }}>
           <TextEditor
             admin={admin} section={section}
             wid={wid} idx={idx} type='title'

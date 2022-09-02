@@ -20,7 +20,7 @@ const GraphicSection = ({ admin, section, wid }) => {
         }}
         item xs={12} sm={6}
       >
-        <Box sx={{ textAlign: 'center', width: '100%' }}>
+        <Box sx={{ textAlign: (sl && sl.align) || 'center', width: '100%' }}>
           <TextEditor
             admin={admin} section={section}
             wid={wid} type='title'

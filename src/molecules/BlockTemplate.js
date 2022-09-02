@@ -41,7 +41,7 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
       <Box
         sx={{
           py: 6, px: sl && sl.variant === 'wide' ?
-            { xs: 4, md: 14 } : { xs: 6, md: 24 },
+            { xs: 4, md: 22 } : { xs: 6, md: 33 },
           position: 'relative', display: 'flex', justifyContent: 'center',
           color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
         }}

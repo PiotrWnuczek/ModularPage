@@ -18,9 +18,10 @@ const MailingSection = ({ admin, section, wid }) => {
     const mailerlite = firebase.functions().httpsCallable('mailerlite');
     mailerlite({ email, group: section.group }).then((result) => console.log(result));
   };
+  const sl = section.layout;
 
   return (
-    <Box sx={{ textAlign: 'center' }}>
+    <Box sx={{ textAlign: (sl && sl.align) || 'center', width: '100%' }}>
       <TextEditor
         admin={admin} section={section}
         wid={wid} type='title'
@@ -46,7 +47,7 @@ const MailingSection = ({ admin, section, wid }) => {
         </Typography>
       </TextEditor>
       {admin && <FormOptions section={section} wid={wid}>
-        <Grid sx={{ px: { xs: 5, md: 10 } }} container spacing={1}>
+        <Grid container spacing={1}>
           <Grid item xs={12} sm={9}>
             <TextField
               sx={{ bgolor: 'backgroundcolor.main', borderRadius: 1 }}
@@ -80,7 +81,7 @@ const MailingSection = ({ admin, section, wid }) => {
       >
         {({ values, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <Grid sx={{ px: { xs: 5, md: 10 } }} container spacing={1}>
+            <Grid container spacing={1}>
               <Grid item xs={12} sm={9}>
                 <TextField
                   sx={{ bgolor: 'backgroundcolor.main', borderRadius: 1 }}

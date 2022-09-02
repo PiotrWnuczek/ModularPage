@@ -10,7 +10,7 @@ const ContentSection = ({ admin, section, wid }) => {
   const sl = section.layout;
 
   return (
-    <Box sx={{ textAlign: 'center' }}>
+    <Box sx={{ textAlign: (sl && sl.align) || 'center', width: '100%' }}>
       <TextEditor
         admin={admin} section={section}
         wid={wid} type='title'

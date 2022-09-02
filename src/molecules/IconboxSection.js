@@ -17,9 +17,10 @@ const IconBox = ({ admin, section, wid, idx }) => {
       sx={{ display: 'flex', justifyContent: 'center' }}
       item xs={12} md={sl ? 12 / sl.quantity : 4}
     >
-      <Box sx={{ textAlign: 'center' }}>
+      <Box sx={{ textAlign: (sl && sl.align) || 'center' }}>
         <Box sx={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          display: 'flex', alignItems: 'center',
+          justifyContent: (sl && sl.align) || 'center',
         }}>
           <IconOptions
             admin={admin} section={section}

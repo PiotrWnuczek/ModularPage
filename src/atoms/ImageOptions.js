@@ -16,11 +16,11 @@ const about = `
 
 const ImageOptions = ({ children, admin, section, wid }) => {
   const [open, setOpen] = useState(false);
-  const [info, setInfo] = useState(false);
   const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: { 'image/*': ['.jpeg', '.png'] }
+  const { acceptedFiles, fileRejections, getRootProps, getInputProps } = useDropzone({
+    accept: { 'image/*': ['.jpeg', '.png'] },
+    validator: (file) => (file.size > 500 * 1024 && { message: 'File is larger than 0.5 MB' }),
   });
 
   return (
@@ -30,19 +30,13 @@ const ImageOptions = ({ children, admin, section, wid }) => {
           cursor: admin && 'pointer', position: 'relative', textAlign: 'center',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
-        onClick={() => {
-          admin && !info && setOpen(true);
-          admin && info && setInfo(false);
-        }}
+        onClick={() => { admin && setOpen(true) }}
       >
-        <Box sx={{ opacity: admin && (info || loading) && 0.5 }}>
+        <Box sx={{ opacity: admin && loading === section.id && 0.5 }}>
           {children}
         </Box>
         {admin && <Box sx={{ position: 'absolute' }}>
-          {info && <Typography variant='h6'>
-            Maximum file size is 0.5 MB <br /> Click to return to the previous file
-          </Typography>}
-          {loading && <CircularProgress size={100} />}
+          {loading === section.id && <CircularProgress size={100} />}
         </Box>}
       </Box>
       <Dialog
@@ -70,27 +64,25 @@ const ImageOptions = ({ children, admin, section, wid }) => {
               />
             </Alert>
             <Paper
-              sx={{ my: 1, p: 2, textAlign: 'center' }}
+              sx={{ my: 1, p: 2, textAlign: 'center', cursor: 'pointer' }}
               {...getRootProps()}
               variant='outlined'
             >
               <Box {...getInputProps()} />
               <Typography>
-                Drag and drop file here, or click to select file.
+                {fileRejections[0] && fileRejections[0].errors[0].message}
+                {acceptedFiles[0] && 'Selected image: ' + acceptedFiles[0].path}
+                {!fileRejections[0] && !acceptedFiles[0] && 'Select image (.jpg or .png file)'}
+                <br /> Drag and drop or click to {acceptedFiles[0] ? 'change' : 'select'} file
               </Typography>
             </Paper>
-            <Typography>
-              {acceptedFiles[0] ? 'Selected image: ' + acceptedFiles[0].path : 'Select image'}
-            </Typography>
           </Box>
           <Button
             onClick={() => {
-              acceptedFiles[0] && acceptedFiles[0].size < 500 * 1024 &&
+              acceptedFiles[0] &&
                 dispatch(createFile({
                   file: acceptedFiles[0], sid: section.id, wid,
                 }));
-              acceptedFiles[0] && acceptedFiles[0].size >= 500 * 1024 &&
-                setInfo(true);
               setOpen(false);
             }}
             variant='contained'
