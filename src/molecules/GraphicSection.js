@@ -3,7 +3,7 @@ import { Grid, Box, Button } from '@mui/material';
 import { Link, Typography } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import Picture from 'stock/picture.png';
+import Image from 'stock/image.png';
 import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
 import ImageOptions from 'atoms/ImageOptions';
@@ -84,7 +84,7 @@ const GraphicSection = ({ admin, section, wid }) => {
         <ImageOptions admin={admin} section={section} wid={wid}>
           <Box
             sx={{ width: '100%', height: 'auto', maxWidth: 400 }}
-            src={section.url || Picture}
+            src={section.url || Image}
             component='img'
           />
         </ImageOptions>

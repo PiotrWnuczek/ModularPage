@@ -75,16 +75,16 @@ const IconOptions = ({ children, admin, section, wid, idx }) => {
                     size='small'
                     fullWidth
                     autoFocus
+                    InputProps={{
+                      endAdornment: <Box
+                        sx={{ color: 'primary.main' }}
+                        component={icons[value]}
+                      />
+                    }}
                   />
                 </form>
               )}
             </Formik>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Typography>
-                {icons[value] ? 'Selected icon: ' : 'Select icon'}
-              </Typography>
-              <Box component={icons[value]} />
-            </Box>
           </Box>
           <Button
             type='submit'

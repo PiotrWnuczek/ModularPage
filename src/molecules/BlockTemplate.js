@@ -98,7 +98,7 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
           <SectionCreate wid={wid} index={index} />
           <RemoveConfirm
             sid={section.id} wid={wid} type='section'
-            file={section.type === 'graphic'}
+            file={section.type === 'graphic' && section.url}
           />
         </Box>}
       </Box>

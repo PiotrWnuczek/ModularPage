@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { updateSection, updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
-import { Box, IconButton } from '@mui/material';
-import { TextField } from '@mui/material';
+import { Box, TextField, IconButton } from '@mui/material';
 import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 
@@ -96,6 +95,7 @@ const TextEditor = ({ children, type, admin, section, wid, idx }) => {
                   <Check />
                 </IconButton>
               }}
+              helperText='You can use MarkDown in this textarea'
             />
           </form>
         )}
