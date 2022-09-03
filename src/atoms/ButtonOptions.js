@@ -15,12 +15,12 @@ const about = `
 `;
 
 const ButtonOptions = ({ children, section, wid, idx }) => {
-  const [open, setOpen] = useState(false);
-  const [target, setTarget] = useState('new');
-  const dispatch = useDispatch();
   const button = idx ? 'button' + idx : 'button';
   const link = idx ? 'link' + idx : 'link';
   const tab = idx ? 'tab' + idx : 'tab';
+  const [open, setOpen] = useState(false);
+  const [target, setTarget] = useState(section[tab] || 'new');
+  const dispatch = useDispatch();
 
   return (
     <Box>
@@ -42,7 +42,7 @@ const ButtonOptions = ({ children, section, wid, idx }) => {
           </Typography>
           <Box sx={{ py: 1 }}>
             <Alert
-              sx={{ mb: 2, py: 0, px: 1 }}
+              sx={{ mb: 1, py: 0, px: 1 }}
               severity='info'
             >
               <AlertTitle>
@@ -63,12 +63,15 @@ const ButtonOptions = ({ children, section, wid, idx }) => {
                 section.id &&
                   (section[tab] !== target || values[button] !== section[button] ||
                     values[link] !== section[link]) &&
-                  dispatch(updateSection({ values, sid: section.id, wid }));
+                  dispatch(updateSection({
+                    values: { ...values, [tab]: target },
+                    sid: section.id, wid,
+                  }));
                 section.type === 'header' &&
                   (section[tab] !== target || values[button] !== section[button] ||
                     values[link] !== section[link]) &&
                   dispatch(updateWebsite({
-                    values: { header: { ...section, ...values } }, wid,
+                    values: { header: { ...section, ...values, [tab]: target } }, wid,
                   }));
                 setOpen(false);
               }}
@@ -106,7 +109,7 @@ const ButtonOptions = ({ children, section, wid, idx }) => {
             <ToggleButtonGroup
               sx={{ my: 1 }}
               value={target}
-              onChange={(e) => setTarget(e.target.value)}
+              onChange={(e, v) => v !== null && setTarget(v)}
               color='primary'
               size='small'
               exclusive

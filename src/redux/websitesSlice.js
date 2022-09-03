@@ -99,6 +99,7 @@ export const createFile = createAsyncThunk(
     const firebase = thunk.extra.getFirebase();
     const firestore = thunk.extra.getFirestore();
     const sections = thunk.getState().firestore.data[wid].sections;
+    const header = thunk.getState().firestore.data[wid].header;
     const storage = firebase.storage().ref(wid).child(sid);
     const ref = firestore.collection('websites');
     try {
@@ -106,7 +107,10 @@ export const createFile = createAsyncThunk(
       if (sid === 'favicon') return await ref.doc(wid).update({
         favicon: url,
       }).then(() => file);
-      if (sid !== 'favicon') return await ref.doc(wid).update({
+      if (sid === 'logo') return await ref.doc(wid).update({
+        header: { ...header, logo: url },
+      }).then(() => file);
+      if (sid !== 'favicon' && sid !== 'logo') return await ref.doc(wid).update({
         sections: sections.map(
           section => section.id === sid ? { ...section, url } : section
         ),

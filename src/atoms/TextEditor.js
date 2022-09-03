@@ -24,9 +24,9 @@ const TextEditor = ({ children, type, admin, section, wid, idx }) => {
         onSubmit={(values) => {
           section.id && (values[title] !== section[title]) &&
             dispatch(updateSection({ values, sid: section.id, wid }));
-          section.type === 'header' && (values[title] !== section[title]) &&
+          section.type === 'footer' && (values[title] !== section[title]) &&
             dispatch(updateWebsite({
-              values: { header: { ...section, ...values } }, wid,
+              values: { footer: { ...section, ...values } }, wid,
             }));
           setEdit(false);
         }}

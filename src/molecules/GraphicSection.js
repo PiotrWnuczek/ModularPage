@@ -4,19 +4,24 @@ import { Link, Typography } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Image from 'stock/image.png';
+import Foto from 'stock/foto.png';
 import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
 import ImageOptions from 'atoms/ImageOptions';
 
 const GraphicSection = ({ admin, section, wid }) => {
   const sl = section.layout;
+  const alt = sl && sl.variant === 'wide' ? Foto : Image;
 
   return (
-    <Grid container>
+    <Grid
+      sx={{ flexDirection: sl && sl.position === 'left' ? 'row-reverse' : 'row' }}
+      container
+    >
       <Grid
         sx={{
-          px: 2, alignItems: 'center',
-          display: 'flex', justifyContent: 'center',
+          px: sl && sl.variant === 'wide' ? 8 : 2, display: 'flex',
+          alignItems: 'center', justifyContent: 'center',
         }}
         item xs={12} sm={6}
       >
@@ -76,15 +81,19 @@ const GraphicSection = ({ admin, section, wid }) => {
       </Grid>
       <Grid
         sx={{
-          px: 2, justifyContent: 'center',
-          display: 'flex', alignItems: 'center',
+          px: sl && sl.variant === 'wide' ? 0 : 2,
+          maxHeight: 400, display: 'flex',
+          alignItems: 'center', justifyContent: 'center',
         }}
         item xs={12} sm={6}
       >
         <ImageOptions admin={admin} section={section} wid={wid}>
           <Box
-            sx={{ width: '100%', height: 'auto', maxWidth: 400 }}
-            src={section.url || Image}
+            sx={{
+              maxWidth: sl && sl.variant === 'wide' ? 1000 : 400,
+              width: '100%', height: '100%',
+            }}
+            src={section.url || alt}
             component='img'
           />
         </ImageOptions>

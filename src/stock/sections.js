@@ -1,23 +1,27 @@
-export const content = {
-  id: Math.random().toString(16).slice(2),
-  type: 'content',
-  title: 'Content Section Title',
-  text: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies. Maecenas aliquet gravida augue sed condimentum.',
-  button1: 'First Button',
-  Link1: '#',
-  button2: 'Second Button',
-  Link2: '#',
-};
-
 export const graphic = {
   id: Math.random().toString(16).slice(2),
   type: 'graphic',
   title: 'Graphic Section Title',
   text: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies. Maecenas aliquet gravida augue sed condimentum.',
   button1: 'First Button',
-  Link1: '#',
+  link1: '#',
+  tab1: 'new',
   button2: 'Second Button',
-  Link2: '#',
+  link2: '#',
+  tab2: 'new',
+};
+
+export const content = {
+  id: Math.random().toString(16).slice(2),
+  type: 'content',
+  title: 'Content Section Title',
+  text: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies. Maecenas aliquet gravida augue sed condimentum.',
+  button1: 'First Button',
+  link1: '#',
+  tab1: 'new',
+  button2: 'Second Button',
+  link2: '#',
+  tab2: 'new',
 };
 
 export const iconbox = {
@@ -71,6 +75,7 @@ export const header = {
   title: 'Website Title',
   button: 'Header Button',
   link: '#',
+  tab: 'new',
 };
 
 export const footer = {

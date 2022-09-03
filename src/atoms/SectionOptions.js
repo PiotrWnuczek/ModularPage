@@ -7,6 +7,7 @@ import { Avatar, Divider, Alert, AlertTitle } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { GridView, Widgets, FormatAlignCenter } from '@mui/icons-material';
 import { Tune, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import StyleEditor from 'atoms/StyleEditor';
 import _ from 'lodash';
 import ReactMarkdown from 'react-markdown';
@@ -41,6 +42,7 @@ const SectionOptions = ({ section, wid }) => {
     quantity: (sl && sl.quantity) || (section.type === 'iconbox' ? '3' : '2'),
     variant: (sl && sl.variant) || 'narrow',
     align: (sl && sl.align) || 'center',
+    position: (sl && sl.position) || 'right',
   });
   const itemize = section.type === 'iconbox' || section.type === 'selling';
 
@@ -91,7 +93,7 @@ const SectionOptions = ({ section, wid }) => {
           <Divider />
           <Box sx={{ py: 2 }}>
             <Grid container>
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} md={section.type === 'graphic' ? 7 : 8}>
                 {['narrow', 'wide'].map(item =>
                   <Box
                     sx={{ my: 1, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
@@ -109,8 +111,28 @@ const SectionOptions = ({ section, wid }) => {
               </Grid>
               <Grid
                 sx={{ display: 'flex', alignItems: 'center' }}
-                item xs={12} md={4}
+                item xs={12} md={section.type === 'graphic' ? 5 : 4}
               >
+                {section.type === 'graphic' && <Box sx={{ textAlign: 'center' }}>
+                  <Typography>
+                    Image Position
+                  </Typography>
+                  <ToggleButtonGroup
+                    sx={{ my: 1 }}
+                    value={layout.position}
+                    onChange={(e, v) => setLayout({ ...layout, position: v })}
+                    color='primary'
+                    size='small'
+                    exclusive
+                  >
+                    <ToggleButton value='left'>
+                      <KeyboardArrowLeft />
+                    </ToggleButton>
+                    <ToggleButton value='right'>
+                      <KeyboardArrowRight />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </Box>}
                 <Box sx={{ textAlign: 'center' }}>
                   <Typography>
                     Text Align
@@ -139,7 +161,7 @@ const SectionOptions = ({ section, wid }) => {
                 <ToggleButtonGroup
                   sx={{ my: 1 }}
                   value={layout.quantity}
-                  onChange={(e, v) => setLayout({ ...layout, quantity: v })}
+                  onChange={(e, v) => v !== null && setLayout({ ...layout, quantity: v })}
                   color='primary'
                   size='small'
                   exclusive

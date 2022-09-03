@@ -31,7 +31,7 @@ const StyleEditor = ({ style, setStyle, reset, sid, wid }) => {
           <ToggleButtonGroup
             sx={{ my: 1 }}
             value={style.fontsize}
-            onChange={(e) => setStyle({ ...style, fontsize: e.target.value })}
+            onChange={(e, v) => v !== null && setStyle({ ...style, fontsize: v })}
             color='primary'
             size='small'
             exclusive

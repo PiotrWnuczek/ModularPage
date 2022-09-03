@@ -39,9 +39,13 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        sx={{
-          py: 6, px: sl && sl.variant === 'wide' ?
-            { xs: 4, md: 22 } : { xs: 6, md: 33 },
+        sx={section.type === 'graphic' ? {
+          py: sl && sl.variant === 'wide' ? 0 : 6,
+          px: sl && sl.variant === 'wide' ? 0 : { xs: 5, md: 30 },
+          position: 'relative', display: 'flex', justifyContent: 'center',
+          color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
+        } : {
+          py: 6, px: sl && sl.variant === 'wide' ? { xs: 4, md: 22 } : { xs: 6, md: 33 },
           position: 'relative', display: 'flex', justifyContent: 'center',
           color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
         }}
@@ -49,7 +53,7 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
         onMouseOut={() => setHover(false)}
       >
         {admin && <Box sx={{
-          pt: 1.6, pb: 0.6,
+          pt: 1.6, pb: 0.6, zIndex: 100,
           position: 'absolute', top: 0,
           display: { xs: 'flex', md: hover ? 'flex' : 'none' },
         }}>
@@ -91,7 +95,7 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
           section={section}
         />}
         {admin && <Box sx={{
-          pb: 1.6, pt: 0.6,
+          pb: 1.6, pt: 0.6, zIndex: 100,
           position: 'absolute', bottom: 0,
           display: { xs: 'flex', md: hover ? 'flex' : 'none' },
         }}>
