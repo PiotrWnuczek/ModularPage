@@ -12,16 +12,22 @@ import ReactMarkdown from 'react-markdown';
 const aboutpaypal = `
 * You select [paypal.com](https://paypal.com/),
 you can also select [stripe.com](https://stripe.com/)
-* Add API key, open [Client ID](https://app.sender.net/settings/tokens),
-copy key and paste below
-* Add Button Text, Product Name and Price
+* Sign in to [Paypal Developer](https://developer.paypal.com/),
+then go to [Applications](https://developer.paypal.com/developer/applications)
+* Create sandbox applications for testing, or live applications for payment
+* Select the created application, copy Client ID and paste below
+* Add Button Text, Product Name, Price and you are done
 `;
 const aboutstripe = `
 * You select [stripe.com](https://stripe.com/),
 you can also select [paypal.com](https://paypal.com/)
-* Add API key, open [API keys](https://dashboard.mailerlite.com/integrations/api),
-copy key and paste below
-* Add Button Text, Price ID and Price
+* Sign in to [Stripe Dashboard](https://dashboard.stripe.com/dashboard),
+then go to [Products](https://dashboard.stripe.com/products)
+* Open [API Keys](https://dashboard.stripe.com/apikeys),
+copy Secret Key and paste below
+* You can turn on test mode in the upper right corner
+* Create new product, then copy Price ID and paste below
+* Add Button Text, Price and you are done
 `;
 
 const PaymentOptions = ({ children, section, wid, idx }) => {
@@ -86,7 +92,7 @@ const PaymentOptions = ({ children, section, wid, idx }) => {
             <Formik
               initialValues={{
                 key: selling === 'paypal' ?
-                  (section.paypal || 'Api Key') : ((profile && profile.stripe) || 'Api Key'),
+                  (section.paypal || 'Client Id') : ((profile && profile.stripe) || 'Secret Key'),
                 [button]: section[button] || 'Buy Now',
                 [product]: section[product] || 'New Product',
                 [currency]: section[currency] || 'USD',
@@ -127,8 +133,8 @@ const PaymentOptions = ({ children, section, wid, idx }) => {
                     onChange={handleChange}
                     value={values.key}
                     name='key'
-                    placeholder='Api Key'
-                    label='Api Key'
+                    placeholder={selling === 'paypal' ? 'Client Id' : 'Secret Key'}
+                    label={selling === 'paypal' ? 'Client Id' : 'Secret Key'}
                     type='text'
                     variant='outlined'
                     size='small'

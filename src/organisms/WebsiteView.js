@@ -66,7 +66,7 @@ const WebsiteView = ({ admin, host }) => {
           <meta name='description' content={website && website.description} />
           <link rel='icon' href={website && website.favicon} />
         </Helmet>
-        {access && <WebsiteFinish />}
+        {access && <WebsiteFinish wid={website.name} />}
         {access && <WebsiteOptions website={website} />}
         {access && website && !website.sections.length && <Box
           sx={{ py: 5.5, display: 'flex', justifyContent: 'center' }}

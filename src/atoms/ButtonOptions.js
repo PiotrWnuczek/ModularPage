@@ -9,8 +9,9 @@ import { Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
 
 const about = `
-* Set button text and url
-* Select new or current card 
+* Set button text and url address
+* You can also enter mailto:yourmail@example.com in url field
+* Select to open in a new or current tab
 `;
 
 const ButtonOptions = ({ children, section, wid, idx }) => {

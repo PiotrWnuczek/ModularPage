@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFirebase } from 'react-redux-firebase';
 import { Box, Grid, Typography } from '@mui/material';
-import { TextField, Button } from '@mui/material';
+import { Dialog, Button, TextField } from '@mui/material';
 import { Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -9,6 +9,7 @@ import TextEditor from 'atoms/TextEditor';
 import FormOptions from 'atoms/FormOptions';
 
 const MailingSection = ({ admin, section, wid }) => {
+  const [success, setSuccess] = useState(false);
   const firebase = useFirebase();
   const senderFunction = (email) => {
     const sender = firebase.functions().httpsCallable('sender');
@@ -77,6 +78,7 @@ const MailingSection = ({ admin, section, wid }) => {
           section.mailing === 'sender' && senderFunction(values.email);
           section.mailing === 'mailerlite' && mailerliteFunction(values.email);
           resetForm();
+          setSuccess(true);
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
@@ -110,6 +112,26 @@ const MailingSection = ({ admin, section, wid }) => {
           </form>
         )}
       </Formik>}
+      <Dialog
+        sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
+        open={success}
+        onClose={() => setSuccess(false)}
+        fullWidth
+      >
+        <Box sx={{ p: 2, textAlign: 'center' }}>
+          <Typography variant='h5'>
+            Subscription Success
+          </Typography>
+          <Button
+            sx={{ mt: 2 }}
+            onClick={() => (setSuccess(false))}
+            variant='contained'
+            size='small'
+          >
+            Return to Page
+          </Button>
+        </Box>
+      </Dialog>
     </Box>
   )
 };

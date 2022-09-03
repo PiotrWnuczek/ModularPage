@@ -2,13 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { updateSection } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
-import { Box, Dialog, Button, Grid } from '@mui/material';
-import { Typography, Avatar, Divider } from '@mui/material';
+import { Box, Typography, Button, Grid, Dialog } from '@mui/material';
+import { Avatar, Divider, Alert, AlertTitle } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { GridView, Widgets, FormatAlignCenter } from '@mui/icons-material';
 import { Tune, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
 import StyleEditor from 'atoms/StyleEditor';
 import _ from 'lodash';
+import ReactMarkdown from 'react-markdown';
+
+const about = `
+* Set basic styles and layout options for this section
+* Select colors or choose your own in [canva.com/colors](https://canva.com/colors/)
+`;
 
 const SectionOptions = ({ section, wid }) => {
   const dispatch = useDispatch();
@@ -54,6 +60,7 @@ const SectionOptions = ({ section, wid }) => {
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
         onClose={() => setOpen(false)}
+        scroll='body'
         fullWidth
       >
         <Box sx={{ p: 2 }}>
@@ -63,6 +70,19 @@ const SectionOptions = ({ section, wid }) => {
           >
             {section && section.type} Section Settings
           </Typography>
+          <Alert
+            sx={{ my: 1, py: 0, px: 1 }}
+            severity='info'
+          >
+            <AlertTitle>
+              Set section options
+            </AlertTitle>
+            <ReactMarkdown
+              children={about}
+              linkTarget='_blank'
+              className='about'
+            />
+          </Alert>
           <StyleEditor
             style={style} setStyle={setStyle} reset={reset}
             sid={section.style && section.id}

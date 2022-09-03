@@ -3,12 +3,18 @@ import { updateWebsite, createFile } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { useDropzone } from 'react-dropzone';
-import { Box, Dialog, Typography } from '@mui/material';
-import { Button, Avatar, Divider } from '@mui/material';
-import { TextField, Paper } from '@mui/material';
+import { Box, Dialog, Typography, Button } from '@mui/material';
+import { Paper, Avatar, Divider } from '@mui/material';
+import { TextField, Alert, AlertTitle } from '@mui/material';
 import { Settings } from '@mui/icons-material';
 import { Formik } from 'formik';
 import StyleEditor from 'atoms/StyleEditor';
+import ReactMarkdown from 'react-markdown';
+
+const about = `
+* Set basic styles for website and add title, description and upload favicon
+* Select colors or choose your own in [canva.com/colors](https://canva.com/colors/)
+`;
 
 const WebsiteOptions = ({ website }) => {
   const dispatch = useDispatch();
@@ -52,6 +58,7 @@ const WebsiteOptions = ({ website }) => {
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
         onClose={() => setOpen(false)}
+        scroll='body'
         fullWidth
       >
         <Box sx={{ p: 2 }}>
@@ -61,6 +68,19 @@ const WebsiteOptions = ({ website }) => {
           >
             {website && website.name} Website Settings
           </Typography>
+          <Alert
+            sx={{ mt: 1, py: 0, px: 1 }}
+            severity='info'
+          >
+            <AlertTitle>
+              Set website options
+            </AlertTitle>
+            <ReactMarkdown
+              children={about}
+              linkTarget='_blank'
+              className='about'
+            />
+          </Alert>
           <Box sx={{ py: 2 }}>
             <Formik
               initialValues={{
@@ -104,7 +124,7 @@ const WebsiteOptions = ({ website }) => {
               )}
             </Formik>
             <Paper
-              sx={{ my: 1, p: 2, textAlign: 'center', cursor: 'pointer' }}
+              sx={{ my: 1, p: 1, textAlign: 'center', cursor: 'pointer' }}
               {...getRootProps()}
               variant='outlined'
             >

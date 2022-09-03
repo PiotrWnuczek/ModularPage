@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Dialog, Button } from '@mui/material';
+import { Box, Dialog, Button, Link } from '@mui/material';
 import { Typography, Avatar } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
-const WebsiteFinish = () => {
+const WebsiteFinish = ({ wid }) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -32,7 +32,11 @@ const WebsiteFinish = () => {
             Exit Editor
           </Typography>
           <Typography sx={{ my: 1 }}>
-            Changes are saved, exit to board.
+            Changes are saved, exit to board,
+            or open: {' '}
+            <Link href={'/' + wid} target='_blank'>
+              modularpage.com/{wid}
+            </Link>
           </Typography>
           <Button
             onClick={() => {

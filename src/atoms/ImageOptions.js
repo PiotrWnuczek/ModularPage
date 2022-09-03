@@ -8,10 +8,10 @@ import { Paper, CircularProgress } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 
 const about = `
-* Add graphics smaller than 0.5 MB
-* Compress files on [compresspng.com](https://compresspng.com)
 * Search for illustrations on [freepik.com](https://freepik.com)
 * Search for images on [pixabay.com](https://pixabay.com)
+* Create your own graphics in [canva.com](https://canva.com/)
+* Compress files on [compresspng.com](https://compresspng.com)
 `;
 
 const ImageOptions = ({ children, admin, section, wid }) => {
@@ -20,7 +20,7 @@ const ImageOptions = ({ children, admin, section, wid }) => {
   const dispatch = useDispatch();
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } = useDropzone({
     accept: { 'image/*': ['.jpeg', '.png'] },
-    validator: (file) => (file.size > 500 * 1024 && { message: 'File is larger than 0.5 MB' }),
+    validator: (file) => (file.size > 500 * 1024 && { message: 'Max file size is 0.5 MB' }),
   });
 
   return (
@@ -64,7 +64,7 @@ const ImageOptions = ({ children, admin, section, wid }) => {
               />
             </Alert>
             <Paper
-              sx={{ my: 1, p: 2, textAlign: 'center', cursor: 'pointer' }}
+              sx={{ my: 1, p: 1, textAlign: 'center', cursor: 'pointer' }}
               {...getRootProps()}
               variant='outlined'
             >
