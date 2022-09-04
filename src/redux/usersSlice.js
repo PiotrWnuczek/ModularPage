@@ -24,7 +24,7 @@ export const signupUser = createAsyncThunk(
           email: values.email,
           date: new Date(),
           premium: future,
-          limit: { all: 5, custom: 3 },
+          limit: { all: 3, custom: 1 },
         })
       )).then(() => values.email);
     } catch (error) { throw error }

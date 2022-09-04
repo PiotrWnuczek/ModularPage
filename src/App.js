@@ -25,7 +25,7 @@ const ScrollTop = ({ children }) => {
 
 const App = () => {
   const active = true;
-  const host = 'localhost:3000';
+  const host = 'modularpage.com';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
   const pl = window.navigator.language.includes('pl');
@@ -52,8 +52,8 @@ const App = () => {
             <Route path='/create' element={access ? <CreateView /> : <Navigate to='/signin' />} />
             <Route path='/:id/*' element={access ? <WebsiteView /> : <Navigate to='/signin' />} />
             <Route path='/:id/admin' element={access ? <WebsiteView admin /> : <Navigate to='/signin' />} />
-            <Route path='/about' element={pl ? <Navigate to='/pl' /> : <Navigate to='/en' />} />
-            <Route path='/*' element={<Navigate to='/board' />} />
+            <Route path='/app' element={<Navigate to='/board' />} />
+            <Route path='/*' element={pl ? <Navigate to='/pl' /> : <Navigate to='/en' />} />
           </Routes> : <Routes>
             <Route path='/*' element={<WebsiteView host={window.location.host} />} />
           </Routes>}

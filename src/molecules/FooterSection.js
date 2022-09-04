@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 import { Dialog, Button } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -14,20 +14,24 @@ const FooterSection = ({ admin, footer, wid }) => {
         admin={admin} section={footer}
         wid={wid} idx='info' type='text'
       >
+        <Button
+          onClick={() => setOpen(true)}
+          size='small'
+        >
+          Rules and Privacy
+        </Button>
         <Typography variant='text'>
           <Box sx={{ fontSize: '90%' }}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>
               {footer.textinfo || 'New Text'}
             </ReactMarkdown>
+            Created with {' '}
+            <Link href='https://modularpage.com/' target='_blank'>
+              modularpage.com
+            </Link>
           </Box>
         </Typography>
       </TextEditor>
-      <Button
-        onClick={() => setOpen(true)}
-        size='small'
-      >
-        Rules and Privacy
-      </Button>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
