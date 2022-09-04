@@ -3,6 +3,7 @@ import { Box, Typography } from '@mui/material';
 import { Button, Link } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
 
@@ -30,7 +31,10 @@ const ContentSection = ({ admin, section, wid }) => {
           sx={{ mt: 1 }}
           variant='text'
         >
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            rehypePlugins={[rehypeRaw]}
+          >
             {section.text || 'New Text'}
           </ReactMarkdown>
         </Typography>

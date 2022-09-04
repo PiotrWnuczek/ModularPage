@@ -95,7 +95,7 @@ exports.domaincreate = functions.firestore
 
 exports.domainremove = functions.firestore
   .document('websites/{id}')
-  .onCreate(async (snap, context) => {
+  .onDelete(async (snap, context) => {
     const adminmail = {
       from: 'Modular Page',
       to: 'contact@piotrwnuczek.pl',
