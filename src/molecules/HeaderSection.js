@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 import { updateWebsite, createFile } from 'redux/websitesSlice';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
-import { Box, Typography, Button, Paper } from '@mui/material';
-import { AppBar, Toolbar, Divider, Link } from '@mui/material';
-import { Dialog, Alert, TextField } from '@mui/material';
+import { Box, Typography, Button, Paper, Link } from '@mui/material';
+import { Dialog, AppBar, Toolbar, Divider } from '@mui/material';
+import { Alert, TextField, CircularProgress } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 import Logo from 'stock/logo.png';
 import ButtonOptions from 'atoms/ButtonOptions';
 
-const HeaderSection = ({ admin, header, wid }) => {
+const HeaderSection = ({ admin, header, logo, wid }) => {
   const [open, setOpen] = useState(false);
   const [variant, setVariant] = useState(header.variant || 'all');
+  const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } = useDropzone({
     accept: { 'image/*': ['.jpeg', '.png'] },
@@ -31,11 +32,14 @@ const HeaderSection = ({ admin, header, wid }) => {
             sx={{ display: 'flex', alignItems: 'center', cursor: admin && 'pointer' }}
             onClick={() => admin && setOpen(true)}
           >
-            {(!hv || (hv && (hv === 'logo' || hv === 'all'))) && <Box
-              sx={{ width: 40, height: 40, mx: 1 }}
-              src={header.logo || Logo}
-              component='img'
-            />}
+            {(!hv || (hv && (hv === 'logo' || hv === 'all'))) && <Box>
+              {(!loading || loading !== 'logo') && <Box
+                sx={{ width: 40, height: 40, mx: 1 }}
+                src={logo || Logo}
+                component='img'
+              />}
+              {loading === 'logo' && <CircularProgress sx={{ mx: 1 }} />}
+            </Box>}
             {(!hv || (hv && (hv === 'title' || hv === 'all'))) && <Typography variant='title'>
               <Box sx={{ fontSize: '60%' }}>
                 {header.title || 'New Title'}
@@ -53,7 +57,7 @@ const HeaderSection = ({ admin, header, wid }) => {
           {!admin && <Button
             component={Link}
             href={header.link || '#'}
-            target='_blank'
+            target={header.tab === 'new' ? '_blank' : '_self'}
             variant='contained'
             color='accentcolor'
           >

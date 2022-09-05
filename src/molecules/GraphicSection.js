@@ -25,7 +25,7 @@ const GraphicSection = ({ admin, section, wid }) => {
         }}
         item xs={12} sm={6}
       >
-        <Box sx={{ textAlign: (sl && sl.align) || 'center', width: '100%' }}>
+        <Box sx={{ textAlign: 'center', width: '100%' }}>
           <TextEditor
             admin={admin} section={section}
             wid={wid} type='title'
@@ -42,7 +42,7 @@ const GraphicSection = ({ admin, section, wid }) => {
             wid={wid} type='text'
           >
             <Typography
-              sx={{ mt: 1 }}
+              sx={{ mt: 1, textAlign: (sl && sl.align) || 'center' }}
               variant='text'
             >
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -68,8 +68,8 @@ const GraphicSection = ({ admin, section, wid }) => {
               </ButtonOptions>}
               {!admin && <Button
                 component={Link}
-                href={section.link || '#'}
-                target='_blank'
+                href={section['link' + idx] || '#'}
+                target={section['tab' + idx] === 'new' ? '_blank' : '_self'}
                 variant='contained'
                 color='accentcolor'
               >

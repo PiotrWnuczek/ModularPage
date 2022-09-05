@@ -34,7 +34,15 @@ const TextEditor = ({ children, type, admin, section, wid, idx }) => {
         {({ values, handleChange, handleSubmit }) => (
           <form onBlur={handleSubmit} onSubmit={handleSubmit} autoComplete='off'>
             <TextField
-              sx={{ my: 0 }}
+              sx={{
+                my: 0, bgolor: 'backgroundcolor.main',
+                input: { color: 'fontcolor.main' },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'fontcolor.main' },
+                  '&:hover fieldset': { borderColor: 'fontcolor.main' },
+                  '&.Mui-focused fieldset': { borderColor: 'fontcolor.main' },
+                },
+              }}
               onChange={handleChange}
               value={values[title]}
               name={title}
@@ -73,7 +81,15 @@ const TextEditor = ({ children, type, admin, section, wid, idx }) => {
         {({ values, handleChange, handleSubmit }) => (
           <form onBlur={handleSubmit} onSubmit={handleSubmit} autoComplete='off'>
             <TextField
-              sx={{ my: 1 }}
+              sx={{
+                my: 1, bgolor: 'backgroundcolor.main',
+                textarea: { color: 'fontcolor.main', p: 1 },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'fontcolor.main' },
+                  '&:hover fieldset': { borderColor: 'fontcolor.main' },
+                  '&.Mui-focused fieldset': { borderColor: 'fontcolor.main' },
+                },
+              }}
               onChange={handleChange}
               value={values[text]}
               name={text}

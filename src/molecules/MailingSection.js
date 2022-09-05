@@ -51,7 +51,15 @@ const MailingSection = ({ admin, section, wid }) => {
         <Grid container spacing={1}>
           <Grid item xs={12} sm={9}>
             <TextField
-              sx={{ bgolor: 'backgroundcolor.main', borderRadius: 1 }}
+              sx={{
+                borderRadius: 1, bgolor: 'backgroundcolor.main',
+                input: { color: 'fontcolor.main' },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: 'fontcolor.main' },
+                  '&:hover fieldset': { borderColor: 'fontcolor.main' },
+                  '&.Mui-focused fieldset': { borderColor: 'fontcolor.main' },
+                },
+              }}
               placeholder='Email'
               name='email'
               autoComplete='off'
@@ -86,7 +94,15 @@ const MailingSection = ({ admin, section, wid }) => {
             <Grid container spacing={1}>
               <Grid item xs={12} sm={9}>
                 <TextField
-                  sx={{ bgolor: 'backgroundcolor.main', borderRadius: 1 }}
+                  sx={{
+                    borderRadius: 1, bgolor: 'backgroundcolor.main',
+                    input: { color: 'fontcolor.main' },
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': { borderColor: 'fontcolor.main' },
+                      '&:hover fieldset': { borderColor: 'fontcolor.main' },
+                      '&.Mui-focused fieldset': { borderColor: 'fontcolor.main' },
+                    },
+                  }}
                   onChange={handleChange}
                   value={values.email}
                   placeholder='Email'

@@ -35,7 +35,7 @@ const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
         sx={{ color: 'fontcolor.main', bgcolor: 'inherit', borderRadius: 2 }}
         variant='outlined'
       >
-        <Box sx={{ p: 2, textAlign: (sl && sl.align) || 'center' }}>
+        <Box sx={{ p: 2, textAlign: 'center' }}>
           <TextEditor
             admin={admin} section={section}
             wid={wid} idx={idx} type='title'
@@ -51,7 +51,7 @@ const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
             wid={wid} idx={idx} type='text'
           >
             <Typography variant='text'>
-              <Box sx={{ fontSize: '90%' }}>
+              <Box sx={{ fontSize: '90%', textAlign: (sl && sl.align) || 'center' }}>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {section[text] || 'New Text'}
                 </ReactMarkdown>

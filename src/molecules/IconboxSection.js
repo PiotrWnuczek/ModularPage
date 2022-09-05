@@ -17,10 +17,10 @@ const IconBox = ({ admin, section, wid, idx }) => {
       sx={{ display: 'flex', justifyContent: 'center' }}
       item xs={12} md={sl ? 12 / sl.quantity : 4}
     >
-      <Box sx={{ textAlign: (sl && sl.align) || 'center' }}>
+      <Box sx={{ textAlign: 'center' }}>
         <Box sx={{
           display: 'flex', alignItems: 'center',
-          justifyContent: (sl && sl.align) || 'center',
+          justifyContent: 'center',
         }}>
           <IconOptions
             admin={admin} section={section}
@@ -47,7 +47,7 @@ const IconBox = ({ admin, section, wid, idx }) => {
           wid={wid} idx={idx} type='text'
         >
           <Typography variant='text'>
-            <Box sx={{ fontSize: '90%' }}>
+            <Box sx={{ fontSize: '90%', textAlign: (sl && sl.align) || 'center' }}>
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {section[text] || 'New Text'}
               </ReactMarkdown>

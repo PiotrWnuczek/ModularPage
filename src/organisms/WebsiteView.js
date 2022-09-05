@@ -74,7 +74,7 @@ const WebsiteView = ({ admin, host }) => {
           <SectionCreate wid={website.name} index={0} start />
         </Box>}
         {website && website.header && (website.public || access) && <HeaderSection
-          admin={access} header={website.header} wid={website.name}
+          admin={access} header={website.header} logo={website.logo} wid={website.name}
         />}
         {access && <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId='droppable'>

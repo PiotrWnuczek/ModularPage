@@ -13,6 +13,10 @@ body {
   margin: 0;
 }
 
+ul, ol {
+  text-align: left;
+}
+
 .about ul {
   margin: 0;
   padding: 0 1rem;

@@ -11,7 +11,7 @@ const ContentSection = ({ admin, section, wid }) => {
   const sl = section.layout;
 
   return (
-    <Box sx={{ textAlign: (sl && sl.align) || 'center', width: '100%' }}>
+    <Box sx={{ width: '100%', textAlign: 'center' }}>
       <TextEditor
         admin={admin} section={section}
         wid={wid} type='title'
@@ -28,7 +28,7 @@ const ContentSection = ({ admin, section, wid }) => {
         wid={wid} type='text'
       >
         <Typography
-          sx={{ mt: 1 }}
+          sx={{ mt: 1, textAlign: (sl && sl.align) || 'center' }}
           variant='text'
         >
           <ReactMarkdown
@@ -57,8 +57,8 @@ const ContentSection = ({ admin, section, wid }) => {
           </ButtonOptions>}
           {!admin && <Button
             component={Link}
-            href={section.link || '#'}
-            target='_blank'
+            href={section['link' + idx] || '#'}
+            target={section['tab' + idx] === 'new' ? '_blank' : '_self'}
             variant='contained'
             color='accentcolor'
           >

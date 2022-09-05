@@ -9,7 +9,8 @@ export const createWebsite = createAsyncThunk(
       const doc = await ref.doc(values.name).get();
       if (doc.exists) throw new Error('exist');
       if (!doc.exists) return await ref.doc(values.name).set({
-        ...values, public: false, title: values.name,
+        ...values, public: false,
+        title: values.name,
         email: auth.email, uid: auth.uid,
       }).then(
         () => navigate && navigate('/board')
@@ -99,7 +100,6 @@ export const createFile = createAsyncThunk(
     const firebase = thunk.extra.getFirebase();
     const firestore = thunk.extra.getFirestore();
     const sections = thunk.getState().firestore.data[wid].sections;
-    const header = thunk.getState().firestore.data[wid].header;
     const storage = firebase.storage().ref(wid).child(sid);
     const ref = firestore.collection('websites');
     try {
@@ -108,7 +108,7 @@ export const createFile = createAsyncThunk(
         favicon: url,
       }).then(() => file);
       if (sid === 'logo') return await ref.doc(wid).update({
-        header: { ...header, logo: url },
+        logo: url,
       }).then(() => file);
       if (sid !== 'favicon' && sid !== 'logo') return await ref.doc(wid).update({
         sections: sections.map(
@@ -137,7 +137,7 @@ const websitesSlice = createSlice({
     },
     [createWebsite.rejected]: (state, action) => {
       console.log(action.type, action.error);
-      return { ...state, error: 'Website already exist' };
+      return { ...state, error: true };
     },
     [updateWebsite.fulfilled]: (state, action) => {
       console.log(action.type, action.payload);
