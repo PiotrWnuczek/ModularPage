@@ -8,14 +8,15 @@ import { Typography, CardHeader, Avatar } from '@mui/material';
 import { TextField, CardActionArea } from '@mui/material';
 import { Dns, Wysiwyg } from '@mui/icons-material';
 import { Formik } from 'formik';
-import { header, footer } from 'stock/sections';
-import { content, graphic, iconbox, mailing, selling } from 'stock/sections';
+import { header, footer } from 'stock/templates';
+import templates from 'stock/templates';
 import MainLayout from 'organisms/MainLayout';
 
 const CreateView = () => {
   const [domain, setDomain] = useState('app');
   const [template, setTemplate] = useState('landing');
   const [info, setInfo] = useState(false);
+  const [warning, setWarning] = useState(false);
   const error = useSelector(state => state.websites.error);
   const auth = useSelector(state => state.firebase.auth);
   const profile = useSelector(state => state.firestore.data[auth.uid]);
@@ -25,11 +26,8 @@ const CreateView = () => {
   useFirestoreConnect([{ collection: 'websites', where: [['email', '==', auth.email]] }]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const sections = template === 'landing' ? [
-    graphic, iconbox, mailing, content,
-  ] : template === 'product' ? [
-    graphic, iconbox, selling, content,
-  ] : [];
+  const sections = templates[template];
+  const blocked = ['en', 'pl', 'app', 'signin', 'signup', 'board', 'create', 'account'];
 
   return (
     <MainLayout>
@@ -110,15 +108,15 @@ const CreateView = () => {
           sx={{ my: 1, bgcolor: 'secondary.light', borderRadius: 2 }}
           variant='outlined'
         >
-          <CardActionArea onClick={() => setTemplate('blank')}>
+          <CardActionArea onClick={() => setTemplate('about')}>
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: template === 'blank' && 'primary.main' }}>
+                <Avatar sx={{ bgcolor: template === 'about' && 'primary.main' }}>
                   <Wysiwyg />
                 </Avatar>
               }
-              title='Blank Page'
-              subheader='Clear page template'
+              title='About Page'
+              subheader='Page template with presentation sections'
             />
           </CardActionArea>
         </Card>
@@ -129,18 +127,22 @@ const CreateView = () => {
           initialValues={{ name: '' }}
           onSubmit={(values) => {
             domain === 'app' && websites.length < profile.limit.all &&
+              !blocked.includes(values.name) &&
               dispatch(createWebsite({
                 values: { ...values, domain, template, sections, header, footer },
                 navigate,
               }));
             domain === 'custom' && websites.length < profile.limit.all &&
               domains.length < profile.limit.custom &&
+              values.name.includes('.') &&
               dispatch(createWebsite({
                 values: { ...values, domain, template, sections, header, footer },
                 navigate,
               }));
             websites.length >= profile.limit.all && setInfo('all');
             domains.length >= profile.limit.custom && setInfo('custom');
+            domain === 'app' && blocked.includes(values.name) && setWarning(true);
+            domain === 'custom' && !values.name.includes('.') && setWarning(true);
           }}
         >
           {({ values, handleChange, handleSubmit }) => (
@@ -161,7 +163,9 @@ const CreateView = () => {
             </form>
           )}
         </Formik>
-        {error && <Typography>{error}</Typography>}
+        {(error || warning) && <Typography>
+          website already exists or the name is not available.
+        </Typography>}
         <Button
           sx={{ my: 1 }}
           type='submit'

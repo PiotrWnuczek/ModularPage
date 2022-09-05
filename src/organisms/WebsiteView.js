@@ -69,7 +69,7 @@ const WebsiteView = ({ admin, host }) => {
         {access && <WebsiteFinish wid={website.name} />}
         {access && <WebsiteOptions website={website} />}
         {access && website && !website.sections.length && <Box
-          sx={{ py: 5.5, display: 'flex', justifyContent: 'center' }}
+          sx={{ py: 10, display: 'flex', justifyContent: 'center' }}
         >
           <SectionCreate wid={website.name} index={0} start />
         </Box>}

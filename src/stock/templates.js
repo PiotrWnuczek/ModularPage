@@ -1,5 +1,4 @@
 export const graphic = {
-  id: Math.random().toString(16).slice(2),
   type: 'graphic',
   title: 'Graphic Section Title',
   text: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies. Maecenas aliquet gravida augue sed condimentum.',
@@ -12,7 +11,6 @@ export const graphic = {
 };
 
 export const content = {
-  id: Math.random().toString(16).slice(2),
   type: 'content',
   title: 'Content Section Title',
   text: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies. Maecenas aliquet gravida augue sed condimentum.',
@@ -25,7 +23,6 @@ export const content = {
 };
 
 export const iconbox = {
-  id: Math.random().toString(16).slice(2),
   type: 'iconbox',
   icon1: 'Settings',
   title1: 'First Iconbox',
@@ -39,7 +36,6 @@ export const iconbox = {
 };
 
 export const mailing = {
-  id: Math.random().toString(16).slice(2),
   type: 'mailing',
   title: 'Mailing Section Title',
   text: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies. Maecenas aliquet gravida augue sed condimentum.',
@@ -48,7 +44,6 @@ export const mailing = {
 };
 
 export const selling = {
-  id: Math.random().toString(16).slice(2),
   type: 'selling',
   title1: 'First Product',
   text1: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -84,3 +79,28 @@ export const footer = {
   textrules: 'This document contains rules and privacy of the website: (your website address). The website administrator is: (your data)',
   titlerules: 'Rules and Privacy',
 };
+
+const landing = [
+  { ...graphic, id: Math.random().toString(16).slice(2) },
+  { ...iconbox, id: Math.random().toString(16).slice(2) },
+  { ...mailing, id: Math.random().toString(16).slice(2) },
+  { ...content, id: Math.random().toString(16).slice(2) },
+];
+
+const product = [
+  { ...graphic, id: Math.random().toString(16).slice(2) },
+  { ...iconbox, id: Math.random().toString(16).slice(2) },
+  { ...selling, id: Math.random().toString(16).slice(2) },
+  { ...content, id: Math.random().toString(16).slice(2) },
+];
+
+const about = [
+  { ...content, id: Math.random().toString(16).slice(2), layout: { variant: 'wide', quantity: '2' } },
+  { ...graphic, id: Math.random().toString(16).slice(2), layout: { variant: 'wide', position: 'left' } },
+  { ...graphic, id: Math.random().toString(16).slice(2), layout: { variant: 'wide', position: 'right' } },
+  { ...iconbox, id: Math.random().toString(16).slice(2), layout: { variant: 'wide', quantity: '3' } },
+];
+
+const templates = { landing, product, about };
+
+export default templates;

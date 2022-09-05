@@ -24,15 +24,19 @@ const ImageOptions = ({ children, admin, section, wid }) => {
   });
 
   return (
-    <Box>
+    <Box sx={{ width: '100%', height: '100%' }}>
       <Box
         sx={{
+          width: '100%', height: '100%',
           cursor: admin && 'pointer', position: 'relative', textAlign: 'center',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
         onClick={() => { admin && setOpen(true) }}
       >
-        <Box sx={{ opacity: admin && loading === section.id && 0.5 }}>
+        <Box sx={{
+          width: '100%', height: '100%',
+          opacity: admin && loading === section.id && 0.5,
+        }}>
           {children}
         </Box>
         {admin && <Box sx={{ position: 'absolute' }}>

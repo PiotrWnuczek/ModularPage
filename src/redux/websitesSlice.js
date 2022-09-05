@@ -58,7 +58,7 @@ export const createSection = createAsyncThunk(
       return await ref.doc(wid).update({
         sections: [
           ...sections.slice(0, index),
-          { ...values },
+          { ...values, id: Math.random().toString(16).slice(2) },
           ...sections.slice(index),
         ],
       }).then(() => values);

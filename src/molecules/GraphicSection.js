@@ -91,7 +91,7 @@ const GraphicSection = ({ admin, section, wid }) => {
           <Box
             sx={{
               maxWidth: sl && sl.variant === 'wide' ? 1000 : 400,
-              width: '100%', height: '100%',
+              width: '100%', height: '100%', objectFit: 'cover',
             }}
             src={section.url || alt}
             component='img'
