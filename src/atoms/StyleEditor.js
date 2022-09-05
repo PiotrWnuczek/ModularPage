@@ -47,18 +47,20 @@ const StyleEditor = ({ style, setStyle, reset, sid, wid }) => {
           </ToggleButtonGroup>
         </Grid>
         <Grid item xs={12} md={4}>
-          <TwitterPicker
-            color={style[picker]}
-            onChangeComplete={(color) => setStyle({ ...style, [picker]: color.hex })}
-            colors={[
-              '#777777', '#666666', '#555555', '#444444', '#1976d2', '#2e7d32',
-              '#ed6c02', '#01579b', '#f5f5f5', '#e5e5e5', '#e3f2fd', '#fffde7',
-            ]}
-            triangle='hide'
-            width='170px'
-          />
+          <Box sx={{ mt: 0.5 }}>
+            <TwitterPicker
+              color={style[picker]}
+              onChangeComplete={(color) => setStyle({ ...style, [picker]: color.hex })}
+              colors={[
+                '#777777', '#666666', '#555555', '#444444', '#1976d2', '#2e7d32',
+                '#ed6c02', '#01579b', '#f5f5f5', '#e5e5e5', '#e3f2fd', '#fffde7',
+              ]}
+              triangle='hide'
+              width='170px'
+            />
+          </Box>
           <Button
-            sx={{ mx: 2.5, my: 1 }}
+            sx={{ mx: 2.5, mt: 1 }}
             onClick={() => {
               wid && sid && dispatch(updateSection({ values: { style: null }, sid, wid }));
               wid && !sid && dispatch(updateWebsite({ values: { style: null }, wid }));

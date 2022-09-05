@@ -40,7 +40,7 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
     <ThemeProvider theme={theme}>
       <Box
         sx={section.type === 'graphic' ? {
-          py: sl && sl.variant === 'wide' ? 0 : 6,
+          py: sl && sl.variant === 'wide' ? { xs: 3, md: 0 } : 6,
           px: sl && sl.variant === 'wide' ? 0 : { xs: 5, md: 30 },
           position: 'relative', display: 'flex', justifyContent: 'center',
           color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',

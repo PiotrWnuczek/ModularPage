@@ -104,7 +104,9 @@ const SectionOptions = ({ section, wid }) => {
                       <GridView />
                     </Avatar>
                     <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
-                      {item} Layout Variant
+                      {section.type !== 'graphic' ? item :
+                        (item === 'wide' ? 'full size image' : 'standard image')
+                      } Layout Variant
                     </Typography>
                   </Box>
                 )}
@@ -168,15 +170,15 @@ const SectionOptions = ({ section, wid }) => {
                 >
                   <ToggleButton value={itemize ? '1' : '0'}>
                     <Widgets sx={{ mr: 1 }} />
-                    {itemize ? 'One Block Element' : 'Zero Buttons'}
+                    {itemize ? 'One Block' : 'Zero Buttons'}
                   </ToggleButton>
                   <ToggleButton value={itemize ? '2' : '1'}>
                     <Widgets sx={{ mr: 1 }} />
-                    {itemize ? 'Two Block Elements' : 'One Button'}
+                    {itemize ? 'Two Blocks' : 'One Button'}
                   </ToggleButton>
                   <ToggleButton value={itemize ? '3' : '2'}>
                     <Widgets sx={{ mr: 1 }} />
-                    {itemize ? 'Three Block Elements' : 'Two Buttons'}
+                    {itemize ? 'Three Blocks' : 'Two Buttons'}
                   </ToggleButton>
                 </ToggleButtonGroup>
               </Grid>

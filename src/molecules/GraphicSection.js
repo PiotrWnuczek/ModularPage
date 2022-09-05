@@ -20,8 +20,8 @@ const GraphicSection = ({ admin, section, wid }) => {
     >
       <Grid
         sx={{
-          px: sl && sl.variant === 'wide' ? 8 : 2, display: 'flex',
-          alignItems: 'center', justifyContent: 'center',
+          px: sl && sl.variant === 'wide' ? { xs: 4, md: 8 } : 2,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
         item xs={12} sm={6}
       >
@@ -60,6 +60,7 @@ const GraphicSection = ({ admin, section, wid }) => {
                 wid={wid} idx={idx}
               >
                 <Button
+                  sx={{ mb: 1 }}
                   variant='contained'
                   color='accentcolor'
                 >
@@ -67,6 +68,7 @@ const GraphicSection = ({ admin, section, wid }) => {
                 </Button>
               </ButtonOptions>}
               {!admin && <Button
+                sx={{ mb: 1 }}
                 component={Link}
                 href={section['link' + idx] || '#'}
                 target={section['tab' + idx] === 'new' ? '_blank' : '_self'}

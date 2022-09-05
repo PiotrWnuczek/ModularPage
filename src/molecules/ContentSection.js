@@ -49,6 +49,7 @@ const ContentSection = ({ admin, section, wid }) => {
             wid={wid} idx={idx}
           >
             <Button
+              sx={{ mb: 1 }}
               variant='contained'
               color='accentcolor'
             >
@@ -56,6 +57,7 @@ const ContentSection = ({ admin, section, wid }) => {
             </Button>
           </ButtonOptions>}
           {!admin && <Button
+            sx={{ mb: 1 }}
             component={Link}
             href={section['link' + idx] || '#'}
             target={section['tab' + idx] === 'new' ? '_blank' : '_self'}

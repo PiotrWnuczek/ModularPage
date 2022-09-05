@@ -6,7 +6,7 @@ import { Box, Typography, Button, Paper, Link } from '@mui/material';
 import { Dialog, AppBar, Toolbar, Divider } from '@mui/material';
 import { Alert, TextField, CircularProgress } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
-import { Check } from '@mui/icons-material';
+import { Style } from '@mui/icons-material';
 import { Formik } from 'formik';
 import Logo from 'stock/logo.png';
 import ButtonOptions from 'atoms/ButtonOptions';
@@ -26,7 +26,7 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
     <Box>
       <AppBar color='backgroundcolor' elevation={0}>
         <Toolbar sx={{
-          color: 'fontcolor.main', justifyContent: 'space-between', mx: { xs: 5, md: 30 },
+          color: 'fontcolor.main', justifyContent: 'space-between', mx: { xs: 1, md: 10 },
         }}>
           <Box
             sx={{ display: 'flex', alignItems: 'center', cursor: admin && 'pointer' }}
@@ -48,6 +48,7 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
           </Box>
           {admin && <ButtonOptions section={header} wid={wid}>
             <Button
+              sx={{ my: 1 }}
               variant='contained'
               color='accentcolor'
             >
@@ -55,6 +56,7 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
             </Button>
           </ButtonOptions>}
           {!admin && <Button
+            sx={{ my: 1 }}
             component={Link}
             href={header.link || '#'}
             target={header.tab === 'new' ? '_blank' : '_self'}
@@ -139,15 +141,15 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
               exclusive
             >
               <ToggleButton value='logo'>
-                <Check sx={{ mr: 1 }} />
+                <Style sx={{ mr: 1 }} />
                 Enable Logo
               </ToggleButton>
               <ToggleButton value='title'>
-                <Check sx={{ mr: 1 }} />
+                <Style sx={{ mr: 1 }} />
                 Enable Title
               </ToggleButton>
               <ToggleButton value='all'>
-                <Check sx={{ mr: 1 }} />
+                <Style sx={{ mr: 1 }} />
                 Enable All
               </ToggleButton>
             </ToggleButtonGroup>
