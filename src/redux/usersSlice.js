@@ -56,35 +56,35 @@ const usersSlice = createSlice({
   name: 'users', initialState: { error: null },
   extraReducers: {
     [signinUser.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return { ...state, error: null };
     },
     [signinUser.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return { ...state, error: action.error.message };
     },
     [signupUser.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return { ...state, error: null };
     },
     [signupUser.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return { ...state, error: action.error.message };
     },
     [updateProfile.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return state;
     },
     [updateProfile.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return state;
     },
     [signoutUser.fulfilled]: (state, action) => {
-      console.log(action.type);
+      //console.log(action.type);
       return state;
     },
     [signoutUser.rejected]: (state, action) => {
-      console.log(action.type);
+      //console.log(action.type);
       return state;
     },
   },

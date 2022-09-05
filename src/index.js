@@ -48,4 +48,4 @@ root.render(
   </ReactReduxFirebaseProvider>
 );
 
-serviceWorkerRegistration.register();
+serviceWorkerRegistration.unregister();

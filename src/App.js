@@ -25,7 +25,7 @@ const ScrollTop = ({ children }) => {
 
 const App = () => {
   const active = true;
-  const host = 'localhost:3000'/*'modularpage.com'*/;
+  const host = /*'localhost:3000'*/'modularpage.com';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
   const pl = window.navigator.language.includes('pl');

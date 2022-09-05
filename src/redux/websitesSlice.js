@@ -132,71 +132,71 @@ const websitesSlice = createSlice({
   name: 'websites', initialState: { error: null },
   extraReducers: {
     [createWebsite.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return { ...state, error: null };
     },
     [createWebsite.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return { ...state, error: true };
     },
     [updateWebsite.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return state;
     },
     [updateWebsite.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return state;
     },
     [removeWebsite.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return state;
     },
     [removeWebsite.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return state;
     },
     [createSection.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return state;
     },
     [createSection.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return state;
     },
     [updateSection.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return state;
     },
     [updateSection.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return state;
     },
     [removeSection.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return state;
     },
     [removeSection.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return state;
     },
     [createFile.pending]: (state, action) => {
-      console.log(action.meta.arg);
+      //console.log(action.meta.arg);
       return { ...state, loading: action.meta.arg.sid };
     },
     [createFile.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return { ...state, loading: false };
     },
     [createFile.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return { ...state, loading: false };
     },
     [removeFile.fulfilled]: (state, action) => {
-      console.log(action.type, action.payload);
+      //console.log(action.type, action.payload);
       return state;
     },
     [removeFile.rejected]: (state, action) => {
-      console.log(action.type, action.error);
+      //console.log(action.type, action.error);
       return state;
     },
   },
