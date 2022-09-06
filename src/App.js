@@ -50,8 +50,8 @@ const App = () => {
             <Route path='/account' element={access ? <AccountView /> : <Navigate to='/signin' />} />
             <Route path='/board' element={access ? <BoardView /> : <Navigate to='/signin' />} />
             <Route path='/create' element={access ? <CreateView /> : <Navigate to='/signin' />} />
-            <Route path='/:id/*' element={access ? <WebsiteView /> : <Navigate to='/signin' />} />
             <Route path='/:id/admin' element={access ? <WebsiteView admin /> : <Navigate to='/signin' />} />
+            <Route path='/:id/*' element={<WebsiteView />} />
             <Route path='/app' element={<Navigate to='/board' />} />
             <Route path='/*' element={pl ? <Navigate to='/pl' /> : <Navigate to='/en' />} />
           </Routes> : <Routes>
