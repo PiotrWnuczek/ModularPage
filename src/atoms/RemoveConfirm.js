@@ -3,11 +3,11 @@ import { removeWebsite } from 'redux/websitesSlice';
 import { removeSection, removeFile } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { Box, Dialog, Typography, Avatar } from '@mui/material';
-import { Button, IconButton, TextField } from '@mui/material';
+import { Button, IconButton, TextField, Tooltip } from '@mui/material';
 import { Delete, Remove } from '@mui/icons-material';
 import { Formik } from 'formik';
 
-const RemoveConfirm = ({ type, sid, wid, file }) => {
+const RemoveConfirm = ({ type, sid, wid, hover, file }) => {
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState(false);
   const dispatch = useDispatch();
@@ -28,7 +28,9 @@ const RemoveConfirm = ({ type, sid, wid, file }) => {
         }}
         onClick={() => setOpen(true)}
       >
-        <Remove />
+        {hover ? <Tooltip title='remove section above' arrow>
+          <Remove />
+        </Tooltip> : <Remove />}
       </Avatar>}
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}

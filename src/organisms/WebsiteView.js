@@ -89,7 +89,7 @@ const WebsiteView = ({ admin, host }) => {
                     draggableId={item.id}
                     index={index}
                   >
-                    {(provided) => (
+                    {(provided, snapshot) => (
                       <div
                         ref={provided.innerRef}
                         {...provided.draggableProps}
@@ -100,6 +100,7 @@ const WebsiteView = ({ admin, host }) => {
                           wid={website.name}
                           index={index + 1}
                           drag={provided.dragHandleProps}
+                          dragging={snapshot.isDragging}
                         />
                       </div>
                     )}

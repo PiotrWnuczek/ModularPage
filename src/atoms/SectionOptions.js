@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { Box, Typography, Button, Grid, Dialog } from '@mui/material';
 import { Avatar, Divider, Alert, AlertTitle } from '@mui/material';
-import { ToggleButtonGroup, ToggleButton } from '@mui/material';
+import { ToggleButtonGroup, ToggleButton, Tooltip } from '@mui/material';
 import { GridView, Widgets, FormatAlignCenter } from '@mui/icons-material';
 import { Tune, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
@@ -17,7 +17,7 @@ const about = `
 * Select colors or choose your own in [canva.com/colors](https://canva.com/colors/)
 `;
 
-const SectionOptions = ({ section, wid }) => {
+const SectionOptions = ({ section, wid, hover }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -56,7 +56,9 @@ const SectionOptions = ({ section, wid }) => {
         }}
         onClick={() => setOpen(true)}
       >
-        <Tune />
+        {hover ? <Tooltip title='open section options' arrow>
+          <Tune />
+        </Tooltip> : <Tune />}
       </Avatar>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}

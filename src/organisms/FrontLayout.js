@@ -38,7 +38,7 @@ const FrontLayout = ({ children }) => {
           </Link>
         </Box>
         <Button
-          onClick={() => navigate('/about')}
+          onClick={() => navigate('/')}
           size='small'
         >
           About App

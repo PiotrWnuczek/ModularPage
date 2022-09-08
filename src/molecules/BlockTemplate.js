@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from '@mui/material';
-import { Box, Avatar } from '@mui/material';
+import { Box, Avatar, Tooltip } from '@mui/material';
 import { DragIndicator } from '@mui/icons-material';
 import SectionCreate from 'atoms/SectionCreate';
 import SectionOptions from 'atoms/SectionOptions';
@@ -11,7 +11,7 @@ import IconboxSection from 'molecules/IconboxSection';
 import MailingSection from 'molecules/MailingSection';
 import SellingSection from 'molecules/SellingSection';
 
-const BlockTemplate = ({ admin, section, wid, index, drag }) => {
+const BlockTemplate = ({ admin, section, wid, index, drag, dragging }) => {
   const [hover, setHover] = useState(false);
   const sl = section.layout;
   const ss = section.style;
@@ -53,11 +53,10 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
         onMouseOut={() => setHover(false)}
       >
         {admin && <Box sx={{
-          pt: 1.6, pb: 0.6, zIndex: 100,
-          position: 'absolute', top: 0,
-          display: { xs: 'flex', md: hover ? 'flex' : 'none' },
+          pt: 1.6, pb: 0.6, zIndex: 100, position: 'absolute', top: 0,
+          display: { xs: 'flex', md: (hover || dragging) ? 'flex' : 'none' },
         }}>
-          <SectionOptions section={section} wid={wid} />
+          <SectionOptions section={section} wid={wid} hover={hover} />
           <Avatar
             sx={{
               width: 30, height: 30, mx: 0.3,
@@ -66,7 +65,9 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
             }}
             {...drag}
           >
-            <DragIndicator />
+            {hover ? <Tooltip title='drag nad drop section' arrow>
+              <DragIndicator />
+            </Tooltip> : <DragIndicator />}
           </Avatar>
         </Box>}
         {section.type === 'content' && <ContentSection
@@ -95,13 +96,12 @@ const BlockTemplate = ({ admin, section, wid, index, drag }) => {
           section={section}
         />}
         {admin && <Box sx={{
-          pb: 1.6, pt: 0.6, zIndex: 100,
-          position: 'absolute', bottom: 0,
-          display: { xs: 'flex', md: hover ? 'flex' : 'none' },
+          pb: 1.6, pt: 0.6, zIndex: 100, position: 'absolute', bottom: 0,
+          display: { xs: 'flex', md: (hover || dragging) ? 'flex' : 'none' },
         }}>
-          <SectionCreate wid={wid} index={index} />
+          <SectionCreate wid={wid} index={index} hover={hover} />
           <RemoveConfirm
-            sid={section.id} wid={wid} type='section'
+            sid={section.id} wid={wid} type='section' hover={hover}
             file={section.type === 'graphic' && section.url}
           />
         </Box>}

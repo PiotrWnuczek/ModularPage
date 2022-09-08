@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createSection } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
-import { Box, Card, Dialog, Typography } from '@mui/material';
+import { Box, Card, Dialog, Typography, Tooltip } from '@mui/material';
 import { CardActionArea, CardMedia, Avatar } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { content, graphic, iconbox } from 'stock/templates';
@@ -12,7 +12,7 @@ import Iconbox from 'stock/iconbox.png';
 import Mailing from 'stock/mailing.png';
 import Selling from 'stock/selling.png';
 
-const SectionCreate = ({ wid, index, start }) => {
+const SectionCreate = ({ wid, index, start, hover }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const sections = [
@@ -33,7 +33,9 @@ const SectionCreate = ({ wid, index, start }) => {
         }}
         onClick={() => setOpen(true)}
       >
-        <Add />
+        {hover ? <Tooltip title='add new section below' arrow>
+          <Add />
+        </Tooltip> : <Add />}
       </Avatar>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
