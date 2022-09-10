@@ -38,7 +38,7 @@ const ButtonOptions = ({ children, section, wid, idx }) => {
       >
         <Box sx={{ p: 2 }}>
           <Typography variant='h5'>
-            Boutton Settings
+            Button Settings
           </Typography>
           <Box sx={{ py: 1 }}>
             <Alert
