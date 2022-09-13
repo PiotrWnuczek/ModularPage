@@ -85,8 +85,7 @@ const MailingSection = ({ admin, section, wid }) => {
         onSubmit={(values, { resetForm }) => {
           section.mailing === 'sender' && senderFunction(values.email);
           section.mailing === 'mailerlite' && mailerliteFunction(values.email);
-          resetForm();
-          setSuccess(true);
+          resetForm(); setSuccess(true);
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
@@ -128,6 +127,9 @@ const MailingSection = ({ admin, section, wid }) => {
           </form>
         )}
       </Formik>}
+      {sl && sl.quantity === '1' && <Typography variant='caption'>
+        Subscribing you accept rules and privacy.
+      </Typography>}
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={success}

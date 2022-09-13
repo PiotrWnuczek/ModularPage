@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { updateWebsite, createFile } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { Box, Typography, Button, Paper, Link } from '@mui/material';
 import { Dialog, AppBar, Toolbar, Divider } from '@mui/material';
@@ -16,6 +17,7 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
   const [variant, setVariant] = useState(header.variant || 'all');
   const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } = useDropzone({
     accept: { 'image/*': ['.jpeg', '.png'] },
     validator: (file) => (file.size > 500 * 1024 && { message: 'Max file size is 0.5 MB' }),
@@ -29,8 +31,8 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
           color: 'fontcolor.main', justifyContent: 'space-between', mx: { xs: 1, md: 10 },
         }}>
           <Box
-            sx={{ display: 'flex', alignItems: 'center', cursor: admin && 'pointer' }}
-            onClick={() => admin && setOpen(true)}
+            sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+            onClick={() => admin ? setOpen(true) : navigate('')}
           >
             {(!hv || (hv && (hv === 'logo' || hv === 'all'))) && <Box>
               {(!loading || loading !== 'logo') && <Box

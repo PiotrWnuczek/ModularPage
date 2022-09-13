@@ -30,10 +30,11 @@ const BlockTemplate = ({ admin, section, wid, index, drag, dragging }) => {
         [outer.breakpoints.down('md')]: { fontSize: ss.fontsize === 'l' ? 32 : 28 },
       },
       text: {
-        fontSize: ss.fontsize === 'l' ? 18 : 16, fontWeight: 400, letterSpacing: 1,
-        [outer.breakpoints.down('md')]: { fontSize: ss.fontsize === 'l' ? 16 : 14 },
+        fontSize: ss.fontsize === 'l' ? 20 : 17, fontWeight: 400, letterSpacing: 1,
+        [outer.breakpoints.down('md')]: { fontSize: ss.fontsize === 'l' ? 18 : 15 },
       },
     } : outer.typography,
+    fontsize: ss ? ss.fontsize : outer.fontsize,
   });
 
   return (

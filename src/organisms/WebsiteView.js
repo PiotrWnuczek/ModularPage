@@ -40,8 +40,8 @@ const WebsiteView = ({ admin, host }) => {
         [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 32 : 28 },
       },
       text: {
-        fontSize: (ws && ws.fontsize === 'l') ? 18 : 16, fontWeight: 400, letterSpacing: 1,
-        [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 16 : 14 },
+        fontSize: (ws && ws.fontsize === 'l') ? 20 : 17, fontWeight: 400, letterSpacing: 1,
+        [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 18 : 15 },
       },
     },
     fontsize: (ws && ws.fontsize) || 'm',

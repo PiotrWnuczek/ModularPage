@@ -45,6 +45,7 @@ const SectionOptions = ({ section, wid, hover }) => {
     position: (sl && sl.position) || 'right',
   });
   const itemize = section.type === 'iconbox' || section.type === 'selling';
+  const form = section.type === 'mailing';
 
   return (
     <Box>
@@ -172,16 +173,16 @@ const SectionOptions = ({ section, wid, hover }) => {
                 >
                   <ToggleButton value={itemize ? '1' : '0'}>
                     <Widgets sx={{ mr: 1 }} />
-                    {itemize ? 'One Block' : 'Zero Buttons'}
+                    {form ? 'Without Disclaimer' : itemize ? 'One Block' : 'Zero Buttons'}
                   </ToggleButton>
                   <ToggleButton value={itemize ? '2' : '1'}>
                     <Widgets sx={{ mr: 1 }} />
-                    {itemize ? 'Two Blocks' : 'One Button'}
+                    {form ? 'With Disclaimer' : itemize ? 'Two Blocks' : 'One Button'}
                   </ToggleButton>
-                  <ToggleButton value={itemize ? '3' : '2'}>
+                  {!form && <ToggleButton value={itemize ? '3' : '2'}>
                     <Widgets sx={{ mr: 1 }} />
                     {itemize ? 'Three Blocks' : 'Two Buttons'}
-                  </ToggleButton>
+                  </ToggleButton>}
                 </ToggleButtonGroup>
               </Grid>
             </Grid>
