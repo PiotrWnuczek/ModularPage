@@ -34,6 +34,7 @@ const ContentSection = ({ admin, section, wid }) => {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw]}
+            linkTarget='_blank'
           >
             {section.text || 'New Text'}
           </ReactMarkdown>

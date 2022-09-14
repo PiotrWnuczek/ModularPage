@@ -52,7 +52,7 @@ const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
           >
             <Typography variant='text'>
               <Box sx={{ fontSize: '90%', textAlign: (sl && sl.align) || 'center' }}>
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
                   {section[text] || 'New Text'}
                 </ReactMarkdown>
               </Box>

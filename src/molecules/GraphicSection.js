@@ -45,7 +45,7 @@ const GraphicSection = ({ admin, section, wid }) => {
               sx={{ mt: 1, textAlign: (sl && sl.align) || 'center' }}
               variant='text'
             >
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
                 {section.text || 'New Text'}
               </ReactMarkdown>
             </Typography>

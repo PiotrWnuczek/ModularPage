@@ -25,7 +25,7 @@ const FooterSection = ({ admin, footer, wid }) => {
           </Button>
           <Typography variant='text'>
             <Box sx={{ fontSize: '90%' }}>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
                 {footer.textinfo || 'New Text'}
               </ReactMarkdown>
               Created with {' '}
@@ -58,7 +58,7 @@ const FooterSection = ({ admin, footer, wid }) => {
             >
               <Typography variant='text'>
                 <Box sx={{ fontSize: '90%' }}>
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
                     {footer.textrules || 'New Text'}
                   </ReactMarkdown>
                 </Box>

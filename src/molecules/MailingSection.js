@@ -42,7 +42,7 @@ const MailingSection = ({ admin, section, wid }) => {
           sx={{ mt: 1 }}
           variant='text'
         >
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
             {section.text || 'New Text'}
           </ReactMarkdown>
         </Typography>
