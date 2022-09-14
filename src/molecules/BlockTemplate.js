@@ -42,12 +42,12 @@ const BlockTemplate = ({ admin, section, wid, index, drag, dragging }) => {
       <Box
         sx={section.type === 'graphic' ? {
           py: sl && sl.variant === 'wide' ? { xs: 3, md: 0 } : 6,
-          px: sl && sl.variant === 'wide' ? 0 : { xs: 5, md: 30 },
+          px: sl && sl.variant === 'wide' ? 0 : { xs: 5, md: 30, xl: 40 },
           position: 'relative', display: 'flex', justifyContent: 'center',
           color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
         } : {
-          py: 6, px: sl && sl.variant === 'wide' ? { xs: 4, md: 22 } : { xs: 6, md: 33 },
-          position: 'relative', display: 'flex', justifyContent: 'center',
+          px: sl && sl.variant === 'wide' ? { xs: 4, md: 22, xl: 32 } : { xs: 6, md: 33, xl: 43 },
+          py: 6, position: 'relative', display: 'flex', justifyContent: 'center',
           color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
         }}
         onMouseOver={() => setHover(true)}

@@ -27,8 +27,3 @@ ul, ol {
   color: blue;
   text-decoration: none;
 }
-
-.picker .react-colorful {
-  width: 150px;
-  height: 150px;
-}

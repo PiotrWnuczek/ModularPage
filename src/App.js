@@ -24,11 +24,9 @@ const ScrollTop = ({ children }) => {
 };
 
 const App = () => {
-  const active = true;
   const host = /*'localhost:3000'*/'modularpage.com';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
-  const pl = window.navigator.language.includes('pl');
   const theme = createTheme({
     typography: { fontFamily: 'Lato' },
     palette: { secondary: { light: grey[50], main: grey[100], dark: blueGrey[50] } },
@@ -37,7 +35,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        {active && <ScrollTop>
+        <ScrollTop>
           {window.location.host === host ? <Routes>
             <Route path='/en' element={<AboutView lang='en' />} />
             <Route path='/pl' element={<AboutView lang='pl' />} />
@@ -53,22 +51,11 @@ const App = () => {
             <Route path='/:id/admin' element={access ? <WebsiteView admin /> : <Navigate to='/signin' />} />
             <Route path='/:id/*' element={<WebsiteView />} />
             <Route path='/app' element={<Navigate to='/board' />} />
-            <Route path='/*' element={pl ? <Navigate to='/pl' /> : <Navigate to='/en' />} />
+            <Route path='/*' element={<Navigate to='/try' />} />
           </Routes> : <Routes>
             <Route path='/*' element={<WebsiteView host={window.location.host} />} />
           </Routes>}
-        </ScrollTop>}
-        {!active && <ScrollTop>
-          <Routes>
-            <Route path='/en' element={<AboutView lang='en' />} />
-            <Route path='/pl' element={<AboutView lang='pl' />} />
-            <Route path='/en/privacy' element={<PrivacyView lang='en' />} />
-            <Route path='/pl/privacy' element={<PrivacyView lang='pl' />} />
-            <Route path='/en/rules' element={<RulesView lang='en' />} />
-            <Route path='/pl/rules' element={<RulesView lang='pl' />} />
-            <Route path='/*' element={pl ? <Navigate to='/pl' /> : <Navigate to='/en' />} />
-          </Routes>
-        </ScrollTop>}
+        </ScrollTop>
       </BrowserRouter>
     </ThemeProvider>
   )

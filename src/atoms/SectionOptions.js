@@ -171,18 +171,18 @@ const SectionOptions = ({ section, wid, hover }) => {
                   size='small'
                   exclusive
                 >
-                  <ToggleButton value={itemize ? '1' : '0'}>
+                  {!form && <ToggleButton value={itemize ? '1' : '0'}>
                     <Widgets sx={{ mr: 1 }} />
-                    {form ? 'Without Disclaimer' : itemize ? 'One Block' : 'Zero Buttons'}
-                  </ToggleButton>
+                    {itemize ? 'One Block' : 'Zero Buttons'}
+                  </ToggleButton>}
                   <ToggleButton value={itemize ? '2' : '1'}>
                     <Widgets sx={{ mr: 1 }} />
-                    {form ? 'With Disclaimer' : itemize ? 'Two Blocks' : 'One Button'}
+                    {form ? 'Without Disclaimer' : itemize ? 'Two Blocks' : 'One Button'}
                   </ToggleButton>
-                  {!form && <ToggleButton value={itemize ? '3' : '2'}>
+                  <ToggleButton value={itemize ? '3' : '2'}>
                     <Widgets sx={{ mr: 1 }} />
-                    {itemize ? 'Three Blocks' : 'Two Buttons'}
-                  </ToggleButton>}
+                    {form ? 'With Disclaimer' : itemize ? 'Three Blocks' : 'Two Buttons'}
+                  </ToggleButton>
                 </ToggleButtonGroup>
               </Grid>
             </Grid>

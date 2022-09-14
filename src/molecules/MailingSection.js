@@ -127,7 +127,7 @@ const MailingSection = ({ admin, section, wid }) => {
           </form>
         )}
       </Formik>}
-      {sl && sl.quantity === '1' && <Typography variant='caption'>
+      {sl && sl.quantity === '2' && <Typography variant='caption'>
         Subscribing you accept rules and privacy.
       </Typography>}
       <Dialog

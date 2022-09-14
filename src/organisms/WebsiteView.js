@@ -29,6 +29,7 @@ const WebsiteView = ({ admin, host }) => {
   const access = website && admin && auth.uid === website.uid;
   const ws = website && website.style;
   const theme = createTheme({
+    breakpoints: { values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 2000 } },
     palette: {
       fontcolor: { main: (ws && ws.fontcolor) || '#444444' },
       accentcolor: { main: (ws && ws.accentcolor) || '#1976d2', contrastText: 'white' },
