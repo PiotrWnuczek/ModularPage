@@ -11,7 +11,7 @@ import IconboxSection from 'molecules/IconboxSection';
 import MailingSection from 'molecules/MailingSection';
 import SellingSection from 'molecules/SellingSection';
 
-const BlockTemplate = ({ admin, section, wid, index, drag, dragging }) => {
+const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
   const [hover, setHover] = useState(false);
   const sl = section.layout;
   const ss = section.style;
@@ -89,6 +89,7 @@ const BlockTemplate = ({ admin, section, wid, index, drag, dragging }) => {
         {section.type === 'mailing' && <MailingSection
           admin={admin}
           wid={wid}
+          uid={uid}
           section={section}
         />}
         {section.type === 'selling' && <SellingSection

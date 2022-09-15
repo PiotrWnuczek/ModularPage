@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 import FormOptions from 'atoms/FormOptions';
 
-const MailingSection = ({ admin, section, wid }) => {
+const MailingSection = ({ admin, section, wid, uid }) => {
   const [success, setSuccess] = useState(false);
   const firebase = useFirebase();
   const senderFunction = (email) => {
@@ -17,7 +17,7 @@ const MailingSection = ({ admin, section, wid }) => {
   };
   const mailerliteFunction = (email) => {
     const mailerlite = firebase.functions().httpsCallable('mailerlite');
-    mailerlite({ email, group: section.group }).then((result) => console.log(result));
+    mailerlite({ uid, email, group: section.group }).then((result) => console.log(result));
   };
   const sl = section.layout;
 

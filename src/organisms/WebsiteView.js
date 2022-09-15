@@ -118,6 +118,7 @@ const WebsiteView = ({ admin, host }) => {
               admin={access}
               section={item}
               wid={website.name}
+              uid={website.uid}
               key={item.id}
             />
           )}

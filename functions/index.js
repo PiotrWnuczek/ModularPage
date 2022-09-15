@@ -14,8 +14,8 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-exports.sender = functions.https.onCall(async (data, context) => {
-  const ref = admin.firestore().collection('users').doc(context.auth.uid);
+exports.sender = functions.https.onCall(async (data, c) => {
+  const ref = admin.firestore().collection('users').doc(data.uid);
   const sender = await ref.get().then(res => res.data().sender);
   const headers = {
     'Authorization': 'Bearer ' + sender,
@@ -33,8 +33,8 @@ exports.sender = functions.https.onCall(async (data, context) => {
   return 'sender';
 });
 
-exports.mailerlite = functions.https.onCall(async (data, context) => {
-  const ref = admin.firestore().collection('users').doc(context.auth.uid);
+exports.mailerlite = functions.https.onCall(async (data, c) => {
+  const ref = admin.firestore().collection('users').doc(data.uid);
   const mailerlite = await ref.get().then(res => res.data().mailerlite);
   const headers = {
     'X-MailerLite-ApiKey': mailerlite,
