@@ -81,7 +81,7 @@ exports.domaincreate = functions.firestore
       to: snap.data().email,
       subject: '[Modular Page] Domain Create',
       html: '<h3>Modular Page Domain Create</h3>' +
-        '<p>Set DNS: ns1.small.pl, ns2.small.pl, for the Domain: ' +
+        '<p>Set DNS: dns1.small.pl, dns2.small.pl, for the Domain: ' +
         context.params.id + '</p>' +
         '<p>DNS change propagation may take from several minutes to several dozen hours.</p>' +
         '<p>If you have any questions, please contact me.</p>',
