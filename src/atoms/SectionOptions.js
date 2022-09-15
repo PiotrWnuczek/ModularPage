@@ -192,13 +192,10 @@ const SectionOptions = ({ section, wid, hover }) => {
               (style.fontsize !== theme.fontsize ||
                 style.fontcolor !== theme.palette.fontcolor.main ||
                 style.accentcolor !== theme.palette.accentcolor.main ||
-                style.backgroundcolor !== theme.palette.backgroundcolor.main) &&
+                style.backgroundcolor !== theme.palette.backgroundcolor.main ||
+                !_.isEqual(layout, section.layout)) &&
                 dispatch(updateSection({
-                  values: { style }, sid: section.id, wid,
-                }));
-              !_.isEqual(layout, section.layout) &&
-                dispatch(updateSection({
-                  values: { layout }, sid: section.id, wid,
+                  values: { style, layout }, sid: section.id, wid,
                 }));
               setOpen(false);
             }}

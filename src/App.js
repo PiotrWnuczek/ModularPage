@@ -13,9 +13,6 @@ import WebsiteView from 'organisms/WebsiteView';
 import AccountView from 'organisms/AccountView';
 import BoardView from 'organisms/BoardView';
 import CreateView from 'organisms/CreateView';
-import AboutView from 'about/AboutView';
-import PrivacyView from 'about/PrivacyView';
-import RulesView from 'about/RulesView';
 
 const ScrollTop = ({ children }) => {
   const location = useLocation();
@@ -24,7 +21,7 @@ const ScrollTop = ({ children }) => {
 };
 
 const App = () => {
-  const host = /*'localhost:3000'*/'modularpage.com';
+  const host = 1 ? 'modularpage.com' : 'localhost:3000';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
   const theme = createTheme({
@@ -37,12 +34,6 @@ const App = () => {
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <ScrollTop>
           {window.location.host === host ? <Routes>
-            <Route path='/en' element={<AboutView lang='en' />} />
-            <Route path='/pl' element={<AboutView lang='pl' />} />
-            <Route path='/en/privacy' element={<PrivacyView lang='en' />} />
-            <Route path='/pl/privacy' element={<PrivacyView lang='pl' />} />
-            <Route path='/en/rules' element={<RulesView lang='en' />} />
-            <Route path='/pl/rules' element={<RulesView lang='pl' />} />
             <Route path='/signin' element={<SigninView />} />
             <Route path='/signup' element={<SignupView />} />
             <Route path='/account' element={access ? <AccountView /> : <Navigate to='/signin' />} />
@@ -51,6 +42,7 @@ const App = () => {
             <Route path='/:id/admin' element={access ? <WebsiteView admin /> : <Navigate to='/signin' />} />
             <Route path='/:id/*' element={<WebsiteView />} />
             <Route path='/app' element={<Navigate to='/board' />} />
+            <Route path='/pl' element={<Navigate to='/try' />} />
             <Route path='/*' element={<Navigate to='/try' />} />
           </Routes> : <Routes>
             <Route path='/*' element={<WebsiteView host={window.location.host} />} />
