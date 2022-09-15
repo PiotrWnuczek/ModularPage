@@ -13,11 +13,11 @@ const MailingSection = ({ admin, section, wid, uid }) => {
   const firebase = useFirebase();
   const senderFunction = (email) => {
     const sender = firebase.functions().httpsCallable('sender');
-    sender({ email, group: section.group }).then((result) => console.log(result));
+    sender({ uid, email, group: section.group });
   };
   const mailerliteFunction = (email) => {
     const mailerlite = firebase.functions().httpsCallable('mailerlite');
-    mailerlite({ uid, email, group: section.group }).then((result) => console.log(result));
+    mailerlite({ uid, email, group: section.group });
   };
   const sl = section.layout;
 
