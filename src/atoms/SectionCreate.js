@@ -62,7 +62,6 @@ const SectionCreate = ({ wid, index, start, hover }) => {
               }}>
                 <CardMedia
                   component='img'
-                  height='120'
                   image={section.image}
                 />
                 <Box sx={{ p: 1, display: 'flex', alignItems: 'center' }}>

@@ -54,6 +54,10 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
       >
+        {admin && (hover || dragging) && <Box sx={{
+          bgcolor: 'black', opacity: 0.03, position: 'absolute',
+          top: 0, width: '100%', height: '100%', zIndex: 1,
+        }} />}
         {admin && <Box sx={{
           pt: 1.6, pb: 0.6, zIndex: 100, position: 'absolute', top: 0,
           display: { xs: 'flex', md: (hover || dragging) ? 'flex' : 'none' },
@@ -72,32 +76,34 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
             </Tooltip> : <DragIndicator />}
           </Avatar>
         </Box>}
-        {section.type === 'content' && <ContentSection
-          admin={admin}
-          wid={wid}
-          section={section}
-        />}
-        {section.type === 'graphic' && <GraphicSection
-          admin={admin}
-          wid={wid}
-          section={section}
-        />}
-        {section.type === 'iconbox' && <IconboxSection
-          admin={admin}
-          wid={wid}
-          section={section}
-        />}
-        {section.type === 'mailing' && <MailingSection
-          admin={admin}
-          wid={wid}
-          uid={uid}
-          section={section}
-        />}
-        {section.type === 'selling' && <SellingSection
-          admin={admin}
-          wid={wid}
-          section={section}
-        />}
+        <Box sx={{ zIndex: 10 }}>
+          {section.type === 'content' && <ContentSection
+            admin={admin}
+            wid={wid}
+            section={section}
+          />}
+          {section.type === 'graphic' && <GraphicSection
+            admin={admin}
+            wid={wid}
+            section={section}
+          />}
+          {section.type === 'iconbox' && <IconboxSection
+            admin={admin}
+            wid={wid}
+            section={section}
+          />}
+          {section.type === 'mailing' && <MailingSection
+            admin={admin}
+            wid={wid}
+            uid={uid}
+            section={section}
+          />}
+          {section.type === 'selling' && <SellingSection
+            admin={admin}
+            wid={wid}
+            section={section}
+          />}
+        </Box>
         {admin && <Box sx={{
           pb: 1.6, pt: 0.6, zIndex: 100, position: 'absolute', bottom: 0,
           display: { xs: 'flex', md: (hover || dragging) ? 'flex' : 'none' },

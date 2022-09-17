@@ -3,9 +3,9 @@ import { createWebsite } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { useNavigate } from 'react-router-dom';
-import { Box, Grid, Dialog, Button, Avatar } from '@mui/material';
-import { Typography, Card, CardActionArea } from '@mui/material';
-import { TextField, CardMedia, Divider } from '@mui/material';
+import { Box, Grid, Dialog, Button } from '@mui/material';
+import { Avatar, TextField, Typography } from '@mui/material';
+import { Card, CardActionArea, CardMedia } from '@mui/material';
 import { CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
 import { CheckBoxOutlined, Edit } from '@mui/icons-material';
 import { Formik } from 'formik';
@@ -44,7 +44,6 @@ const CreateView = () => {
               <CardActionArea onClick={() => setTemplate('landing')}>
                 <CardMedia
                   component='img'
-                  height={{ xs: 230, md: 330 }}
                   image={Landing}
                 />
                 <Box sx={{ p: 1, display: 'flex', alignItems: 'center' }}>
@@ -72,7 +71,6 @@ const CreateView = () => {
               <CardActionArea onClick={() => setTemplate('product')}>
                 <CardMedia
                   component='img'
-                  height={{ xs: 230, md: 330 }}
                   image={Product}
                 />
                 <Box sx={{ p: 1, display: 'flex', alignItems: 'center' }}>
@@ -92,9 +90,6 @@ const CreateView = () => {
               </CardActionArea>
             </Card>
           </Grid>
-        </Grid>
-        <Divider sx={{ my: 2 }} />
-        <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Card
               sx={{ bgcolor: 'secondary.light', borderRadius: 2 }}

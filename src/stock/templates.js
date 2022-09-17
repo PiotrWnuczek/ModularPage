@@ -94,29 +94,6 @@ const product = [
   { ...content, id: Math.random().toString(16).slice(2) },
 ];
 
-const about = [
-  {
-    ...content,
-    id: Math.random().toString(16).slice(2),
-    layout: { variant: 'wide', quantity: '2' },
-  },
-  {
-    ...graphic,
-    id: Math.random().toString(16).slice(2),
-    layout: { variant: 'wide', position: 'left', quantity: '2' },
-  },
-  {
-    ...graphic,
-    id: Math.random().toString(16).slice(2),
-    layout: { variant: 'wide', position: 'right', quantity: '2' },
-  },
-  {
-    ...iconbox,
-    id: Math.random().toString(16).slice(2),
-    layout: { variant: 'wide', quantity: '3' },
-  },
-];
-
-const templates = { landing, product, about };
+const templates = { landing, product };
 
 export default templates;

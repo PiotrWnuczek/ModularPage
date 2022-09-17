@@ -26,17 +26,19 @@ const WebsiteCard = ({ website }) => {
             <Web />
           </Avatar>
           <Box sx={{ ml: 2 }}>
-            <Typography variant='h5'>
-              {website.name}
+            <Typography variant='h6'>
+              {website.domain === 'custom' && website.name}
+              {website.domain === 'app' && 'modularpage.com/' + website.name}
             </Typography>
-            <Link
+            <Button
+              component={Link}
               href={website.domain === 'custom' ?
                 'https://' + website.name : '/' + website.name}
               target='_blank'
+              size='small'
             >
-              {website.domain === 'custom' && website.name}
-              {website.domain === 'app' && 'modularpage.com/' + website.name}
-            </Link>
+              Link to website
+            </Button>
           </Box>
         </Grid>
         <Grid
