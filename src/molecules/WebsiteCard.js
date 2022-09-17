@@ -2,10 +2,10 @@ import React from 'react';
 import { updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Box, Card, Grid, Typography } from '@mui/material';
-import { Button, IconButton, Avatar } from '@mui/material';
-import { Link, FormControlLabel, Switch } from '@mui/material';
-import { Edit, InsertLink, Web } from '@mui/icons-material';
+import { Box, Grid, Card, Button } from '@mui/material';
+import { Typography, Avatar, Link } from '@mui/material';
+import { FormControlLabel, Switch } from '@mui/material';
+import { Edit, Web } from '@mui/icons-material';
 import RemoveConfirm from 'atoms/RemoveConfirm';
 
 const WebsiteCard = ({ website }) => {
@@ -17,34 +17,26 @@ const WebsiteCard = ({ website }) => {
       sx={{ bgcolor: 'secondary.light', borderRadius: 2 }}
       variant='outlined'
     >
-      <Grid
-        sx={{ p: 2 }}
-        container
-      >
+      <Grid sx={{ p: 2 }} container>
         <Grid
           sx={{ display: 'flex', alignItems: 'center' }}
           item xs={12} md={6}
         >
-          <Avatar sx={{ mr: 2, bgcolor: 'primary.main' }}>
+          <Avatar sx={{ bgcolor: 'primary.main' }}>
             <Web />
           </Avatar>
-          <Box>
-            <Typography sx={{ fontSize: 24 }}>
+          <Box sx={{ ml: 2 }}>
+            <Typography variant='h5'>
               {website.name}
-              <IconButton
-                sx={{ mx: 1 }}
-                component={Link}
-                href={'/' + website.name}
-                target='_blank'
-                color='primary'
-                size='small'
-              >
-                <InsertLink />
-              </IconButton>
             </Typography>
-            <Typography sx={{ textTransform: 'capitalize' }}>
-              {website.domain} Domain
-            </Typography>
+            <Link
+              href={website.domain === 'custom' ?
+                'https://' + website.name : '/' + website.name}
+              target='_blank'
+            >
+              {website.domain === 'custom' && website.name}
+              {website.domain === 'app' && 'modularpage.com/' + website.name}
+            </Link>
           </Box>
         </Grid>
         <Grid

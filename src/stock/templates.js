@@ -82,15 +82,15 @@ export const footer = {
 
 const landing = [
   { ...graphic, id: Math.random().toString(16).slice(2) },
-  { ...iconbox, id: Math.random().toString(16).slice(2) },
   { ...mailing, id: Math.random().toString(16).slice(2) },
+  { ...iconbox, id: Math.random().toString(16).slice(2) },
   { ...content, id: Math.random().toString(16).slice(2) },
 ];
 
 const product = [
   { ...graphic, id: Math.random().toString(16).slice(2) },
-  { ...iconbox, id: Math.random().toString(16).slice(2) },
   { ...selling, id: Math.random().toString(16).slice(2) },
+  { ...iconbox, id: Math.random().toString(16).slice(2) },
   { ...content, id: Math.random().toString(16).slice(2) },
 ];
 

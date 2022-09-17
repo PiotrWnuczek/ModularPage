@@ -3,13 +3,16 @@ import { createWebsite } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { useNavigate } from 'react-router-dom';
-import { Box, Card, Button, Dialog } from '@mui/material';
-import { Typography, CardHeader, Avatar } from '@mui/material';
-import { TextField, CardActionArea } from '@mui/material';
-import { Dns, Wysiwyg } from '@mui/icons-material';
+import { Box, Grid, Dialog, Button, Avatar } from '@mui/material';
+import { Typography, Card, CardActionArea } from '@mui/material';
+import { TextField, CardMedia, Divider } from '@mui/material';
+import { CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
+import { CheckBoxOutlined, Edit } from '@mui/icons-material';
 import { Formik } from 'formik';
 import { header, footer } from 'stock/templates';
 import templates from 'stock/templates';
+import Landing from 'stock/landing.png';
+import Product from 'stock/product.png';
 import MainLayout from 'organisms/MainLayout';
 
 const CreateView = () => {
@@ -32,97 +35,115 @@ const CreateView = () => {
   return (
     <MainLayout>
       <Box sx={{ p: 2 }}>
-        <Typography variant='h6'>
-          Select Domain Variant
-        </Typography>
-        <Card
-          sx={{ my: 1, bgcolor: 'secondary.light', borderRadius: 2 }}
-          variant='outlined'
-        >
-          <CardActionArea onClick={() => setDomain('app')}>
-            <CardHeader
-              avatar={
-                <Avatar sx={{ bgcolor: domain === 'app' && 'primary.main' }}>
-                  <Dns />
-                </Avatar>
-              }
-              title='App Domain'
-              subheader='Free - modularpage.com/YourName - Without connecting domain'
-            />
-          </CardActionArea>
-        </Card>
-        <Card
-          sx={{ my: 1, bgcolor: 'secondary.light', borderRadius: 2 }}
-          variant='outlined'
-        >
-          <CardActionArea onClick={() => {
-            profile.premium.toDate() < new Date() ? setInfo('plan') : setDomain('custom');
-          }}>
-            <CardHeader
-              avatar={
-                <Avatar sx={{ bgcolor: domain === 'custom' && 'primary.main' }}>
-                  <Dns />
-                </Avatar>
-              }
-              title='Custom Domain'
-              subheader='Premium - YourDomain.com - You will receive mail with DNS'
-            />
-          </CardActionArea>
-        </Card>
-        <Typography variant='h6'>
-          Select Page Temaplate
-        </Typography>
-        <Card
-          sx={{ my: 1, bgcolor: 'secondary.light', borderRadius: 2 }}
-          variant='outlined'
-        >
-          <CardActionArea onClick={() => setTemplate('landing')}>
-            <CardHeader
-              avatar={
-                <Avatar sx={{ bgcolor: template === 'landing' && 'primary.main' }}>
-                  <Wysiwyg />
-                </Avatar>
-              }
-              title='Landing Page'
-              subheader='Page template with mailing form'
-            />
-          </CardActionArea>
-        </Card>
-        <Card
-          sx={{ my: 1, bgcolor: 'secondary.light', borderRadius: 2 }}
-          variant='outlined'
-        >
-          <CardActionArea onClick={() => setTemplate('product')}>
-            <CardHeader
-              avatar={
-                <Avatar sx={{ bgcolor: template === 'product' && 'primary.main' }}>
-                  <Wysiwyg />
-                </Avatar>
-              }
-              title='Product Page'
-              subheader='Page template with payment buttons'
-            />
-          </CardActionArea>
-        </Card>
-        <Card
-          sx={{ my: 1, bgcolor: 'secondary.light', borderRadius: 2 }}
-          variant='outlined'
-        >
-          <CardActionArea onClick={() => setTemplate('about')}>
-            <CardHeader
-              avatar={
-                <Avatar sx={{ bgcolor: template === 'about' && 'primary.main' }}>
-                  <Wysiwyg />
-                </Avatar>
-              }
-              title='About Page'
-              subheader='Page template with presentation sections'
-            />
-          </CardActionArea>
-        </Card>
-        <Typography variant='h6'>
-          Create New Website
-        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Card
+              sx={{ bgcolor: 'secondary.light', borderRadius: 2 }}
+              variant='outlined'
+            >
+              <CardActionArea onClick={() => setTemplate('landing')}>
+                <CardMedia
+                  component='img'
+                  height={{ xs: 230, md: 330 }}
+                  image={Landing}
+                />
+                <Box sx={{ p: 1, display: 'flex', alignItems: 'center' }}>
+                  <Avatar sx={{ bgcolor: template === 'landing' && 'primary.main' }}>
+                    {template === 'landing' && <CheckBoxOutlined />}
+                    {template !== 'landing' && <CheckBoxOutlineBlankOutlined />}
+                  </Avatar>
+                  <Box sx={{ ml: 1 }}>
+                    <Typography>
+                      Landing Page
+                    </Typography>
+                    <Typography variant='body2'>
+                      Website with mailing form
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardActionArea>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Card
+              sx={{ bgcolor: 'secondary.light', borderRadius: 2 }}
+              variant='outlined'
+            >
+              <CardActionArea onClick={() => setTemplate('product')}>
+                <CardMedia
+                  component='img'
+                  height={{ xs: 230, md: 330 }}
+                  image={Product}
+                />
+                <Box sx={{ p: 1, display: 'flex', alignItems: 'center' }}>
+                  <Avatar sx={{ bgcolor: template === 'product' && 'primary.main' }}>
+                    {template === 'product' && <CheckBoxOutlined />}
+                    {template !== 'product' && <CheckBoxOutlineBlankOutlined />}
+                  </Avatar>
+                  <Box sx={{ ml: 1 }}>
+                    <Typography>
+                      Product Page
+                    </Typography>
+                    <Typography variant='body2'>
+                      Website with payment buttons
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        </Grid>
+        <Divider sx={{ my: 2 }} />
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Card
+              sx={{ bgcolor: 'secondary.light', borderRadius: 2 }}
+              variant='outlined'
+            >
+              <CardActionArea onClick={() => setDomain('app')}>
+                <Box sx={{ p: 1, display: 'flex', alignItems: 'center' }}>
+                  <Avatar sx={{ bgcolor: domain === 'app' && 'primary.main' }}>
+                    {domain === 'app' && <CheckBoxOutlined />}
+                    {domain !== 'app' && <CheckBoxOutlineBlankOutlined />}
+                  </Avatar>
+                  <Box sx={{ ml: 1 }}>
+                    <Typography>
+                      App Domain
+                    </Typography>
+                    <Typography variant='body2'>
+                      modularpage.com/YourName (free option)
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardActionArea>
+            </Card>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Card
+              sx={{ bgcolor: 'secondary.light', borderRadius: 2 }}
+              variant='outlined'
+            >
+              <CardActionArea onClick={() => {
+                profile.premium.toDate() < new Date() ? setInfo('plan') : setDomain('custom');
+              }}>
+                <Box sx={{ p: 1, display: 'flex', alignItems: 'center' }}>
+                  <Avatar sx={{ bgcolor: domain === 'custom' && 'primary.main' }}>
+                    {domain === 'custom' && <CheckBoxOutlined />}
+                    {domain !== 'custom' && <CheckBoxOutlineBlankOutlined />}
+                  </Avatar>
+                  <Box sx={{ ml: 1 }}>
+                    <Typography>
+                      Custom Domain
+                    </Typography>
+                    <Typography variant='body2'>
+                      YourDomain.com (you will receive mail with DNS)
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        </Grid>
         <Formik
           initialValues={{ name: '' }}
           onSubmit={(values) => {
@@ -148,7 +169,7 @@ const CreateView = () => {
           {({ values, handleChange, handleSubmit }) => (
             <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
               <TextField
-                sx={{ my: 1 }}
+                sx={{ my: 2 }}
                 onChange={handleChange}
                 value={domain === 'app' ? values.name.replace(/\./g, '') : values.name}
                 placeholder={domain === 'app' ? 'Website Name' : 'Domain Name'}
@@ -164,10 +185,10 @@ const CreateView = () => {
           )}
         </Formik>
         {(error || warning) && <Typography>
-          website already exists or the name is not available.
+          Website already exists or the name is not available.
         </Typography>}
         <Button
-          sx={{ my: 1 }}
+          startIcon={<Edit />}
           type='submit'
           form='confirm'
           variant='contained'
