@@ -36,9 +36,18 @@ const WebsiteCard = ({ website }) => {
                 'https://' + website.name : '/' + website.name}
               target='_blank'
               size='small'
+              disabled={!website.public}
             >
               Link to website
             </Button>
+            <FormControlLabel
+              sx={{ m: 0 }}
+              control={<Switch checked={website.public} size='small' />}
+              onChange={(e, value) => dispatch(updateWebsite({
+                values: { public: value }, wid: website.name,
+              }))}
+              label='public'
+            />
           </Box>
         </Grid>
         <Grid
@@ -58,15 +67,6 @@ const WebsiteCard = ({ website }) => {
           >
             Open Editor
           </Button>
-          <FormControlLabel
-            sx={{ mr: 3 }}
-            control={<Switch checked={website.public} size='small' />}
-            onChange={(e, value) => dispatch(updateWebsite({
-              values: { public: value },
-              wid: website.name,
-            }))}
-            label='public'
-          />
           <RemoveConfirm wid={website.name} type='website' />
         </Grid>
       </Grid>

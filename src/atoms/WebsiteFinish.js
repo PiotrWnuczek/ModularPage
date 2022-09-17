@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { updateWebsite } from 'redux/websitesSlice';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Box, Dialog, Button, Link } from '@mui/material';
 import { Typography, Avatar } from '@mui/material';
+import { FormControlLabel, Switch } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 
-const WebsiteFinish = ({ wid }) => {
+const WebsiteFinish = ({ website }) => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -31,13 +35,29 @@ const WebsiteFinish = ({ wid }) => {
           <Typography variant='h5'>
             Exit Editor
           </Typography>
-          <Typography sx={{ my: 1 }}>
-            Changes are saved, exit to board,
-            or open: {' '}
-            <Link href={'/' + wid} target='_blank'>
-              modularpage.com/{wid}
-            </Link>
-          </Typography>
+          <Box sx={{ my: 1, mb: 2 }}>
+            <Typography>
+              Changes are saved, you can exit to board.
+            </Typography>
+            <Button
+              component={Link}
+              href={website.domain === 'custom' ?
+                'https://' + website.name : '/' + website.name}
+              target='_blank'
+              size='small'
+              disabled={!website.public}
+            >
+              Link to website
+            </Button>
+            <FormControlLabel
+              sx={{ m: 0 }}
+              control={<Switch checked={website.public} size='small' />}
+              onChange={(e, value) => dispatch(updateWebsite({
+                values: { public: value }, wid: website.name,
+              }))}
+              label='public'
+            />
+          </Box>
           <Button
             onClick={() => {
               navigate('/board');

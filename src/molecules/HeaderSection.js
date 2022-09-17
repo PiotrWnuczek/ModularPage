@@ -144,15 +144,15 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
             >
               <ToggleButton value='logo'>
                 <Style sx={{ mr: 1 }} />
-                Enable Logo
+                Only Logo
               </ToggleButton>
               <ToggleButton value='title'>
                 <Style sx={{ mr: 1 }} />
-                Enable Title
+                Only Title
               </ToggleButton>
               <ToggleButton value='all'>
                 <Style sx={{ mr: 1 }} />
-                Enable All
+                Logo and Title
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>

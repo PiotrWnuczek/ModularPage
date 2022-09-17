@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { updateWebsite } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { Button, Link } from '@mui/material';
 import { Helmet } from 'react-helmet';
 import WebsiteFinish from 'atoms/WebsiteFinish';
 import WebsiteOptions from 'atoms/WebsiteOptions';
@@ -23,13 +24,12 @@ const WebsiteView = ({ admin, host }) => {
   const auth = useSelector(state => state.firebase.auth);
   useFirestoreConnect([{ storeAs: wid, collection: 'websites', doc: wid }]);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [data, setData] = useState(website && [...website.sections]);
   useEffect(() => { setData(website && [...website.sections]) }, [website]);
   const access = website && admin && auth.uid === website.uid;
   const ws = website && website.style;
   const theme = createTheme({
-    breakpoints: { values: { xs: 0, sm: 700, md: 900, lg: 1200, xl: 1600 } },
+    breakpoints: { values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1600 } },
     palette: {
       fontcolor: { main: (ws && ws.fontcolor) || '#444444' },
       accentcolor: { main: (ws && ws.accentcolor) || '#1976d2', contrastText: 'white' },
@@ -67,7 +67,7 @@ const WebsiteView = ({ admin, host }) => {
           <meta name='description' content={website && website.description} />
           <link rel='icon' href={website && website.favicon} />
         </Helmet>
-        {access && <WebsiteFinish wid={website.name} />}
+        {access && <WebsiteFinish website={website} />}
         {access && <WebsiteOptions website={website} />}
         {access && website && !website.sections.length && <Box
           sx={{ py: 10, display: 'flex', justifyContent: 'center' }}
@@ -131,7 +131,8 @@ const WebsiteView = ({ admin, host }) => {
               Page not public
             </Typography>
             <Button
-              onClick={() => navigate('/')}
+              component={Link}
+              href='https://modularpage.com/app'
               size='small'
             >
               Modular Page

@@ -42,12 +42,12 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
       <Box
         sx={section.type === 'graphic' ? {
           py: sl && sl.variant === 'wide' ? { xs: 3, md: 0 } : 6,
-          px: sl && sl.variant === 'wide' ? 0 : { xs: 5, md: 10, lg: 25, xl: 45 },
+          px: sl && sl.variant === 'wide' ? 0 : { xs: 5, md: 10, lg: 30, xl: 50 },
           position: 'relative', display: 'flex', justifyContent: 'center',
           color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
         } : {
           px: sl && sl.variant === 'wide' ?
-            { xs: 4, md: 8, lg: 22, xl: 42 } : { xs: 6, md: 12, lg: 28, xl: 48 },
+            { xs: 4, md: 8, lg: 26, xl: 46 } : { xs: 6, md: 12, lg: 34, xl: 54 },
           py: 6, position: 'relative', display: 'flex', justifyContent: 'center',
           color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
         }}

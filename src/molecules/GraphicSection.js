@@ -23,7 +23,7 @@ const GraphicSection = ({ admin, section, wid }) => {
           px: sl && sl.variant === 'wide' ? { xs: 4, md: 8 } : 2,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
-        item xs={12} sm={6}
+        item xs={12} md={6}
       >
         <Box sx={{ textAlign: 'center', width: '100%' }}>
           <TextEditor
@@ -87,7 +87,7 @@ const GraphicSection = ({ admin, section, wid }) => {
           maxHeight: 400, display: 'flex',
           alignItems: 'center', justifyContent: 'center',
         }}
-        item xs={12} sm={6}
+        item xs={12} md={6}
       >
         <ImageOptions admin={admin} section={section} wid={wid}>
           <Box
