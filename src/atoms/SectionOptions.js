@@ -5,9 +5,9 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Typography, Button, Grid, Dialog } from '@mui/material';
 import { Avatar, Divider, Alert, AlertTitle } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton, Tooltip } from '@mui/material';
-import { Tune, CheckBoxOutlined, CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
+import { Widgets, Tune, TextDecrease, TextIncrease } from '@mui/icons-material';
 import { FormatAlignLeft, FormatAlignCenter, FormatAlignRight } from '@mui/icons-material';
-import { Widgets, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
+import { CheckBoxOutlined, CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
 import StyleEditor from 'atoms/StyleEditor';
 import _ from 'lodash';
 import ReactMarkdown from 'react-markdown';
@@ -18,11 +18,10 @@ const about = `
 `;
 
 const SectionOptions = ({ section, wid, hover }) => {
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
   const initial = {
-    fontsize: theme.fontsize,
     fontcolor: theme.palette.fontcolor.main,
     accentcolor: theme.palette.accentcolor.main,
     backgroundcolor: theme.palette.backgroundcolor.main,
@@ -31,7 +30,6 @@ const SectionOptions = ({ section, wid, hover }) => {
   const reset = () => setStyle(initial);
   useEffect(() => {
     setStyle({
-      fontsize: theme.fontsize,
       fontcolor: theme.palette.fontcolor.main,
       accentcolor: theme.palette.accentcolor.main,
       backgroundcolor: theme.palette.backgroundcolor.main,
@@ -39,12 +37,13 @@ const SectionOptions = ({ section, wid, hover }) => {
   }, [theme]);
   const sl = section.layout;
   const [layout, setLayout] = useState({
-    quantity: (sl && sl.quantity) || (section.type === 'iconbox' ? '3' : '2'),
+    fontsize: (sl && sl.fontsize) || 'm',
+    textalign: (sl && sl.textalign) || 'center',
     variant: (sl && sl.variant) || 'narrow',
-    align: (sl && sl.align) || 'center',
-    position: (sl && sl.position) || 'right',
+    quantity: (sl && sl.quantity) || (section.type === 'iconbox' ? '3' : '2'),
   });
-  const itemize = section.type === 'iconbox' || section.type === 'selling';
+  const buttons = section.type === 'graphic' || section.type === 'content';
+  const blocks = section.type === 'iconbox' || section.type === 'selling';
   const form = section.type === 'mailing';
 
   return (
@@ -65,7 +64,6 @@ const SectionOptions = ({ section, wid, hover }) => {
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
         onClose={() => setOpen(false)}
-        scroll='body'
         fullWidth
       >
         <Box sx={{ p: 2 }}>
@@ -76,7 +74,7 @@ const SectionOptions = ({ section, wid, hover }) => {
             {section && section.type} Section Settings
           </Typography>
           <Alert
-            sx={{ my: 1, py: 0, px: 1 }}
+            sx={{ mt: 1, py: 0, px: 1 }}
             severity='info'
           >
             <AlertTitle>
@@ -94,104 +92,97 @@ const SectionOptions = ({ section, wid, hover }) => {
             wid={section.style && wid}
           />
           <Divider />
-          <Box sx={{ py: 2 }}>
-            <Grid container>
-              <Grid item xs={12} md={section.type === 'graphic' ? 7 : 8}>
-                {['narrow', 'wide'].map(item =>
-                  <Box
-                    sx={{ my: 1, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-                    onClick={() => setLayout({ ...layout, variant: item })}
-                    key={item}
-                  >
-                    <Avatar sx={{ bgcolor: layout.variant === item && 'primary.main' }}>
-                      {layout.variant === item && <CheckBoxOutlined />}
-                      {layout.variant !== item && <CheckBoxOutlineBlankOutlined />}
-                    </Avatar>
-                    <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
-                      {section.type !== 'graphic' ? item + ' layout' :
-                        (item === 'wide' ? 'full size image' : 'standard image')
-                      } variant
-                    </Typography>
-                  </Box>
-                )}
+          <Grid sx={{ py: 2 }} container spacing={2}>
+            {['narrow', 'wide'].map(item =>
+              <Grid item xs={12} md='auto' key={item}>
+                <Box
+                  sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                  onClick={() => setLayout({ ...layout, variant: item })}
+                >
+                  <Avatar sx={{ bgcolor: layout.variant === item && 'primary.main' }}>
+                    {layout.variant === item && <CheckBoxOutlined />}
+                    {layout.variant !== item && <CheckBoxOutlineBlankOutlined />}
+                  </Avatar>
+                  {section.type !== 'graphic' && <Typography sx={{ ml: 1 }}>
+                    {item === 'wide' ? 'Wide Layout Variant' : 'Narrow Layout Variant'}
+                  </Typography>}
+                  {section.type === 'graphic' && <Typography sx={{ ml: 1 }}>
+                    {item === 'wide' ? 'Full Size Image Variant' : 'Standard Image Variant'}
+                  </Typography>}
+                </Box>
               </Grid>
-              <Grid
-                sx={{ display: 'flex', alignItems: 'center' }}
-                item xs={12} md={section.type === 'graphic' ? 5 : 4}
-              >
-                {section.type === 'graphic' && <Box sx={{ textAlign: 'center' }}>
-                  <Typography>
-                    Image Position
+            )}
+            {['fontsize', 'textalign'].map(item =>
+              <Grid item xs={12} md='auto' key={item}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Typography sx={{ mr: 1 }}>
+                    {item === 'fontsize' && 'Font Size'}
+                    {item === 'textalign' && 'Text Align'}
                   </Typography>
                   <ToggleButtonGroup
-                    sx={{ my: 1 }}
-                    value={layout.position}
-                    onChange={(e, v) => setLayout({ ...layout, position: v })}
+                    value={layout[item]}
+                    onChange={(e, v) => setLayout({ ...layout, [item]: v })}
                     color='primary'
                     size='small'
                     exclusive
                   >
-                    <ToggleButton value='left'>
-                      <KeyboardArrowLeft />
-                    </ToggleButton>
-                    <ToggleButton value='right'>
-                      <KeyboardArrowRight />
-                    </ToggleButton>
-                  </ToggleButtonGroup>
-                </Box>}
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography>
-                    Text Align
-                  </Typography>
-                  <ToggleButtonGroup
-                    sx={{ my: 1 }}
-                    value={layout.align}
-                    onChange={(e, v) => setLayout({ ...layout, align: v })}
-                    color='primary'
-                    size='small'
-                    exclusive
-                  >
-                    <ToggleButton value='left'>
+                    {item === 'fontsize' && <ToggleButton value='m'>
+                      <TextDecrease />
+                    </ToggleButton>}
+                    {item === 'fontsize' && <ToggleButton value='l'>
+                      <TextIncrease />
+                    </ToggleButton>}
+                    {item === 'textalign' && <ToggleButton value='left'>
                       <FormatAlignLeft />
-                    </ToggleButton>
-                    <ToggleButton value='center'>
+                    </ToggleButton>}
+                    {item === 'textalign' && <ToggleButton value='center'>
                       <FormatAlignCenter />
-                    </ToggleButton>
-                    <ToggleButton value='right'>
+                    </ToggleButton>}
+                    {item === 'textalign' && <ToggleButton value='right'>
                       <FormatAlignRight />
-                    </ToggleButton>
+                    </ToggleButton>}
                   </ToggleButtonGroup>
                 </Box>
               </Grid>
-              <Grid item xs={12}>
-                <ToggleButtonGroup
-                  sx={{ my: 1 }}
-                  value={layout.quantity}
-                  onChange={(e, v) => v !== null && setLayout({ ...layout, quantity: v })}
-                  color='primary'
-                  size='small'
-                  exclusive
-                >
-                  {!form && <ToggleButton value={itemize ? '1' : '0'}>
-                    <Widgets sx={{ mr: 1 }} />
-                    {itemize ? 'One Block' : 'Zero Buttons'}
-                  </ToggleButton>}
-                  <ToggleButton value={itemize ? '2' : '1'}>
-                    <Widgets sx={{ mr: 1 }} />
-                    {form ? 'Without Disclaimer' : itemize ? 'Two Blocks' : 'One Button'}
-                  </ToggleButton>
-                  <ToggleButton value={itemize ? '3' : '2'}>
-                    <Widgets sx={{ mr: 1 }} />
-                    {form ? 'With Disclaimer' : itemize ? 'Three Blocks' : 'Two Buttons'}
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </Grid>
+            )}
+            <Grid item xs={12}>
+              <ToggleButtonGroup
+                value={layout.quantity}
+                onChange={(e, v) => v !== null && setLayout({ ...layout, quantity: v })}
+                color='primary'
+                size='small'
+                exclusive
+              >
+                {buttons && <ToggleButton value='0'>
+                  <Widgets sx={{ mr: 1 }} /> Zero Buttons
+                </ToggleButton>}
+                {buttons && <ToggleButton value='1'>
+                  <Widgets sx={{ mr: 1 }} /> One Button
+                </ToggleButton>}
+                {buttons && <ToggleButton value='2'>
+                  <Widgets sx={{ mr: 1 }} /> Two Buttons
+                </ToggleButton>}
+                {blocks && <ToggleButton value='1'>
+                  <Widgets sx={{ mr: 1 }} /> One Block
+                </ToggleButton>}
+                {blocks && <ToggleButton value='2'>
+                  <Widgets sx={{ mr: 1 }} /> Two Blocks
+                </ToggleButton>}
+                {blocks && <ToggleButton value='3'>
+                  <Widgets sx={{ mr: 1 }} /> Three Blocks
+                </ToggleButton>}
+                {form && <ToggleButton value='1'>
+                  <Widgets sx={{ mr: 1 }} /> Without Disclaimer
+                </ToggleButton>}
+                {form && <ToggleButton value='2'>
+                  <Widgets sx={{ mr: 1 }} /> With Disclaimer
+                </ToggleButton>}
+              </ToggleButtonGroup>
             </Grid>
-          </Box>
+          </Grid>
           <Button
             onClick={() => {
-              (style.fontsize !== theme.fontsize ||
-                style.fontcolor !== theme.palette.fontcolor.main ||
+              (style.fontcolor !== theme.palette.fontcolor.main ||
                 style.accentcolor !== theme.palette.accentcolor.main ||
                 style.backgroundcolor !== theme.palette.backgroundcolor.main ||
                 !_.isEqual(layout, section.layout)) &&

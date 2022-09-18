@@ -3,8 +3,8 @@ import { updateWebsite, createFile } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '@mui/material/styles';
 import { useDropzone } from 'react-dropzone';
-import { Box, Dialog, Typography, Button } from '@mui/material';
-import { Paper, Avatar, Divider } from '@mui/material';
+import { Box, Dialog, Paper, Button } from '@mui/material';
+import { Typography, Avatar, Divider } from '@mui/material';
 import { TextField, Alert, AlertTitle } from '@mui/material';
 import { Settings } from '@mui/icons-material';
 import { Formik } from 'formik';
@@ -17,11 +17,10 @@ const about = `
 `;
 
 const WebsiteOptions = ({ website }) => {
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
   const initial = {
-    fontsize: theme.fontsize,
     fontcolor: theme.palette.fontcolor.main,
     accentcolor: theme.palette.accentcolor.main,
     backgroundcolor: theme.palette.backgroundcolor.main,
@@ -30,14 +29,13 @@ const WebsiteOptions = ({ website }) => {
   const reset = () => setStyle(initial);
   useEffect(() => {
     setStyle({
-      fontsize: theme.fontsize,
       fontcolor: theme.palette.fontcolor.main,
       accentcolor: theme.palette.accentcolor.main,
       backgroundcolor: theme.palette.backgroundcolor.main,
     })
   }, [theme]);
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } = useDropzone({
-    accept: { 'image/x-icon': ['.ico'] },
+    accept: { 'image/*': ['.ico', '.png'] },
     validator: (file) => (file.size > 500 * 1024 && { message: 'File is larger than 0.5 MB' }),
   });
 
@@ -58,7 +56,6 @@ const WebsiteOptions = ({ website }) => {
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
         onClose={() => setOpen(false)}
-        scroll='body'
         fullWidth
       >
         <Box sx={{ p: 2 }}>
@@ -66,7 +63,7 @@ const WebsiteOptions = ({ website }) => {
             sx={{ textTransform: 'capitalize' }}
             variant='h5'
           >
-            {website && website.name} Website Settings
+            Default Website Settings
           </Typography>
           <Alert
             sx={{ mt: 1, py: 0, px: 1 }}
@@ -96,7 +93,7 @@ const WebsiteOptions = ({ website }) => {
               {({ values, handleChange, handleSubmit }) => (
                 <form onSubmit={handleSubmit} id='confirm' autoComplete='off'>
                   <TextField
-                    sx={{ my: 1 }}
+                    sx={{ mb: 1 }}
                     onChange={handleChange}
                     value={values.title}
                     name='title'
@@ -124,7 +121,7 @@ const WebsiteOptions = ({ website }) => {
               )}
             </Formik>
             <Paper
-              sx={{ my: 1, p: 1, textAlign: 'center', cursor: 'pointer' }}
+              sx={{ mt: 1, p: 1, textAlign: 'center', cursor: 'pointer' }}
               {...getRootProps()}
               variant='outlined'
             >
@@ -132,7 +129,7 @@ const WebsiteOptions = ({ website }) => {
               <Typography>
                 {fileRejections[0] && fileRejections[0].errors[0].message}
                 {acceptedFiles[0] && 'Selected favicon: ' + acceptedFiles[0].path}
-                {!fileRejections[0] && !acceptedFiles[0] && 'Select favicon (.ico file)'}
+                {!fileRejections[0] && !acceptedFiles[0] && 'Select favicon (.ico or .png file)'}
                 <br /> Drag and drop or click to {acceptedFiles[0] ? 'change' : 'select'} favicon
               </Typography>
             </Paper>
@@ -144,8 +141,7 @@ const WebsiteOptions = ({ website }) => {
           />
           <Button
             onClick={() => {
-              (style.fontsize !== theme.fontsize ||
-                style.fontcolor !== theme.palette.fontcolor.main ||
+              (style.fontcolor !== theme.palette.fontcolor.main ||
                 style.accentcolor !== theme.palette.accentcolor.main ||
                 style.backgroundcolor !== theme.palette.backgroundcolor.main) &&
                 dispatch(updateWebsite({

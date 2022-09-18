@@ -29,7 +29,6 @@ const WebsiteView = ({ admin, host }) => {
   const access = website && admin && auth.uid === website.uid;
   const ws = website && website.style;
   const theme = createTheme({
-    breakpoints: { values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1600 } },
     palette: {
       fontcolor: { main: (ws && ws.fontcolor) || '#444444' },
       accentcolor: { main: (ws && ws.accentcolor) || '#1976d2', contrastText: 'white' },
@@ -37,15 +36,15 @@ const WebsiteView = ({ admin, host }) => {
     },
     typography: {
       title: {
-        fontSize: (ws && ws.fontsize === 'l') ? 36 : 32, fontWeight: 600, letterSpacing: 2,
-        [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 32 : 28 },
+        fontSize: 32, fontWeight: 600, letterSpacing: 2,
+        [createTheme().breakpoints.down('md')]: { fontSize: 28 },
       },
       text: {
-        fontSize: (ws && ws.fontsize === 'l') ? 20 : 17, fontWeight: 400, letterSpacing: 1,
-        [createTheme().breakpoints.down('md')]: { fontSize: (ws && ws.fontsize === 'l') ? 18 : 15 },
+        fontSize: 17, fontWeight: 400, letterSpacing: 1,
+        [createTheme().breakpoints.down('md')]: { fontSize: 15 },
       },
     },
-    fontsize: (ws && ws.fontsize) || 'm',
+    breakpoints: { values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1600 } },
   });
   const onDragEnd = ({ source, destination }) => {
     if (!destination) return;

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { updateSection } from 'redux/websitesSlice';
+import { useDispatch } from 'react-redux';
 import { ThemeProvider } from '@mui/material';
 import { Box, Avatar, Tooltip } from '@mui/material';
-import { DragIndicator } from '@mui/icons-material';
+import { DragIndicator, Loop } from '@mui/icons-material';
 import SectionCreate from 'atoms/SectionCreate';
 import SectionOptions from 'atoms/SectionOptions';
 import RemoveConfirm from 'atoms/RemoveConfirm';
@@ -13,6 +15,7 @@ import SellingSection from 'molecules/SellingSection';
 
 const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
   const [hover, setHover] = useState(false);
+  const dispatch = useDispatch();
   const sl = section.layout;
   const ss = section.style;
   const theme = (outer) => ({
@@ -26,15 +29,14 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
     typography: ss ? {
       ...outer.typography,
       title: {
-        fontSize: ss.fontsize === 'l' ? 36 : 32, fontWeight: 600, letterSpacing: 2,
-        [outer.breakpoints.down('md')]: { fontSize: ss.fontsize === 'l' ? 32 : 28 },
+        fontSize: sl.fontsize === 'l' ? 36 : 32, fontWeight: 600, letterSpacing: 2,
+        [outer.breakpoints.down('md')]: { fontSize: sl.fontsize === 'l' ? 32 : 28 },
       },
       text: {
-        fontSize: ss.fontsize === 'l' ? 20 : 17, fontWeight: 400, letterSpacing: 1,
-        [outer.breakpoints.down('md')]: { fontSize: ss.fontsize === 'l' ? 18 : 15 },
+        fontSize: sl.fontsize === 'l' ? 20 : 17, fontWeight: 400, letterSpacing: 1,
+        [outer.breakpoints.down('md')]: { fontSize: sl.fontsize === 'l' ? 18 : 15 },
       },
     } : outer.typography,
-    fontsize: ss ? ss.fontsize : outer.fontsize,
   });
 
   return (
@@ -75,6 +77,23 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
               <DragIndicator />
             </Tooltip> : <DragIndicator />}
           </Avatar>
+          {section.type === 'graphic' && <Avatar
+            sx={{
+              width: 30, height: 30, mx: 0.3,
+              cursor: 'pointer', bgcolor: 'primary.main',
+              '&:hover': { bgcolor: 'primary.dark' },
+            }}
+            onClick={() => dispatch(updateSection({
+              values: {
+                layout: !sl ? { position: 'left' } :
+                  { ...sl, position: sl.position === 'right' ? 'left' : 'right' }
+              }, sid: section.id, wid,
+            }))}
+          >
+            {hover ? <Tooltip title='change image position' arrow>
+              <Loop />
+            </Tooltip> : <Loop />}
+          </Avatar>}
         </Box>}
         <Box sx={{ zIndex: 10 }}>
           {section.type === 'content' && <ContentSection

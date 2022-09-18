@@ -51,7 +51,7 @@ const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
             wid={wid} idx={idx} type='text'
           >
             <Typography variant='text'>
-              <Box sx={{ fontSize: '90%', textAlign: (sl && sl.align) || 'center' }}>
+              <Box sx={{ fontSize: '90%', textAlign: (sl && sl.textalign) || 'center' }}>
                 <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
                   {section[text] || 'New Text'}
                 </ReactMarkdown>
@@ -162,7 +162,7 @@ const SellingSection = ({ admin, section, wid }) => {
   const [params, setParams] = useSearchParams();
   useEffect(() => {
     params.has('success') && setSuccess(true);
-    setParams(false);
+    (params.has('success') || params.has('cancel')) && setParams(false);
   }, [params, setParams]);
   const sl = section.layout;
 

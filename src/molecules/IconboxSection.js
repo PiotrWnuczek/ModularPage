@@ -47,7 +47,7 @@ const IconBox = ({ admin, section, wid, idx }) => {
           wid={wid} idx={idx} type='text'
         >
           <Typography variant='text'>
-            <Box sx={{ fontSize: '90%', textAlign: (sl && sl.align) || 'center' }}>
+            <Box sx={{ fontSize: '90%', textAlign: (sl && sl.textalign) || 'center' }}>
               <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
                 {section[text] || 'New Text'}
               </ReactMarkdown>

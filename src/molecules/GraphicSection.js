@@ -42,7 +42,7 @@ const GraphicSection = ({ admin, section, wid }) => {
             wid={wid} type='text'
           >
             <Typography
-              sx={{ mt: 1, textAlign: (sl && sl.align) || 'center' }}
+              sx={{ mt: 1, textAlign: (sl && sl.textalign) || 'center' }}
               variant='text'
             >
               <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
