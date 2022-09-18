@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { updateProfile } from 'redux/usersSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
-import { Box, Typography } from '@mui/material';
-import { Dialog, Button } from '@mui/material';
+import { Box, Card, Dialog } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import moment from 'moment';
 import MainLayout from 'organisms/MainLayout';
 
@@ -18,31 +18,37 @@ const AccountView = () => {
   return (
     <MainLayout>
       <Box sx={{ p: 2 }}>
-        <Typography
-          sx={{ mb: 2 }}
-          variant='h6'
+        <Card
+          sx={{ bgcolor: 'secondary.light', borderRadius: 2, p: 2 }}
+          variant='outlined'
         >
-          Account Details
-        </Typography>
-        <Typography sx={{ mb: 1 }}>
-          Email: {profile && profile.email}
-        </Typography>
-        <Typography sx={{ mb: 1 }}>
-          Custom Domains Limit: {profile && profile.limit.custom}
-        </Typography>
-        <Typography sx={{ mb: 1 }}>
-          All Websites Limit: {profile && profile.limit.all}
-        </Typography>
-        <Typography sx={{ mb: 1 }}>
-          Premium: {(profile && moment(profile.premium.toDate()).calendar()) || 'inactive'}
-        </Typography>
-        {(profile && profile.premium.toDate()) < new Date() && <Button
-          onClick={() => setOpen(true)}
-          variant='contained'
-          size='small'
-        >
-          Activate Premium
-        </Button>}
+          <Typography
+            sx={{ mb: 2 }}
+            variant='h6'
+          >
+            Account Details
+          </Typography>
+          <Typography sx={{ mb: 1 }}>
+            Email: {profile && profile.email}
+          </Typography>
+          <Typography sx={{ mb: 1 }}>
+            Custom Domains Limit: {profile && profile.limit.custom}
+          </Typography>
+          <Typography sx={{ mb: 1 }}>
+            All Websites Limit: {profile && profile.limit.all}
+          </Typography>
+          <Typography sx={{ mb: 0.5 }}>
+            Premium: {(profile && moment(profile.premium.toDate()).calendar()) || 'inactive'}
+          </Typography>
+          {(profile && profile.premium.toDate()) < new Date() && <Button
+            sx={{ mt: 0.5 }}
+            onClick={() => setOpen(true)}
+            variant='contained'
+            size='small'
+          >
+            Activate Premium
+          </Button>}
+        </Card>
       </Box>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}

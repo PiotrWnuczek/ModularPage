@@ -31,6 +31,7 @@ const WebsiteCard = ({ website }) => {
               {website.domain === 'app' && 'modularpage.com/' + website.name}
             </Typography>
             <Button
+              sx={{ ml: -0.5 }}
               component={Link}
               href={website.domain === 'custom' ?
                 'https://' + website.name : '/' + website.name}
@@ -44,7 +45,8 @@ const WebsiteCard = ({ website }) => {
               sx={{ m: 0 }}
               control={<Switch checked={website.public} size='small' />}
               onChange={(e, value) => dispatch(updateWebsite({
-                values: { public: value }, wid: website.name,
+                values: { public: value },
+                wid: website.name,
               }))}
               label='public'
             />

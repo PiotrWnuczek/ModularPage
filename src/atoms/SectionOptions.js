@@ -5,9 +5,9 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Typography, Button, Grid, Dialog } from '@mui/material';
 import { Avatar, Divider, Alert, AlertTitle } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton, Tooltip } from '@mui/material';
-import { GridView, Widgets, FormatAlignCenter } from '@mui/icons-material';
-import { Tune, FormatAlignLeft, FormatAlignRight } from '@mui/icons-material';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
+import { Tune, CheckBoxOutlined, CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
+import { FormatAlignLeft, FormatAlignCenter, FormatAlignRight } from '@mui/icons-material';
+import { Widgets, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import StyleEditor from 'atoms/StyleEditor';
 import _ from 'lodash';
 import ReactMarkdown from 'react-markdown';
@@ -104,12 +104,13 @@ const SectionOptions = ({ section, wid, hover }) => {
                     key={item}
                   >
                     <Avatar sx={{ bgcolor: layout.variant === item && 'primary.main' }}>
-                      <GridView />
+                      {layout.variant === item && <CheckBoxOutlined />}
+                      {layout.variant !== item && <CheckBoxOutlineBlankOutlined />}
                     </Avatar>
                     <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
-                      {section.type !== 'graphic' ? item :
+                      {section.type !== 'graphic' ? item + ' layout' :
                         (item === 'wide' ? 'full size image' : 'standard image')
-                      } Layout Variant
+                      } variant
                     </Typography>
                   </Box>
                 )}

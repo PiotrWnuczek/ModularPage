@@ -61,19 +61,19 @@ const WebsiteView = ({ admin, host }) => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Helmet>
+        <title>{website && website.title}</title>
+        <meta name='description' content={website && website.description} />
+        <link rel='icon' href={website && website.favicon} />
+      </Helmet>
+      {access && <WebsiteFinish website={website} />}
+      {access && <WebsiteOptions website={website} />}
+      {access && website && !website.sections.length && <Box
+        sx={{ py: 10, display: 'flex', justifyContent: 'center' }}
+      >
+        <SectionCreate wid={website.name} index={0} start />
+      </Box>}
       <Box sx={{ color: 'fontcolor.main', bgcolor: 'backgroundcolor.main' }}>
-        <Helmet>
-          <title>{website && website.title}</title>
-          <meta name='description' content={website && website.description} />
-          <link rel='icon' href={website && website.favicon} />
-        </Helmet>
-        {access && <WebsiteFinish website={website} />}
-        {access && <WebsiteOptions website={website} />}
-        {access && website && !website.sections.length && <Box
-          sx={{ py: 10, display: 'flex', justifyContent: 'center' }}
-        >
-          <SectionCreate wid={website.name} index={0} start />
-        </Box>}
         {website && website.header && (website.public || access) && <HeaderSection
           admin={access} header={website.header} logo={website.logo} wid={website.name}
         />}
@@ -125,21 +125,21 @@ const WebsiteView = ({ admin, host }) => {
         {website && website.footer && (website.public || access) && <FooterSection
           admin={access} footer={website.footer} wid={website.name}
         />}
-        {!access && !(website && website.public) &&
-          <Box sx={{ textAlign: 'center', m: 5 }}>
-            <Typography variant='h6'>
-              Page not public
-            </Typography>
-            <Button
-              component={Link}
-              href='https://modularpage.com/app'
-              size='small'
-            >
-              Modular Page
-            </Button>
-          </Box>
-        }
       </Box>
+      {!access && !(website && website.public) &&
+        <Box sx={{ textAlign: 'center', m: 5 }}>
+          <Typography variant='h6'>
+            Page not public
+          </Typography>
+          <Button
+            component={Link}
+            href='https://modularpage.com/app'
+            size='small'
+          >
+            Modular Page
+          </Button>
+        </Box>
+      }
     </ThemeProvider>
   )
 };

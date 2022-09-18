@@ -20,7 +20,7 @@ const GraphicSection = ({ admin, section, wid }) => {
     >
       <Grid
         sx={{
-          px: sl && sl.variant === 'wide' ? { xs: 4, md: 8 } : 2,
+          px: sl && sl.variant === 'wide' ? { xs: 4, md: 8, lg: 12, xl: 22 } : 2,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
         item xs={12} md={6}

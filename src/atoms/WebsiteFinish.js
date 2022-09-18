@@ -40,6 +40,7 @@ const WebsiteFinish = ({ website }) => {
               Changes are saved, you can exit to board.
             </Typography>
             <Button
+              sx={{ ml: -0.5 }}
               component={Link}
               href={website.domain === 'custom' ?
                 'https://' + website.name : '/' + website.name}
@@ -53,7 +54,8 @@ const WebsiteFinish = ({ website }) => {
               sx={{ m: 0 }}
               control={<Switch checked={website.public} size='small' />}
               onChange={(e, value) => dispatch(updateWebsite({
-                values: { public: value }, wid: website.name,
+                values: { public: value },
+                wid: website.name,
               }))}
               label='public'
             />
