@@ -60,7 +60,12 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
           {!admin && <Button
             sx={{ my: 1 }}
             component={Link}
-            href={header.link || '#'}
+            onClick={() => {
+              const l = header.link;
+              const qs = l[0] === '#' && document.querySelector('#' + l.replace('#', 's'));
+              qs && qs.scrollIntoView({ behavior: 'smooth' });
+            }}
+            href={header.link[0] === '#' ? null : header.link || null}
             target={header.tab === 'new' ? '_blank' : '_self'}
             variant='contained'
             color='accentcolor'

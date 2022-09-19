@@ -112,15 +112,16 @@ const WebsiteView = ({ admin, host }) => {
           </Droppable>
         </DragDropContext>}
         {!access && website && website.public &&
-          data && data.map(item =>
+          data && data.map((item, index) => (
             <BlockTemplate
               admin={access}
               section={item}
               wid={website.name}
               uid={website.uid}
+              index={index + 1}
               key={item.id}
             />
-          )}
+          ))}
         {website && website.footer && (website.public || access) && <FooterSection
           admin={access} footer={website.footer} wid={website.name}
         />}

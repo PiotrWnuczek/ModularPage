@@ -60,7 +60,12 @@ const ContentSection = ({ admin, section, wid }) => {
           {!admin && <Button
             sx={{ mb: 1 }}
             component={Link}
-            href={section['link' + idx] || '#'}
+            onClick={() => {
+              const l = section['link' + idx];
+              const qs = l[0] === '#' && document.querySelector('#' + l.replace('#', 's'));
+              qs && qs.scrollIntoView({ behavior: 'smooth' });
+            }}
+            href={section['link' + idx][0] === '#' ? null : section['link' + idx] || null}
             target={section['tab' + idx] === 'new' ? '_blank' : '_self'}
             variant='contained'
             color='accentcolor'

@@ -9,9 +9,9 @@ import { Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
 
 const about = `
-* Set button text and url address
-* You can also enter mailto:yourmail@example.com in url field
-* Select to open in a new or current tab
+* Set button text, url address and opening tab
+* Create contact by entering mailto:yourmail@example.com in url field
+* Create scroll by entering # and section number from top (e.g. #1) in url field
 `;
 
 const ButtonOptions = ({ children, section, wid, idx }) => {

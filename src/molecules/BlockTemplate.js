@@ -95,7 +95,7 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
             </Tooltip> : <Loop />}
           </Avatar>}
         </Box>}
-        <Box sx={{ zIndex: 10 }}>
+        <Box sx={{ zIndex: 10 }} id={'s' + index}>
           {section.type === 'content' && <ContentSection
             admin={admin}
             wid={wid}
