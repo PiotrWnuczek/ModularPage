@@ -93,7 +93,7 @@ const SectionOptions = ({ section, wid, hover }) => {
           />
           <Divider />
           <Grid sx={{ py: 2 }} container spacing={2}>
-            {['narrow', 'wide'].map(item =>
+            {section.type !== 'graphic' && ['narrow', 'wide'].map(item =>
               <Grid item xs={12} md='auto' key={item}>
                 <Box
                   sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
@@ -103,12 +103,25 @@ const SectionOptions = ({ section, wid, hover }) => {
                     {layout.variant === item && <CheckBoxOutlined />}
                     {layout.variant !== item && <CheckBoxOutlineBlankOutlined />}
                   </Avatar>
-                  {section.type !== 'graphic' && <Typography sx={{ ml: 1 }}>
-                    {item === 'wide' ? 'Wide Layout Variant' : 'Narrow Layout Variant'}
-                  </Typography>}
-                  {section.type === 'graphic' && <Typography sx={{ ml: 1 }}>
-                    {item === 'wide' ? 'Full Size Image Variant' : 'Standard Image Variant'}
-                  </Typography>}
+                  <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
+                    {item} Layout Variant
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
+            {section.type === 'graphic' && ['narrow', 'wide', 'full'].map(item =>
+              <Grid item xs={12} md='auto' key={item}>
+                <Box
+                  sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                  onClick={() => setLayout({ ...layout, variant: item })}
+                >
+                  <Avatar sx={{ bgcolor: layout.variant === item && 'primary.main' }}>
+                    {layout.variant === item && <CheckBoxOutlined />}
+                    {layout.variant !== item && <CheckBoxOutlineBlankOutlined />}
+                  </Avatar>
+                  <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
+                    {item} image
+                  </Typography>
                 </Box>
               </Grid>
             )}
@@ -121,7 +134,7 @@ const SectionOptions = ({ section, wid, hover }) => {
                   </Typography>
                   <ToggleButtonGroup
                     value={layout[item]}
-                    onChange={(e, v) => setLayout({ ...layout, [item]: v })}
+                    onChange={(e, v) => v !== null && setLayout({ ...layout, [item]: v })}
                     color='primary'
                     size='small'
                     exclusive
@@ -182,12 +195,13 @@ const SectionOptions = ({ section, wid, hover }) => {
           </Grid>
           <Button
             onClick={() => {
-              (style.fontcolor !== theme.palette.fontcolor.main ||
+              const changeStyle = style.fontcolor !== theme.palette.fontcolor.main ||
                 style.accentcolor !== theme.palette.accentcolor.main ||
-                style.backgroundcolor !== theme.palette.backgroundcolor.main ||
-                !_.isEqual(layout, section.layout)) &&
+                style.backgroundcolor !== theme.palette.backgroundcolor.main;
+              (changeStyle || !_.isEqual(layout, section.layout)) &&
                 dispatch(updateSection({
-                  values: { style, layout }, sid: section.id, wid,
+                  values: changeStyle ? { style, layout } : { layout },
+                  sid: section.id, wid,
                 }));
               setOpen(false);
             }}

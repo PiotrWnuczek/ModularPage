@@ -23,8 +23,8 @@ const RemoveConfirm = ({ type, sid, wid, hover, file }) => {
       {type === 'section' && <Avatar
         sx={{
           width: 30, height: 30, mx: 0.3,
-          cursor: 'pointer', bgcolor: 'primary.main',
-          '&:hover': { bgcolor: 'primary.dark' },
+          cursor: 'pointer', bgcolor: 'info.main',
+          '&:hover': { bgcolor: 'info.dark' },
         }}
         onClick={() => setOpen(true)}
       >

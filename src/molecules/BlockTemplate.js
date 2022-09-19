@@ -26,7 +26,7 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
       accentcolor: { main: ss.accentcolor, contrastText: 'white' },
       backgroundcolor: { main: ss.backgroundcolor },
     } : outer.palette,
-    typography: ss ? {
+    typography: sl ? {
       ...outer.typography,
       title: {
         fontSize: sl.fontsize === 'l' ? 36 : 32, fontWeight: 600, letterSpacing: 2,
@@ -43,8 +43,10 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
     <ThemeProvider theme={theme}>
       <Box
         sx={section.type === 'graphic' ? {
-          py: sl && sl.variant === 'wide' ? { xs: 3, md: 0 } : 6,
-          px: sl && sl.variant === 'wide' ? 0 : { xs: 5, md: 10, lg: 30, xl: 50 },
+          px: sl && sl.variant === 'full' ? 0 : sl && sl.variant === 'wide' ?
+            { xs: 3, md: 6, lg: 20, xl: 40 } : { xs: 5, md: 10, lg: 30, xl: 50 },
+          py: sl && sl.variant === 'full' ?
+            { xs: 3, md: 0 } : sl && sl.variant === 'wide' ? 3 : 6,
           position: 'relative', display: 'flex', justifyContent: 'center',
           color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
         } : {
@@ -68,8 +70,8 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
           <Avatar
             sx={{
               width: 30, height: 30, mx: 0.3,
-              cursor: 'pointer', bgcolor: 'primary.main',
-              '&:hover': { bgcolor: 'primary.dark' },
+              cursor: 'pointer', bgcolor: 'info.main',
+              '&:hover': { bgcolor: 'info.dark' },
             }}
             {...drag}
           >
@@ -80,14 +82,12 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
           {section.type === 'graphic' && <Avatar
             sx={{
               width: 30, height: 30, mx: 0.3,
-              cursor: 'pointer', bgcolor: 'primary.main',
-              '&:hover': { bgcolor: 'primary.dark' },
+              cursor: 'pointer', bgcolor: 'info.main',
+              '&:hover': { bgcolor: 'info.dark' },
             }}
             onClick={() => dispatch(updateSection({
-              values: {
-                layout: !sl ? { position: 'left' } :
-                  { ...sl, position: sl.position === 'right' ? 'left' : 'right' }
-              }, sid: section.id, wid,
+              values: { position: section.position === 'right' ? 'left' : 'right' },
+              sid: section.id, wid,
             }))}
           >
             {hover ? <Tooltip title='change image position' arrow>
@@ -95,7 +95,7 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
             </Tooltip> : <Loop />}
           </Avatar>}
         </Box>}
-        <Box sx={{ zIndex: 10 }} id={'s' + index}>
+        <Box sx={{ zIndex: 10, width: '100%' }} id={'s' + index}>
           {section.type === 'content' && <ContentSection
             admin={admin}
             wid={wid}

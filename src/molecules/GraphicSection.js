@@ -4,23 +4,22 @@ import { Link, Typography } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Image from 'stock/image.png';
-import Foto from 'stock/foto.png';
 import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
 import ImageOptions from 'atoms/ImageOptions';
 
 const GraphicSection = ({ admin, section, wid }) => {
   const sl = section.layout;
-  const alt = sl && sl.variant === 'wide' ? Foto : Image;
 
   return (
     <Grid
-      sx={{ flexDirection: sl && sl.position === 'left' ? 'row-reverse' : 'row' }}
+      sx={{ flexDirection: section.position === 'left' ? 'row-reverse' : 'row' }}
       container
     >
       <Grid
         sx={{
-          px: sl && sl.variant === 'wide' ? { xs: 4, md: 8, lg: 12, xl: 22 } : 2,
+          px: sl && sl.variant === 'full' ?
+            { xs: 4, md: 8, lg: 12, xl: 22 } : sl && sl.variant === 'wide' ? 4 : 2,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
         item xs={12} md={6}
@@ -88,7 +87,8 @@ const GraphicSection = ({ admin, section, wid }) => {
       </Grid>
       <Grid
         sx={{
-          px: sl && sl.variant === 'wide' ? 0 : 2, maxHeight: 400,
+          px: sl && sl.variant === 'full' ? 0 : 2,
+          maxHeight: sl && sl.variant === 'wide' ? 500 : 400,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
         item xs={12} md={6}
@@ -96,10 +96,11 @@ const GraphicSection = ({ admin, section, wid }) => {
         <ImageOptions admin={admin} section={section} wid={wid}>
           <Box
             sx={{
-              maxWidth: sl && sl.variant === 'wide' ? 1000 : 400,
+              maxWidth: sl && sl.variant === 'full' ?
+                1000 : sl && sl.variant === 'wide' ? 600 : 400,
               width: '100%', height: '100%', objectFit: 'cover',
             }}
-            src={section.url || alt}
+            src={section.url || Image}
             component='img'
           />
         </ImageOptions>

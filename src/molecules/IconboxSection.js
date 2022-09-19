@@ -17,37 +17,32 @@ const IconBox = ({ admin, section, wid, idx }) => {
       sx={{ display: 'flex', justifyContent: 'center' }}
       item xs={12} md={sl ? 12 / sl.quantity : 4}
     >
-      <Box sx={{ textAlign: 'center' }}>
-        <Box sx={{
-          display: 'flex', alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-          <IconOptions
-            admin={admin} section={section}
-            wid={wid} idx={idx}
-          >
-            <Box
-              sx={{ mr: 1, fontSize: 32, color: 'accentcolor.main' }}
-              component={icons[section[icon]] || icons.Add}
-            />
-          </IconOptions>
-          <TextEditor
-            admin={admin} section={section}
-            wid={wid} idx={idx} type='title'
-          >
-            <Typography variant='title'>
-              <Box sx={{ fontSize: '70%' }}>
-                {section[title] || 'New Title'}
-              </Box>
-            </Typography>
-          </TextEditor>
-        </Box>
+      <Box sx={{ textAlign: 'center', width: '100%' }}>
+        <IconOptions
+          admin={admin} section={section}
+          wid={wid} idx={idx}
+        >
+          <Box
+            sx={{ mr: 1, fontSize: 44, color: 'accentcolor.main' }}
+            component={icons[section[icon]] || icons.Add}
+          />
+        </IconOptions>
+        <TextEditor
+          admin={admin} section={section}
+          wid={wid} idx={idx} type='title'
+        >
+          <Typography variant='title'>
+            <Box sx={{ fontSize: '75%' }}>
+              {section[title] || 'New Title'}
+            </Box>
+          </Typography>
+        </TextEditor>
         <TextEditor
           admin={admin} section={section}
           wid={wid} idx={idx} type='text'
         >
           <Typography variant='text'>
-            <Box sx={{ fontSize: '90%', textAlign: (sl && sl.textalign) || 'center' }}>
+            <Box sx={{ fontSize: '95%', textAlign: (sl && sl.textalign) || 'center' }}>
               <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
                 {section[text] || 'New Text'}
               </ReactMarkdown>

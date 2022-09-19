@@ -1,7 +1,8 @@
 export const graphic = {
   type: 'graphic',
+  position: 'right',
   title: 'Graphic Section Title',
-  text: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies. Maecenas aliquet gravida augue sed condimentum.',
+  text: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies.',
   button1: 'First Button',
   link1: '#',
   tab1: 'new',
@@ -13,7 +14,7 @@ export const graphic = {
 export const content = {
   type: 'content',
   title: 'Content Section Title',
-  text: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies. Maecenas aliquet gravida augue sed condimentum.',
+  text: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies.',
   button1: 'First Button',
   link1: '#',
   tab1: 'new',
@@ -24,21 +25,21 @@ export const content = {
 
 export const iconbox = {
   type: 'iconbox',
-  icon1: 'Settings',
+  icon1: 'GridView',
   title1: 'First Iconbox',
-  text1: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  icon2: 'Settings',
+  text1: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet.',
+  icon2: 'GridView',
   title2: 'Second Iconbox',
-  text2: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  icon3: 'Settings',
+  text2: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet.',
+  icon3: 'GridView',
   title3: 'Third Iconbox',
-  text3: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  text3: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet.',
 };
 
 export const mailing = {
   type: 'mailing',
   title: 'Mailing Section Title',
-  text: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies. Maecenas aliquet gravida augue sed condimentum.',
+  text: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies.',
   button: 'Subscribe',
   group: 'Group Id',
 };
@@ -46,19 +47,19 @@ export const mailing = {
 export const selling = {
   type: 'selling',
   title1: 'First Product',
-  text1: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  text1: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet.',
   button1: 'Buy Now',
   product1: 'First Product',
   currency1: 'USD',
   price1: '10',
   title2: 'Second Product',
-  text2: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  text2: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet.',
   button2: 'Buy Now',
   product2: 'Second Product',
   currency2: 'USD',
   price2: '20',
   title3: 'Third Product',
-  text3: 'Click to edit! Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  text3: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet.',
   button3: 'Buy Now',
   product3: 'Third Product',
   currency3: 'USD',
@@ -76,7 +77,7 @@ export const header = {
 export const footer = {
   type: 'footer',
   textinfo: 'Copywrite © all rights reserved.',
-  textrules: 'This document contains rules and privacy of the website: (your website address). The website administrator is: (your data)',
+  textrules: '**Click to edit! Use MarkDown (commonmark.org/help)!** This document contains rules and privacy of the website: (your website address). The website administrator is: (your data)',
   titlerules: 'Rules and Privacy',
 };
 

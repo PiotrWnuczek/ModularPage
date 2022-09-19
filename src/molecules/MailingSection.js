@@ -22,7 +22,7 @@ const MailingSection = ({ admin, section, wid, uid }) => {
   const sl = section.layout;
 
   return (
-    <Box sx={{ textAlign: (sl && sl.textalign) || 'center', width: '100%' }}>
+    <Box sx={{ textAlign: 'center', width: '100%' }}>
       <TextEditor
         admin={admin} section={section}
         wid={wid} type='title'
@@ -39,7 +39,7 @@ const MailingSection = ({ admin, section, wid, uid }) => {
         wid={wid} type='text'
       >
         <Typography
-          sx={{ mt: 1 }}
+          sx={{ mt: 1, textAlign: (sl && sl.textalign) || 'center' }}
           variant='text'
         >
           <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
@@ -48,7 +48,7 @@ const MailingSection = ({ admin, section, wid, uid }) => {
         </Typography>
       </TextEditor>
       {admin && <FormOptions section={section} wid={wid}>
-        <Grid container spacing={1}>
+        <Grid sx={{ px: { lg: 7 } }} container spacing={1}>
           <Grid item xs={12} sm={9}>
             <TextField
               sx={{
@@ -90,7 +90,7 @@ const MailingSection = ({ admin, section, wid, uid }) => {
       >
         {({ values, handleChange, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
-            <Grid container spacing={1}>
+            <Grid sx={{ px: { lg: 7 } }} container spacing={1}>
               <Grid item xs={12} sm={9}>
                 <TextField
                   sx={{

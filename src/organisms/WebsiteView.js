@@ -9,6 +9,7 @@ import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from '@mui/material';
 import { Box, Typography } from '@mui/material';
 import { Button, Link } from '@mui/material';
+import { blueGrey } from '@mui/material/colors';
 import { Helmet } from 'react-helmet';
 import WebsiteFinish from 'atoms/WebsiteFinish';
 import WebsiteOptions from 'atoms/WebsiteOptions';
@@ -33,6 +34,7 @@ const WebsiteView = ({ admin, host }) => {
       fontcolor: { main: (ws && ws.fontcolor) || '#444444' },
       accentcolor: { main: (ws && ws.accentcolor) || '#1976d2', contrastText: 'white' },
       backgroundcolor: { main: (ws && ws.backgroundcolor) || '#f5f5f5' },
+      info: blueGrey,
     },
     typography: {
       title: {
@@ -44,7 +46,7 @@ const WebsiteView = ({ admin, host }) => {
         [createTheme().breakpoints.down('md')]: { fontSize: 15 },
       },
     },
-    breakpoints: { values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1600 } },
+    breakpoints: { values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1700 } },
   });
   const onDragEnd = ({ source, destination }) => {
     if (!destination) return;
