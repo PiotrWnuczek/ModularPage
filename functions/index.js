@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const axios = require('axios');
 const nodemailer = require('nodemailer');
+
 admin.initializeApp();
 
 const transporter = nodemailer.createTransport({
@@ -66,6 +67,25 @@ exports.stripe = functions.https.onCall(async (data, context) => {
   });
   return session.url;
 });
+
+exports.newuser = functions.firestore
+  .document('users/{uid}')
+  .onCreate(async (snap, c) => {
+    const headers = {
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNWM5ZWIzYzQxMDc0YmM4ZDM0ZWViMzA0NTRkZWFhYzEwOGE3MmFiZjczMWZjZDVhMWM0MzE1NmRlZmRkMTkwZGM1MTQxNmM3MzU5YzY0NzMiLCJpYXQiOjE2NTkyNTk3NzMuNjk1ODk2LCJuYmYiOjE2NTkyNTk3NzMuNjk1OTIzLCJleHAiOjQ4MTI4NjMzNzMuNjkzNDE1LCJzdWIiOiI3NDYwNTIiLCJzY29wZXMiOltdfQ.o_Fgwd9l0POsBeid4YHyjfylqkO7om-gysr4YsJ9UeTTvE7J_JEH1Zj9NUa93yGVYrMkulPt9hze97rfTYLH0Q',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+    await axios.post(
+      'https://api.sender.net/v2/subscribers',
+      { 'email': snap.data().email }, { headers }
+    );
+    await axios.post(
+      'https://api.sender.net/v2/subscribers/groups/b28Dyj',
+      { 'subscribers': [snap.data().email] }, { headers },
+    );
+    return 'newuser';
+  });
 
 exports.domaincreate = functions.firestore
   .document('websites/{id}')
