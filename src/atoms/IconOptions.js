@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { updateSection } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
-import { Box, Typography, TextField } from '@mui/material';
-import { Dialog, Button, Alert, AlertTitle } from '@mui/material';
-import * as icons from '@mui/icons-material';
+import { Box, Dialog, Typography, TextField } from '@mui/material';
+import { Button, Alert, AlertTitle, Icon } from '@mui/material';
 import { Formik } from 'formik';
 import ReactMarkdown from 'react-markdown';
 
 const about = `
-* Search for icons on [mui.com](https://mui.com/material-ui/material-icons/)
-* Add icon name, be aware of the case of letters 
+* Search for icons on [fonts.google.com](https://fonts.google.com/icons) and enter icon name
+* Add svg icon, copy and paste the content of the svg file 
 `;
 
 const IconOptions = ({ children, admin, section, wid, idx }) => {
@@ -76,10 +75,15 @@ const IconOptions = ({ children, admin, section, wid, idx }) => {
                     fullWidth
                     autoFocus
                     InputProps={{
-                      endAdornment: <Box
-                        sx={{ color: 'primary.main' }}
-                        component={icons[value]}
-                      />
+                      endAdornment: <Icon sx={{ color: 'accentcolor.main' }}>
+                        {value.includes('<svg') ? <img
+                          src={'data:image/svg+xml;utf8,' + encodeURIComponent(value)}
+                          alt='icon'
+                        /> : value
+                          .replace(/[A-Z]/g, c => '_' + c.toLowerCase())
+                          .replace(/^_/, '').replace(/\s+/g, '') ||
+                        'grid_view'}
+                      </Icon>
                     }}
                   />
                 </form>

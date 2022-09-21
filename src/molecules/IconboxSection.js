@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Grid, Typography } from '@mui/material';
-import * as icons from '@mui/icons-material';
+import { Box, Typography } from '@mui/material';
+import { Grid, Icon } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
@@ -22,10 +22,15 @@ const IconBox = ({ admin, section, wid, idx }) => {
           admin={admin} section={section}
           wid={wid} idx={idx}
         >
-          <Box
-            sx={{ mr: 1, fontSize: 44, color: 'accentcolor.main' }}
-            component={icons[section[icon]] || icons.Add}
-          />
+          <Icon sx={{ mr: 1, fontSize: 44, color: 'accentcolor.main' }}>
+            {section[icon].includes('<svg') ? <img
+              src={'data:image/svg+xml;utf8,' + encodeURIComponent(section[icon])}
+              alt='icon'
+            /> : section[icon]
+              .replace(/[A-Z]/g, c => '_' + c.toLowerCase())
+              .replace(/^_/, '').replace(/\s+/g, '') ||
+            'grid_view'}
+          </Icon>
         </IconOptions>
         <TextEditor
           admin={admin} section={section}
