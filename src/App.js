@@ -36,15 +36,28 @@ const App = () => {
           {window.location.host === host ? <Routes>
             <Route path='/signin' element={<SigninView />} />
             <Route path='/signup' element={<SignupView />} />
-            <Route path='/account' element={access ? <AccountView /> : <Navigate to='/signin' />} />
-            <Route path='/board' element={access ? <BoardView /> : <Navigate to='/signin' />} />
-            <Route path='/create' element={access ? <CreateView /> : <Navigate to='/signin' />} />
-            <Route path='/:id/admin' element={access ? <WebsiteView admin /> : <Navigate to='/signin' />} />
+            <Route path='/account' element={
+              access ? <AccountView /> : <Navigate to='/signin' />
+            } />
+            <Route path='/board' element={
+              access ? <BoardView /> : <Navigate to='/signin' />
+            } />
+            <Route path='/create' element={
+              access ? <CreateView /> : <Navigate to='/signin' />
+            } />
+            <Route path='/admin/:id/:lang' element={
+              access ? <WebsiteView admin /> : <Navigate to='/signin' />
+            } />
+            <Route path='/admin/:id/*' element={
+              access ? <WebsiteView admin /> : <Navigate to='/signin' />
+            } />
+            <Route path='/:id/:lang' element={<WebsiteView />} />
             <Route path='/:id/*' element={<WebsiteView />} />
             <Route path='/app' element={<Navigate to='/board' />} />
             <Route path='/pl' element={<Navigate to='/try' />} />
             <Route path='/*' element={<Navigate to='/try' />} />
           </Routes> : <Routes>
+            <Route path='/:lang' element={<WebsiteView host={window.location.host} />} />
             <Route path='/*' element={<WebsiteView host={window.location.host} />} />
           </Routes>}
         </ScrollTop>

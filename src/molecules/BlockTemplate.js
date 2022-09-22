@@ -13,7 +13,7 @@ import IconboxSection from 'molecules/IconboxSection';
 import MailingSection from 'molecules/MailingSection';
 import SellingSection from 'molecules/SellingSection';
 
-const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
+const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging, lang }) => {
   const [hover, setHover] = useState(false);
   const dispatch = useDispatch();
   const sl = section.layout;
@@ -99,28 +99,33 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging }) => {
           {section.type === 'content' && <ContentSection
             admin={admin}
             wid={wid}
-            section={section}
+            section={{ ...section, ...section[lang] }}
+            lang={lang}
           />}
           {section.type === 'graphic' && <GraphicSection
             admin={admin}
             wid={wid}
-            section={section}
+            section={{ ...section, ...section[lang] }}
+            lang={lang}
           />}
           {section.type === 'iconbox' && <IconboxSection
             admin={admin}
             wid={wid}
-            section={section}
+            section={{ ...section, ...section[lang] }}
+            lang={lang}
           />}
           {section.type === 'mailing' && <MailingSection
             admin={admin}
             wid={wid}
             uid={uid}
-            section={section}
+            section={{ ...section, ...section[lang] }}
+            lang={lang}
           />}
           {section.type === 'selling' && <SellingSection
             admin={admin}
             wid={wid}
-            section={section}
+            section={{ ...section, ...section[lang] }}
+            lang={lang}
           />}
         </Box>
         {admin && <Box sx={{

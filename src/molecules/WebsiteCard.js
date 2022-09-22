@@ -62,7 +62,7 @@ const WebsiteCard = ({ website }) => {
         >
           <Button
             sx={{ mr: 2 }}
-            onClick={() => navigate('/' + website.name + '/admin')}
+            onClick={() => navigate('/admin/' + website.name)}
             startIcon={<Edit />}
             variant='contained'
             size='small'

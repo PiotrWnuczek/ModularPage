@@ -19,7 +19,7 @@ import HeaderSection from 'molecules/HeaderSection';
 import FooterSection from 'molecules/FooterSection';
 
 const WebsiteView = ({ admin, host }) => {
-  const { id } = useParams();
+  const { id, lang } = useParams();
   const wid = id ? id : host;
   const website = useSelector(state => state.firestore.data[wid]);
   const auth = useSelector(state => state.firebase.auth);
@@ -103,6 +103,7 @@ const WebsiteView = ({ admin, host }) => {
                           index={index + 1}
                           drag={provided.dragHandleProps}
                           dragging={snapshot.isDragging}
+                          lang={lang}
                         />
                       </div>
                     )}
@@ -116,12 +117,13 @@ const WebsiteView = ({ admin, host }) => {
         {!access && website && website.public &&
           data && data.map((item, index) => (
             <BlockTemplate
+              key={item.id}
               admin={access}
               section={item}
               wid={website.name}
               uid={website.uid}
               index={index + 1}
-              key={item.id}
+              lang={lang}
             />
           ))}
         {website && website.footer && (website.public || access) && <FooterSection

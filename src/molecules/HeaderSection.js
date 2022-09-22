@@ -3,17 +3,20 @@ import { updateWebsite, createFile } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
-import { Box, Typography, Button, Paper, Link } from '@mui/material';
+import { Box, Button, Link, Paper } from '@mui/material';
+import { Typography, Select, MenuItem } from '@mui/material';
 import { Dialog, AppBar, Toolbar, Divider } from '@mui/material';
 import { Alert, TextField, CircularProgress } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { Style } from '@mui/icons-material';
 import { Formik } from 'formik';
+import Flag from 'react-world-flags';
 import Logo from 'stock/logo.png';
 import ButtonOptions from 'atoms/ButtonOptions';
 
 const HeaderSection = ({ admin, header, logo, wid }) => {
   const [open, setOpen] = useState(false);
+  const [select, setSelect] = useState('pl');
   const [variant, setVariant] = useState(header.variant || 'all');
   const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
@@ -30,23 +33,35 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
         <Toolbar sx={{
           color: 'fontcolor.main', justifyContent: 'space-between', mx: { xs: 1, md: 10 },
         }}>
-          <Box
-            sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-            onClick={() => admin ? setOpen(true) : navigate('')}
-          >
-            {(!hv || (hv && (hv === 'logo' || hv === 'all'))) && <Box>
-              {(!loading || loading !== 'logo') && <Box
-                sx={{ width: 40, height: 40, mx: 1 }}
-                src={logo || Logo}
-                component='img'
-              />}
-              {loading === 'logo' && <CircularProgress sx={{ mx: 1 }} />}
-            </Box>}
-            {(!hv || (hv && (hv === 'title' || hv === 'all'))) && <Typography variant='title'>
-              <Box sx={{ fontSize: '60%' }}>
-                {header.title || 'New Title'}
-              </Box>
-            </Typography>}
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+              onClick={() => admin ? setOpen(true) : navigate('')}
+            >
+              {(!hv || (hv && (hv === 'logo' || hv === 'all'))) && <Box>
+                {(!loading || loading !== 'logo') && <Box
+                  sx={{ width: 40, height: 40, mx: 1 }}
+                  src={logo || Logo}
+                  component='img'
+                />}
+                {loading === 'logo' && <CircularProgress sx={{ mx: 1 }} />}
+              </Box>}
+              {(!hv || (hv && (hv === 'title' || hv === 'all'))) && <Typography variant='title'>
+                <Box sx={{ fontSize: '60%' }}>
+                  {header.title || 'New Title'}
+                </Box>
+              </Typography>}
+            </Box>
+            <Box>
+              <Select
+                value={select}
+                onChange={(e) => setSelect(e.target.value)}
+              >
+                <MenuItem value='pl'>
+                  <Flag code='pl' />
+                </MenuItem>
+              </Select>
+            </Box>
           </Box>
           {admin && <ButtonOptions section={header} wid={wid}>
             <Button
