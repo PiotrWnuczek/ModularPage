@@ -4,19 +4,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { Box, Button, Link, Paper } from '@mui/material';
-import { Typography, Select, MenuItem } from '@mui/material';
+import { Typography, Menu, MenuItem } from '@mui/material';
 import { Dialog, AppBar, Toolbar, Divider } from '@mui/material';
 import { Alert, TextField, CircularProgress } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { Style } from '@mui/icons-material';
 import { Formik } from 'formik';
-import Flag from 'react-world-flags';
 import Logo from 'stock/logo.png';
 import ButtonOptions from 'atoms/ButtonOptions';
 
 const HeaderSection = ({ admin, header, logo, wid }) => {
   const [open, setOpen] = useState(false);
-  const [select, setSelect] = useState('pl');
+  const [menu, setMenu] = useState(false);
+  const [option, setOption] = useState('pl');
   const [variant, setVariant] = useState(header.variant || 'all');
   const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
@@ -53,14 +53,40 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
               </Typography>}
             </Box>
             <Box>
-              <Select
-                value={select}
-                onChange={(e) => setSelect(e.target.value)}
+              <Button
+                sx={{ mx: 1 }}
+                onClick={(e) => setMenu(e.currentTarget)}
+                size='small'
               >
-                <MenuItem value='pl'>
-                  <Flag code='pl' />
+                <Box
+                  sx={{ width: 30, height: 20, objectFit: 'cover', boxShadow: '0 0 1px 0 gray' }}
+                  component='img'
+                  src={'https://countryflagsapi.com/svg/' + option}
+                  alt='flag'
+                />
+              </Button>
+              <Menu
+                anchorEl={menu}
+                open={Boolean(menu)}
+                onClose={() => setMenu(false)}
+              >
+                <MenuItem onClick={() => { setMenu(false); setOption('pl'); }}>
+                  <Box
+                    sx={{ width: 30, height: 20, objectFit: 'cover', boxShadow: '0 0 1px 0 gray' }}
+                    component='img'
+                    src='https://countryflagsapi.com/svg/pl'
+                    alt='flag'
+                  />
                 </MenuItem>
-              </Select>
+                <MenuItem onClick={() => { setMenu(false); setOption('gb'); }}>
+                  <Box
+                    sx={{ width: 30, height: 20, objectFit: 'cover', boxShadow: '0 0 1px 0 gray' }}
+                    component='img'
+                    src='https://countryflagsapi.com/svg/gb'
+                    alt='flag'
+                  />
+                </MenuItem>
+              </Menu>
             </Box>
           </Box>
           {admin && <ButtonOptions section={header} wid={wid}>
