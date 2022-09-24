@@ -77,7 +77,7 @@ export const header = {
 export const footer = {
   type: 'footer',
   textinfo: 'Copywrite © all rights reserved.',
-  textrules: '**Click to edit! Use MarkDown (commonmark.org/help)!** This document contains rules and privacy of the website: (your website address). The website administrator is: (your data)',
+  textrules: '**Click to edit! Use MarkDown (commonmark.org/help)! Use Policy Privacy Generator (privacypolicygenerator.info)!** This document contains rules and privacy of the website: (your website address). The website administrator is: (your data)',
   titlerules: 'Rules and Privacy',
 };
 

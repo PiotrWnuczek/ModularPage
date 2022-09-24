@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createWebsite } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
@@ -50,8 +50,8 @@ const CreateView = () => {
   const [template, setTemplate] = useState('landing');
   const [existing, setExisting] = useState(false);
   const [info, setInfo] = useState(false);
-  const [warning, setWarning] = useState(false);
   const error = useSelector(state => state.websites.error);
+  useEffect(() => { setInfo(error && 'exist') }, [error]);
   const auth = useSelector(state => state.firebase.auth);
   const profile = useSelector(state => state.firestore.data[auth.uid]);
   const websites = useSelector(state => state.firestore.ordered.websites);
@@ -148,8 +148,8 @@ const CreateView = () => {
                   }));
                 websites.length >= profile.limit.all && setInfo('all');
                 domains.length >= profile.limit.custom && setInfo('custom');
-                domain === 'app' && blocked.includes(values.name) && setWarning(true);
-                domain === 'custom' && !values.name.includes('.') && setWarning(true);
+                domain === 'app' && blocked.includes(values.name) && setInfo('name');
+                domain === 'custom' && !values.name.includes('.') && setInfo('name');
               }}
             >
               {({ values, handleChange, handleSubmit }) => (
@@ -170,9 +170,6 @@ const CreateView = () => {
                 </form>
               )}
             </Formik>
-            {(error || warning) && <Typography>
-              Website already exists or the name is not available.
-            </Typography>}
             <Button
               startIcon={<Edit />}
               type='submit'
@@ -187,7 +184,7 @@ const CreateView = () => {
       </Grid>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
-        open={info ? true : false}
+        open={Boolean(info)}
         onClose={() => setInfo(false)}
         fullWidth
       >
@@ -196,17 +193,29 @@ const CreateView = () => {
             Upgrade Plan
           </Typography>
           <Typography sx={{ py: 1 }}>
-            {info === 'plan' ?
-              'To add custom domain upgrade your plan to premium.' :
-              'Your ' + info + ' domains limit has expired, upgrade your plan to premium.'}
+            {info === 'exist' && 'This website name already exists, choose another name.'}
+            {info === 'name' && 'This website name is not available, choose another name.'}
+            {info === 'plan' && 'To add custom domain upgrade your plan to premium.'}
+            {info === 'all' && 'Your all domains limit has expired, upgrade your plan to premium.'}
+            {info === 'custom' && 'Your custom domains limit has expired, upgrade your plan to premium.'}
           </Typography>
-          <Button
+          {['exist', 'name'].includes(info) && <Button
+            onClick={() => {
+              setInfo(false);
+              console.log('reset error');
+            }}
+            variant='contained'
+            size='small'
+          >
+            Accept Info
+          </Button>}
+          {['plan', 'all', 'custom'].includes(info) && <Button
             onClick={() => navigate('/account')}
             variant='contained'
             size='small'
           >
             Upgrade Plan
-          </Button>
+          </Button>}
           <Button
             sx={{ ml: 1 }}
             onClick={() => setInfo(false)}
