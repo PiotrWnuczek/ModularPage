@@ -12,8 +12,9 @@ import { Style } from '@mui/icons-material';
 import { Formik } from 'formik';
 import Logo from 'stock/logo.png';
 import ButtonOptions from 'atoms/ButtonOptions';
+import LangOptions from 'atoms/LangOptions';
 
-const HeaderSection = ({ admin, header, logo, wid }) => {
+const HeaderSection = ({ admin, header, logo, langs, wid }) => {
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);
   const [option, setOption] = useState('pl');
@@ -52,14 +53,17 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
                 </Box>
               </Typography>}
             </Box>
-            <Box>
+            <LangOptions>
               <Button
                 sx={{ mx: 1 }}
                 onClick={(e) => setMenu(e.currentTarget)}
                 size='small'
               >
                 <Box
-                  sx={{ width: 30, height: 20, objectFit: 'cover', boxShadow: '0 0 1px 0 gray' }}
+                  sx={{
+                    width: 30, height: 20, objectFit: 'cover',
+                    boxShadow: '0 0 1px 0 gray'
+                  }}
                   component='img'
                   src={'https://countryflagsapi.com/svg/' + option}
                   alt='flag'
@@ -72,7 +76,10 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
               >
                 <MenuItem onClick={() => { setMenu(false); setOption('pl'); }}>
                   <Box
-                    sx={{ width: 30, height: 20, objectFit: 'cover', boxShadow: '0 0 1px 0 gray' }}
+                    sx={{
+                      width: 30, height: 20, objectFit: 'cover',
+                      boxShadow: '0 0 1px 0 gray'
+                    }}
                     component='img'
                     src='https://countryflagsapi.com/svg/pl'
                     alt='flag'
@@ -80,14 +87,17 @@ const HeaderSection = ({ admin, header, logo, wid }) => {
                 </MenuItem>
                 <MenuItem onClick={() => { setMenu(false); setOption('gb'); }}>
                   <Box
-                    sx={{ width: 30, height: 20, objectFit: 'cover', boxShadow: '0 0 1px 0 gray' }}
+                    sx={{
+                      width: 30, height: 20, objectFit: 'cover',
+                      boxShadow: '0 0 1px 0 gray'
+                    }}
                     component='img'
                     src='https://countryflagsapi.com/svg/gb'
                     alt='flag'
                   />
                 </MenuItem>
               </Menu>
-            </Box>
+            </LangOptions>
           </Box>
           {admin && <ButtonOptions section={header} wid={wid}>
             <Button
