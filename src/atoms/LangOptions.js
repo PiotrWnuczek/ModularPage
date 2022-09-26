@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Box, Dialog, Typography } from '@mui/material';
-import { Button, Alert, AlertTitle } from '@mui/material';
-import { Select, Menu, MenuItem } from '@mui/material';
+import { Box, Dialog, Button, Select } from '@mui/material';
+import { Typography, Alert, AlertTitle } from '@mui/material';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { Translate } from '@mui/icons-material';
 import ReactMarkdown from 'react-markdown';
 
 const about = `
@@ -16,7 +17,9 @@ const LangOptions = ({ admin, wid, langs, lang }) => {
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);
   const [select, setSelect] = useState({
-    lang1: 'en', lang2: 'en', lang3: 'en',
+    lang1: (langs && langs.lang1) || false,
+    lang2: (langs && langs.lang2) || false,
+    lang3: (langs && langs.lang3) || false,
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,53 +28,62 @@ const LangOptions = ({ admin, wid, langs, lang }) => {
     ['en', 'English'],
     ['pl', 'Polish'],
     ['de', 'German'],
+    ['es', 'Spanish'],
+    ['fr', 'French'],
     ['ru', 'Russian'],
   ];
+  const param = lang || (langs && langs.lang1);
+  const cond = langs && langs.lang1 && (langs.lang2 || langs.lang3);
 
   return (
     <Box>
-      <Button
-        onClick={(e) => admin ? setOpen(true) : setMenu(e.currentTarget)}
+      {cond && <Box>
+        <Button
+          sx={{ mx: 1 }}
+          onClick={(e) => admin ? setOpen(true) : setMenu(e.currentTarget)}
+          size='small'
+        >
+          <Box
+            sx={{
+              width: 30, height: 20, objectFit: 'cover',
+              boxShadow: '0 0 1px 0 gray',
+            }}
+            component='img'
+            src={'https://countryflagsapi.com/svg/' + (flags[param] || param)}
+            alt='flag'
+          />
+        </Button>
+        <Menu
+          anchorEl={menu}
+          open={Boolean(menu)}
+          onClose={() => setMenu(false)}
+        >
+          {[langs.lang1, langs.lang2, langs.lang3].map((item, idx) =>
+            item && item !== param &&
+            <MenuItem
+              onClick={() => { setMenu(false); navigate('/' + wid + '/' + item); }}
+              key={idx}
+            >
+              <Box
+                sx={{
+                  width: 30, height: 20, objectFit: 'cover',
+                  boxShadow: '0 0 1px 0 gray',
+                }}
+                component='img'
+                src={'https://countryflagsapi.com/svg/' + (flags[item] || item)}
+                alt='flag'
+              />
+            </MenuItem>
+          )}
+        </Menu>
+      </Box>}
+      {!cond && admin && <IconButton
+        sx={{ mx: 1 }}
+        onClick={() => setOpen(true)}
         size='small'
       >
-        <Box
-          sx={{
-            width: 30, height: 20, objectFit: 'cover',
-            boxShadow: '0 0 1px 0 gray',
-          }}
-          component='img'
-          src={'https://countryflagsapi.com/svg/' + (flags[lang] || lang || 'gb')}
-          alt='flag'
-        />
-      </Button>
-      <Menu
-        anchorEl={menu}
-        open={Boolean(menu)}
-        onClose={() => setMenu(false)}
-      >
-        <MenuItem onClick={() => { setMenu(false); navigate('/' + wid + '/pl'); }}>
-          <Box
-            sx={{
-              width: 30, height: 20, objectFit: 'cover',
-              boxShadow: '0 0 1px 0 gray',
-            }}
-            component='img'
-            src='https://countryflagsapi.com/svg/pl'
-            alt='flag'
-          />
-        </MenuItem>
-        <MenuItem onClick={() => { setMenu(false); navigate('/' + wid + '/en'); }}>
-          <Box
-            sx={{
-              width: 30, height: 20, objectFit: 'cover',
-              boxShadow: '0 0 1px 0 gray',
-            }}
-            component='img'
-            src='https://countryflagsapi.com/svg/gb'
-            alt='flag'
-          />
-        </MenuItem>
-      </Menu>
+        <Translate />
+      </IconButton>}
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
@@ -110,17 +122,23 @@ const LangOptions = ({ admin, wid, langs, lang }) => {
                   size='small'
                   fullWidth
                 >
-                  {options.map(option => <MenuItem value={option[0]} key={option}>
-                    {option[1]}
-                  </MenuItem>)}
+                  <MenuItem value={false}>Language Disabled</MenuItem>
+                  {options.map(option =>
+                    <MenuItem value={option[0]} key={option[0]}>
+                      {option[1]}
+                    </MenuItem>
+                  )}
                 </Select>
               </Box>
             )}
           </Box>
           <Button
-            onClick={() => dispatch(updateWebsite({
-              values: { lang: { ...langs, lang } }, wid,
-            }))}
+            onClick={() => {
+              dispatch(updateWebsite({
+                values: { langs: select }, wid,
+              }));
+              setOpen(false);
+            }}
             variant='contained'
             size='small'
           >
