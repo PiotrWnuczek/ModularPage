@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Box, Dialog, Typography } from '@mui/material';
 import { Button, Alert, AlertTitle } from '@mui/material';
-import { Select, MenuItem } from '@mui/material';
+import { Select, Menu, MenuItem } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 
 const about = `
@@ -11,19 +12,66 @@ const about = `
 * Select the language version to edit
 `;
 
-const LangOptions = ({ children, langs, wid }) => {
+const LangOptions = ({ admin, wid, langs, lang }) => {
   const [open, setOpen] = useState(false);
-  const [lang, setLang] = useState(langs);
+  const [menu, setMenu] = useState(false);
+  const [select, setSelect] = useState({
+    lang1: 'en', lang2: 'en', lang3: 'en',
+  });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const flags = { en: 'gb' };
+  const options = [
+    ['en', 'English'],
+    ['pl', 'Polish'],
+    ['de', 'German'],
+    ['ru', 'Russian'],
+  ];
 
   return (
     <Box>
-      <Box
-        sx={{ cursor: 'pointer' }}
-        onClick={() => setOpen(true)}
+      <Button
+        onClick={(e) => admin ? setOpen(true) : setMenu(e.currentTarget)}
+        size='small'
       >
-        {children}
-      </Box>
+        <Box
+          sx={{
+            width: 30, height: 20, objectFit: 'cover',
+            boxShadow: '0 0 1px 0 gray',
+          }}
+          component='img'
+          src={'https://countryflagsapi.com/svg/' + (flags[lang] || lang || 'gb')}
+          alt='flag'
+        />
+      </Button>
+      <Menu
+        anchorEl={menu}
+        open={Boolean(menu)}
+        onClose={() => setMenu(false)}
+      >
+        <MenuItem onClick={() => { setMenu(false); navigate('/' + wid + '/pl'); }}>
+          <Box
+            sx={{
+              width: 30, height: 20, objectFit: 'cover',
+              boxShadow: '0 0 1px 0 gray',
+            }}
+            component='img'
+            src='https://countryflagsapi.com/svg/pl'
+            alt='flag'
+          />
+        </MenuItem>
+        <MenuItem onClick={() => { setMenu(false); navigate('/' + wid + '/en'); }}>
+          <Box
+            sx={{
+              width: 30, height: 20, objectFit: 'cover',
+              boxShadow: '0 0 1px 0 gray',
+            }}
+            component='img'
+            src='https://countryflagsapi.com/svg/gb'
+            alt='flag'
+          />
+        </MenuItem>
+      </Menu>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
         open={open}
@@ -40,7 +88,7 @@ const LangOptions = ({ children, langs, wid }) => {
               severity='info'
             >
               <AlertTitle>
-                Set button options
+                Set language varsions
               </AlertTitle>
               <ReactMarkdown
                 children={about}
@@ -48,60 +96,26 @@ const LangOptions = ({ children, langs, wid }) => {
                 className='about'
               />
             </Alert>
-            <Typography>
-              Website Language
-            </Typography>
-            <Select
-              sx={{ my: 1 }}
-              value={lang}
-              onChange={(e) => setLang(e.target.value)}
-              size='small'
-              fullWidth
-              autoFocus
-            >
-              <MenuItem value='en'>
-                English
-              </MenuItem>
-              <MenuItem value='pl'>
-                Polish
-              </MenuItem>
-            </Select>
-            <Typography>
-              First Translation
-            </Typography>
-            <Select
-              sx={{ my: 1 }}
-              value={lang}
-              onChange={(e) => setLang(e.target.value)}
-              size='small'
-              fullWidth
-              autoFocus
-            >
-              <MenuItem value='en'>
-                English
-              </MenuItem>
-              <MenuItem value='pl'>
-                Polish
-              </MenuItem>
-            </Select>
-            <Typography>
-              Second Translation
-            </Typography>
-            <Select
-              sx={{ my: 1 }}
-              value={lang}
-              onChange={(e) => setLang(e.target.value)}
-              size='small'
-              fullWidth
-              autoFocus
-            >
-              <MenuItem value='en'>
-                English
-              </MenuItem>
-              <MenuItem value='pl'>
-                Polish
-              </MenuItem>
-            </Select>
+            {['lang1', 'lang2', 'lang3'].map(item =>
+              <Box key={item}>
+                <Typography>
+                  {item === 'lang1' && 'Website Language'}
+                  {item === 'lang2' && 'First Translation'}
+                  {item === 'lang3' && 'Second Translation'}
+                </Typography>
+                <Select
+                  sx={{ my: 1 }}
+                  value={select[item]}
+                  onChange={(e) => setSelect({ ...select, [item]: e.target.value })}
+                  size='small'
+                  fullWidth
+                >
+                  {options.map(option => <MenuItem value={option[0]} key={option}>
+                    {option[1]}
+                  </MenuItem>)}
+                </Select>
+              </Box>
+            )}
           </Box>
           <Button
             onClick={() => dispatch(updateWebsite({

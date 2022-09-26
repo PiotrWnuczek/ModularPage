@@ -40,14 +40,6 @@ const AccountView = () => {
           <Typography sx={{ mb: 0.5 }}>
             Premium: {(profile && moment(profile.premium.toDate()).calendar()) || 'inactive'}
           </Typography>
-          {(profile && profile.premium.toDate()) < new Date() && <Button
-            sx={{ mt: 0.5 }}
-            onClick={() => setOpen(true)}
-            variant='contained'
-            size='small'
-          >
-            Activate Premium
-          </Button>}
         </Card>
       </Box>
       <Dialog

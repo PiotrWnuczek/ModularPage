@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { createWebsite } from 'redux/websitesSlice';
+import React, { useState } from 'react';
+import { createWebsite, reset } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { useNavigate } from 'react-router-dom';
-import { Box, Grid, Dialog, Button } from '@mui/material';
-import { Card, TextField, Typography } from '@mui/material';
-import { CardActionArea, CardMedia } from '@mui/material';
-import { Avatar, Select, MenuItem } from '@mui/material';
+import { Box, Grid, Dialog, Button, Avatar } from '@mui/material';
+import { Typography, Select, MenuItem, TextField } from '@mui/material';
+import { Card, CardActionArea, CardMedia } from '@mui/material';
 import { CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
 import { CheckBoxOutlined, Edit } from '@mui/icons-material';
 import { Formik } from 'formik';
@@ -51,7 +50,6 @@ const CreateView = () => {
   const [existing, setExisting] = useState(false);
   const [info, setInfo] = useState(false);
   const error = useSelector(state => state.websites.error);
-  useEffect(() => { setInfo(error && 'exist') }, [error]);
   const auth = useSelector(state => state.firebase.auth);
   const profile = useSelector(state => state.firestore.data[auth.uid]);
   const websites = useSelector(state => state.firestore.ordered.websites);
@@ -184,32 +182,23 @@ const CreateView = () => {
       </Grid>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
-        open={Boolean(info)}
-        onClose={() => setInfo(false)}
+        open={Boolean(info || error)}
+        onClose={() => { setInfo(false); error && dispatch(reset()); }}
         fullWidth
       >
         <Box sx={{ p: 2 }}>
           <Typography variant='h5'>
-            Upgrade Plan
+            {['plan', 'all', 'custom'].includes(info) ? 'Upgrade Plan' : 'Change Name'}
           </Typography>
           <Typography sx={{ py: 1 }}>
-            {info === 'exist' && 'This website name already exists, choose another name.'}
+            {error && 'This website name already exists, choose another name.'}
             {info === 'name' && 'This website name is not available, choose another name.'}
             {info === 'plan' && 'To add custom domain upgrade your plan to premium.'}
             {info === 'all' && 'Your all domains limit has expired, upgrade your plan to premium.'}
             {info === 'custom' && 'Your custom domains limit has expired, upgrade your plan to premium.'}
           </Typography>
-          {['exist', 'name'].includes(info) && <Button
-            onClick={() => {
-              setInfo(false);
-              console.log('reset error');
-            }}
-            variant='contained'
-            size='small'
-          >
-            Accept Info
-          </Button>}
           {['plan', 'all', 'custom'].includes(info) && <Button
+            sx={{ mr: 1 }}
             onClick={() => navigate('/account')}
             variant='contained'
             size='small'
@@ -217,12 +206,11 @@ const CreateView = () => {
             Upgrade Plan
           </Button>}
           <Button
-            sx={{ ml: 1 }}
-            onClick={() => setInfo(false)}
+            onClick={() => { setInfo(false); error && dispatch(reset()); }}
             variant='outlined'
             size='small'
           >
-            Cancel
+            {['plan', 'all', 'custom'].includes(info) ? 'Cancel' : 'All Right'}
           </Button>
         </Box>
       </Dialog>

@@ -53,7 +53,8 @@ export const signoutUser = createAsyncThunk(
 );
 
 const usersSlice = createSlice({
-  name: 'users', initialState: { error: null },
+  name: 'users',
+  initialState: { error: null },
   extraReducers: {
     [signinUser.fulfilled]: (state, action) => {
       //console.log(action.type, action.payload);

@@ -129,7 +129,9 @@ export const removeFile = createAsyncThunk(
 );
 
 const websitesSlice = createSlice({
-  name: 'websites', initialState: { error: null },
+  name: 'websites',
+  initialState: { error: null },
+  reducers: { reset: (state) => { state.error = null } },
   extraReducers: {
     [createWebsite.fulfilled]: (state, action) => {
       //console.log(action.type, action.payload);
@@ -201,5 +203,7 @@ const websitesSlice = createSlice({
     },
   },
 });
+
+export const { reset } = websitesSlice.actions;
 
 export default websitesSlice.reducer;
