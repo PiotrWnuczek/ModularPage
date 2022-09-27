@@ -3,9 +3,10 @@ import { updateWebsite, createFile } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
-import { Box, Button, Typography, Divider } from '@mui/material';
-import { Dialog, AppBar, Toolbar, Paper, Link } from '@mui/material';
-import { Alert, TextField, CircularProgress } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { Dialog, AppBar, Toolbar } from '@mui/material';
+import { Alert, Link, Divider, Paper } from '@mui/material';
+import { TextField, CircularProgress } from '@mui/material';
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import { Style } from '@mui/icons-material';
 import { Formik } from 'formik';
@@ -55,7 +56,10 @@ const HeaderSection = ({ admin, header, logo, langs, lang, wid }) => {
               langs={langs} lang={lang}
             />
           </Box>
-          {admin && <ButtonOptions section={header} wid={wid}>
+          {admin && <ButtonOptions
+            section={header}
+            wid={wid} lang={lang}
+          >
             <Button
               sx={{ my: 1 }}
               variant='contained'
@@ -106,7 +110,11 @@ const HeaderSection = ({ admin, header, logo, langs, lang, wid }) => {
               onSubmit={(values) => {
                 (values.title !== header.title || variant !== header.variant) &&
                   dispatch(updateWebsite({
-                    values: { header: { ...header, ...values, variant } }, wid,
+                    values: {
+                      header: lang ?
+                        { ...header, variant, [lang]: { ...header[lang], ...values } } :
+                        { ...header, ...values, variant }
+                    }, wid,
                   }));
                 acceptedFiles[0] &&
                   dispatch(createFile({

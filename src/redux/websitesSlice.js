@@ -68,14 +68,16 @@ export const createSection = createAsyncThunk(
 );
 
 export const updateSection = createAsyncThunk(
-  'updateSection', async ({ values, sid, wid }, thunk) => {
+  'updateSection', async ({ values, sid, wid, lang }, thunk) => {
     const firestore = thunk.extra.getFirestore();
     const sections = thunk.getState().firestore.data[wid].sections;
     const ref = firestore.collection('websites');
     try {
       return await ref.doc(wid).update({
         sections: sections.map(
-          section => section.id === sid ? { ...section, ...values } : section
+          section => section.id === sid ? lang ?
+            { ...section, [lang]: { ...section[lang], ...values } } :
+            { ...section, ...values } : section
         ),
       }).then(() => values);
     } catch (error) { throw error }

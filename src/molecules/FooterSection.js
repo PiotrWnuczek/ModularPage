@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 
-const FooterSection = ({ admin, footer, wid }) => {
+const FooterSection = ({ admin, footer, wid, lang }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -14,8 +14,8 @@ const FooterSection = ({ admin, footer, wid }) => {
       <Divider />
       <Box sx={{ py: 3, px: { xs: 6, md: 24 } }}>
         <TextEditor
-          admin={admin} section={footer}
-          wid={wid} idx='info' type='text'
+          admin={admin} section={footer} wid={wid}
+          lang={lang} idx='info' type='text'
         >
           <Button
             onClick={() => setOpen(true)}
@@ -43,8 +43,8 @@ const FooterSection = ({ admin, footer, wid }) => {
         >
           <Box sx={{ p: 2 }}>
             <TextEditor
-              admin={admin} section={footer}
-              wid={wid} idx='rules' type='title'
+              admin={admin} section={footer} wid={wid}
+              lang={lang} idx='rules' type='title'
             >
               <Typography variant='title'>
                 <Box sx={{ fontSize: '60%' }}>
@@ -53,8 +53,8 @@ const FooterSection = ({ admin, footer, wid }) => {
               </Typography>
             </TextEditor>
             <TextEditor
-              admin={admin} section={footer}
-              wid={wid} idx='rules' type='text'
+              admin={admin} section={footer} wid={wid}
+              lang={lang} idx='rules' type='text'
             >
               <Typography variant='text'>
                 <Box sx={{ fontSize: '90%' }}>

@@ -7,14 +7,14 @@ import rehypeRaw from 'rehype-raw';
 import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
 
-const ContentSection = ({ admin, section, wid }) => {
+const ContentSection = ({ admin, section, wid, lang }) => {
   const sl = section.layout;
 
   return (
     <Box sx={{ width: '100%', textAlign: 'center' }}>
       <TextEditor
         admin={admin} section={section}
-        wid={wid} type='title'
+        wid={wid} lang={lang} type='title'
       >
         <Typography
           sx={{ mb: 1 }}
@@ -25,7 +25,7 @@ const ContentSection = ({ admin, section, wid }) => {
       </TextEditor>
       <TextEditor
         admin={admin} section={section}
-        wid={wid} type='text'
+        wid={wid} lang={lang} type='text'
       >
         <Typography
           sx={{ mt: 1, textAlign: (sl && sl.textalign) || 'center' }}
@@ -46,8 +46,8 @@ const ContentSection = ({ admin, section, wid }) => {
           key={idx}
         >
           {admin && <ButtonOptions
-            section={section}
-            wid={wid} idx={idx}
+            section={section} idx={idx}
+            wid={wid} lang={lang}
           >
             <Button
               sx={{ mb: 1 }}

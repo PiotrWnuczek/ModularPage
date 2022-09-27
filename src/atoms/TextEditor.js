@@ -5,7 +5,7 @@ import { Box, TextField, IconButton } from '@mui/material';
 import { Check } from '@mui/icons-material';
 import { Formik } from 'formik';
 
-const TextEditor = ({ children, type, admin, section, wid, idx }) => {
+const TextEditor = ({ children, type, admin, section, wid, lang, idx }) => {
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
   const title = idx ? 'title' + idx : 'title';
@@ -23,10 +23,14 @@ const TextEditor = ({ children, type, admin, section, wid, idx }) => {
         initialValues={{ [title]: section[title] || 'New Title' }}
         onSubmit={(values) => {
           section.id && (values[title] !== section[title]) &&
-            dispatch(updateSection({ values, sid: section.id, wid }));
+            dispatch(updateSection({ values, sid: section.id, wid, lang }));
           section.type === 'footer' && (values[title] !== section[title]) &&
             dispatch(updateWebsite({
-              values: { footer: { ...section, ...values } }, wid,
+              values: {
+                footer: lang ?
+                  { ...section, [lang]: { ...section[lang], ...values } } :
+                  { ...section, ...values }
+              }, wid,
             }));
           setEdit(false);
         }}
@@ -70,10 +74,14 @@ const TextEditor = ({ children, type, admin, section, wid, idx }) => {
         initialValues={{ [text]: section[text] || 'New Text' }}
         onSubmit={(values) => {
           section.id && (values[text] !== section[text]) &&
-            dispatch(updateSection({ values, sid: section.id, wid }));
+            dispatch(updateSection({ values, sid: section.id, wid, lang }));
           section.type === 'footer' && (values[text] !== section[text]) &&
             dispatch(updateWebsite({
-              values: { footer: { ...section, ...values } }, wid,
+              values: {
+                footer: lang ?
+                  { ...section, [lang]: { ...section[lang], ...values } } :
+                  { ...section, ...values }
+              }, wid,
             }));
           setEdit(false);
         }}

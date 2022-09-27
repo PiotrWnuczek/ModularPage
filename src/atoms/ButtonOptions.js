@@ -14,7 +14,7 @@ const about = `
 * Create scroll by entering # and section number from top (e.g. #1) in url field
 `;
 
-const ButtonOptions = ({ children, section, wid, idx }) => {
+const ButtonOptions = ({ children, section, wid, lang, idx }) => {
   const button = idx ? 'button' + idx : 'button';
   const link = idx ? 'link' + idx : 'link';
   const tab = idx ? 'tab' + idx : 'tab';
@@ -65,13 +65,17 @@ const ButtonOptions = ({ children, section, wid, idx }) => {
                     values[link] !== section[link]) &&
                   dispatch(updateSection({
                     values: { ...values, [tab]: target },
-                    sid: section.id, wid,
+                    sid: section.id, wid, lang,
                   }));
                 section.type === 'header' &&
                   (section[tab] !== target || values[button] !== section[button] ||
                     values[link] !== section[link]) &&
                   dispatch(updateWebsite({
-                    values: { header: { ...section, ...values, [tab]: target } }, wid,
+                    values: {
+                      header: lang ?
+                        { ...section, [lang]: { ...section[lang], ...values, [tab]: target } } :
+                        { ...section, ...values, [tab]: target }
+                    }, wid,
                   }));
                 setOpen(false);
               }}
