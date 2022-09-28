@@ -10,7 +10,7 @@ import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 import PaymentOptions from 'atoms/PaymentOptions';
 
-const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
+const ProductCard = ({ admin, section, wid, lang, idx, setSuccess }) => {
   const [payment, setPayment] = useState(false);
   const selling = idx ? 'selling' + idx : 'selling';
   const title = idx ? 'title' + idx : 'title';
@@ -37,8 +37,8 @@ const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
       >
         <Box sx={{ p: 2, textAlign: 'center' }}>
           <TextEditor
-            admin={admin} section={section}
-            wid={wid} idx={idx} type='title'
+            admin={admin} section={section} idx={idx}
+            wid={wid} lang={lang} type='title'
           >
             <Typography variant='title'>
               <Box sx={{ fontSize: '70%' }}>
@@ -47,8 +47,8 @@ const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
             </Typography>
           </TextEditor>
           <TextEditor
-            admin={admin} section={section}
-            wid={wid} idx={idx} type='text'
+            admin={admin} section={section} idx={idx}
+            wid={wid} lang={lang} type='text'
           >
             <Typography variant='text'>
               <Box sx={{ fontSize: '90%', textAlign: (sl && sl.textalign) || 'center' }}>
@@ -59,7 +59,7 @@ const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
             </Typography>
           </TextEditor>
           {admin && <PaymentOptions
-            section={section} wid={wid} idx={idx}
+            section={section} wid={wid} lang={lang} idx={idx}
           >
             <Typography variant='text'>
               <Box sx={{ fontSize: '90%' }}>
@@ -157,7 +157,7 @@ const ProductCard = ({ admin, section, wid, idx, setSuccess }) => {
   )
 };
 
-const SellingSection = ({ admin, section, wid }) => {
+const SellingSection = ({ admin, section, wid, lang }) => {
   const [success, setSuccess] = useState(false);
   const [params, setParams] = useSearchParams();
   useEffect(() => {
@@ -170,8 +170,8 @@ const SellingSection = ({ admin, section, wid }) => {
     <Grid container spacing={2}>
       {Array.from({ length: sl ? Number(sl.quantity) : 2 }, (_, i) => ++i).map(idx =>
         <ProductCard
-          key={idx} idx={idx} wid={wid} admin={admin}
-          section={section} setSuccess={setSuccess}
+          key={idx} wid={wid} lang={lang} admin={admin}
+          idx={idx} section={section} setSuccess={setSuccess}
         />
       )}
       <Dialog

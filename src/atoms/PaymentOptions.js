@@ -30,7 +30,7 @@ copy Secret Key and paste below
 * Add Button Text, Price and you are done
 `;
 
-const PaymentOptions = ({ children, section, wid, idx }) => {
+const PaymentOptions = ({ children, section, wid, lang, idx }) => {
   const [open, setOpen] = useState(false);
   const [selling, setSelling] = useState(section['selling' + idx] || 'paypal');
   const auth = useSelector(state => state.firebase.auth);
@@ -99,16 +99,6 @@ const PaymentOptions = ({ children, section, wid, idx }) => {
                 [price]: section[price] || '0',
               }}
               onSubmit={(values) => {
-                selling === 'paypal' && values.key !== section.paypal &&
-                  dispatch(updateSection({
-                    values: { paypal: values.key },
-                    sid: section.id, wid,
-                  }));
-                selling === 'stripe' && profile && (values.key !== profile[selling]) &&
-                  dispatch(updateProfile({
-                    values: { [selling]: values.key },
-                    id: auth.uid,
-                  }));
                 (values[button] !== section[button] || values[product] !== section[product] ||
                   values[currency] !== section[currency] || values[price] !== section[price] ||
                   section['selling' + idx] !== selling) &&
@@ -119,8 +109,15 @@ const PaymentOptions = ({ children, section, wid, idx }) => {
                       [currency]: values[currency],
                       [price]: values[price],
                       ['selling' + idx]: selling,
+                      paypal: selling === 'paypal' && values.key !== section.paypal ?
+                        values.key : null,
                     },
-                    sid: section.id, wid,
+                    sid: section.id, wid, lang,
+                  }));
+                selling === 'stripe' && profile && (values.key !== profile[selling]) &&
+                  dispatch(updateProfile({
+                    values: { [selling]: values.key },
+                    id: auth.uid,
                   }));
                 setOpen(false);
               }}

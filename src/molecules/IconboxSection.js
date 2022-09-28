@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 import IconOptions from 'atoms/IconOptions';
 
-const IconBox = ({ admin, section, wid, idx }) => {
+const IconBox = ({ admin, section, wid, lang, idx }) => {
   const icon = idx ? 'icon' + idx : 'icon';
   const title = idx ? 'title' + idx : 'title';
   const text = idx ? 'text' + idx : 'text';
@@ -33,8 +33,8 @@ const IconBox = ({ admin, section, wid, idx }) => {
           </Icon>
         </IconOptions>
         <TextEditor
-          admin={admin} section={section}
-          wid={wid} idx={idx} type='title'
+          admin={admin} section={section} idx={idx}
+          wid={wid} lang={lang} type='title'
         >
           <Typography variant='title'>
             <Box sx={{ fontSize: '75%' }}>
@@ -43,8 +43,8 @@ const IconBox = ({ admin, section, wid, idx }) => {
           </Typography>
         </TextEditor>
         <TextEditor
-          admin={admin} section={section}
-          wid={wid} idx={idx} type='text'
+          admin={admin} section={section} idx={idx}
+          wid={wid} lang={lang} type='text'
         >
           <Typography variant='text'>
             <Box sx={{ fontSize: '95%', textAlign: (sl && sl.textalign) || 'center' }}>
@@ -59,7 +59,7 @@ const IconBox = ({ admin, section, wid, idx }) => {
   )
 };
 
-const IconboxSection = ({ admin, section, wid }) => {
+const IconboxSection = ({ admin, section, wid, lang }) => {
   const sl = section.layout;
 
   return (
@@ -67,7 +67,7 @@ const IconboxSection = ({ admin, section, wid }) => {
       {Array.from({ length: sl ? Number(sl.quantity) : 3 }, (_, i) => ++i).map(idx =>
         <IconBox
           key={idx} idx={idx} admin={admin}
-          section={section} wid={wid}
+          section={section} wid={wid} lang={lang}
         />
       )}
     </Grid>

@@ -76,9 +76,9 @@ const WebsiteView = ({ admin, host }) => {
       </Box>}
       <Box sx={{ color: 'fontcolor.main', bgcolor: 'backgroundcolor.main' }}>
         {website && website.header && (website.public || access) && <HeaderSection
-          admin={access} wid={website.name} logo={website.logo}
           header={{ ...website.header, ...website.header[lang] }}
-          langs={website.langs} lang={lang}
+          section={website.header} admin={access} wid={website.name}
+          logo={website.logo} langs={website.langs} lang={lang}
         />}
         {access && <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId='droppable'>
@@ -129,8 +129,9 @@ const WebsiteView = ({ admin, host }) => {
             />
           ))}
         {website && website.footer && (website.public || access) && <FooterSection
-          admin={access} wid={website.name} lang={lang}
           footer={{ ...website.footer, ...website.footer[lang] }}
+          section={website.footer} admin={access}
+          wid={website.name} lang={lang}
         />}
       </Box>
       {!access && !(website && website.public) &&

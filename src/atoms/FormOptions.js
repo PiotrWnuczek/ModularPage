@@ -26,7 +26,7 @@ copy key and paste below
 copy Group Name and paste below
 `;
 
-const FormOptions = ({ children, section, wid }) => {
+const FormOptions = ({ children, section, wid, lang }) => {
   const [open, setOpen] = useState(false);
   const [mailing, setMailing] = useState(section.mailing || 'sender');
   const auth = useSelector(state => state.firebase.auth);
@@ -96,7 +96,7 @@ const FormOptions = ({ children, section, wid }) => {
                 (values.group !== section.group || values.button !== section.button) &&
                   dispatch(updateSection({
                     values: { group: values.group, button: values.button, mailing },
-                    sid: section.id, wid,
+                    sid: section.id, wid, lang,
                   }));
                 setOpen(false);
               }}

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { updateWebsite } from 'redux/websitesSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Box, Dialog, Button, Select } from '@mui/material';
-import { Typography, Alert, AlertTitle } from '@mui/material';
-import { IconButton, Menu, MenuItem } from '@mui/material';
-import { Translate } from '@mui/icons-material';
+import { Box, Typography, Dialog, Button } from '@mui/material';
+import { Grid, Select, Alert, AlertTitle } from '@mui/material';
+import { IconButton, Menu, MenuItem, Avatar } from '@mui/material';
+import { Edit, Translate } from '@mui/icons-material';
 import ReactMarkdown from 'react-markdown';
 
 const about = `
@@ -14,6 +14,7 @@ const about = `
 `;
 
 const LangOptions = ({ admin, wid, langs, lang }) => {
+  const [edit, setEdit] = useState('lang1');
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);
   const [select, setSelect] = useState({
@@ -109,27 +110,44 @@ const LangOptions = ({ admin, wid, langs, lang }) => {
               />
             </Alert>
             {['lang1', 'lang2', 'lang3'].map(item =>
-              <Box key={item}>
-                <Typography>
-                  {item === 'lang1' && 'Website Language'}
-                  {item === 'lang2' && 'First Translation'}
-                  {item === 'lang3' && 'Second Translation'}
-                </Typography>
-                <Select
-                  sx={{ my: 1 }}
-                  value={select[item]}
-                  onChange={(e) => setSelect({ ...select, [item]: e.target.value })}
-                  size='small'
-                  fullWidth
-                >
-                  <MenuItem value={false}>Language Disabled</MenuItem>
-                  {options.map(option =>
-                    <MenuItem value={option[0]} key={option[0]}>
-                      {option[1]}
-                    </MenuItem>
-                  )}
-                </Select>
-              </Box>
+              <Grid container key={item}>
+                <Grid item xs={12} md={5}>
+                  <Box
+                    sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                    onClick={() => {
+                      setEdit(item);
+                      langs[item] &&
+                        navigate('/admin/' + wid + '/' + langs[item]);
+                    }}
+                  >
+                    <Avatar sx={{ bgcolor: edit === item && 'primary.main' }}>
+                      {edit === item && <Edit />}
+                      {edit !== item && <Translate />}
+                    </Avatar>
+                    <Typography sx={{ ml: 1 }}>
+                      {item === 'lang1' && 'Website Language'}
+                      {item === 'lang2' && 'First Translation'}
+                      {item === 'lang3' && 'Second Translation'}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={7}>
+                  <Select
+                    sx={{ my: 1 }}
+                    value={select[item]}
+                    onChange={(e) => setSelect({ ...select, [item]: e.target.value })}
+                    size='small'
+                    fullWidth
+                  >
+                    <MenuItem value={false}>Language Disabled</MenuItem>
+                    {options.map(option =>
+                      <MenuItem value={option[0]} key={option[0]}>
+                        {option[1]}
+                      </MenuItem>
+                    )}
+                  </Select>
+                </Grid>
+              </Grid>
             )}
           </Box>
           <Button

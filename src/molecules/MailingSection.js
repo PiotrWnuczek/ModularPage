@@ -8,7 +8,7 @@ import remarkGfm from 'remark-gfm';
 import TextEditor from 'atoms/TextEditor';
 import FormOptions from 'atoms/FormOptions';
 
-const MailingSection = ({ admin, section, wid, uid }) => {
+const MailingSection = ({ admin, section, wid, lang, uid }) => {
   const [success, setSuccess] = useState(false);
   const firebase = useFirebase();
   const senderFunction = (email) => {
@@ -25,7 +25,7 @@ const MailingSection = ({ admin, section, wid, uid }) => {
     <Box sx={{ textAlign: 'center', width: '100%' }}>
       <TextEditor
         admin={admin} section={section}
-        wid={wid} type='title'
+        wid={wid} lang={lang} type='title'
       >
         <Typography
           sx={{ mb: 1 }}
@@ -36,7 +36,7 @@ const MailingSection = ({ admin, section, wid, uid }) => {
       </TextEditor>
       <TextEditor
         admin={admin} section={section}
-        wid={wid} type='text'
+        wid={wid} lang={lang} type='text'
       >
         <Typography
           sx={{ mt: 1, textAlign: (sl && sl.textalign) || 'center' }}
@@ -47,7 +47,9 @@ const MailingSection = ({ admin, section, wid, uid }) => {
           </ReactMarkdown>
         </Typography>
       </TextEditor>
-      {admin && <FormOptions section={section} wid={wid}>
+      {admin && <FormOptions
+        section={section} wid={wid} lang={lang}
+      >
         <Grid sx={{ px: { lg: 7 } }} container spacing={1}>
           <Grid item xs={12} sm={9}>
             <TextField

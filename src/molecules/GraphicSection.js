@@ -8,7 +8,7 @@ import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
 import ImageOptions from 'atoms/ImageOptions';
 
-const GraphicSection = ({ admin, section, wid }) => {
+const GraphicSection = ({ admin, section, wid, lang }) => {
   const sl = section.layout;
 
   return (
@@ -27,7 +27,7 @@ const GraphicSection = ({ admin, section, wid }) => {
         <Box sx={{ textAlign: 'center', width: '100%' }}>
           <TextEditor
             admin={admin} section={section}
-            wid={wid} type='title'
+            wid={wid} lang={lang} type='title'
           >
             <Typography
               sx={{ mb: 1 }}
@@ -38,7 +38,7 @@ const GraphicSection = ({ admin, section, wid }) => {
           </TextEditor>
           <TextEditor
             admin={admin} section={section}
-            wid={wid} type='text'
+            wid={wid} lang={lang} type='text'
           >
             <Typography
               sx={{ mt: 1, textAlign: (sl && sl.textalign) || 'center' }}
@@ -55,8 +55,8 @@ const GraphicSection = ({ admin, section, wid }) => {
               key={idx}
             >
               {admin && <ButtonOptions
-                section={section}
-                wid={wid} idx={idx}
+                section={section} idx={idx}
+                wid={wid} lang={lang}
               >
                 <Button
                   sx={{ mb: 1 }}

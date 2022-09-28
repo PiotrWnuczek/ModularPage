@@ -14,7 +14,7 @@ import Logo from 'stock/logo.png';
 import ButtonOptions from 'atoms/ButtonOptions';
 import LangOptions from 'atoms/LangOptions';
 
-const HeaderSection = ({ admin, header, logo, langs, lang, wid }) => {
+const HeaderSection = ({ admin, header, section, logo, langs, lang, wid }) => {
   const [open, setOpen] = useState(false);
   const [variant, setVariant] = useState(header.variant || 'all');
   const loading = useSelector(state => state.websites.loading);
@@ -57,7 +57,7 @@ const HeaderSection = ({ admin, header, logo, langs, lang, wid }) => {
             />
           </Box>
           {admin && <ButtonOptions
-            section={header}
+            section={section}
             wid={wid} lang={lang}
           >
             <Button
@@ -112,8 +112,8 @@ const HeaderSection = ({ admin, header, logo, langs, lang, wid }) => {
                   dispatch(updateWebsite({
                     values: {
                       header: lang ?
-                        { ...header, variant, [lang]: { ...header[lang], ...values } } :
-                        { ...header, ...values, variant }
+                        { ...section, variant, [lang]: { ...section[lang], ...values } } :
+                        { ...section, ...values, variant }
                     }, wid,
                   }));
                 acceptedFiles[0] &&
