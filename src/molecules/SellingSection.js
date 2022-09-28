@@ -41,7 +41,7 @@ const ProductCard = ({ admin, section, wid, lang, idx, setSuccess }) => {
             wid={wid} lang={lang} type='title'
           >
             <Typography variant='title'>
-              <Box sx={{ fontSize: '70%' }}>
+              <Box sx={{ fontSize: '75%' }}>
                 {section[title] || 'New Title'}
               </Box>
             </Typography>
@@ -51,7 +51,7 @@ const ProductCard = ({ admin, section, wid, lang, idx, setSuccess }) => {
             wid={wid} lang={lang} type='text'
           >
             <Typography variant='text'>
-              <Box sx={{ fontSize: '90%', textAlign: (sl && sl.textalign) || 'center' }}>
+              <Box sx={{ fontSize: '95%', textAlign: (sl && sl.textalign) || 'center' }}>
                 <ReactMarkdown remarkPlugins={[remarkGfm]} linkTarget='_blank'>
                   {section[text] || 'New Text'}
                 </ReactMarkdown>

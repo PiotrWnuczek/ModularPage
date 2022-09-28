@@ -14,13 +14,13 @@ const about = `
 `;
 
 const LangOptions = ({ admin, wid, langs, lang }) => {
-  const [edit, setEdit] = useState('lang1');
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [edit, setEdit] = useState(lang || 'lang0');
   const [select, setSelect] = useState({
+    lang0: (langs && langs.lang0) || false,
     lang1: (langs && langs.lang1) || false,
     lang2: (langs && langs.lang2) || false,
-    lang3: (langs && langs.lang3) || false,
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,8 +33,8 @@ const LangOptions = ({ admin, wid, langs, lang }) => {
     ['fr', 'French'],
     ['ru', 'Russian'],
   ];
-  const param = lang || (langs && langs.lang1);
-  const cond = langs && langs.lang1 && (langs.lang2 || langs.lang3);
+  const param = langs && (langs[lang] || langs.lang0);
+  const cond = langs && langs.lang0 && (langs.lang1 || langs.lang2);
 
   return (
     <Box>
@@ -59,7 +59,7 @@ const LangOptions = ({ admin, wid, langs, lang }) => {
           open={Boolean(menu)}
           onClose={() => setMenu(false)}
         >
-          {[langs.lang1, langs.lang2, langs.lang3].map((item, idx) =>
+          {[langs.lang0, langs.lang1, langs.lang2].map((item, idx) =>
             item && item !== param &&
             <MenuItem
               onClick={() => { setMenu(false); navigate('/' + wid + '/' + item); }}
@@ -109,15 +109,15 @@ const LangOptions = ({ admin, wid, langs, lang }) => {
                 className='about'
               />
             </Alert>
-            {['lang1', 'lang2', 'lang3'].map(item =>
+            {['lang0', 'lang1', 'lang2'].map(item =>
               <Grid container key={item}>
                 <Grid item xs={12} md={5}>
                   <Box
-                    sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                    sx={{ my: 1, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
                     onClick={() => {
+                      select[item] &&
+                        navigate('/admin/' + wid + '/' + select[item]);
                       setEdit(item);
-                      langs[item] &&
-                        navigate('/admin/' + wid + '/' + langs[item]);
                     }}
                   >
                     <Avatar sx={{ bgcolor: edit === item && 'primary.main' }}>
@@ -125,9 +125,9 @@ const LangOptions = ({ admin, wid, langs, lang }) => {
                       {edit !== item && <Translate />}
                     </Avatar>
                     <Typography sx={{ ml: 1 }}>
-                      {item === 'lang1' && 'Website Language'}
-                      {item === 'lang2' && 'First Translation'}
-                      {item === 'lang3' && 'Second Translation'}
+                      {item === 'lang0' && 'Website Language'}
+                      {item === 'lang1' && 'First Translation'}
+                      {item === 'lang2' && 'Second Translation'}
                     </Typography>
                   </Box>
                 </Grid>

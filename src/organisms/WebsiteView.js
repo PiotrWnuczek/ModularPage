@@ -59,6 +59,10 @@ const WebsiteView = ({ admin, host }) => {
       wid: website.name,
     }));
   };
+  const wl = website && website.langs;
+  const language = (wl && wl.lang0 === lang && 'lang0') ||
+    (wl && wl.lang1 === lang && 'lang1') ||
+    (wl && wl.lang2 === lang && 'lang2');
 
   return (
     <ThemeProvider theme={theme}>
@@ -76,9 +80,9 @@ const WebsiteView = ({ admin, host }) => {
       </Box>}
       <Box sx={{ color: 'fontcolor.main', bgcolor: 'backgroundcolor.main' }}>
         {website && website.header && (website.public || access) && <HeaderSection
-          header={{ ...website.header, ...website.header[lang] }}
+          header={{ ...website.header, ...website.header[language] }}
           section={website.header} admin={access} wid={website.name}
-          logo={website.logo} langs={website.langs} lang={lang}
+          logo={website.logo} langs={website.langs} lang={language}
         />}
         {access && <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId='droppable'>
@@ -105,7 +109,7 @@ const WebsiteView = ({ admin, host }) => {
                           index={index + 1}
                           drag={provided.dragHandleProps}
                           dragging={snapshot.isDragging}
-                          lang={lang}
+                          lang={language}
                         />
                       </div>
                     )}
@@ -125,13 +129,13 @@ const WebsiteView = ({ admin, host }) => {
               wid={website.name}
               uid={website.uid}
               index={index + 1}
-              lang={lang}
+              lang={language}
             />
           ))}
         {website && website.footer && (website.public || access) && <FooterSection
-          footer={{ ...website.footer, ...website.footer[lang] }}
+          footer={{ ...website.footer, ...website.footer[language] }}
           section={website.footer} admin={access}
-          wid={website.name} lang={lang}
+          wid={website.name} lang={language}
         />}
       </Box>
       {!access && !(website && website.public) &&
