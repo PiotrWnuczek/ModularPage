@@ -88,7 +88,7 @@ const GraphicSection = ({ admin, section, wid, lang }) => {
       <Grid
         sx={{
           px: sl && sl.variant === 'full' ? 0 : 2,
-          maxHeight: sl && sl.variant === 'wide' ? 500 : 400,
+          maxHeight: sl && sl.variant === 'narrow' ? 400 : 500,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}
         item xs={12} md={6}
@@ -97,7 +97,7 @@ const GraphicSection = ({ admin, section, wid, lang }) => {
           <Box
             sx={{
               maxWidth: sl && sl.variant === 'full' ?
-                1000 : sl && sl.variant === 'wide' ? 600 : 400,
+                1000 : sl && sl.variant === 'wide' ? 600 : 500,
               width: '100%', height: '100%', objectFit: 'cover',
             }}
             src={section.url || Image}

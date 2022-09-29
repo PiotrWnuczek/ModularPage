@@ -78,7 +78,9 @@ const WebsiteView = ({ admin, host }) => {
       >
         <SectionCreate wid={website.name} index={0} start />
       </Box>}
-      <Box sx={{ color: 'fontcolor.main', bgcolor: 'backgroundcolor.main' }}>
+      <Box sx={{
+        color: 'fontcolor.main', bgcolor: 'backgroundcolor.main', wordWrap: 'break-word',
+      }}>
         {website && website.header && (website.public || access) && <HeaderSection
           header={{ ...website.header, ...website.header[language] }}
           section={website.header} admin={access} wid={website.name}

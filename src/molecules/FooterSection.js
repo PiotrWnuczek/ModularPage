@@ -19,6 +19,7 @@ const FooterSection = ({ admin, footer, section, wid, lang }) => {
         >
           <Button
             onClick={() => setOpen(true)}
+            color='accentcolor'
             size='small'
           >
             Rules and Privacy
@@ -29,7 +30,11 @@ const FooterSection = ({ admin, footer, section, wid, lang }) => {
                 {footer.textinfo || 'New Text'}
               </ReactMarkdown>
               Created with {' '}
-              <Link href='https://modularpage.com/' target='_blank'>
+              <Link
+                href='https://modularpage.com/'
+                target='_blank'
+                color='inherit'
+              >
                 modularpage.com
               </Link>
             </Box>
@@ -41,7 +46,7 @@ const FooterSection = ({ admin, footer, section, wid, lang }) => {
           onClose={() => setOpen(false)}
           fullWidth
         >
-          <Box sx={{ p: 2 }}>
+          <Box sx={{ p: 2, color: 'fontcolor.main', bgcolor: 'backgroundcolor.main' }}>
             <TextEditor
               admin={admin} section={section} wid={wid}
               lang={lang} idx='rules' type='title'
@@ -67,6 +72,7 @@ const FooterSection = ({ admin, footer, section, wid, lang }) => {
             <Button
               onClick={() => setOpen(false)}
               variant='contained'
+              color='accentcolor'
               size='small'
             >
               Return to Website

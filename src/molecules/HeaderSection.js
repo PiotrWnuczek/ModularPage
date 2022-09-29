@@ -146,7 +146,7 @@ const HeaderSection = ({ admin, header, section, logo, langs, lang, wid }) => {
               {...getRootProps()}
               variant='outlined'
             >
-              <Box {...getInputProps()} />
+              <Box {...getInputProps()} component='input' />
               <Typography>
                 {fileRejections[0] && fileRejections[0].errors[0].message}
                 {acceptedFiles[0] && 'Selected logo: ' + acceptedFiles[0].path}

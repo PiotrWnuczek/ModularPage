@@ -63,7 +63,8 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging, lang }
           top: 0, width: '100%', height: '100%', zIndex: 1,
         }} />}
         {admin && <Box sx={{
-          pt: 1.6, pb: 0.6, zIndex: 100, position: 'absolute', top: 0,
+          bgcolor: 'white', borderRadius: 10, boxShadow: '0 0 5px 0 lightgray',
+          mt: 0.6, p: 0.6, zIndex: 100, position: 'absolute', top: 0,
           display: { xs: 'flex', md: (hover || dragging) ? 'flex' : 'none' },
         }}>
           <SectionOptions section={section} wid={wid} hover={hover} />
@@ -95,7 +96,10 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging, lang }
             </Tooltip> : <Loop />}
           </Avatar>}
         </Box>}
-        <Box sx={{ zIndex: 10, width: '100%' }} id={'s' + index} className='s'>
+        <Box
+          sx={{ zIndex: 10, width: '100%' }} id={'s' + index}
+          className='s'
+        >
           {section.type === 'content' && <ContentSection
             admin={admin}
             wid={wid}
@@ -129,7 +133,8 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging, lang }
           />}
         </Box>
         {admin && <Box sx={{
-          pb: 1.6, pt: 0.6, zIndex: 100, position: 'absolute', bottom: 0,
+          bgcolor: 'white', borderRadius: 10, boxShadow: '0 0 5px 0 lightgray',
+          mb: 0.6, p: 0.6, zIndex: 100, position: 'absolute', bottom: 0,
           display: { xs: 'flex', md: (hover || dragging) ? 'flex' : 'none' },
         }}>
           <SectionCreate wid={wid} index={index} hover={hover} />

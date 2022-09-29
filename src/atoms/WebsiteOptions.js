@@ -41,16 +41,21 @@ const WebsiteOptions = ({ website }) => {
 
   return (
     <Box>
-      <Box sx={{ position: 'fixed', top: 44, right: 44, zIndex: 1200 }}>
-        <Avatar
-          sx={{
-            cursor: 'pointer', bgcolor: 'primary.main',
-            '&:hover': { bgcolor: 'primary.dark' },
-          }}
-          onClick={() => setOpen(true)}
-        >
-          <Settings />
-        </Avatar>
+      <Box sx={{ position: 'fixed', top: 36, right: 0, zIndex: 1200 }}>
+        <Box sx={{
+          p: 1, bgcolor: 'white', borderRadius: '30px 0 0 30px',
+          boxShadow: '0 0 5px 0 lightgray',
+        }}>
+          <Avatar
+            sx={{
+              cursor: 'pointer', bgcolor: 'primary.main',
+              '&:hover': { bgcolor: 'primary.dark' },
+            }}
+            onClick={() => setOpen(true)}
+          >
+            <Settings />
+          </Avatar>
+        </Box>
       </Box>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}
@@ -125,7 +130,7 @@ const WebsiteOptions = ({ website }) => {
               {...getRootProps()}
               variant='outlined'
             >
-              <Box {...getInputProps()} />
+              <Box {...getInputProps()} component='input' />
               <Typography>
                 {fileRejections[0] && fileRejections[0].errors[0].message}
                 {acceptedFiles[0] && 'Selected favicon: ' + acceptedFiles[0].path}

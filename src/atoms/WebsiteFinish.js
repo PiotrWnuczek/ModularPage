@@ -14,16 +14,21 @@ const WebsiteFinish = ({ website }) => {
 
   return (
     <Box>
-      <Box sx={{ position: 'fixed', top: 44, left: 44, zIndex: 1200 }}>
-        <Avatar
-          sx={{
-            cursor: 'pointer', bgcolor: 'primary.main',
-            '&:hover': { bgcolor: 'primary.dark' },
-          }}
-          onClick={() => setOpen(true)}
-        >
-          <ArrowBack />
-        </Avatar>
+      <Box sx={{ position: 'fixed', top: 36, left: 0, zIndex: 1200 }}>
+        <Box sx={{
+          p: 1, bgcolor: 'white', borderRadius: '0 30px 30px 0',
+          boxShadow: '0 0 5px 0 lightgray',
+        }}>
+          <Avatar
+            sx={{
+              cursor: 'pointer', bgcolor: 'primary.main',
+              '&:hover': { bgcolor: 'primary.dark' },
+            }}
+            onClick={() => setOpen(true)}
+          >
+            <ArrowBack />
+          </Avatar>
+        </Box>
       </Box>
       <Dialog
         sx={{ '& .MuiDialog-paper': { borderRadius: 2 } }}

@@ -72,7 +72,7 @@ const ImageOptions = ({ children, admin, section, wid }) => {
               {...getRootProps()}
               variant='outlined'
             >
-              <Box {...getInputProps()} />
+              <Box {...getInputProps()} component='input' />
               <Typography>
                 {fileRejections[0] && fileRejections[0].errors[0].message}
                 {acceptedFiles[0] && 'Selected image: ' + acceptedFiles[0].path}
