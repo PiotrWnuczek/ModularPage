@@ -43,16 +43,16 @@ const SectionOptions = ({ section, wid, hover }) => {
     quantity: (sl && sl.quantity) || (section.type === 'iconbox' ? '3' : '2'),
   });
   const buttons = section.type === 'graphic' || section.type === 'content';
-  const blocks = section.type === 'iconbox' || section.type === 'selling';
+  const cards = section.type === 'cardbox' || section.type === 'selling';
+  const blocks = section.type === 'iconbox';
   const form = section.type === 'mailing';
 
   return (
     <Box>
       <Avatar
         sx={{
-          width: 30, height: 30, mx: 0.3,
-          cursor: 'pointer', bgcolor: 'primary.main',
-          '&:hover': { bgcolor: 'primary.dark' },
+          width: 30, height: 30, mx: 0.3, cursor: 'pointer',
+          bgcolor: 'primary.main', '&:hover': { bgcolor: 'primary.dark' },
         }}
         onClick={() => setOpen(true)}
       >
@@ -175,14 +175,14 @@ const SectionOptions = ({ section, wid, hover }) => {
                 {buttons && <ToggleButton value='2'>
                   <Widgets sx={{ mr: 1 }} /> Two Buttons
                 </ToggleButton>}
-                {blocks && <ToggleButton value='1'>
-                  <Widgets sx={{ mr: 1 }} /> One Block
+                {(blocks || cards) && <ToggleButton value='1'>
+                  <Widgets sx={{ mr: 1 }} /> One {cards ? 'Card' : 'Block'}
                 </ToggleButton>}
-                {blocks && <ToggleButton value='2'>
-                  <Widgets sx={{ mr: 1 }} /> Two Blocks
+                {(blocks || cards) && <ToggleButton value='2'>
+                  <Widgets sx={{ mr: 1 }} /> Two {cards ? 'Cards' : 'Blocks'}
                 </ToggleButton>}
                 {blocks && <ToggleButton value='3'>
-                  <Widgets sx={{ mr: 1 }} /> Three Blocks
+                  <Widgets sx={{ mr: 1 }} /> Three {cards ? 'Cards' : 'Blocks'}
                 </ToggleButton>}
                 {form && <ToggleButton value='1'>
                   <Widgets sx={{ mr: 1 }} /> Without Disclaimer

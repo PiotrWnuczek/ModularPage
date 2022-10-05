@@ -14,7 +14,7 @@ const about = `
 * Compress files on [compresspng.com](https://compresspng.com)
 `;
 
-const ImageOptions = ({ children, admin, section, wid }) => {
+const ImageOptions = ({ children, admin, section, wid, idx }) => {
   const [open, setOpen] = useState(false);
   const loading = useSelector(state => state.websites.loading);
   const dispatch = useDispatch();
@@ -35,12 +35,12 @@ const ImageOptions = ({ children, admin, section, wid }) => {
       >
         <Box sx={{
           width: '100%', height: '100%',
-          opacity: admin && loading === section.id && 0.5,
+          opacity: admin && loading === section.id + idx && 0.5,
         }}>
           {children}
         </Box>
         {admin && <Box sx={{ position: 'absolute' }}>
-          {loading === section.id && <CircularProgress size={100} />}
+          {loading === section.id + idx && <CircularProgress size={100} />}
         </Box>}
       </Box>
       <Dialog
@@ -85,7 +85,7 @@ const ImageOptions = ({ children, admin, section, wid }) => {
             onClick={() => {
               acceptedFiles[0] &&
                 dispatch(createFile({
-                  file: acceptedFiles[0], sid: section.id, wid,
+                  file: acceptedFiles[0], wid, sid: section.id, idx,
                 }));
               setOpen(false);
             }}

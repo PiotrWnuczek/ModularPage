@@ -10,6 +10,7 @@ import RemoveConfirm from 'atoms/RemoveConfirm';
 import ContentSection from 'molecules/ContentSection';
 import GraphicSection from 'molecules/GraphicSection';
 import IconboxSection from 'molecules/IconboxSection';
+import CardboxSection from 'molecules/CardboxSection';
 import MailingSection from 'molecules/MailingSection';
 import SellingSection from 'molecules/SellingSection';
 
@@ -101,35 +102,28 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging, lang }
           className='s'
         >
           {section.type === 'content' && <ContentSection
-            admin={admin}
-            wid={wid}
+            admin={admin} wid={wid} lang={lang}
             section={{ ...section, ...section[lang] }}
-            lang={lang}
           />}
           {section.type === 'graphic' && <GraphicSection
-            admin={admin}
-            wid={wid}
+            admin={admin} wid={wid} lang={lang}
             section={{ ...section, ...section[lang] }}
-            lang={lang}
           />}
           {section.type === 'iconbox' && <IconboxSection
-            admin={admin}
-            wid={wid}
+            admin={admin} wid={wid} lang={lang}
             section={{ ...section, ...section[lang] }}
-            lang={lang}
+          />}
+          {section.type === 'cardbox' && <CardboxSection
+            admin={admin} wid={wid} lang={lang}
+            section={{ ...section, ...section[lang] }}
           />}
           {section.type === 'mailing' && <MailingSection
-            admin={admin}
-            wid={wid}
-            uid={uid}
+            admin={admin} wid={wid} lang={lang} uid={uid}
             section={{ ...section, ...section[lang] }}
-            lang={lang}
           />}
           {section.type === 'selling' && <SellingSection
-            admin={admin}
-            wid={wid}
+            admin={admin} wid={wid} lang={lang}
             section={{ ...section, ...section[lang] }}
-            lang={lang}
           />}
         </Box>
         {admin && <Box sx={{

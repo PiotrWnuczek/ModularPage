@@ -5,10 +5,11 @@ import { Box, Card, Dialog, Typography, Tooltip } from '@mui/material';
 import { CardActionArea, CardMedia, Avatar } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { content, graphic, iconbox } from 'stock/templates';
-import { mailing, selling } from 'stock/templates';
+import { cardbox, mailing, selling } from 'stock/templates';
 import Graphic from 'stock/graphic.png';
 import Content from 'stock/content.png';
 import Iconbox from 'stock/iconbox.png';
+import Cardbox from 'stock/cardbox.png';
 import Mailing from 'stock/mailing.png';
 import Selling from 'stock/selling.png';
 
@@ -19,6 +20,7 @@ const SectionCreate = ({ wid, index, start, hover }) => {
     { name: 'Graphic Section', template: graphic, image: Graphic },
     { name: 'Content Section', template: content, image: Content },
     { name: 'Iconbox Section', template: iconbox, image: Iconbox },
+    { name: 'Cardbox Section', template: cardbox, image: Cardbox },
     { name: 'Mailing Section', template: mailing, image: Mailing },
     { name: 'Selling Section', template: selling, image: Selling },
   ];

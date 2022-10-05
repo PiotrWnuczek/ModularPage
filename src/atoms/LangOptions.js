@@ -101,7 +101,7 @@ const LangOptions = ({ admin, wid, langs, lang }) => {
               severity='info'
             >
               <AlertTitle>
-                Set language varsions
+                Set language versions
               </AlertTitle>
               <ReactMarkdown
                 children={about}

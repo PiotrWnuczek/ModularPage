@@ -36,6 +36,14 @@ export const iconbox = {
   text3: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet.',
 };
 
+export const cardbox = {
+  type: 'cardbox',
+  title1: 'First Cardbox',
+  text1: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet.',
+  title2: 'Second Cardbox',
+  text2: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet.',
+};
+
 export const mailing = {
   type: 'mailing',
   title: 'Mailing Section Title',
@@ -58,12 +66,6 @@ export const selling = {
   product2: 'Second Product',
   currency2: 'USD',
   price2: '20',
-  title3: 'Third Product',
-  text3: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet.',
-  button3: 'Buy Now',
-  product3: 'Third Product',
-  currency3: 'USD',
-  price3: '30',
 };
 
 export const header = {

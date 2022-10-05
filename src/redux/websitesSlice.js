@@ -98,13 +98,15 @@ export const removeSection = createAsyncThunk(
 );
 
 export const createFile = createAsyncThunk(
-  'createFile', async ({ file, sid, wid }, thunk) => {
+  'createFile', async ({ file, wid, sid, idx }, thunk) => {
     const firebase = thunk.extra.getFirebase();
     const firestore = thunk.extra.getFirestore();
     const sections = thunk.getState().firestore.data[wid].sections;
-    const storage = firebase.storage().ref(wid).child(sid);
+    const fid = idx ? sid + idx : sid;
+    const storage = firebase.storage().ref(wid).child(fid);
     const ref = firestore.collection('websites');
     try {
+      const uri = idx ? 'url' + idx : 'url';
       const url = await storage.put(file).then(() => storage.getDownloadURL());
       if (sid === 'favicon') return await ref.doc(wid).update({
         favicon: url,
@@ -114,7 +116,7 @@ export const createFile = createAsyncThunk(
       }).then(() => file);
       if (sid !== 'favicon' && sid !== 'logo') return await ref.doc(wid).update({
         sections: sections.map(
-          section => section.id === sid ? { ...section, url } : section
+          section => section.id === sid ? { ...section, [uri]: url } : section
         ),
       }).then(() => file);
     } catch (error) { throw error }
@@ -185,7 +187,7 @@ const websitesSlice = createSlice({
     },
     [createFile.pending]: (state, action) => {
       //console.log(action.meta.arg);
-      return { ...state, loading: action.meta.arg.sid };
+      return { ...state, loading: action.meta.arg.sid + action.meta.arg.idx };
     },
     [createFile.fulfilled]: (state, action) => {
       //console.log(action.type, action.payload);
