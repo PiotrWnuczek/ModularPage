@@ -68,8 +68,20 @@ const WebsiteView = ({ admin, host }) => {
     <ThemeProvider theme={theme}>
       <Helmet>
         <title>{website && website.title}</title>
-        <meta name='description' content={website && website.description} />
         <link rel='icon' href={website && website.favicon} />
+        <html lang={lang || 'en'} />
+        {website && website.gtag && <script
+          src={`https://www.googletagmanager.com/gtag/js?id=${website.gtag}`}
+          async
+        />}
+        {website && website.gtag && <script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${website.gtag}');
+          `}
+        </script>}
       </Helmet>
       {access && <WebsiteFinish website={website} />}
       {access && <WebsiteOptions website={website} />}

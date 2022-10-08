@@ -12,7 +12,8 @@ import StyleEditor from 'atoms/StyleEditor';
 import ReactMarkdown from 'react-markdown';
 
 const about = `
-* Set basic styles for website and add title, description and upload favicon
+* Set basic styles for website, add meta title and upload favicon
+* Enter Google Analytics Tag eg. G-0000000000
 * Select colors or choose your own in [canva.com/colors](https://canva.com/colors/)
 `;
 
@@ -87,11 +88,11 @@ const WebsiteOptions = ({ website }) => {
             <Formik
               initialValues={{
                 title: website.title || 'Meta Title',
-                description: website.description || 'Meta Description',
+                gtag: website.gtag || 'Google Analytics',
               }}
               onSubmit={(values) => {
                 (values.title !== website.title ||
-                  values.description !== website.description) &&
+                  values.gtag !== website.gtag) &&
                   dispatch(updateWebsite({ values, wid: website.name }));
               }}
             >
@@ -113,10 +114,10 @@ const WebsiteOptions = ({ website }) => {
                   <TextField
                     sx={{ my: 1 }}
                     onChange={handleChange}
-                    value={values.description}
-                    name='description'
-                    placeholder='Meta Description'
-                    label='Meta Description'
+                    value={values.gtag}
+                    name='gtag'
+                    placeholder='Google Analytics'
+                    label='Google Analytics'
                     type='text'
                     variant='outlined'
                     size='small'
