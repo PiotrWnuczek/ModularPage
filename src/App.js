@@ -21,7 +21,7 @@ const ScrollTop = ({ children }) => {
 };
 
 const App = () => {
-  const host = 1 ? 'modularpage.com' : 'localhost:3000';
+  const host = 0 ? 'modularpage.com' : 'localhost:3000';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
   const theme = createTheme({
@@ -50,6 +50,12 @@ const App = () => {
             } />
             <Route path='/admin/:id/*' element={
               access ? <WebsiteView admin /> : <Navigate to='/signin' />
+            } />
+            <Route path='/draft/:id/:lang' element={
+              access ? <WebsiteView draft /> : <Navigate to='/signin' />
+            } />
+            <Route path='/draft/:id/*' element={
+              access ? <WebsiteView draft /> : <Navigate to='/signin' />
             } />
             <Route path='/:id/:lang' element={<WebsiteView />} />
             <Route path='/:id/*' element={<WebsiteView />} />

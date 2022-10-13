@@ -16,7 +16,8 @@ const WebsiteFinish = ({ website }) => {
     <Box>
       <Box sx={{ position: 'fixed', top: 36, left: 0, zIndex: 1200 }}>
         <Box sx={{
-          p: 1, bgcolor: 'white', borderRadius: '0 30px 30px 0',
+          p: 1, bgcolor: 'white',
+          borderRadius: '0 30px 30px 0',
           boxShadow: '0 0 5px 0 lightgray',
         }}>
           <Avatar
@@ -44,17 +45,25 @@ const WebsiteFinish = ({ website }) => {
             <Typography>
               Changes are saved, you can exit to board.
             </Typography>
-            <Button
+            {website.public && <Button
               sx={{ ml: -0.5 }}
               component={Link}
               href={website.domain === 'custom' ?
                 'https://' + website.name : '/' + website.name}
               target='_blank'
               size='small'
-              disabled={!website.public}
             >
               Link to website
-            </Button>
+            </Button>}
+            {!website.public && <Button
+              sx={{ ml: -0.5 }}
+              component={Link}
+              href={'/draft/' + website.name}
+              target='_blank'
+              size='small'
+            >
+              Link to draft
+            </Button>}
             <FormControlLabel
               sx={{ m: 0 }}
               control={<Switch checked={website.public} size='small' />}

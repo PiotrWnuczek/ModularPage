@@ -18,7 +18,7 @@ import BlockTemplate from 'molecules/BlockTemplate';
 import HeaderSection from 'molecules/HeaderSection';
 import FooterSection from 'molecules/FooterSection';
 
-const WebsiteView = ({ admin, host }) => {
+const WebsiteView = ({ admin, draft, host }) => {
   const { id, lang } = useParams();
   const wid = id ? id : host;
   const website = useSelector(state => state.firestore.data[wid]);
@@ -27,7 +27,9 @@ const WebsiteView = ({ admin, host }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState(website && [...website.sections]);
   useEffect(() => { setData(website && [...website.sections]) }, [website]);
-  const access = website && admin && auth.uid === website.uid;
+  const edit = website && admin && !draft && auth.uid === website.uid;
+  const view = website && draft && !admin && auth.uid === website.uid;
+  const open = website && website.public && !admin && !draft;
   const ws = website && website.style;
   const theme = createTheme({
     palette: {
@@ -83,9 +85,9 @@ const WebsiteView = ({ admin, host }) => {
           `}
         </script>}
       </Helmet>
-      {access && <WebsiteFinish website={website} />}
-      {access && <WebsiteOptions website={website} />}
-      {access && website && !website.sections.length && <Box
+      {edit && <WebsiteFinish website={website} />}
+      {edit && <WebsiteOptions website={website} />}
+      {edit && !website.sections.length && <Box
         sx={{ py: 10, display: 'flex', justifyContent: 'center' }}
       >
         <SectionCreate wid={website.name} index={0} start />
@@ -93,12 +95,12 @@ const WebsiteView = ({ admin, host }) => {
       <Box sx={{
         color: 'fontcolor.main', bgcolor: 'backgroundcolor.main', wordWrap: 'break-word',
       }}>
-        {website && website.header && (website.public || access) && <HeaderSection
+        {(edit || view || open) && website.header && <HeaderSection
           header={{ ...website.header, ...website.header[language] }}
-          section={website.header} admin={access} wid={website.name}
+          section={website.header} admin={edit} wid={website.name}
           logo={website.logo} langs={website.langs} lang={language}
         />}
-        {access && <DragDropContext onDragEnd={onDragEnd}>
+        {edit && <DragDropContext onDragEnd={onDragEnd}>
           <Droppable droppableId='droppable'>
             {(provided) => (
               <div
@@ -117,7 +119,7 @@ const WebsiteView = ({ admin, host }) => {
                         {...provided.draggableProps}
                       >
                         <BlockTemplate
-                          admin={access}
+                          admin={true}
                           section={item}
                           wid={website.name}
                           index={index + 1}
@@ -134,11 +136,11 @@ const WebsiteView = ({ admin, host }) => {
             )}
           </Droppable>
         </DragDropContext>}
-        {!access && website && website.public &&
+        {(view || open) &&
           data && data.map((item, index) => (
             <BlockTemplate
               key={item.id}
-              admin={access}
+              admin={false}
               section={item}
               wid={website.name}
               uid={website.uid}
@@ -146,13 +148,13 @@ const WebsiteView = ({ admin, host }) => {
               lang={language}
             />
           ))}
-        {website && website.footer && (website.public || access) && <FooterSection
+        {(edit || view || open) && website.footer && <FooterSection
           footer={{ ...website.footer, ...website.footer[language] }}
-          section={website.footer} admin={access}
+          section={website.footer} admin={edit}
           wid={website.name} lang={language}
         />}
       </Box>
-      {!access && !(website && website.public) &&
+      {!(edit || view || open) &&
         <Box sx={{ textAlign: 'center', m: 5 }}>
           <Typography variant='h6'>
             Page not public

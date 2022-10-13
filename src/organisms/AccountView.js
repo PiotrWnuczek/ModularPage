@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { Box, Card, Dialog } from '@mui/material';
 import { Typography, Button } from '@mui/material';
-import moment from 'moment';
+//import moment from 'moment';
 import MainLayout from 'organisms/MainLayout';
 
 const AccountView = () => {
@@ -38,7 +38,8 @@ const AccountView = () => {
             All Websites Limit: {profile && profile.limit.all}
           </Typography>
           <Typography sx={{ mb: 0.5 }}>
-            Premium: {(profile && moment(profile.premium.toDate()).calendar()) || 'inactive'}
+            Premium: Trial
+            {/*(profile && moment(profile.premium.toDate()).calendar()) || 'inactive'*/}
           </Typography>
         </Card>
       </Box>

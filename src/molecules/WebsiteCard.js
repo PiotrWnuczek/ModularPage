@@ -30,17 +30,25 @@ const WebsiteCard = ({ website }) => {
               {website.domain === 'custom' && website.name}
               {website.domain === 'app' && 'modularpage.com/' + website.name}
             </Typography>
-            <Button
+            {website.public && <Button
               sx={{ ml: -0.5 }}
               component={Link}
               href={website.domain === 'custom' ?
                 'https://' + website.name : '/' + website.name}
               target='_blank'
               size='small'
-              disabled={!website.public}
             >
               Link to website
-            </Button>
+            </Button>}
+            {!website.public && <Button
+              sx={{ ml: -0.5 }}
+              component={Link}
+              href={'/draft/' + website.name}
+              target='_blank'
+              size='small'
+            >
+              Link to draft
+            </Button>}
             <FormControlLabel
               sx={{ m: 0 }}
               control={<Switch checked={website.public} size='small' />}
