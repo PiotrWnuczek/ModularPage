@@ -1,2 +1,1 @@
-stripe integration
-domain emails
+premium validation
