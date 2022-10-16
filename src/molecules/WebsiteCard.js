@@ -1,15 +1,12 @@
 import React from 'react';
-import { updateWebsite } from 'redux/websitesSlice';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Box, Grid, Card, Button } from '@mui/material';
-import { Typography, Avatar, Link } from '@mui/material';
-import { FormControlLabel, Switch } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
+import { Card, Button, Avatar } from '@mui/material';
 import { Edit, Web } from '@mui/icons-material';
 import RemoveConfirm from 'atoms/RemoveConfirm';
+import PublicControl from 'atoms/PublicControl';
 
 const WebsiteCard = ({ website }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -30,34 +27,7 @@ const WebsiteCard = ({ website }) => {
               {website.domain === 'custom' && website.name}
               {website.domain === 'app' && 'modularpage.com/' + website.name}
             </Typography>
-            {website.public && <Button
-              sx={{ ml: -0.5 }}
-              component={Link}
-              href={website.domain === 'custom' ?
-                'https://' + website.name : '/' + website.name}
-              target='_blank'
-              size='small'
-            >
-              Link to website
-            </Button>}
-            {!website.public && <Button
-              sx={{ ml: -0.5 }}
-              component={Link}
-              href={'/draft/' + website.name}
-              target='_blank'
-              size='small'
-            >
-              Link to draft
-            </Button>}
-            <FormControlLabel
-              sx={{ m: 0 }}
-              control={<Switch checked={website.public} size='small' />}
-              onChange={(e, value) => dispatch(updateWebsite({
-                values: { public: value },
-                wid: website.name,
-              }))}
-              label='public'
-            />
+            <PublicControl website={website} />
           </Box>
         </Grid>
         <Grid

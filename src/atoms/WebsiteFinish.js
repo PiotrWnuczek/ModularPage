@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { updateWebsite } from 'redux/websitesSlice';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Box, Dialog, Button, Link } from '@mui/material';
-import { Typography, Avatar } from '@mui/material';
-import { FormControlLabel, Switch } from '@mui/material';
+import { Dialog, Typography } from '@mui/material';
+import { Box, Button, Avatar } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
+import PublicControl from './PublicControl';
 
 const WebsiteFinish = ({ website }) => {
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -45,34 +42,7 @@ const WebsiteFinish = ({ website }) => {
             <Typography>
               Changes are saved, you can exit to board.
             </Typography>
-            {website.public && <Button
-              sx={{ ml: -0.5 }}
-              component={Link}
-              href={website.domain === 'custom' ?
-                'https://' + website.name : '/' + website.name}
-              target='_blank'
-              size='small'
-            >
-              Link to website
-            </Button>}
-            {!website.public && <Button
-              sx={{ ml: -0.5 }}
-              component={Link}
-              href={'/draft/' + website.name}
-              target='_blank'
-              size='small'
-            >
-              Link to draft
-            </Button>}
-            <FormControlLabel
-              sx={{ m: 0 }}
-              control={<Switch checked={website.public} size='small' />}
-              onChange={(e, value) => dispatch(updateWebsite({
-                values: { public: value },
-                wid: website.name,
-              }))}
-              label='public'
-            />
+            <PublicControl website={website} />
           </Box>
           <Button
             onClick={() => {

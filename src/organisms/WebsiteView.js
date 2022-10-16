@@ -27,9 +27,10 @@ const WebsiteView = ({ admin, draft, host }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState(website && [...website.sections]);
   useEffect(() => { setData(website && [...website.sections]) }, [website]);
-  const edit = website && admin && !draft && auth.uid === website.uid;
+  const date = website && website.public.seconds && website.public.toDate() > new Date();
+  const open = website && date && !admin && !draft;
   const view = website && draft && !admin && auth.uid === website.uid;
-  const open = website && website.public && !admin && !draft;
+  const edit = website && admin && !draft && auth.uid === website.uid;
   const ws = website && website.style;
   const theme = createTheme({
     palette: {
