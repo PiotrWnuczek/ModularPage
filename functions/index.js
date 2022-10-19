@@ -2,7 +2,6 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const axios = require('axios');
 const nodemailer = require('nodemailer');
-
 admin.initializeApp();
 
 const transporter = nodemailer.createTransport({
@@ -67,6 +66,17 @@ exports.stripe = functions.https.onCall(async (data, context) => {
   });
   return session.url;
 });
+
+exports.premium = functions.firestore
+  .document('users/{uid}')
+  .onUpdate(async (snap, context) => {
+    const ref = admin.firestore().collection('websites');
+    const query = await ref.where('uid', '==', context.params.uid).get();
+    query.forEach(doc => {
+      doc.data().public && doc.ref.update({ public: snap.data().premium })
+    })
+    return 'premium';
+  });
 
 exports.newuser = functions.firestore
   .document('users/{uid}')

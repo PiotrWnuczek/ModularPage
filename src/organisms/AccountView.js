@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { Box, Card, Dialog } from '@mui/material';
 import { Typography, Button } from '@mui/material';
-//import moment from 'moment';
+import moment from 'moment';
 import MainLayout from 'organisms/MainLayout';
 
 const AccountView = () => {
@@ -37,10 +37,20 @@ const AccountView = () => {
           <Typography sx={{ mb: 1 }}>
             All Websites Limit: {profile && profile.limit.all}
           </Typography>
-          <Typography sx={{ mb: 0.5 }}>
-            Premium: Trial
-            {/*(profile && moment(profile.premium.toDate()).calendar()) || 'inactive'*/}
+          <Typography sx={{ mb: 1 }}>
+            {profile && profile.premium.toDate() > new Date(2023, 0, 0) ?
+              'Premium: ' + moment(profile.premium.toDate()).calendar() :
+              'Premium: trial'
+            }
           </Typography>
+          {profile && profile.premium.toDate() < new Date() && 0 && <Button
+            sx={{ mb: 1 }}
+            onClick={() => setOpen(true)}
+            variant='outlined'
+            size='small'
+          >
+            Activate Premium
+          </Button>}
         </Card>
       </Box>
       <Dialog
@@ -58,9 +68,10 @@ const AccountView = () => {
           </Typography>
           <Button
             onClick={() => {
-              (profile && profile.premium.toDate()) < new Date() &&
+              profile && profile.premium.toDate() < new Date() &&
                 dispatch(updateProfile({
-                  values: { premium: future }, id: auth.uid,
+                  values: { premium: future },
+                  id: auth.uid,
                 }));
               setOpen(false);
             }}

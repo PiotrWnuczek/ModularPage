@@ -10,7 +10,7 @@ import WebsiteCard from 'molecules/WebsiteCard';
 const BoardView = () => {
   const websites = useSelector(state => state.firestore.ordered.websites);
   const auth = useSelector(state => state.firebase.auth);
-  useFirestoreConnect([{ collection: 'websites', where: [['email', '==', auth.email]] }]);
+  useFirestoreConnect([{ collection: 'websites', where: [['uid', '==', auth.uid]] }]);
   const navigate = useNavigate();
 
   return (

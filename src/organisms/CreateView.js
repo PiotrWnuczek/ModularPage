@@ -3,8 +3,9 @@ import { createWebsite, reset } from 'redux/websitesSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFirestoreConnect } from 'react-redux-firebase';
 import { useNavigate } from 'react-router-dom';
-import { Box, Grid, Dialog, Button, Avatar } from '@mui/material';
-import { Typography, Select, MenuItem, TextField } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
+import { Dialog, Button, Avatar } from '@mui/material';
+import { Select, MenuItem, TextField } from '@mui/material';
 import { Card, CardActionArea, CardMedia } from '@mui/material';
 import { CheckBoxOutlineBlankOutlined } from '@mui/icons-material';
 import { CheckBoxOutlined, Edit } from '@mui/icons-material';
@@ -188,16 +189,15 @@ const CreateView = () => {
       >
         <Box sx={{ p: 2 }}>
           <Typography variant='h5'>
-            {['plan', 'all', 'custom'].includes(info) ? 'Upgrade Plan' : 'Change Name'}
+            {['all', 'custom'].includes(info) ? 'Upgrade Plan' : 'Change Name'}
           </Typography>
           <Typography sx={{ py: 1 }}>
             {error && 'This website name already exists, choose another name.'}
             {info === 'name' && 'This website name is not available, choose another name.'}
-            {info === 'plan' && 'To add custom domain upgrade your plan to premium.'}
             {info === 'all' && 'Your all domains limit has expired, upgrade your plan to premium.'}
             {info === 'custom' && 'Your custom domains limit has expired, upgrade your plan to premium.'}
           </Typography>
-          {['plan', 'all', 'custom'].includes(info) && <Button
+          {['all', 'custom'].includes(info) && <Button
             sx={{ mr: 1 }}
             onClick={() => navigate('/account')}
             variant='contained'
@@ -210,7 +210,7 @@ const CreateView = () => {
             variant='outlined'
             size='small'
           >
-            {['plan', 'all', 'custom'].includes(info) ? 'Cancel' : 'All Right'}
+            {['all', 'custom'].includes(info) ? 'Cancel' : 'All Right'}
           </Button>
         </Box>
       </Dialog>
