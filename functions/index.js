@@ -69,12 +69,16 @@ exports.stripe = functions.https.onCall(async (data, context) => {
 
 exports.premium = functions.firestore
   .document('users/{uid}')
-  .onUpdate(async (snap, context) => {
-    const ref = admin.firestore().collection('websites');
-    const query = await ref.where('uid', '==', context.params.uid).get();
-    query.forEach(doc => {
-      doc.data().public && doc.ref.update({ public: snap.data().premium })
-    })
+  .onUpdate(async (change, context) => {
+    const before = change.before.data();
+    const after = change.after.data();
+    if (before.premium !== after.premium) {
+      const ref = admin.firestore().collection('websites');
+      const query = await ref.where('uid', '==', context.params.uid).get();
+      query.forEach(doc => {
+        doc.data().public && doc.ref.update({ public: after.premium })
+      });
+    };
     return 'premium';
   });
 
