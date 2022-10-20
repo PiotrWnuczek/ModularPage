@@ -38,7 +38,7 @@ const AccountView = () => {
             All Websites Limit: {profile && profile.limit.all}
           </Typography>
           <Typography sx={{ mb: 1 }}>
-            {profile && profile.premium.toDate() > new Date(2023, 0, 0) ?
+            {profile && profile.premium.toDate() > new Date(2022, 11, 10) ?
               'Premium: ' + moment(profile.premium.toDate()).calendar() :
               'Premium: trial'
             }

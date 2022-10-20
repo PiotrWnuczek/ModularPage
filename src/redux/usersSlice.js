@@ -22,7 +22,7 @@ export const signupUser = createAsyncThunk(
         firestore.collection('users').doc(resp.user.uid).set({
           email: values.email,
           date: new Date(),
-          premium: new Date(2023, 0, 0),
+          premium: new Date(2022, 11, 10),
           limit: { all: 3, custom: 1 },
         })
       )).then(() => values.email);
