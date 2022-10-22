@@ -85,9 +85,9 @@ const MailingSection = ({ admin, section, wid, lang, uid }) => {
       {!admin && <Formik
         initialValues={{ email: '' }}
         onSubmit={(values, { resetForm }) => {
-          section.mailing === 'sender' && senderFunction(values.email);
-          section.mailing === 'mailerlite' && mailerliteFunction(values.email);
-          resetForm(); setSuccess(true);
+          values.email && section.mailing === 'sender' && senderFunction(values.email);
+          values.email && section.mailing === 'mailerlite' && mailerliteFunction(values.email); 
+          values.email && setSuccess(true); resetForm();
         }}
       >
         {({ values, handleChange, handleSubmit }) => (

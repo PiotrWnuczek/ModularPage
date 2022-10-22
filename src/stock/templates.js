@@ -1,3 +1,15 @@
+export const hero = {
+  type: 'hero',
+  title: 'Hero Section Title',
+  text: '**Click to edit! Use MarkDown (commonmark.org/help)! Add Emoticons (getemoji.com)!** 🙂 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquam quam sit amet mi ullamcorper, ut commodo ligula ultricies.',
+  button1: 'First Button',
+  link1: '#',
+  tab1: 'new',
+  button2: 'Second Button',
+  link2: '#',
+  tab2: 'new',
+};
+
 export const graphic = {
   type: 'graphic',
   position: 'right',

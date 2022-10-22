@@ -7,8 +7,9 @@ import { DragIndicator, Loop } from '@mui/icons-material';
 import SectionCreate from 'atoms/SectionCreate';
 import SectionOptions from 'atoms/SectionOptions';
 import RemoveConfirm from 'atoms/RemoveConfirm';
-import ContentSection from 'molecules/ContentSection';
+import HeroSection from 'molecules/HeroSection';
 import GraphicSection from 'molecules/GraphicSection';
+import ContentSection from 'molecules/ContentSection';
 import IconboxSection from 'molecules/IconboxSection';
 import CardboxSection from 'molecules/CardboxSection';
 import MailingSection from 'molecules/MailingSection';
@@ -98,14 +99,19 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging, lang }
           </Avatar>}
         </Box>}
         <Box
-          sx={{ zIndex: 10, width: '100%' }} id={'s' + index}
+          sx={{ zIndex: 10, width: '100%' }}
+          id={'s' + index}
           className='s'
         >
-          {section.type === 'content' && <ContentSection
+          {section.type === 'hero' && <HeroSection
             admin={admin} wid={wid} lang={lang}
             section={{ ...section, ...section[lang] }}
           />}
           {section.type === 'graphic' && <GraphicSection
+            admin={admin} wid={wid} lang={lang}
+            section={{ ...section, ...section[lang] }}
+          />}
+          {section.type === 'content' && <ContentSection
             admin={admin} wid={wid} lang={lang}
             section={{ ...section, ...section[lang] }}
           />}
