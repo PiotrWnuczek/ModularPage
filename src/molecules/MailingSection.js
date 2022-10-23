@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useFirebase } from 'react-redux-firebase';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { Box, Grid, Typography } from '@mui/material';
 import { Dialog, Button, TextField } from '@mui/material';
 import { Formik } from 'formik';
@@ -20,6 +21,20 @@ const MailingSection = ({ admin, section, wid, lang, uid }) => {
     mailerlite({ uid, email, group: section.group });
   };
   const sl = section.layout;
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const handleReCaptchaVerify = useCallback(async () => {
+    if (executeRecaptcha) {
+      const token = await executeRecaptcha('yourAction');
+      console.log(token);
+      fetch('https://www.google.com/recaptcha/api/siteverify', {
+        method: 'POST',
+        body: JSON.stringify({
+          secret: '6LfiuKMiAAAAAG77eSQeilAQvrJkdK4nkuvBbs69',
+          response: token,
+        })
+      }).then(res => res.json()).then(data => console.log(data));
+    }
+  }, [executeRecaptcha]);
 
   return (
     <Box sx={{ textAlign: 'center', width: '100%' }}>
@@ -86,7 +101,7 @@ const MailingSection = ({ admin, section, wid, lang, uid }) => {
         initialValues={{ email: '' }}
         onSubmit={(values, { resetForm }) => {
           values.email && section.mailing === 'sender' && senderFunction(values.email);
-          values.email && section.mailing === 'mailerlite' && mailerliteFunction(values.email); 
+          values.email && section.mailing === 'mailerlite' && mailerliteFunction(values.email);
           values.email && setSuccess(true); resetForm();
         }}
       >
@@ -117,6 +132,7 @@ const MailingSection = ({ admin, section, wid, lang, uid }) => {
               <Grid item xs={12} sm={3}>
                 <Button
                   sx={{ py: 0.85 }}
+                  onClick={handleReCaptchaVerify}
                   type='submit'
                   variant='contained'
                   color='accentcolor'

@@ -11,6 +11,7 @@ import { Box, Typography } from '@mui/material';
 import { Button, Link } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
 import { Helmet } from 'react-helmet';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import WebsiteFinish from 'atoms/WebsiteFinish';
 import WebsiteOptions from 'atoms/WebsiteOptions';
 import SectionCreate from 'atoms/SectionCreate';
@@ -69,106 +70,108 @@ const WebsiteView = ({ admin, draft, host }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Helmet>
-        <title>{website && website.title}</title>
-        <link rel='icon' href={website && website.favicon} />
-        <html lang={lang || 'en'} />
-        {website && website.gtag && <script
-          src={`https://www.googletagmanager.com/gtag/js?id=${website.gtag}`}
-          async
-        />}
-        {website && website.gtag && <script>
-          {`
+      <GoogleReCaptchaProvider reCaptchaKey='6LfiuKMiAAAAAEV7tP-p19dCZGnrkj1Z89l-vNpr'>
+        <Helmet>
+          <title>{website && website.title}</title>
+          <link rel='icon' href={website && website.favicon} />
+          <html lang={lang || 'en'} />
+          {website && website.gtag && <script
+            src={`https://www.googletagmanager.com/gtag/js?id=${website.gtag}`}
+            async
+          />}
+          {website && website.gtag && <script>
+            {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', '${website.gtag}');
           `}
-        </script>}
-      </Helmet>
-      {edit && <WebsiteFinish website={website} />}
-      {edit && <WebsiteOptions website={website} />}
-      {edit && !website.sections.length && <Box
-        sx={{ py: 10, display: 'flex', justifyContent: 'center' }}
-      >
-        <SectionCreate wid={website.name} index={0} start />
-      </Box>}
-      <Box sx={{
-        color: 'fontcolor.main', bgcolor: 'backgroundcolor.main', wordWrap: 'break-word',
-      }}>
-        {(edit || view || open) && website.header && <HeaderSection
-          header={{ ...website.header, ...website.header[language] }}
-          section={website.header} admin={edit} wid={website.name}
-          logo={website.logo} langs={website.langs} lang={language}
-        />}
-        {edit && <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId='droppable'>
-            {(provided) => (
-              <div
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                {data && data.map((item, index) => (
-                  <Draggable
-                    key={item.id}
-                    draggableId={item.id}
-                    index={index}
-                  >
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                      >
-                        <BlockTemplate
-                          admin={true}
-                          section={item}
-                          wid={website.name}
-                          index={index + 1}
-                          drag={provided.dragHandleProps}
-                          dragging={snapshot.isDragging}
-                          lang={language}
-                        />
-                      </div>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>}
-        {(view || open) &&
-          data && data.map((item, index) => (
-            <BlockTemplate
-              key={item.id}
-              admin={false}
-              section={item}
-              wid={website.name}
-              uid={website.uid}
-              index={index + 1}
-              lang={language}
-            />
-          ))}
-        {(edit || view || open) && website.footer && <FooterSection
-          footer={{ ...website.footer, ...website.footer[language] }}
-          section={website.footer} admin={edit}
-          wid={website.name} lang={language}
-        />}
-      </Box>
-      {!(edit || view || open) &&
-        <Box sx={{ textAlign: 'center', m: 5 }}>
-          <Typography variant='h6'>
-            Page not public
-          </Typography>
-          <Button
-            component={Link}
-            href='https://modularpage.com/app'
-            size='small'
-          >
-            Modular Page
-          </Button>
+          </script>}
+        </Helmet>
+        {edit && <WebsiteFinish website={website} />}
+        {edit && <WebsiteOptions website={website} />}
+        {edit && !website.sections.length && <Box
+          sx={{ py: 10, display: 'flex', justifyContent: 'center' }}
+        >
+          <SectionCreate wid={website.name} index={0} start />
+        </Box>}
+        <Box sx={{
+          color: 'fontcolor.main', bgcolor: 'backgroundcolor.main', wordWrap: 'break-word',
+        }}>
+          {(edit || view || open) && website.header && <HeaderSection
+            header={{ ...website.header, ...website.header[language] }}
+            section={website.header} admin={edit} wid={website.name}
+            logo={website.logo} langs={website.langs} lang={language}
+          />}
+          {edit && <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId='droppable'>
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {data && data.map((item, index) => (
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                        >
+                          <BlockTemplate
+                            admin={true}
+                            section={item}
+                            wid={website.name}
+                            index={index + 1}
+                            drag={provided.dragHandleProps}
+                            dragging={snapshot.isDragging}
+                            lang={language}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>}
+          {(view || open) &&
+            data && data.map((item, index) => (
+              <BlockTemplate
+                key={item.id}
+                admin={false}
+                section={item}
+                wid={website.name}
+                uid={website.uid}
+                index={index + 1}
+                lang={language}
+              />
+            ))}
+          {(edit || view || open) && website.footer && <FooterSection
+            footer={{ ...website.footer, ...website.footer[language] }}
+            section={website.footer} admin={edit}
+            wid={website.name} lang={language}
+          />}
         </Box>
-      }
+        {!(edit || view || open) &&
+          <Box sx={{ textAlign: 'center', m: 5 }}>
+            <Typography variant='h6'>
+              Page not public
+            </Typography>
+            <Button
+              component={Link}
+              href='https://modularpage.com/app'
+              size='small'
+            >
+              Modular Page
+            </Button>
+          </Box>
+        }
+      </GoogleReCaptchaProvider>
     </ThemeProvider>
   )
 };
