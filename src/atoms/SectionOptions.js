@@ -42,8 +42,8 @@ const SectionOptions = ({ section, wid, hover }) => {
     variant: (sl && sl.variant) || 'narrow',
     quantity: (sl && sl.quantity) || (section.type === 'iconbox' ? '3' : '2'),
   });
-  const buttons = section.type === 'graphic' || section.type === 'content';
-  const cards = section.type === 'cardbox' || section.type === 'selling';
+  const buttons = ['content', 'graphic', 'hero'].includes(section.type);
+  const cards = ['cardbox', 'selling'].includes(section.type);
   const blocks = section.type === 'iconbox';
   const form = section.type === 'mailing';
 
@@ -93,7 +93,7 @@ const SectionOptions = ({ section, wid, hover }) => {
           />
           <Divider />
           <Grid sx={{ py: 2 }} container spacing={2}>
-            {section.type !== 'graphic' && ['narrow', 'wide'].map(item =>
+            {!['graphic', 'hero'].includes(section.type) && ['narrow', 'wide'].map(item =>
               <Grid item xs={12} md='auto' key={item}>
                 <Box
                   sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
@@ -120,7 +120,23 @@ const SectionOptions = ({ section, wid, hover }) => {
                     {layout.variant !== item && <CheckBoxOutlineBlankOutlined />}
                   </Avatar>
                   <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
-                    {item} image
+                    {item} Image
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
+            {section.type === 'hero' && ['single', 'double', 'triple'].map(item =>
+              <Grid item xs={12} md='auto' key={item}>
+                <Box
+                  sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                  onClick={() => setLayout({ ...layout, variant: item })}
+                >
+                  <Avatar sx={{ bgcolor: layout.variant === item && 'primary.main' }}>
+                    {layout.variant === item && <CheckBoxOutlined />}
+                    {layout.variant !== item && <CheckBoxOutlineBlankOutlined />}
+                  </Avatar>
+                  <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
+                    {item} Hero
                   </Typography>
                 </Box>
               </Grid>
