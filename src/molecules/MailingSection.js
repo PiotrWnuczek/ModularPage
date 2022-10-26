@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useFirebase } from 'react-redux-firebase';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { Box, Grid, Typography } from '@mui/material';
@@ -20,21 +20,19 @@ const MailingSection = ({ admin, section, wid, lang, uid }) => {
     const mailerlite = firebase.functions().httpsCallable('mailerlite');
     mailerlite({ uid, email, group: section.group });
   };
+  const captchaFunction = (token) => {
+    const captcha = firebase.functions().httpsCallable('captcha');
+    captcha({ token });
+  };
   const sl = section.layout;
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const handleReCaptchaVerify = useCallback(async () => {
+  const captchaVerify = async () => {
     if (executeRecaptcha) {
-      const token = await executeRecaptcha('yourAction');
-      console.log(token);
-      fetch('https://www.google.com/recaptcha/api/siteverify', {
-        method: 'POST',
-        body: JSON.stringify({
-          secret: '6LfiuKMiAAAAAG77eSQeilAQvrJkdK4nkuvBbs69',
-          response: token,
-        })
-      }).then(res => res.json()).then(data => console.log(data));
+      const token = await executeRecaptcha('form');
+      const verification = captchaFunction(token);
+      console.log(token, verification);
     }
-  }, [executeRecaptcha]);
+  };
 
   return (
     <Box sx={{ textAlign: 'center', width: '100%' }}>
@@ -132,7 +130,7 @@ const MailingSection = ({ admin, section, wid, lang, uid }) => {
               <Grid item xs={12} sm={3}>
                 <Button
                   sx={{ py: 0.85 }}
-                  onClick={handleReCaptchaVerify}
+                  onClick={() => captchaVerify()}
                   type='submit'
                   variant='contained'
                   color='accentcolor'

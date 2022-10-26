@@ -48,6 +48,14 @@ exports.mailerlite = functions.https.onCall(async (data, c) => {
   return 'mailerlite';
 });
 
+exports.captcha = functions.https.onCall(async (data, c) => {
+  const verification = await axios.post(
+    'https://www.google.com/recaptcha/api/siteverify',
+    { secret: '6LfiuKMiAAAAAG77eSQeilAQvrJkdK4nkuvBbs69', response: data.token },
+  );
+  return verification;
+});
+
 exports.stripe = functions.https.onCall(async (data, context) => {
   const ref = admin.firestore().collection('users').doc(context.auth.uid);
   const key = await ref.get().then(res => res.data().stripe);
