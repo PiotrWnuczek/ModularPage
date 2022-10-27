@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const axios = require('axios');
 const nodemailer = require('nodemailer');
+
 admin.initializeApp();
 
 const transporter = nodemailer.createTransport({
@@ -50,10 +51,11 @@ exports.mailerlite = functions.https.onCall(async (data, c) => {
 
 exports.captcha = functions.https.onCall(async (data, c) => {
   const verification = await axios.post(
-    'https://www.google.com/recaptcha/api/siteverify',
-    { secret: '6LfiuKMiAAAAAG77eSQeilAQvrJkdK4nkuvBbs69', response: data.token },
+    'https://www.google.com/recaptcha/api/siteverify' +
+    '?secret=6LfiuKMiAAAAAG77eSQeilAQvrJkdK4nkuvBbs69' +
+    '&response=' + data.token,
   );
-  return verification;
+  return verification.score;
 });
 
 exports.stripe = functions.https.onCall(async (data, context) => {

@@ -6,6 +6,7 @@ import { CardActionArea, CardMedia, Avatar } from '@mui/material';
 import { Add } from '@mui/icons-material';
 import { hero, graphic, content, iconbox } from 'stock/templates';
 import { cardbox, mailing, selling } from 'stock/templates';
+import Hero from 'stock/hero.png';
 import Graphic from 'stock/graphic.png';
 import Content from 'stock/content.png';
 import Iconbox from 'stock/iconbox.png';
@@ -17,7 +18,7 @@ const SectionCreate = ({ wid, index, start, hover }) => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const sections = [
-    { name: 'Hero Section', template: hero, image: Graphic },
+    { name: 'Hero Section', template: hero, image: Hero },
     { name: 'Graphic Section', template: graphic, image: Graphic },
     { name: 'Content Section', template: content, image: Content },
     { name: 'Iconbox Section', template: iconbox, image: Iconbox },
@@ -30,9 +31,8 @@ const SectionCreate = ({ wid, index, start, hover }) => {
     <Box>
       <Avatar
         sx={{
-          width: start ? 40 : 30, height: start ? 40 : 30,
-          mx: 0.3, cursor: 'pointer', bgcolor: 'primary.main',
-          '&:hover': { bgcolor: 'primary.dark' },
+          width: start ? 40 : 30, height: start ? 40 : 30, mx: 0.3, cursor: 'pointer',
+          bgcolor: 'primary.main', '&:hover': { bgcolor: 'primary.dark' },
         }}
         onClick={() => setOpen(true)}
       >

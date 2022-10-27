@@ -13,11 +13,17 @@ const HeroSection = ({ admin, section, wid, lang }) => {
 
   return (
     <Box sx={{ position: 'relative' }}>
+      <Box sx={{ zIndex: 100, position: 'absolute', top: 0, width: '100%', height: '10%' }} />
+      <Box sx={{ zIndex: 100, position: 'absolute', bottom: 0, width: '100%', height: '10%' }} />
       <Box sx={{
-        width: '100%', height: '100%', position: 'absolute', zIndex: 100,
+        width: '100%', height: '100%', position: 'absolute',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
-        <Box sx={{ textAlign: 'center' }}>
+        <Box sx={{
+          width: '100%', textAlign: 'center', zIndex: 100,
+          mx: sl && sl.variant === 'wide' ?
+            { xs: 4, md: 6, lg: 16, xl: 36 } : { xs: 4, md: 12, lg: 32, xl: 52 },
+        }}>
           <TextEditor
             admin={admin} section={section}
             wid={wid} lang={lang} type='title'
@@ -81,7 +87,7 @@ const HeroSection = ({ admin, section, wid, lang }) => {
       <ImageOptions admin={admin} section={section} wid={wid}>
         <Box
           sx={{
-            maxHeight: 400, opacity: 0.2,
+            maxHeight: 500, opacity: 0.2,
             width: '100%', height: '100%', objectFit: 'cover',
           }}
           src={section.url || Image}

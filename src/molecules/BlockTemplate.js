@@ -44,17 +44,11 @@ const BlockTemplate = ({ admin, section, wid, uid, index, drag, dragging, lang }
   return (
     <ThemeProvider theme={theme}>
       <Box
-        sx={section.type === 'graphic' ? {
-          px: sl && sl.variant === 'full' ? 0 : sl && sl.variant === 'wide' ?
-            { xs: 3, md: 6, lg: 20, xl: 40 } : { xs: 5, md: 10, lg: 30, xl: 50 },
-          py: sl && sl.variant === 'full' ?
-            { xs: 3, md: 0 } : sl && sl.variant === 'wide' ? 3 : 6,
+        sx={{
+          px: section.type === 'hero' ? 0 : sl && sl.variant === 'wide' ?
+            { xs: 4, md: 6, lg: 16, xl: 36 } : { xs: 4, md: 12, lg: 32, xl: 52 },
+          py: section.type === 'hero' ? 0 : sl && sl.variant === 'wide' ? 3 : 6,
           position: 'relative', display: 'flex', justifyContent: 'center',
-          color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
-        } : {
-          px: sl && sl.variant === 'wide' ?
-            { xs: 4, md: 8, lg: 26, xl: 46 } : { xs: 6, md: 12, lg: 34, xl: 54 },
-          py: 6, position: 'relative', display: 'flex', justifyContent: 'center',
           color: 'fontcolor.main', bgcolor: 'backgroundcolor.main',
         }}
         onMouseOver={() => setHover(true)}

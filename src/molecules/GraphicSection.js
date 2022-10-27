@@ -3,7 +3,7 @@ import { Grid, Box, Button } from '@mui/material';
 import { Link, Typography } from '@mui/material';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import Image from 'stock/image.png';
+import Picture from 'stock/picture.png';
 import TextEditor from 'atoms/TextEditor';
 import ButtonOptions from 'atoms/ButtonOptions';
 import ImageOptions from 'atoms/ImageOptions';
@@ -17,11 +17,7 @@ const GraphicSection = ({ admin, section, wid, lang }) => {
       container
     >
       <Grid
-        sx={{
-          px: sl && sl.variant === 'full' ?
-            { xs: 4, md: 8, lg: 12, xl: 22 } : sl && sl.variant === 'wide' ? 4 : 2,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}
+        sx={{ px: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
         item xs={12} md={6}
       >
         <Box sx={{ textAlign: 'center', width: '100%' }}>
@@ -87,20 +83,18 @@ const GraphicSection = ({ admin, section, wid, lang }) => {
       </Grid>
       <Grid
         sx={{
-          px: sl && sl.variant === 'full' ? 0 : 2,
-          maxHeight: sl && sl.variant === 'narrow' ? 400 : 500,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          px: 2, display: 'flex', alignItems: 'center', justifyContent: 'center',
+          maxHeight: sl && sl.variant === 'wide' ? 700 : 500,
         }}
         item xs={12} md={6}
       >
         <ImageOptions admin={admin} section={section} wid={wid}>
           <Box
             sx={{
-              maxWidth: sl && sl.variant === 'full' ?
-                1000 : sl && sl.variant === 'wide' ? 600 : 500,
               width: '100%', height: '100%', objectFit: 'cover',
+              maxWidth: sl && sl.variant === 'wide' ? 700 : 500,
             }}
-            src={section.url || Image}
+            src={section.url || Picture}
             component='img'
           />
         </ImageOptions>

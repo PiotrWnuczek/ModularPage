@@ -93,7 +93,7 @@ const SectionOptions = ({ section, wid, hover }) => {
           />
           <Divider />
           <Grid sx={{ py: 2 }} container spacing={2}>
-            {!['graphic', 'hero'].includes(section.type) && ['narrow', 'wide'].map(item =>
+            {['narrow', 'wide'].map(item =>
               <Grid item xs={12} md='auto' key={item}>
                 <Box
                   sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
@@ -105,38 +105,6 @@ const SectionOptions = ({ section, wid, hover }) => {
                   </Avatar>
                   <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
                     {item} Layout Variant
-                  </Typography>
-                </Box>
-              </Grid>
-            )}
-            {section.type === 'graphic' && ['narrow', 'wide', 'full'].map(item =>
-              <Grid item xs={12} md='auto' key={item}>
-                <Box
-                  sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-                  onClick={() => setLayout({ ...layout, variant: item })}
-                >
-                  <Avatar sx={{ bgcolor: layout.variant === item && 'primary.main' }}>
-                    {layout.variant === item && <CheckBoxOutlined />}
-                    {layout.variant !== item && <CheckBoxOutlineBlankOutlined />}
-                  </Avatar>
-                  <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
-                    {item} Image
-                  </Typography>
-                </Box>
-              </Grid>
-            )}
-            {section.type === 'hero' && ['single', 'double', 'triple'].map(item =>
-              <Grid item xs={12} md='auto' key={item}>
-                <Box
-                  sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-                  onClick={() => setLayout({ ...layout, variant: item })}
-                >
-                  <Avatar sx={{ bgcolor: layout.variant === item && 'primary.main' }}>
-                    {layout.variant === item && <CheckBoxOutlined />}
-                    {layout.variant !== item && <CheckBoxOutlineBlankOutlined />}
-                  </Avatar>
-                  <Typography sx={{ ml: 1, textTransform: 'capitalize' }}>
-                    {item} Hero
                   </Typography>
                 </Box>
               </Grid>

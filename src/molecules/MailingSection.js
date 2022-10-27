@@ -22,15 +22,15 @@ const MailingSection = ({ admin, section, wid, lang, uid }) => {
   };
   const captchaFunction = (token) => {
     const captcha = firebase.functions().httpsCallable('captcha');
-    captcha({ token });
+    captcha({ token }).then(score => console.log(score));
   };
   const sl = section.layout;
   const { executeRecaptcha } = useGoogleReCaptcha();
   const captchaVerify = async () => {
     if (executeRecaptcha) {
       const token = await executeRecaptcha('form');
-      const verification = captchaFunction(token);
-      console.log(token, verification);
+      console.log(token);
+      captchaFunction(token);
     }
   };
 
