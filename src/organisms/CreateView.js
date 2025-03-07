@@ -69,7 +69,7 @@ const CreateView = () => {
           <OptionBox
             get={domain} set={setDomain}
             option='app' title='App Domain'
-            text='modularpage.com/YourName (free option)'
+            text={process.env.REACT_APP_DOMAIN + '/YourName (free option)'}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -112,7 +112,7 @@ const CreateView = () => {
               {websites && websites.map(website =>
                 <MenuItem value={website.sections} key={website.name}>
                   {website.domain === 'custom' && website.name}
-                  {website.domain === 'app' && 'modularpage.com/' + website.name}
+                  {website.domain === 'app' && process.env.REACT_APP_DOMAIN + '/' + website.name}
                 </MenuItem>
               )}
             </Select>

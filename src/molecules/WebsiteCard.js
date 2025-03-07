@@ -25,7 +25,7 @@ const WebsiteCard = ({ website }) => {
           <Box sx={{ ml: 2 }}>
             <Typography variant='h6'>
               {website.domain === 'custom' && website.name}
-              {website.domain === 'app' && 'modularpage.com/' + website.name}
+              {website.domain === 'app' && process.env.REACT_APP_DOMAIN + '/' + website.name}
             </Typography>
             <PublicControl website={website} />
           </Box>

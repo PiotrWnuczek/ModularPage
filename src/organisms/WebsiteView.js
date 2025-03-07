@@ -164,7 +164,7 @@ const WebsiteView = ({ admin, draft, host }) => {
             </Typography>
             <Button
               component={Link}
-              href='https://modularpage.com/app'
+              href={'https://' + process.env.REACT_APP_DOMAIN + '/app'}
               size='small'
             >
               Modular Page

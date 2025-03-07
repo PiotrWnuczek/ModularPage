@@ -22,7 +22,7 @@ const FrontLayout = ({ children }) => (
         alignItems: 'center', justifyContent: 'center',
       }}>
         <Typography>
-          Copyright © modularpage.com created by
+          Copyright © {process.env.REACT_APP_DOMAIN} created by
         </Typography>
         <Link
           sx={{ ml: 0.5 }}
@@ -35,7 +35,7 @@ const FrontLayout = ({ children }) => (
       </Box>
       <Button
         component={Link}
-        href='https://modularpage.com'
+        href={'https://' + process.env.REACT_APP_DOMAIN}
         size='small'
       >
         About App

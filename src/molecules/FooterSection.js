@@ -31,11 +31,11 @@ const FooterSection = ({ admin, footer, section, wid, lang }) => {
               </ReactMarkdown>
               Created with {' '}
               <Link
-                href='https://modularpage.com/'
+                href={'https://' + process.env.REACT_APP_DOMAIN}
                 target='_blank'
                 color='inherit'
               >
-                modularpage.com
+                {process.env.REACT_APP_DOMAIN}
               </Link>
             </Box>
           </Typography>

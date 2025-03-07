@@ -21,7 +21,7 @@ const ScrollTop = ({ children }) => {
 };
 
 const App = () => {
-  const host = 0 ? 'modularpage.com' : 'localhost:3000';
+  const host = 0 ? process.env.REACT_APP_DOMAIN : 'localhost:3000';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
   const theme = createTheme({
@@ -60,8 +60,8 @@ const App = () => {
             <Route path='/:id/:lang' element={<WebsiteView />} />
             <Route path='/:id/*' element={<WebsiteView />} />
             <Route path='/app' element={<Navigate to='/board' />} />
-            <Route path='/pl' element={<Navigate to='/try' />} />
-            <Route path='/*' element={<Navigate to='/try' />} />
+            <Route path='/pl' element={<Navigate to='/app' />} />
+            <Route path='/*' element={<Navigate to='/app' />} />
           </Routes> : <Routes>
             <Route path='/:lang' element={<WebsiteView host={window.location.host} />} />
             <Route path='/*' element={<WebsiteView host={window.location.host} />} />

@@ -53,7 +53,7 @@ const RemoveConfirm = ({ type, sid, wid, hover, file }) => {
             {type === 'website' && <Formik
               initialValues={{ name: '' }}
               onSubmit={(values) => {
-                if (values.name === wid || values.name === 'modularpage.com/' + wid) {
+                if (values.name === wid || values.name === process.env.REACT_APP_DOMAIN + '/' + wid) {
                   dispatch(removeWebsite({ wid }));
                   setOpen(false);
                 } else { setInfo(true) }

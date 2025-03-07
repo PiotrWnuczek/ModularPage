@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: 'contact@modularpage.com',
+    user: 'modularpage@piotrwnuczek.pl',
     pass: 'modularMP(00)',
   }
 });
