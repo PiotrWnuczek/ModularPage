@@ -35,7 +35,7 @@ const FrontLayout = ({ children }) => (
       </Box>
       <Button
         component={Link}
-        href={'https://' + process.env.REACT_APP_DOMAIN}
+        href={'https://' + process.env.REACT_APP_DOMAIN + '/about'}
         size='small'
       >
         About App
