@@ -21,7 +21,7 @@ const ScrollTop = ({ children }) => {
 };
 
 const App = () => {
-  const host = 0 ? process.env.REACT_APP_DOMAIN : 'localhost:3000';
+  const host = 1 ? process.env.REACT_APP_DOMAIN : 'localhost:3000';
   const auth = useSelector(state => state.firebase.auth);
   const access = isLoaded(auth) && !isEmpty(auth);
   const theme = createTheme({
