@@ -41,7 +41,7 @@ exports.mailerlite = functions.https.onCall(async (data, c) => {
 exports.captcha = functions.https.onCall(async (data, c) => {
   const verification = await axios.post(
     'https://www.google.com/recaptcha/api/siteverify' +
-    '?secret=6LfiuKMiAAAAAG77eSQeilAQvrJkdK4nkuvBbs69' +
+    '?secret=' + process.env.REACT_APP_RECAPTCHA_SECRET +
     '&response=' + data.token,
   );
   return verification.score;

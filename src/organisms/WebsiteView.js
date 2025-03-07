@@ -70,7 +70,7 @@ const WebsiteView = ({ admin, draft, host }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <GoogleReCaptchaProvider reCaptchaKey='6LfiuKMiAAAAAEV7tP-p19dCZGnrkj1Z89l-vNpr'>
+      <GoogleReCaptchaProvider reCaptchaKey={process.env.REACT_APP_RECAPTCHA_KEY}>
         <Helmet>
           <title>{website && website.title}</title>
           <link rel='icon' href={website && website.favicon} />
