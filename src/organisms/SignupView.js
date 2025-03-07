@@ -26,13 +26,11 @@ const SignupView = () => {
         }}
         onSubmit={(values) => {
           values.password === values.confirm &&
-            values.code === process.env.REACT_APP_CODE &&
             dispatch(signupUser({
               email: values.email,
               password: values.password,
             }));
           values.password !== values.confirm && setInfo('password');
-          values.code !== process.env.REACT_APP_CODE && setInfo('code');
         }}
       >
         {({ values, handleChange, handleSubmit }) => (
@@ -71,19 +69,6 @@ const SignupView = () => {
               placeholder='Password'
               label='Password'
               type='password'
-              variant='outlined'
-              size='small'
-              fullWidth
-              required
-            />
-            <TextField
-              sx={{ my: 1 }}
-              onChange={handleChange}
-              value={values.code}
-              name='code'
-              placeholder='Code'
-              label='Code'
-              type='text'
               variant='outlined'
               size='small'
               fullWidth
